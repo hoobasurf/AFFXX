@@ -1,0 +1,97 @@
+/* === ACCUEIL === */
+body.home {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background: url('../images/background.jpg') center center no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  font-family: 'Arial', sans-serif;
+}
+
+.welcome-text {
+  position: absolute;
+  top: 20%;
+  width: 100%;
+  text-align: center;
+  font-size: 42px;
+  color: white;
+  text-shadow: 0 0 10px #ff66ff;
+}
+
+.enter-button {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 20px 50px;
+  font-size: 26px;
+  color: #ff66ff;
+  background-color: rgba(0, 0, 0, 0.4);
+  border: 2px solid #ff00ff;
+  border-radius: 12px;
+  cursor: pointer;
+  animation: neonPulse 2s infinite;
+  box-shadow: 0 0 12px #ff00ff, 0 0 25px #ff66ff;
+}
+
+@keyframes neonPulse {
+  0%, 100% { box-shadow: 0 0 12px #ff00ff, 0 0 25px #ff66ff; }
+  50%     { box-shadow: 0 0 20px #ff00ff, 0 0 40px #ff66ff; }
+}
+
+
+/* === TOKYO === */
+body.tokyo {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-color: #000000; /* couleur pour combler les bandes vides */
+  background-image: url('../images/fond-tokyo.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;     /* affiche toute l’image sans la couper */
+  background-attachment: fixed;
+  font-family: 'Arial', sans-serif;
+  position: relative;
+}
+
+.panel {
+  position: absolute;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.panel:hover {
+  box-shadow: 0 0 20px 5px currentColor;
+}
+
+.panel[onclick*="rencontre-amicale"] { color: #00ffff; }
+.panel[onclick*="relation-serieuse"] { color: #ff66ff; }
+.panel[onclick*="rencontre-fun"]     { color: #ffcc00; }
+.panel[onclick*="parents"]           { color: #ff3366; }
+.panel[onclick*="retour"]            { color: #66ff66; }
+.panel[onclick*="createur"]          { color: #9966ff; }
+
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  body.tokyo {
+    background-color: #000000;
+    background-image: url('../images/fond-tokyo.jpg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-attachment: scroll; /* scroll pour mobiles */
+    max-height: 100vh;
+  }
+
+  .panel {
+    max-width: 90% !important;
+    left: 5% !important;
+  }
+}
