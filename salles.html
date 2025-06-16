@@ -5,6 +5,30 @@
   <title>Les Salles</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/styles.css">
+  
+  <style>
+    /* Néon lumineux au clic sur panneau */
+    .panel.clicked {
+      animation: neonFlash 0.3s ease forwards;
+      filter: drop-shadow(0 0 8px #ff00ff) drop-shadow(0 0 20px #ff00ff);
+      transform: scale(0.97);
+      transition: transform 0.1s ease;
+      z-index: 10;
+      position: relative;
+    }
+    @keyframes neonFlash {
+      0% {
+        filter: drop-shadow(0 0 2px #ff00ff);
+      }
+      50% {
+        filter: drop-shadow(0 0 15px #ff00ff) drop-shadow(0 0 30px #ff00ff);
+      }
+      100% {
+        filter: drop-shadow(0 0 8px #ff00ff) drop-shadow(0 0 20px #ff00ff);
+      }
+    }
+  </style>
+  
 </head>
 <body class="tokyo">
 
@@ -29,25 +53,17 @@
     </div>
   </div>
 
-  <!-- Optionnel : son de clic futuriste -->
-  <!--
-  <audio id="clickSound" src="sons/click-neon.mp3" preload="auto"></audio>
-  -->
-
   <script>
     function handleClick(panel, url) {
       // Vibration
       if (navigator.vibrate) navigator.vibrate(100);
-
-      // Son (décommente si tu ajoutes un fichier .mp3)
-      // document.getElementById('clickSound').play();
 
       // Néon clignotant
       panel.classList.add('clicked');
       setTimeout(() => {
         panel.classList.remove('clicked');
         window.location.href = url;
-      }, 300); // assez rapide pour garder l’effet avant le rediriger
+      }, 300); // garde effet néon puis redirection
     }
   </script>
 
