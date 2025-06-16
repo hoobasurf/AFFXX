@@ -61,7 +61,79 @@ body.tokyo {
   font-family: 'Orbitron', sans-serif;
   position: relative;
 }
+/* === INSCRIPTION (Tokyo style) === */
+body.inscription {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url('../images/fond-tokyo.jpg') center center no-repeat;
+  background-size: cover;
+  font-family: 'Orbitron', sans-serif;
+}
 
+.inscription-container {
+  background: rgba(0,0,0,0.6);
+  padding: 30px 25px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px #a64cff, 0 0 40px #6a00ff;
+  text-align: center;
+  width: 90%;
+  max-width: 360px;
+}
+
+.inscription-container h1 {
+  margin-bottom: 15px;
+  font-size: 28px;
+  color: #e0e0ff;
+  text-shadow: 0 0 10px #ff66ff;
+}
+
+.inscription-container input,
+.inscription-container textarea,
+.inscription-container select {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px;
+  font-size: 14px;
+  border: 2px solid #6a00ff;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.1);
+  color: white;
+}
+
+.inscription-container textarea { resize: none; height: 70px; }
+
+.zone-search { display: flex; gap: 10px; }
+
+.inscription-container button {
+  width: 100%;
+  padding: 12px;
+  font-size: 18px;
+  background: #6a00ff;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 0 15px #6a00ff, 0 0 30px #a64cff;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.inscription-container button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #6a00ff, 0 0 40px #a64cff;
+}
+
+@media (max-width: 480px) {
+  .inscription-container {
+    padding: 20px;
+  }
+  .inscription-container h1 {
+    font-size: 24px;
+  }
+  .inscription-container button {
+    font-size: 16px;
+  }
+}
 /* Conteneur des panneaux */
 .panels-container {
   position: absolute;
