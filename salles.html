@@ -4,66 +4,28 @@
   <meta charset="UTF-8">
   <title>Les Salles</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
-  
-  <style>
-    /* Néon lumineux au clic sur panneau */
-    .panel.clicked {
-      animation: neonFlash 0.3s ease forwards;
-      filter: drop-shadow(0 0 8px #ff00ff) drop-shadow(0 0 20px #ff00ff);
-      transform: scale(0.97);
-      transition: transform 0.1s ease;
-      z-index: 10;
-      position: relative;
-    }
-    @keyframes neonFlash {
-      0% {
-        filter: drop-shadow(0 0 2px #ff00ff);
-      }
-      50% {
-        filter: drop-shadow(0 0 15px #ff00ff) drop-shadow(0 0 30px #ff00ff);
-      }
-      100% {
-        filter: drop-shadow(0 0 8px #ff00ff) drop-shadow(0 0 20px #ff00ff);
-      }
-    }
-  </style>
-  
 </head>
 <body class="tokyo">
 
   <div class="panels-container">
-    <div class="panel" onclick="handleClick(this, 'rencontre-amicale.html')">
-      <img src="boutons-visuels/amicale.png" alt="Amicale" style="width: 100%;">
-    </div>
-    <div class="panel" onclick="handleClick(this, 'relation-serieuse.html')">
-      <img src="boutons-visuels/serieuse.png" alt="Sérieuse" style="width: 100%;">
-    </div>
-    <div class="panel" onclick="handleClick(this, 'rencontre-fun.html')">
-      <img src="boutons-visuels/fun.png" alt="Fun" style="width: 100%;">
-    </div>
-    <div class="panel" onclick="handleClick(this, 'parents.html')">
-      <img src="boutons-visuels/parents.png" alt="Parents" style="width: 100%;">
-    </div>
-    <div class="panel" onclick="handleClick(this, 'retour.html')">
-      <img src="boutons-visuels/retour.png" alt="Retour" style="width: 100%;">
-    </div>
-    <div class="panel" onclick="handleClick(this, 'createur.html')">
-      <img src="boutons-visuels/createur.png" alt="Créateur" style="width: 100%;">
-    </div>
+    <div class="panel" onclick="handleClick(this, 'rencontre-amicale.html')">Rencontre Amicale</div>
+    <div class="panel" onclick="handleClick(this, 'relation-serieuse.html')">Relation Sérieuse</div>
+    <div class="panel" onclick="handleClick(this, 'rencontre-fun.html')">Rencontre Fun</div>
+    <div class="panel" onclick="handleClick(this, 'parents.html')">Parents Solos</div>
+    <div class="panel" onclick="handleClick(this, 'retour.html')">Retour</div>
+    <div class="panel" onclick="handleClick(this, 'createur.html')">Le Créateur</div>
   </div>
 
   <script>
     function handleClick(panel, url) {
-      // Vibration
       if (navigator.vibrate) navigator.vibrate(100);
-
-      // Néon clignotant
       panel.classList.add('clicked');
       setTimeout(() => {
         panel.classList.remove('clicked');
         window.location.href = url;
-      }, 300); // garde effet néon puis redirection
+      }, 300);
     }
   </script>
 
