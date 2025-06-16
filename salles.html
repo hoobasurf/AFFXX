@@ -9,25 +9,47 @@
 <body class="tokyo">
 
   <div class="panels-container">
-    <div class="panel" onclick="location.href='rencontre-amicale.html'">
+    <div class="panel" onclick="handleClick(this, 'rencontre-amicale.html')">
       <img src="boutons-visuels/amicale.png" alt="Amicale" style="width: 100%;">
     </div>
-    <div class="panel" onclick="location.href='relation-serieuse.html'">
+    <div class="panel" onclick="handleClick(this, 'relation-serieuse.html')">
       <img src="boutons-visuels/serieuse.png" alt="Sérieuse" style="width: 100%;">
     </div>
-    <div class="panel" onclick="location.href='rencontre-fun.html'">
+    <div class="panel" onclick="handleClick(this, 'rencontre-fun.html')">
       <img src="boutons-visuels/fun.png" alt="Fun" style="width: 100%;">
     </div>
-    <div class="panel" onclick="location.href='parents.html'">
+    <div class="panel" onclick="handleClick(this, 'parents.html')">
       <img src="boutons-visuels/parents.png" alt="Parents" style="width: 100%;">
     </div>
-    <div class="panel" onclick="location.href='retour.html'">
+    <div class="panel" onclick="handleClick(this, 'retour.html')">
       <img src="boutons-visuels/retour.png" alt="Retour" style="width: 100%;">
     </div>
-    <div class="panel" onclick="location.href='createur.html'">
+    <div class="panel" onclick="handleClick(this, 'createur.html')">
       <img src="boutons-visuels/createur.png" alt="Créateur" style="width: 100%;">
     </div>
   </div>
+
+  <!-- Optionnel : son de clic futuriste -->
+  <!--
+  <audio id="clickSound" src="sons/click-neon.mp3" preload="auto"></audio>
+  -->
+
+  <script>
+    function handleClick(panel, url) {
+      // Vibration
+      if (navigator.vibrate) navigator.vibrate(100);
+
+      // Son (décommente si tu ajoutes un fichier .mp3)
+      // document.getElementById('clickSound').play();
+
+      // Néon clignotant
+      panel.classList.add('clicked');
+      setTimeout(() => {
+        panel.classList.remove('clicked');
+        window.location.href = url;
+      }, 300); // assez rapide pour garder l’effet avant le rediriger
+    }
+  </script>
 
 </body>
 </html>
