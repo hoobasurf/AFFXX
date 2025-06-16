@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
 /* === ACCUEIL === */
 body.home {
   margin: 0;
@@ -8,7 +10,7 @@ body.home {
   background: url('../images/background.jpg') center center no-repeat;
   background-size: cover;
   background-attachment: fixed;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Orbitron', sans-serif;
 }
 
 .welcome-text {
@@ -56,10 +58,11 @@ body.tokyo {
   background-repeat: no-repeat;
   background-size: contain;
   background-attachment: fixed;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Orbitron', sans-serif;
   position: relative;
 }
 
+/* Conteneur des panneaux */
 .panels-container {
   position: absolute;
   top: 50%;
@@ -71,26 +74,27 @@ body.tokyo {
   align-items: center;
   gap: 20px;
   width: 90%;
-  max-width: 800px;
+  max-width: 900px;
 }
 
+/* Panneau stylé futuriste */
 .panel {
-  width: 100px;
-  height: 100px;
-  font-size: 36px;
+  min-width: 140px;
+  padding: 12px 18px;
   text-align: center;
-  line-height: 100px;
-  border: 2px solid currentColor;
+  font-size: 14px;
+  color: white;
   border-radius: 12px;
-  background-color: rgba(0, 0, 0, 0.4);
+  border: 2px solid currentColor;
   cursor: pointer;
-  transition: box-shadow 0.3s ease-in-out, transform 0.2s ease;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 8px currentColor;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-.panel:hover {
-  box-shadow: 0 0 20px 5px currentColor;
-}
-
+/* Couleur individuelle */
 .panel[onclick*="rencontre-amicale"] { color: #00ffff; }
 .panel[onclick*="relation-serieuse"] { color: #ff66ff; }
 .panel[onclick*="rencontre-fun"]     { color: #ffcc00; }
@@ -98,14 +102,27 @@ body.tokyo {
 .panel[onclick*="retour"]            { color: #66ff66; }
 .panel[onclick*="createur"]          { color: #9966ff; }
 
+.panel:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px 5px currentColor, 0 0 25px 10px currentColor;
+}
 
-/* === RESPONSIVE === */
-@media (max-width: 768px) {
-  body.tokyo {
-    background-attachment: scroll;
-    max-height: 100vh;
+/* Effet néon au clic */
+.panel.clicked {
+  animation: neonFlash 0.5s ease-in-out;
+}
+
+@keyframes neonFlash {
+  0%, 100% {
+    box-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
   }
+  50% {
+    box-shadow: 0 0 25px currentColor, 0 0 40px currentColor;
+  }
+}
 
+/* Responsive mobile */
+@media (max-width: 768px) {
   .panels-container {
     flex-direction: column;
     gap: 15px;
@@ -114,53 +131,8 @@ body.tokyo {
   }
 
   .panel {
-    width: 80px;
-    height: 80px;
-    font-size: 28px;
-    line-height: 80px;
-  }
-}
-
-/* Conteneur des panneaux (déjà inclus dans ta dernière version CSS) */
-.panels-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  gap: 30px;
-  padding: 20px;
-}
-
-/* Style de base des panneaux */
-.panel {
-  width: 160px;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
-  border-radius: 12px;
-}
-
-/* Néon au survol */
-.panel:hover {
-  box-shadow: 0 0 15px 5px #ff66ff, 0 0 25px 10px #00ffff;
-  transform: scale(1.05);
-}
-
-/* Animation de clic néon clignotant */
-.panel.clicked {
-  animation: neonFlash 0.5s ease-in-out;
-  filter: drop-shadow(0 0 10px #ff66ff) drop-shadow(0 0 20px #00ffff);
-  transform: scale(0.97);
-  transition: transform 0.1s ease;
-  z-index: 10;
-  position: relative;
-}
-
-@keyframes neonFlash {
-  0%, 100% {
-    box-shadow: 0 0 10px #ff66ff, 0 0 20px #00ffff;
-  }
-  50% {
-    box-shadow: 0 0 25px #ff00ff, 0 0 40px #00ffff;
+    min-width: 120px;
+    font-size: 12px;
+    padding: 10px 14px;
   }
 }
