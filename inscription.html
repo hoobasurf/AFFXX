@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Inscription</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Police futuriste -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="tokyo inscription">
+
+  <div class="inscription-container">
+    <h1>Inscris‑toi</h1>
+    <form id="inscriptionForm" action="merci.html" method="get" enctype="multipart/form-data">
+      <input type="text" name="pseudo" placeholder="Ton pseudo" required>
+      <textarea name="description" rows="3" placeholder="Présente‑toi en quelques mots…" required></textarea>
+      <input type="file" name="photo" accept="image/*" required>
+
+      <input type="text" name="home" placeholder="Lieu d’habitation (ville, pays)" required>
+
+      <div class="zone-search">
+        <input type="text" name="searchLocation" placeholder="Lieu de recherche" required>
+        <select name="radius">
+          <option value="10">10 km</option>
+          <option value="25" selected>25 km</option>
+          <option value="50">50 km</option>
+          <option value="100">100 km</option>
+          <option value="global">Monde entier</option>
+        </select>
+      </div>
+
+      <button type="submit">S’inscrire</button>
+    </form>
+  </div>
+
+</body>
+</html>
