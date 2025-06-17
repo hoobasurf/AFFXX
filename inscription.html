@@ -5,6 +5,89 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Inscription – Affinix</title>
   <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    body.tokyo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: linear-gradient(145deg, #1a0033, #33004d);
+      font-family: 'Arial', sans-serif;
+      overflow-y: auto;
+    }
+
+    .inscription-container {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid #aa00ff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px #aa00ff99;
+      max-width: 500px;
+      width: 90%;
+      color: #fff;
+      text-align: center;
+    }
+
+    .inscription-container h1 {
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #e0b3ff;
+    }
+
+    form input[type="text"],
+    form input[type="email"],
+    form textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      background: #1c0033;
+      border: 1px solid #aa00ff;
+      border-radius: 8px;
+      color: #fff;
+    }
+
+    form textarea {
+      height: 80px;
+      resize: none;
+    }
+
+    .zone-search {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .zone-search label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1em;
+    }
+
+    form button {
+      padding: 12px 24px;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 10px;
+      background: #aa00ff;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 0 10px #aa00ff88;
+      transition: background 0.3s ease;
+    }
+
+    form button:hover {
+      background: #cc33ff;
+    }
+
+    button[onclick] {
+      margin-top: 15px;
+      background: #555;
+      box-shadow: 0 0 5px #aaa;
+    }
+  </style>
 </head>
 <body class="tokyo">
   <div class="inscription-container">
@@ -17,7 +100,7 @@
       <textarea name="description" placeholder="Décrivez-vous en quelques mots..." required></textarea>
 
       <label style="color:#e0e0ff; display:block; margin: 15px 0 5px;">Choisissez vos salles :</label>
-      <div class="zone-search" style="flex-wrap: wrap; justify-content: center;">
+      <div class="zone-search">
         <label style="color:#00ffff;">
           <input type="checkbox" name="salles[]" value="amicale" /> 💬 Rencontre Amicale
         </label>
@@ -35,7 +118,6 @@
       <button type="submit">Envoyer l’inscription</button>
     </form>
 
-    <br />
     <button onclick="location.href='salles.html'">⬅ Retour à la ville</button>
   </div>
 </body>
