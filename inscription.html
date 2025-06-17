@@ -17,7 +17,6 @@
       height: 100vh;
       margin: 0;
     }
-
     .inscription-box {
       background: rgba(0, 0, 0, 0.7);
       border: 2px solid #a86eff;
@@ -28,13 +27,11 @@
       box-shadow: 0 0 20px #a86eff;
       text-align: center;
     }
-
     .inscription-box h1 {
       margin-bottom: 20px;
       font-size: 28px;
       color: #ffbaff;
     }
-
     .inscription-box input[type="text"],
     .inscription-box input[type="email"],
     .inscription-box input[type="password"] {
@@ -45,18 +42,6 @@
       border-radius: 10px;
       font-size: 16px;
     }
-
-    .salles-checkbox {
-      text-align: left;
-      margin: 20px 0;
-    }
-
-    .salles-checkbox label {
-      display: block;
-      margin: 8px 0;
-      font-size: 16px;
-    }
-
     .inscription-box button {
       background: #a86eff;
       border: none;
@@ -67,7 +52,6 @@
       cursor: pointer;
       transition: background 0.3s ease;
     }
-
     .inscription-box button:hover {
       background: #d8a6ff;
     }
@@ -76,7 +60,7 @@
 <body>
   <div class="inscription-box">
     <h1>Inscription sur Affinix</h1>
-    <form name="inscription" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/merci.html">
+    <form name="inscription" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/salle.html">
       <input type="hidden" name="form-name" value="inscription" />
       <p hidden>
         <label>Ne pas remplir : <input name="bot-field"></label>
