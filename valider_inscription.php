@@ -1,41 +1,31 @@
 <?php
-$fichierJson = 'inscriptions_en_attente.json';
-$inscriptions = [];
-if (file_exists($fichierJson)) {
-    $jsonContent = file_get_contents($fichierJson);
-    $inscriptions = json_decode($jsonContent, true) ?? [];
-} else {
-    die("Aucune inscription en attente.");
-}
-
-$email = $_GET['email'] ?? '';
 $token = $_GET['token'] ?? '';
+$source_file = "data/utilisateurs_en_attente.csv";
+$valid_file = "data/utilisateurs_validés.csv";
 
-if (!$email || !$token) {
+if (!$token) {
     die("Lien invalide.");
 }
 
-$trouve = false;
-foreach ($inscriptions as &$inscription) {
-    if ($inscription['email'] === $email && $inscription['token'] === $token) {
-        if ($inscription['valide'] === true) {
-            die("Cette inscription est déjà validée.");
-        }
-        // Marquer comme validée
-        $inscription['valide'] = true;
-        $trouve = true;
-        break;
+$found = false;
+$lines = file($source_file);
+$new_lines = [];
+
+foreach ($lines as $line) {
+    list($nom, $email, $password, $salles, $saved_token, $valide) = explode(",", trim($line));
+    if ($token === $saved_token) {
+        $found = true;
+        $valid_line = "$nom,$email,$password,$salles\n";
+        file_put_contents($valid_file, $valid_line, FILE_APPEND);
+    } else {
+        $new_lines[] = $line;
     }
 }
 
-if (!$trouve) {
-    die("Inscription non trouvée ou lien invalide.");
+if ($found) {
+    file_put_contents($source_file, implode("", $new_lines));
+    echo "✅ Ton compte a été validé avec succès ! Tu peux maintenant accéder à la ville d’AFFINIX.";
+} else {
+    echo "❌ Token non trouvé ou déjà utilisé.";
 }
-
-// Sauvegarder la validation
-file_put_contents($fichierJson, json_encode($inscriptions, JSON_PRETTY_PRINT));
-
-// Tu peux ici envoyer un email à l’utilisateur pour confirmer la validation si tu veux.
-
-echo "Merci, l'inscription de $email est maintenant validée.";
 ?>
