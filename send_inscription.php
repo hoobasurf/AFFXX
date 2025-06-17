@@ -1,81 +1,104 @@
 <?php
-// Config – Adresse e-mail du créateur (où recevoir les inscriptions)
-$to = "ton.email@exemple.com"; // À MODIFIER : mets ton adresse e-mail ici
+// === CONFIG ===
+// Adresse mail du créateur qui recevra les inscriptions
+$adminEmail = "brice.paneela@icloud.com";
 
-// Sécurité simple : vérifier que les champs attendus sont présents
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['prenom'], $_POST['email'], $_POST['description'], $_POST['salles'])) {
-    
-    // Récupération des données du formulaire
-    $prenom = htmlspecialchars($_POST['prenom']);
-    $email = htmlspecialchars($_POST['email']);
-    $age = htmlspecialchars($_POST['age']);
-    $description = htmlspecialchars($_POST['description']);
-    $salles = $_POST['salles'];
+// Dossier pour sauvegarder inscriptions (crée-le avec droits écriture)
+$dataDir = __DIR__ . '/inscriptions';
+if (!is_dir($dataDir)) mkdir($dataDir, 0755, true);
 
-    // Formatage de l'e-mail
-    $subject = "Nouvelle inscription sur Affinix - $prenom";
-    
-    $message = "Une nouvelle demande d'inscription a été soumise sur Affinix.\n\n";
-    $message .= "👤 Prénom : $prenom\n";
-    $message .= "📧 Email : $email\n";
-    $message .= "🎂 Âge : $age\n\n";
-    $message .= "📝 Description :\n$description\n\n";
-    $message .= "🏠 Salles choisies :\n- " . implode("\n- ", $salles) . "\n\n";
-    $message .= "---------------------------\n";
-    $message .= "💡 Pour activer manuellement ce compte, réponds à cet email ou ajoute-le dans ta base utilisateur.";
-
-    $headers = "From: inscription@affinix.com\r\n";
-    $headers .= "Reply-To: $email\r\n";
-    $headers .= "Content-Type: text/plain; charset=utf-8";
-
-    // Envoi de l'e-mail
-    $mail_sent = mail($to, $subject, $message, $headers);
-    
-    if ($mail_sent) {
-        echo "<!DOCTYPE html>
-        <html lang='fr'>
-        <head>
-            <meta charset='UTF-8'>
-            <title>Inscription envoyée</title>
-            <meta name='viewport' content='width=device-width, initial-scale=1'>
-            <style>
-                body {
-                    background: #1a0033;
-                    color: #fff;
-                    font-family: Arial, sans-serif;
-                    text-align: center;
-                    padding: 50px;
-                }
-                .box {
-                    background: rgba(255, 255, 255, 0.05);
-                    border: 1px solid #aa00ff;
-                    padding: 30px;
-                    border-radius: 15px;
-                    box-shadow: 0 0 20px #aa00ff99;
-                    max-width: 500px;
-                    margin: auto;
-                }
-                a {
-                    color: #00ffff;
-                    text-decoration: none;
-                    display: inline-block;
-                    margin-top: 20px;
-                }
-            </style>
-        </head>
-        <body>
-            <div class='box'>
-                <h1>✨ Merci $prenom !</h1>
-                <p>Ton inscription a bien été envoyée.</p>
-                <p>Tu recevras un email de validation une fois que le créateur aura approuvé ton profil.</p>
-                <a href='index.html'>⬅ Retour à l'accueil</a>
-            </div>
-        </body>
-        </html>";
-    } else {
-        echo "Erreur lors de l'envoi. Réessaie plus tard.";
-    }
-} else {
-    echo "Formulaire incomplet.";
+// Fonction pour générer un token unique de validation
+function generateToken($length = 32) {
+    return bin2hex(random_bytes($length));
 }
+
+// === Récupération données POST et nettoyage ===
+$username = trim($_POST['username'] ?? '');
+$email = trim($_POST['email'] ?? '');
+$description = trim($_POST['description'] ?? '');
+$salles = $_POST['salles'] ?? [];
+
+if (empty($username) || empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL) || empty($salles)) {
+    die("Erreur: Veuillez remplir tous les champs obligatoires correctement.");
+}
+
+// Générer un token unique
+$token = generateToken(16);
+
+// Construire le contenu inscription à sauvegarder
+$inscriptionData = [
+    'username' => htmlspecialchars($username, ENT_QUOTES),
+    'email' => htmlspecialchars($email, ENT_QUOTES),
+    'description' => htmlspecialchars($description, ENT_QUOTES),
+    'salles' => $salles,
+    'token' => $token,
+    'validated' => false,
+    'timestamp' => time()
+];
+
+// Sauvegarder inscription dans un fichier JSON unique
+$file = $dataDir . "/inscription_{$token}.json";
+file_put_contents($file, json_encode($inscriptionData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+
+// Préparer mail de validation
+$validationUrl = "https://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . "/validate.php?token={$token}";
+
+$subject = "Nouvelle inscription Affinix à valider";
+$message = <<<EOD
+Bonjour,
+
+Une nouvelle inscription a été réalisée sur Affinix.
+
+Nom d'utilisateur : {$username}
+Email : {$email}
+Description : {$description}
+Salles choisies : {implode(", ", $salles)}
+
+Pour valider cette inscription, cliquez sur le lien ci-dessous :
+{$validationUrl}
+
+Cordialement,
+Le système Affinix
+EOD;
+
+$headers = "From: no-reply@affinix.example.com\r\n";
+$headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+
+// Envoi mail au créateur
+$mailSent = mail($adminEmail, $subject, $message, $headers);
+
+if (!$mailSent) {
+    echo "Erreur lors de l'envoi du mail de validation. Merci de réessayer plus tard.";
+    exit;
+}
+
+// Message utilisateur
 ?>
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<title>Inscription enregistrée</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  body {
+    background: #110022;
+    color: #ff66ff;
+    font-family: 'Orbitron', sans-serif;
+    text-align: center;
+    padding: 3rem;
+  }
+  a {
+    color: #ff99ff;
+    text-decoration: none;
+  }
+</style>
+</head>
+<body>
+  <h1>Merci pour votre inscription !</h1>
+  <p>Un email de validation a été envoyé au créateur de l'application.</p>
+  <p>Vous recevrez une confirmation une fois votre inscription validée.</p>
+  <p><a href="index.html">Retour à l'accueil</a></p>
+</body>
+</html>
