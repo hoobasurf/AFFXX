@@ -2,37 +2,36 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Inscription</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Police futuriste -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
+  <title>Inscription - Affinix</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="javascript.js"></script>
 </head>
-<body class="tokyo inscription">
-
+<body class="inscription">
   <div class="inscription-container">
-    <h1>Inscris‑toi</h1>
-    <form id="inscriptionForm" action="merci.html" method="get" enctype="multipart/form-data">
-      <input type="text" name="pseudo" placeholder="Ton pseudo" required>
-      <textarea name="description" rows="3" placeholder="Présente‑toi en quelques mots…" required></textarea>
-      <input type="file" name="photo" accept="image/*" required>
+    <h1>Créer mon profil</h1>
+    <form id="inscriptionForm">
+      <input type="text" id="pseudo" name="pseudo" placeholder="Ton pseudo" required>
 
-      <input type="text" name="home" placeholder="Lieu d’habitation (ville, pays)" required>
+      <textarea id="description" name="description" placeholder="Une petite description..." required></textarea>
 
-      <div class="zone-search">
-        <input type="text" name="searchLocation" placeholder="Lieu de recherche" required>
-        <select name="radius">
-          <option value="10">10 km</option>
-          <option value="25" selected>25 km</option>
-          <option value="50">50 km</option>
-          <option value="100">100 km</option>
-          <option value="global">Monde entier</option>
-        </select>
-      </div>
+      <input type="file" id="photo" name="photo" accept="image/*" required>
 
-      <button type="submit">S’inscrire</button>
+      <input type="text" id="lieu" name="lieu" placeholder="Ton lieu d’habitation" required>
+
+      <input type="text" id="recherche" name="recherche" placeholder="Lieu de recherche (ville, région...)" required>
+
+      <select id="distance" name="distance" required>
+        <option value="">Rayon de recherche</option>
+        <option value="5">5 km</option>
+        <option value="10">10 km</option>
+        <option value="25">25 km</option>
+        <option value="50">50 km</option>
+        <option value="100">100 km</option>
+        <option value="Illimité">Illimité</option>
+      </select>
+
+      <button type="submit">Valider mon inscription</button>
     </form>
   </div>
-
 </body>
 </html>
