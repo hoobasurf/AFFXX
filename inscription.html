@@ -2,123 +2,180 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
+  <title>Inscription - Affinix</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Inscription – Affinix</title>
-  <link rel="stylesheet" href="css/styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
   <style>
-    body.tokyo {
+    /* Fond tokyo */
+    body.inscription {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      background: url('../images/fond-tokyo.jpg') center center no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+      font-family: 'Orbitron', sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      margin: 0;
-      background: linear-gradient(145deg, #1a0033, #33004d);
-      font-family: 'Arial', sans-serif;
-      overflow-y: auto;
     }
 
+    /* Conteneur formulaire */
     .inscription-container {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid #aa00ff;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 0 20px #aa00ff99;
-      max-width: 500px;
-      width: 90%;
-      color: #fff;
+      background: rgba(10, 0, 30, 0.75);
+      padding: 40px 35px;
+      border-radius: 20px;
+      box-shadow:
+        0 0 20px #a64cff,
+        0 0 40px #6a00ff;
+      width: 100%;
+      max-width: 420px;
+      color: white;
       text-align: center;
+      box-sizing: border-box;
     }
 
     .inscription-container h1 {
-      font-size: 2em;
-      margin-bottom: 20px;
-      color: #e0b3ff;
+      font-size: 36px;
+      margin-bottom: 25px;
+      text-shadow: 0 0 12px #ff66ff;
     }
 
-    form input[type="text"],
-    form input[type="email"],
-    form textarea {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      background: #1c0033;
-      border: 1px solid #aa00ff;
-      border-radius: 8px;
-      color: #fff;
-    }
-
-    form textarea {
-      height: 80px;
-      resize: none;
-    }
-
-    .zone-search {
+    /* Formulaire */
+    form {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      margin-bottom: 20px;
+      gap: 20px;
+      text-align: left;
     }
 
-    .zone-search label {
+    label {
+      font-size: 16px;
+      margin-bottom: 6px;
+      display: block;
+      text-shadow: 0 0 8px #b368ff;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 2px solid #6a00ff;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 16px;
+      box-sizing: border-box;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    textarea:focus {
+      border-color: #ff66ff;
+      box-shadow: 0 0 10px #ff66ff;
+      background: rgba(255,255,255,0.15);
+    }
+
+    textarea {
+      resize: none;
+      height: 80px;
+    }
+
+    /* Checkbox group container */
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .checkbox-group label {
+      font-size: 16px;
+      cursor: pointer;
+      user-select: none;
       display: flex;
       align-items: center;
       gap: 10px;
-      font-size: 1em;
+      text-shadow: 0 0 6px #b368ff;
     }
 
-    form button {
-      padding: 12px 24px;
-      font-size: 1.1em;
-      border: none;
-      border-radius: 10px;
-      background: #aa00ff;
-      color: white;
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #a64cff;
       cursor: pointer;
-      box-shadow: 0 0 10px #aa00ff88;
-      transition: background 0.3s ease;
     }
 
-    form button:hover {
-      background: #cc33ff;
+    /* Bouton Entrer */
+    button {
+      margin-top: 25px;
+      padding: 15px 0;
+      font-size: 24px;
+      font-weight: 600;
+      color: #ff66ff;
+      background-color: rgba(0, 0, 0, 0.4);
+      border: 2px solid #ff00ff;
+      border-radius: 14px;
+      cursor: pointer;
+      box-shadow:
+        0 0 15px #ff00ff,
+        0 0 30px #ff66ff;
+      text-transform: uppercase;
+      transition: transform 0.3s ease, box-shadow 0.4s ease;
     }
 
-    button[onclick] {
-      margin-top: 15px;
-      background: #555;
-      box-shadow: 0 0 5px #aaa;
+    button:hover {
+      transform: scale(1.1);
+      box-shadow:
+        0 0 25px #ff00ff,
+        0 0 50px #ff66ff;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .inscription-container {
+        padding: 30px 25px;
+        max-width: 90vw;
+      }
+
+      .inscription-container h1 {
+        font-size: 28px;
+      }
+
+      button {
+        font-size: 20px;
+        padding: 12px 0;
+      }
     }
   </style>
 </head>
-<body class="tokyo">
+<body class="inscription">
   <div class="inscription-container">
-    <h1>✨ Inscription Affinix ✨</h1>
+    <h1>Inscription Affinix</h1>
+    <form action="send_inscription.php" method="POST" id="inscriptionForm">
+      <label for="username">Nom d'utilisateur *</label>
+      <input type="text" id="username" name="username" required placeholder="Votre nom" />
 
-    <form action="send_inscription.php" method="POST">
-      <input type="text" name="prenom" placeholder="Votre prénom" required />
-      <input type="email" name="email" placeholder="Votre adresse e-mail" required />
-      <input type="text" name="age" placeholder="Votre âge" required />
-      <textarea name="description" placeholder="Décrivez-vous en quelques mots..." required></textarea>
+      <label for="email">Email *</label>
+      <input type="email" id="email" name="email" required placeholder="exemple@mail.com" />
 
-      <label style="color:#e0e0ff; display:block; margin: 15px 0 5px;">Choisissez vos salles :</label>
-      <div class="zone-search">
-        <label style="color:#00ffff;">
-          <input type="checkbox" name="salles[]" value="amicale" /> 💬 Rencontre Amicale
-        </label>
-        <label style="color:#ff66ff;">
-          <input type="checkbox" name="salles[]" value="serieuse" /> 💖 Relation Sérieuse
-        </label>
-        <label style="color:#ffcc00;">
-          <input type="checkbox" name="salles[]" value="fun" /> 🎉 Rencontre Fun
-        </label>
-        <label style="color:#ff3366;">
-          <input type="checkbox" name="salles[]" value="parents" /> 👨‍👩‍👧 Parents Solos
-        </label>
+      <label for="description">Description</label>
+      <textarea id="description" name="description" placeholder="Parlez un peu de vous..."></textarea>
+
+      <label>Salles choisies *</label>
+      <div class="checkbox-group" role="group" aria-labelledby="checkbox-group-label" required>
+        <label><input type="checkbox" name="salles[]" value="relation-serieuse" required /> Relation Sérieuse</label>
+        <label><input type="checkbox" name="salles[]" value="rencontre-amicale" /> Rencontre Amicale</label>
+        <label><input type="checkbox" name="salles[]" value="rencontre-fun" /> Rencontre Fun</label>
+        <label><input type="checkbox" name="salles[]" value="parents-solos" /> Parents Solos</label>
       </div>
 
-      <button type="submit">Envoyer l’inscription</button>
+      <button type="submit">Entrer</button>
     </form>
-
-    <button onclick="location.href='salles.html'">⬅ Retour à la ville</button>
   </div>
 </body>
 </html>
