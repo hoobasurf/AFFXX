@@ -2,125 +2,116 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Inscription - Affinix</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Inscription - AFFINIX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/styles.css" />
   <style>
-    /* Style violet futuriste, centré, responsive */
     body {
-      margin: 0; 
-      background: linear-gradient(135deg, #4b0082, #800080);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #eee;
+      background: url("img/fond-neon-violet.jpg") no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      padding: 20px;
+      height: 100vh;
+      margin: 0;
     }
-    form {
-      background: rgba(75, 0, 130, 0.85);
-      border-radius: 12px;
-      padding: 30px 40px;
-      max-width: 400px;
-      width: 100%;
-      box-shadow: 0 0 20px #a64ca6;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    h1 {
+
+    .inscription-box {
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid #a86eff;
+      border-radius: 20px;
+      padding: 40px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 0 20px #a86eff;
       text-align: center;
-      margin-bottom: 10px;
-      text-shadow: 0 0 10px #d877d8;
     }
-    label {
-      font-weight: 600;
-      text-shadow: 0 0 8px #a64ca6;
+
+    .inscription-box h1 {
+      margin-bottom: 20px;
+      font-size: 28px;
+      color: #ffbaff;
     }
-    input[type="text"],
-    input[type="email"] {
-      padding: 10px;
-      border-radius: 6px;
+
+    .inscription-box input[type="text"],
+    .inscription-box input[type="email"],
+    .inscription-box input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
       border: none;
-      font-size: 1em;
-      outline: none;
-    }
-    input[type="checkbox"] {
-      margin-right: 8px;
-      transform: scale(1.3);
-      accent-color: #d877d8;
-    }
-    .checkbox-group {
-      display: flex;
-      flex-direction: column;
-      max-height: 140px;
-      overflow-y: auto;
-      padding-left: 8px;
-      border: 1px solid #a64ca6;
-      border-radius: 8px;
-      background: rgba(138, 43, 226, 0.2);
-    }
-    .checkbox-group label {
-      margin-bottom: 8px;
-      cursor: pointer;
-    }
-    button {
-      background: #d877d8;
-      border: none;
-      padding: 15px;
-      font-size: 1.1em;
-      color: #fff;
-      border-radius: 8px;
-      cursor: pointer;
-      box-shadow: 0 0 15px #d877d8;
-      transition: background-color 0.3s ease;
-    }
-    button:hover {
-      background: #c157c1;
-    }
-    /* Scrollbar stylisée pour checkbox group */
-    .checkbox-group::-webkit-scrollbar {
-      width: 8px;
-    }
-    .checkbox-group::-webkit-scrollbar-thumb {
-      background-color: #d877d8;
       border-radius: 10px;
+      font-size: 16px;
+    }
+
+    .salles-checkbox {
+      text-align: left;
+      margin: 20px 0;
+    }
+
+    .salles-checkbox label {
+      display: block;
+      margin: 8px 0;
+      font-size: 16px;
+    }
+
+    .inscription-box button {
+      background: #a86eff;
+      border: none;
+      padding: 14px 28px;
+      color: #fff;
+      font-size: 18px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .inscription-box button:hover {
+      background: #d8a6ff;
     }
   </style>
 </head>
 <body>
+  <div class="inscription-box">
+    <h1>Inscription sur Affinix</h1>
+    <form method="POST" action="send_inscription.php">
+      <input type="text" name="nom" placeholder="Ton prénom ou pseudo" required />
+      <input type="email" name="email" placeholder="Ton email" required />
+      <input type="password" name="password" placeholder="Mot de passe" required />
 
-  <form 
-    name="inscription" 
-    method="POST" 
-    data-netlify="true" 
-    netlify-honeypot="bot-field"
-    action="salles.html"
-  >
-    <h1>Inscription</h1>
+      <div class="salles-checkbox">
+        <label><input type="checkbox" name="salles[]" value="relation_serieuse" /> 💖 Relation Sérieuse</label>
+        <label><input type="checkbox" name="salles[]" value="rencontre_amicale" /> 💬 Rencontre Amicale</label>
+        <label><input type="checkbox" name="salles[]" value="rencontre_fun" /> 🎉 Rencontre Fun</label>
+        <label><input type="checkbox" name="salles[]" value="parents_solos" /> 👨‍👩‍👧 Parents Solos</label>
+      </div>
 
-    <!-- Honeypot anti-spam -->
-    <input type="hidden" name="form-name" value="inscription" />
-    <p style="display:none">
-      <label>Ne pas remplir <input name="bot-field" /></label>
-    </p>
+      <button type="submit">Entrer</button>
+    </form>
+  </div>
 
-    <label for="name">Nom complet :</label>
-    <input type="text" id="name" name="name" required placeholder="Votre nom" />
+  <script>
+    document.querySelector('form').addEventListener('submit', function (e) {
+      const checkedSalles = [...document.querySelectorAll('input[name="salles[]"]:checked')]
+        .map(input => input.value);
 
-    <label for="email">Email :</label>
-    <input type="email" id="email" name="email" required placeholder="exemple@mail.com" />
+      if (checkedSalles.length === 0) {
+        alert("Veuillez choisir au moins une salle.");
+        e.preventDefault();
+        return;
+      }
 
-    <label>Choisissez vos salles :</label>
-    <div class="checkbox-group">
-      <label><input type="checkbox" name="salles" value="Relation Sérieuse" /> Relation Sérieuse</label>
-      <label><input type="checkbox" name="salles" value="Rencontre Amicale" /> Rencontre Amicale</label>
-      <label><input type="checkbox" name="salles" value="Rencontre Fun" /> Rencontre Fun</label>
-      <label><input type="checkbox" name="salles" value="Parents Solos" /> Parents Solos</label>
-    </div>
+      const confirmation = confirm(
+        "Vous avez sélectionné :\n- " + checkedSalles.join("\n- ") +
+        "\n\nConfirmez-vous votre inscription avec ces salles ?"
+      );
 
-    <button type="submit">Entrer</button>
-  </form>
-
+      if (!confirmation) {
+        e.preventDefault();
+      }
+    });
+  </script>
 </body>
 </html>
