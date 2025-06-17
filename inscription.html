@@ -2,244 +2,164 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Inscription - Affinix</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Inscription Futuriste - Ville du futur Tokyo</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #4b0082, #8a2be2);
-      font-family: 'Montserrat', sans-serif;
-      color: #f0e6ff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
+    /* Reset basique */
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #ddd;
     }
 
-    .container {
-      background: rgba(38, 0, 56, 0.85);
-      padding: 40px 45px;
+    body {
+      background: linear-gradient(135deg, #2e005f, #6b0080, #a200a9);
+      height: 100vh;
+      display: flex;
+      justify-content: flex-start; /* aligné à gauche */
+      align-items: center;
+      padding-left: 50px;
+      overflow: hidden;
+      background-image:
+        url('https://i.imgur.com/3sS2lPd.png'), /* guirlandes néon (exemple) */
+        linear-gradient(135deg, #2e005f, #6b0080, #a200a9);
+      background-repeat: no-repeat;
+      background-position: top center;
+      background-size: contain;
+    }
+
+    main {
+      background: rgba(30, 0, 40, 0.75);
+      padding: 30px 40px;
       border-radius: 20px;
-      box-shadow:
-        0 0 10px #a86eff,
-        0 0 20px #a86eff,
-        0 0 40px #d19fff;
-      max-width: 480px;
+      box-shadow: 0 0 15px #a200a9;
+      max-width: 380px;
       width: 100%;
-      text-align: center;
-      backdrop-filter: blur(8px);
-      border: 2px solid #a86eff;
-      transition: box-shadow 0.3s ease;
+      border: 2px solid #d462f5;
+      backdrop-filter: blur(6px);
     }
 
     h1 {
-      font-weight: 700;
-      font-size: 2.8rem;
-      margin-bottom: 30px;
-      color: #ffbaff;
-      text-shadow:
-        0 0 8px #ff8fff,
-        0 0 16px #ff66cc;
+      font-size: 2rem;
+      color: #ff85f0;
+      text-shadow: 0 0 10px #d462f5;
+      margin-bottom: 25px;
+      text-align: left;
     }
 
     label {
       display: block;
       font-weight: 600;
-      margin-bottom: 8px;
-      font-size: 1.1rem;
-      text-align: left;
-      color: #d8a6ff;
-      text-shadow: 0 0 3px #a86eff;
+      margin-bottom: 10px;
+      color: #ddaaff;
+      text-shadow: 0 0 6px #a200a9;
     }
 
-    input[type="text"],
-    input[type="email"],
-    textarea,
-    select,
     input[type="range"] {
       width: 100%;
-      padding: 14px 16px;
-      border-radius: 12px;
-      border: 2px solid #8a2be2;
-      background: rgba(70, 0, 120, 0.15);
-      font-size: 1rem;
-      color: #eee;
-      outline: none;
-      box-shadow:
-        inset 0 0 6px #a86eff,
-        0 0 6px #8a2be2;
-      margin-bottom: 22px;
-      resize: vertical;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    input[type="text"]:focus,
-    input[type="email"]:focus,
-    textarea:focus,
-    select:focus,
-    input[type="range"]:focus {
-      border-color: #ff99ff;
-      box-shadow:
-        inset 0 0 10px #ff99ff,
-        0 0 12px #ff66cc;
-      background: rgba(120, 0, 170, 0.25);
-      color: #fff;
-    }
-
-    input[type="range"] {
+      margin-bottom: 15px;
       -webkit-appearance: none;
-      height: 6px;
-      background: #6a00ff;
-      cursor: pointer;
+      height: 8px;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #d462f5, #6b0080);
+      outline: none;
+      box-shadow: 0 0 10px #d462f5;
     }
+
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
+      appearance: none;
       width: 22px;
       height: 22px;
-      background: #ff66cc;
       border-radius: 50%;
-      box-shadow: 0 0 8px #ff66cc;
+      background: #ff85f0;
       cursor: pointer;
-      margin-top: -8px;
+      box-shadow: 0 0 15px #ff85f0;
       transition: background 0.3s ease;
+      border: 2px solid #d462f5;
+      margin-top: -7px;
     }
     input[type="range"]:focus::-webkit-slider-thumb {
-      background: #ff99ff;
-      box-shadow: 0 0 12px #ff99ff;
+      background: #ffccff;
+      box-shadow: 0 0 25px #ffccff;
     }
-
+    /* Pour Firefox */
     input[type="range"]::-moz-range-thumb {
       width: 22px;
       height: 22px;
-      background: #ff66cc;
       border-radius: 50%;
-      box-shadow: 0 0 8px #ff66cc;
+      background: #ff85f0;
       cursor: pointer;
+      border: 2px solid #d462f5;
+      box-shadow: 0 0 15px #ff85f0;
       transition: background 0.3s ease;
     }
+
     input[type="range"]:focus::-moz-range-thumb {
-      background: #ff99ff;
-      box-shadow: 0 0 12px #ff99ff;
+      background: #ffccff;
+      box-shadow: 0 0 25px #ffccff;
     }
 
     .range-value {
-      font-weight: 700;
-      color: #d8a6ff;
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #ffb8ff;
       text-align: right;
-      margin-top: -18px;
-      margin-bottom: 22px;
-      font-size: 1rem;
-      text-shadow: 0 0 3px #a86eff;
-    }
-
-    .checkbox-group {
-      text-align: left;
-      margin-bottom: 28px;
-    }
-    .checkbox-group label {
-      display: inline-block;
-      margin-right: 20px;
-      font-weight: 500;
-      cursor: pointer;
-      color: #cc99ff;
-      text-shadow: 0 0 2px #a86eff;
+      margin-bottom: 25px;
+      text-shadow: 0 0 8px #d462f5;
       user-select: none;
-      font-size: 1rem;
-    }
-    .checkbox-group input[type="checkbox"] {
-      margin-right: 6px;
-      cursor: pointer;
-      width: 18px;
-      height: 18px;
-      vertical-align: middle;
-      accent-color: #d180ff;
-      filter: drop-shadow(0 0 2px #d180ff);
-      transition: filter 0.3s ease;
-    }
-    .checkbox-group input[type="checkbox"]:hover {
-      filter: drop-shadow(0 0 6px #ff99ff);
     }
 
     button {
       width: 100%;
-      padding: 16px;
-      background: linear-gradient(90deg, #ff66cc, #d180ff);
+      padding: 12px 0;
       border: none;
-      border-radius: 35px;
-      font-weight: 700;
-      font-size: 1.3rem;
-      color: #fff;
+      background: #d462f5;
+      color: white;
+      font-size: 1.2rem;
+      border-radius: 12px;
       cursor: pointer;
-      box-shadow: 0 0 12px #d180ff;
-      transition: background 0.4s ease, box-shadow 0.3s ease;
-      user-select: none;
-    }
-    button:hover,
-    button:focus {
-      background: linear-gradient(90deg, #ff99ff, #ff66cc);
-      box-shadow: 0 0 18px #ff99ff, 0 0 25px #ff66cc;
-      outline: none;
+      box-shadow: 0 0 15px #ff85f0;
+      transition: background 0.3s ease;
     }
 
-    @media (max-width: 520px) {
-      .container {
-        padding: 30px 25px;
-        max-width: 100%;
-      }
-      h1 {
-        font-size: 2rem;
-      }
+    button:hover {
+      background: #ff85f0;
+      box-shadow: 0 0 25px #ff85f0;
     }
   </style>
 </head>
 <body>
-  <main class="container" role="main" aria-label="Formulaire d'inscription Affinix">
-    <h1>Inscription Affinix</h1>
-    <form id="formInscription" method="POST" action="/salles.html" novalidate>
-      <label for="pseudo">Prénom ou pseudo :</label>
-      <input type="text" id="pseudo" name="pseudo" required maxlength="30" placeholder="Ex : Alex" autocomplete="nickname" />
-
-      <label for="description">Description :</label>
-      <textarea id="description" name="description" maxlength="300" placeholder="Parlez un peu de vous..." required></textarea>
-
-      <label for="email">Email :</label>
-      <input type="email" id="email" name="email" required placeholder="exemple@mail.com" autocomplete="email" />
-
-      <label>Salles choisies :</label>
-      <div class="checkbox-group" role="group" aria-labelledby="label-salles">
-        <label><input type="checkbox" name="salles[]" value="relation-serieuse" /> Relation sérieuse</label>
-        <label><input type="checkbox" name="salles[]" value="amicale" /> Rencontre amicale</label>
-        <label><input type="checkbox" name="salles[]" value="fun" /> Rencontre fun</label>
-        <label><input type="checkbox" name="salles[]" value="parents-solos" /> Parents solos</label>
-      </div>
-
-      <label for="departement">Département :</label>
-      <select id="departement" name="departement" required>
-        <option value="" disabled selected>Choisissez votre département</option>
-        <option value="75">75 - Paris</option>
-        <option value="69">69 - Rhône</option>
-        <option value="13">13 - Bouches-du-Rhône</option>
-        <option value="33">33 - Gironde</option>
-        <option value="44">44 - Loire-Atlantique</option>
-      </select>
-
+  <main>
+    <h1>Inscription Ville Futuriste</h1>
+    <form>
       <label for="rayon">Rayon de recherche (km) :</label>
-      <input type="range" id="rayon" name="rayon" min="1" max="100" value="25" />
-      <div class="range-value" id="rayon-value">25 km</div>
+      <input
+        type="range"
+        id="rayon"
+        name="rayon"
+        min="5"
+        max="100"
+        value="50"
+        step="1"
+        aria-valuemin="5"
+        aria-valuemax="100"
+        aria-valuenow="50"
+        aria-label="Rayon de recherche en kilomètres"
+      />
+      <div class="range-value" id="rayon-value">50 km</div>
 
-      <button type="submit">S'inscrire</button>
+      <button type="submit" aria-label="Valider l'inscription">S’inscrire</button>
     </form>
   </main>
 
   <script>
-    const rangeInput = document.getElementById('rayon');
-    const rangeValue = document.getElementById('rayon-value');
+    const slider = document.getElementById('rayon');
+    const output = document.getElementById('rayon-value');
 
-    rangeInput.addEventListener('input', () => {
-      rangeValue.textContent = `${rangeInput.value} km`;
+    slider.addEventListener('input', () => {
+      output.textContent = slider.value + ' km';
+      slider.setAttribute('aria-valuenow', slider.value);
     });
   </script>
 </body>
