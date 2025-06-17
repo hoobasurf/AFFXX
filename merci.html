@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Merci pour ton inscription</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      width: 100vw;
+      background: url('images/fond-tokyo.jpg') center center no-repeat;
+      background-size: cover;
+      font-family: 'Orbitron', sans-serif;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .merci-box {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px #a64cff, 0 0 40px #6a00ff;
+      max-width: 400px;
+      width: 90%;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .merci-box h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #ff66ff;
+      text-shadow: 0 0 10px #ff66ff;
+    }
+
+    .merci-box p {
+      font-size: 16px;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .merci-box a {
+      display: inline-block;
+      padding: 12px 24px;
+      font-size: 16px;
+      background: #6a00ff;
+      color: white;
+      border-radius: 10px;
+      text-decoration: none;
+      box-shadow: 0 0 15px #6a00ff, 0 0 30px #a64cff;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
+
+    .merci-box a:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #6a00ff, 0 0 40px #a64cff;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="merci-box">
+    <h1>Merci pour ton inscription !</h1>
+    <p>Ta demande a bien été envoyée.<br>
+    Tu vas bientôt recevoir un message dans l'application.<br><br>
+    À très vite dans l’univers AFFINIX 🌌</p>
+    <a href="index.html">Retour à l’accueil</a>
+  </div>
+</body>
+</html>
