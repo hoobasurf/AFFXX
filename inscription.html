@@ -4,117 +4,123 @@
   <meta charset="UTF-8" />
   <title>Inscription - Affinix</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="css/styles.css" />
   <style>
+    /* Style violet futuriste, centré, responsive */
     body {
-      background: linear-gradient(135deg, #4b0082, #9400d3);
+      margin: 0; 
+      background: linear-gradient(135deg, #4b0082, #800080);
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #e0d7ff;
+      color: #eee;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      margin: 0;
-      padding: 0 20px;
+      padding: 20px;
     }
-    .form-container {
-      background: rgba(30, 0, 50, 0.8);
+    form {
+      background: rgba(75, 0, 130, 0.85);
+      border-radius: 12px;
       padding: 30px 40px;
-      border-radius: 15px;
-      box-shadow: 0 0 15px #8a2be2;
       max-width: 400px;
       width: 100%;
-      text-align: center;
+      box-shadow: 0 0 20px #a64ca6;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
     }
     h1 {
-      margin-bottom: 25px;
-      font-size: 2rem;
-      text-shadow: 0 0 8px #cba9ff;
+      text-align: center;
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px #d877d8;
     }
     label {
-      display: block;
-      text-align: left;
-      margin: 15px 0 8px 0;
       font-weight: 600;
-      font-size: 1.1rem;
-      text-shadow: 0 0 4px #a279ff;
+      text-shadow: 0 0 8px #a64ca6;
     }
     input[type="text"],
     input[type="email"] {
-      width: 100%;
-      padding: 10px 12px;
-      border-radius: 8px;
+      padding: 10px;
+      border-radius: 6px;
       border: none;
-      font-size: 1rem;
+      font-size: 1em;
       outline: none;
-      box-shadow: 0 0 10px #a279ff inset;
-      background: #2a0040;
-      color: #e0d7ff;
-      transition: 0.3s;
     }
-    input[type="text"]:focus,
-    input[type="email"]:focus {
-      box-shadow: 0 0 14px #c6a1ff inset;
-      background: #350058;
+    input[type="checkbox"] {
+      margin-right: 8px;
+      transform: scale(1.3);
+      accent-color: #d877d8;
     }
     .checkbox-group {
-      margin: 20px 0;
-      text-align: left;
+      display: flex;
+      flex-direction: column;
+      max-height: 140px;
+      overflow-y: auto;
+      padding-left: 8px;
+      border: 1px solid #a64ca6;
+      border-radius: 8px;
+      background: rgba(138, 43, 226, 0.2);
     }
     .checkbox-group label {
-      display: flex;
-      align-items: center;
-      margin-bottom: 12px;
-      cursor: pointer;
-      font-size: 1rem;
-      user-select: none;
-      text-shadow: none;
-    }
-    .checkbox-group input[type="checkbox"] {
-      margin-right: 12px;
-      width: 18px;
-      height: 18px;
+      margin-bottom: 8px;
       cursor: pointer;
     }
-    .enter-button {
-      margin-top: 25px;
-      width: 100%;
-      background: linear-gradient(90deg, #a86fff, #5700af);
+    button {
+      background: #d877d8;
       border: none;
-      padding: 14px 0;
-      border-radius: 30px;
-      font-size: 1.25rem;
-      font-weight: 700;
+      padding: 15px;
+      font-size: 1.1em;
       color: #fff;
-      text-shadow: 0 0 5px #d5aaff;
+      border-radius: 8px;
       cursor: pointer;
-      transition: background 0.3s;
-      box-shadow: 0 0 20px #9c4eff;
+      box-shadow: 0 0 15px #d877d8;
+      transition: background-color 0.3s ease;
     }
-    .enter-button:hover {
-      background: linear-gradient(90deg, #5700af, #a86fff);
-      box-shadow: 0 0 30px #cc99ff;
+    button:hover {
+      background: #c157c1;
+    }
+    /* Scrollbar stylisée pour checkbox group */
+    .checkbox-group::-webkit-scrollbar {
+      width: 8px;
+    }
+    .checkbox-group::-webkit-scrollbar-thumb {
+      background-color: #d877d8;
+      border-radius: 10px;
     }
   </style>
 </head>
 <body>
-  <form class="form-container" method="POST" action="send_inscription.php">
+
+  <form 
+    name="inscription" 
+    method="POST" 
+    data-netlify="true" 
+    netlify-honeypot="bot-field"
+    action="salles.html"
+  >
     <h1>Inscription</h1>
 
-    <label for="pseudo">Pseudo :</label>
-    <input type="text" id="pseudo" name="pseudo" placeholder="Votre pseudo" required />
+    <!-- Honeypot anti-spam -->
+    <input type="hidden" name="form-name" value="inscription" />
+    <p style="display:none">
+      <label>Ne pas remplir <input name="bot-field" /></label>
+    </p>
+
+    <label for="name">Nom complet :</label>
+    <input type="text" id="name" name="name" required placeholder="Votre nom" />
 
     <label for="email">Email :</label>
-    <input type="email" id="email" name="email" placeholder="exemple@domaine.com" required />
+    <input type="email" id="email" name="email" required placeholder="exemple@mail.com" />
 
+    <label>Choisissez vos salles :</label>
     <div class="checkbox-group">
-      <label><input type="checkbox" name="salles[]" value="relation_seriesuse" /> Relation Sérieuse</label>
-      <label><input type="checkbox" name="salles[]" value="rencontre_amicale" /> Rencontre Amicale</label>
-      <label><input type="checkbox" name="salles[]" value="rencontre_fun" /> Rencontre Fun</label>
-      <label><input type="checkbox" name="salles[]" value="parents_solos" /> Parents Solos</label>
+      <label><input type="checkbox" name="salles" value="Relation Sérieuse" /> Relation Sérieuse</label>
+      <label><input type="checkbox" name="salles" value="Rencontre Amicale" /> Rencontre Amicale</label>
+      <label><input type="checkbox" name="salles" value="Rencontre Fun" /> Rencontre Fun</label>
+      <label><input type="checkbox" name="salles" value="Parents Solos" /> Parents Solos</label>
     </div>
 
-    <button type="submit" class="enter-button">Entrer</button>
+    <button type="submit">Entrer</button>
   </form>
+
 </body>
 </html>
