@@ -1,21 +1,65 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Les Salles</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
+  <meta charset="UTF-8" />
+  <title>Les Salles - AFFINIX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    body {
+      background: url("img/fond-neon-violet.jpg") no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Orbitron', sans-serif;
+      color: #fff;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .panels-container {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 600px;
+      gap: 15px;
+      justify-content: center;
+    }
+    .panel {
+      background: rgba(168, 110, 255, 0.8);
+      border-radius: 15px;
+      padding: 25px 40px;
+      cursor: pointer;
+      font-size: 18px;
+      text-align: center;
+      transition: background 0.3s ease, transform 0.2s ease;
+      user-select: none;
+      min-width: 200px;
+      box-shadow: 0 0 10px #a86eff;
+    }
+    .panel:hover {
+      background: #d8a6ff;
+      color: #000;
+      transform: scale(1.05);
+    }
+    .panel.clicked {
+      animation: clickAnim 0.3s forwards;
+    }
+    @keyframes clickAnim {
+      0% { transform: scale(1); background-color: #a86eff; }
+      50% { transform: scale(0.95); background-color: #d8a6ff; }
+      100% { transform: scale(1); background-color: #a86eff; }
+    }
+  </style>
 </head>
-<body class="tokyo">
-
+<body>
   <div class="panels-container">
     <div class="panel" onclick="handleClick(this, 'rencontre-amicale.html')">Rencontre Amicale</div>
     <div class="panel" onclick="handleClick(this, 'relation-serieuse.html')">Relation Sérieuse</div>
     <div class="panel" onclick="handleClick(this, 'rencontre-fun.html')">Rencontre Fun</div>
     <div class="panel" onclick="handleClick(this, 'parents.html')">Parents Solos</div>
-    <div class="panel" onclick="handleBackClick(this)">Retour</div>
     <div class="panel" onclick="handleClick(this, 'createur.html')">Le Créateur</div>
+    <div class="panel" onclick="handleBackClick(this)">Retour</div>
   </div>
 
   <script>
@@ -27,7 +71,6 @@
         window.location.href = url;
       }, 300);
     }
-
     function handleBackClick(panel) {
       if (navigator.vibrate) navigator.vibrate(100);
       panel.classList.add('clicked');
@@ -37,6 +80,5 @@
       }, 300);
     }
   </script>
-
 </body>
 </html>
