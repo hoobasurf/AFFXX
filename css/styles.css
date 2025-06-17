@@ -44,7 +44,6 @@ body.home {
   50%     { box-shadow: 0 0 20px #ff00ff, 0 0 40px #ff66ff; }
 }
 
-
 /* === TOKYO === */
 body.tokyo {
   margin: 0;
@@ -61,6 +60,7 @@ body.tokyo {
   font-family: 'Orbitron', sans-serif;
   position: relative;
 }
+
 /* === INSCRIPTION (Tokyo style) === */
 body.inscription {
   display: flex;
@@ -123,18 +123,59 @@ body.inscription {
   box-shadow: 0 0 20px #6a00ff, 0 0 40px #a64cff;
 }
 
-@media (max-width: 480px) {
-  .inscription-container {
-    padding: 20px;
-  }
-  .inscription-container h1 {
-    font-size: 24px;
-  }
-  .inscription-container button {
-    font-size: 16px;
-  }
+/* === PAGE PARENTS SOLO === */
+body.page-parents {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('../images/fond-tokyo.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  font-family: 'Orbitron', sans-serif;
 }
-/* Conteneur des panneaux */
+
+.page-parents .inscription-container {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px #ff3366, 0 0 40px #ff99aa;
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  animation: fadeIn 1s ease-out;
+}
+
+.page-parents .inscription-container h1 {
+  font-size: 28px;
+  color: #ff99aa;
+  text-shadow: 0 0 8px #ff3366;
+  margin-bottom: 20px;
+}
+
+.page-parents .inscription-container button {
+  padding: 12px 20px;
+  font-size: 16px;
+  background-color: #ff3366;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 0 10px #ff3366, 0 0 20px #ff99aa;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.page-parents .inscription-container button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #ff3366, 0 0 30px #ff99aa;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === PANNEAUX (VILLE) === */
 .panels-container {
   position: absolute;
   top: 50%;
@@ -149,7 +190,6 @@ body.inscription {
   max-width: 900px;
 }
 
-/* Panneau stylé futuriste */
 .panel {
   min-width: 140px;
   padding: 12px 18px;
@@ -166,7 +206,6 @@ body.inscription {
   letter-spacing: 1px;
 }
 
-/* Couleur individuelle */
 .panel[onclick*="rencontre-amicale"] { color: #00ffff; }
 .panel[onclick*="relation-serieuse"] { color: #ff66ff; }
 .panel[onclick*="rencontre-fun"]     { color: #ffcc00; }
@@ -179,7 +218,6 @@ body.inscription {
   box-shadow: 0 0 15px 5px currentColor, 0 0 25px 10px currentColor;
 }
 
-/* Effet néon au clic */
 .panel.clicked {
   animation: neonFlash 0.5s ease-in-out;
 }
@@ -193,7 +231,7 @@ body.inscription {
   }
 }
 
-/* Responsive mobile */
+/* === RESPONSIVE === */
 @media (max-width: 768px) {
   .panels-container {
     flex-direction: column;
@@ -207,10 +245,21 @@ body.inscription {
     font-size: 12px;
     padding: 10px 14px;
   }
+
+  .inscription-container {
+    padding: 20px;
+  }
+
+  .inscription-container h1 {
+    font-size: 24px;
+  }
+
+  .inscription-container button {
+    font-size: 16px;
+  }
 }
 
-
-/* === Effet de disparition fluide (fade-out) === */
+/* === FADE OUT === */
 .fade-out {
   opacity: 0;
   transition: opacity 1s ease-in-out;
