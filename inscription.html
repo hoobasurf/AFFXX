@@ -1,166 +1,124 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Inscription Futuriste - Ville du futur Tokyo</title>
+  <meta charset="UTF-8">
+  <title>Inscription - AFFINIX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css"> <!-- tu peux relier ici ton fichier css global -->
   <style>
-    /* Reset basique */
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #ddd;
-    }
-
     body {
-      background: linear-gradient(135deg, #2e005f, #6b0080, #a200a9);
-      height: 100vh;
-      display: flex;
-      justify-content: flex-start; /* aligné à gauche */
-      align-items: center;
-      padding-left: 50px;
-      overflow: hidden;
-      background-image:
-        url('https://i.imgur.com/3sS2lPd.png'), /* guirlandes néon (exemple) */
-        linear-gradient(135deg, #2e005f, #6b0080, #a200a9);
-      background-repeat: no-repeat;
-      background-position: top center;
-      background-size: contain;
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: url('img/fond-tokyo.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
     }
 
-    main {
-      background: rgba(30, 0, 40, 0.75);
-      padding: 30px 40px;
-      border-radius: 20px;
-      box-shadow: 0 0 15px #a200a9;
-      max-width: 380px;
-      width: 100%;
-      border: 2px solid #d462f5;
-      backdrop-filter: blur(6px);
+    .inscription-wrapper {
+      display: flex;
+      flex-direction: column;
+      padding: 60px 20px;
+      max-width: 500px;
+      margin: 120px 5% 100px auto; /* encadré sur la droite */
+      background: rgba(10, 0, 30, 0.7);
+      border: 2px solid #a86eff;
+      border-radius: 25px;
+      box-shadow: 0 0 30px #ff6dfb;
     }
 
     h1 {
-      font-size: 2rem;
-      color: #ff85f0;
-      text-shadow: 0 0 10px #d462f5;
-      margin-bottom: 25px;
-      text-align: left;
+      color: #ffbaff;
+      font-size: 28px;
+      margin-bottom: 20px;
+      text-shadow: 0 0 8px #ffbaff;
     }
 
     label {
       display: block;
-      font-weight: 600;
-      margin-bottom: 10px;
-      color: #ddaaff;
-      text-shadow: 0 0 6px #a200a9;
+      margin: 15px 0 5px;
+      color: #ffffff;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea,
+    select,
+    input[type="range"] {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      font-size: 15px;
+      margin-bottom: 15px;
     }
 
     input[type="range"] {
-      width: 100%;
-      margin-bottom: 15px;
-      -webkit-appearance: none;
-      height: 8px;
-      border-radius: 8px;
-      background: linear-gradient(90deg, #d462f5, #6b0080);
-      outline: none;
-      box-shadow: 0 0 10px #d462f5;
-    }
-
-    input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: #ff85f0;
-      cursor: pointer;
-      box-shadow: 0 0 15px #ff85f0;
-      transition: background 0.3s ease;
-      border: 2px solid #d462f5;
-      margin-top: -7px;
-    }
-    input[type="range"]:focus::-webkit-slider-thumb {
-      background: #ffccff;
-      box-shadow: 0 0 25px #ffccff;
-    }
-    /* Pour Firefox */
-    input[type="range"]::-moz-range-thumb {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: #ff85f0;
-      cursor: pointer;
-      border: 2px solid #d462f5;
-      box-shadow: 0 0 15px #ff85f0;
-      transition: background 0.3s ease;
-    }
-
-    input[type="range"]:focus::-moz-range-thumb {
-      background: #ffccff;
-      box-shadow: 0 0 25px #ffccff;
-    }
-
-    .range-value {
-      font-weight: bold;
-      font-size: 1.2rem;
-      color: #ffb8ff;
-      text-align: right;
-      margin-bottom: 25px;
-      text-shadow: 0 0 8px #d462f5;
-      user-select: none;
+      accent-color: #ff6dfb;
     }
 
     button {
-      width: 100%;
-      padding: 12px 0;
+      margin-top: 20px;
+      background: #a86eff;
+      color: #fff;
+      font-size: 18px;
+      padding: 12px 24px;
       border: none;
-      background: #d462f5;
-      color: white;
-      font-size: 1.2rem;
-      border-radius: 12px;
+      border-radius: 30px;
       cursor: pointer;
-      box-shadow: 0 0 15px #ff85f0;
-      transition: background 0.3s ease;
+      box-shadow: 0 0 10px #ffbaff;
+      transition: 0.3s;
     }
 
     button:hover {
-      background: #ff85f0;
-      box-shadow: 0 0 25px #ff85f0;
+      background: #ff6dfb;
+    }
+
+    .guirlande {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      height: 100px;
+      background: url('img/guirlande-neon.png') repeat-x top;
+      pointer-events: none;
+      z-index: 1;
     }
   </style>
 </head>
 <body>
-  <main>
-    <h1>Inscription Ville Futuriste</h1>
-    <form>
+
+  <div class="guirlande"></div>
+
+  <div class="inscription-wrapper">
+    <h1>Rejoins AFFINIX</h1>
+    <form name="inscription" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/salles.html">
+      <input type="hidden" name="form-name" value="inscription">
+      <p hidden><label>Ne pas remplir : <input name="bot-field" /></label></p>
+
+      <label for="prenom">Prénom ou Pseudo :</label>
+      <input type="text" id="prenom" name="prenom" required>
+
+      <label for="description">Décris-toi en quelques mots :</label>
+      <textarea id="description" name="description" rows="4" required></textarea>
+
+      <label for="email">Adresse email :</label>
+      <input type="email" id="email" name="email" required>
+
+      <label>Salles que tu veux explorer :</label>
+      <label><input type="checkbox" name="salles[]" value="relation-serieuse"> 💖 Relation sérieuse</label>
+      <label><input type="checkbox" name="salles[]" value="amicale"> 💬 Rencontre amicale</label>
+      <label><input type="checkbox" name="salles[]" value="fun"> 🎉 Rencontre fun</label>
+      <label><input type="checkbox" name="salles[]" value="parents"> 👨‍👩‍👧 Parents solos</label>
+
+      <label for="departement">Ton département :</label>
+      <input type="text" id="departement" name="departement" placeholder="Ex : 75 ou Paris" required>
+
       <label for="rayon">Rayon de recherche (km) :</label>
-      <input
-        type="range"
-        id="rayon"
-        name="rayon"
-        min="5"
-        max="100"
-        value="50"
-        step="1"
-        aria-valuemin="5"
-        aria-valuemax="100"
-        aria-valuenow="50"
-        aria-label="Rayon de recherche en kilomètres"
-      />
-      <div class="range-value" id="rayon-value">50 km</div>
+      <input type="range" id="rayon" name="rayon" min="5" max="100" value="50" step="1">
 
-      <button type="submit" aria-label="Valider l'inscription">S’inscrire</button>
+      <button type="submit">Valider et Entrer</button>
     </form>
-  </main>
+  </div>
 
-  <script>
-    const slider = document.getElementById('rayon');
-    const output = document.getElementById('rayon-value');
-
-    slider.addEventListener('input', () => {
-      output.textContent = slider.value + ' km';
-      slider.setAttribute('aria-valuenow', slider.value);
-    });
-  </script>
 </body>
 </html>
