@@ -1,37 +1,13 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Inscription - Affinix</title>
-  <link rel="stylesheet" href="style.css">
-  <script defer src="javascript.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
-<body class="inscription">
-  <div class="inscription-container">
-    <h1>Créer mon profil</h1>
-    <form id="inscriptionForm">
-      <input type="text" id="pseudo" name="pseudo" placeholder="Ton pseudo" required>
-
-      <textarea id="description" name="description" placeholder="Une petite description..." required></textarea>
-
-      <input type="file" id="photo" name="photo" accept="image/*" required>
-
-      <input type="text" id="lieu" name="lieu" placeholder="Ton lieu d’habitation" required>
-
-      <input type="text" id="recherche" name="recherche" placeholder="Lieu de recherche (ville, région...)" required>
-
-      <select id="distance" name="distance" required>
-        <option value="">Rayon de recherche</option>
-        <option value="5">5 km</option>
-        <option value="10">10 km</option>
-        <option value="25">25 km</option>
-        <option value="50">50 km</option>
-        <option value="100">100 km</option>
-        <option value="Illimité">Illimité</option>
-      </select>
-
-      <button type="submit">Valider mon inscription</button>
-    </form>
-  </div>
+<body class="home">
+  <div class="welcome-text">Inscris-toi pour accéder aux salles</div>
+  <button class="enter-button" onclick="location.href='salles.html'">Entrer</button>
 </body>
 </html>
