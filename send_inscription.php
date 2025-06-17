@@ -1,6 +1,6 @@
 <?php
 // Configuration
-$adminEmail = "ton-email@domaine.com"; // Remplace par ton email administrateur
+$adminEmail = "brice.paneela@icloud.com"; // Remplace par ton email administrateur
 $subjectAdmin = "Nouvelle inscription Affinix";
 $subjectUser = "Confirmez votre inscription Affinix";
 
