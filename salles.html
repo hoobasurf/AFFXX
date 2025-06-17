@@ -14,7 +14,7 @@
     <div class="panel" onclick="handleClick(this, 'relation-serieuse.html')">Relation Sérieuse</div>
     <div class="panel" onclick="handleClick(this, 'rencontre-fun.html')">Rencontre Fun</div>
     <div class="panel" onclick="handleClick(this, 'parents.html')">Parents Solos</div>
-    <div class="panel" onclick="handleClick(this, 'retour.html')">Retour</div>
+    <div class="panel" onclick="handleBackClick(this)">Retour</div>
     <div class="panel" onclick="handleClick(this, 'createur.html')">Le Créateur</div>
   </div>
 
@@ -25,6 +25,15 @@
       setTimeout(() => {
         panel.classList.remove('clicked');
         window.location.href = url;
+      }, 300);
+    }
+
+    function handleBackClick(panel) {
+      if (navigator.vibrate) navigator.vibrate(100);
+      panel.classList.add('clicked');
+      setTimeout(() => {
+        panel.classList.remove('clicked');
+        history.back();
       }, 300);
     }
   </script>
