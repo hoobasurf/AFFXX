@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$admin_password = "motDePasseSecret123"; // CHANGE CE MOT DE PASSE
+$admin_password = "NeelaPG1305!"; // CHANGE CE MOT DE PASSE
 
 if ($_POST['admin_pass'] === $admin_password) {
     $_SESSION['admin'] = true;
