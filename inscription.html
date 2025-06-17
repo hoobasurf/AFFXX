@@ -2,107 +2,244 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Inscription - AFFINIX</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="css/styles.css" />
+  <title>Inscription - Affinix</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
     body {
-      background: url("img/fond-neon-violet.jpg") no-repeat center center fixed;
-      background-size: cover;
-      font-family: 'Segoe UI', sans-serif;
-      color: #fff;
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #4b0082, #8a2be2);
+      font-family: 'Montserrat', sans-serif;
+      color: #f0e6ff;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
+      padding: 20px;
     }
-    .inscription-box {
-      background: rgba(0, 0, 0, 0.7);
-      border: 2px solid #a86eff;
+
+    .container {
+      background: rgba(38, 0, 56, 0.85);
+      padding: 40px 45px;
       border-radius: 20px;
-      padding: 40px;
-      width: 90%;
-      max-width: 500px;
-      box-shadow: 0 0 20px #a86eff;
-      text-align: center;
-    }
-    .inscription-box h1 {
-      margin-bottom: 20px;
-      font-size: 28px;
-      color: #ffbaff;
-    }
-    .inscription-box input[type="text"],
-    .inscription-box input[type="email"],
-    .inscription-box input[type="password"] {
+      box-shadow:
+        0 0 10px #a86eff,
+        0 0 20px #a86eff,
+        0 0 40px #d19fff;
+      max-width: 480px;
       width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border: none;
-      border-radius: 10px;
-      font-size: 16px;
+      text-align: center;
+      backdrop-filter: blur(8px);
+      border: 2px solid #a86eff;
+      transition: box-shadow 0.3s ease;
     }
-    .inscription-box button {
-      background: #a86eff;
-      border: none;
-      padding: 14px 28px;
+
+    h1 {
+      font-weight: 700;
+      font-size: 2.8rem;
+      margin-bottom: 30px;
+      color: #ffbaff;
+      text-shadow:
+        0 0 8px #ff8fff,
+        0 0 16px #ff66cc;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+      text-align: left;
+      color: #d8a6ff;
+      text-shadow: 0 0 3px #a86eff;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea,
+    select,
+    input[type="range"] {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 2px solid #8a2be2;
+      background: rgba(70, 0, 120, 0.15);
+      font-size: 1rem;
+      color: #eee;
+      outline: none;
+      box-shadow:
+        inset 0 0 6px #a86eff,
+        0 0 6px #8a2be2;
+      margin-bottom: 22px;
+      resize: vertical;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    textarea:focus,
+    select:focus,
+    input[type="range"]:focus {
+      border-color: #ff99ff;
+      box-shadow:
+        inset 0 0 10px #ff99ff,
+        0 0 12px #ff66cc;
+      background: rgba(120, 0, 170, 0.25);
       color: #fff;
-      font-size: 18px;
-      border-radius: 30px;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      height: 6px;
+      background: #6a00ff;
+      cursor: pointer;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 22px;
+      height: 22px;
+      background: #ff66cc;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #ff66cc;
+      cursor: pointer;
+      margin-top: -8px;
+      transition: background 0.3s ease;
+    }
+    input[type="range"]:focus::-webkit-slider-thumb {
+      background: #ff99ff;
+      box-shadow: 0 0 12px #ff99ff;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 22px;
+      height: 22px;
+      background: #ff66cc;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #ff66cc;
       cursor: pointer;
       transition: background 0.3s ease;
     }
-    .inscription-box button:hover {
-      background: #d8a6ff;
+    input[type="range"]:focus::-moz-range-thumb {
+      background: #ff99ff;
+      box-shadow: 0 0 12px #ff99ff;
+    }
+
+    .range-value {
+      font-weight: 700;
+      color: #d8a6ff;
+      text-align: right;
+      margin-top: -18px;
+      margin-bottom: 22px;
+      font-size: 1rem;
+      text-shadow: 0 0 3px #a86eff;
+    }
+
+    .checkbox-group {
+      text-align: left;
+      margin-bottom: 28px;
+    }
+    .checkbox-group label {
+      display: inline-block;
+      margin-right: 20px;
+      font-weight: 500;
+      cursor: pointer;
+      color: #cc99ff;
+      text-shadow: 0 0 2px #a86eff;
+      user-select: none;
+      font-size: 1rem;
+    }
+    .checkbox-group input[type="checkbox"] {
+      margin-right: 6px;
+      cursor: pointer;
+      width: 18px;
+      height: 18px;
+      vertical-align: middle;
+      accent-color: #d180ff;
+      filter: drop-shadow(0 0 2px #d180ff);
+      transition: filter 0.3s ease;
+    }
+    .checkbox-group input[type="checkbox"]:hover {
+      filter: drop-shadow(0 0 6px #ff99ff);
+    }
+
+    button {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(90deg, #ff66cc, #d180ff);
+      border: none;
+      border-radius: 35px;
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 0 12px #d180ff;
+      transition: background 0.4s ease, box-shadow 0.3s ease;
+      user-select: none;
+    }
+    button:hover,
+    button:focus {
+      background: linear-gradient(90deg, #ff99ff, #ff66cc);
+      box-shadow: 0 0 18px #ff99ff, 0 0 25px #ff66cc;
+      outline: none;
+    }
+
+    @media (max-width: 520px) {
+      .container {
+        padding: 30px 25px;
+        max-width: 100%;
+      }
+      h1 {
+        font-size: 2rem;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="inscription-box">
-    <h1>Inscription sur Affinix</h1>
-    <form name="inscription" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/salle.html">
-      <input type="hidden" name="form-name" value="inscription" />
-      <p hidden>
-        <label>Ne pas remplir : <input name="bot-field"></label>
-      </p>
+  <main class="container" role="main" aria-label="Formulaire d'inscription Affinix">
+    <h1>Inscription Affinix</h1>
+    <form id="formInscription" method="POST" action="/salles.html" novalidate>
+      <label for="pseudo">Prénom ou pseudo :</label>
+      <input type="text" id="pseudo" name="pseudo" required maxlength="30" placeholder="Ex : Alex" autocomplete="nickname" />
 
-      <label>Prénom :
-        <input type="text" name="prenom" required>
-      </label><br><br>
+      <label for="description">Description :</label>
+      <textarea id="description" name="description" maxlength="300" placeholder="Parlez un peu de vous..." required></textarea>
 
-      <label>Email :
-        <input type="email" name="email" required>
-      </label><br><br>
+      <label for="email">Email :</label>
+      <input type="email" id="email" name="email" required placeholder="exemple@mail.com" autocomplete="email" />
 
-      <label>Salles choisies :</label><br>
-      <input type="checkbox" name="salles[]" value="relation-serieuse"> Relation sérieuse<br>
-      <input type="checkbox" name="salles[]" value="amicale"> Rencontre amicale<br>
-      <input type="checkbox" name="salles[]" value="fun"> Rencontre fun<br>
-      <input type="checkbox" name="salles[]" value="parents-solos"> Parents solos<br><br>
+      <label>Salles choisies :</label>
+      <div class="checkbox-group" role="group" aria-labelledby="label-salles">
+        <label><input type="checkbox" name="salles[]" value="relation-serieuse" /> Relation sérieuse</label>
+        <label><input type="checkbox" name="salles[]" value="amicale" /> Rencontre amicale</label>
+        <label><input type="checkbox" name="salles[]" value="fun" /> Rencontre fun</label>
+        <label><input type="checkbox" name="salles[]" value="parents-solos" /> Parents solos</label>
+      </div>
 
-      <button type="submit">Entrer</button>
+      <label for="departement">Département :</label>
+      <select id="departement" name="departement" required>
+        <option value="" disabled selected>Choisissez votre département</option>
+        <option value="75">75 - Paris</option>
+        <option value="69">69 - Rhône</option>
+        <option value="13">13 - Bouches-du-Rhône</option>
+        <option value="33">33 - Gironde</option>
+        <option value="44">44 - Loire-Atlantique</option>
+      </select>
+
+      <label for="rayon">Rayon de recherche (km) :</label>
+      <input type="range" id="rayon" name="rayon" min="1" max="100" value="25" />
+      <div class="range-value" id="rayon-value">25 km</div>
+
+      <button type="submit">S'inscrire</button>
     </form>
-  </div>
+  </main>
 
   <script>
-    document.querySelector('form').addEventListener('submit', function (e) {
-      const checkedSalles = [...document.querySelectorAll('input[name="salles[]"]:checked')]
-        .map(input => input.value);
+    const rangeInput = document.getElementById('rayon');
+    const rangeValue = document.getElementById('rayon-value');
 
-      if (checkedSalles.length === 0) {
-        alert("Veuillez choisir au moins une salle.");
-        e.preventDefault();
-        return;
-      }
-
-      const confirmation = confirm(
-        "Vous avez sélectionné :\n- " + checkedSalles.join("\n- ") +
-        "\n\nConfirmez-vous votre inscription avec ces salles ?"
-      );
-
-      if (!confirmation) {
-        e.preventDefault();
-      }
+    rangeInput.addEventListener('input', () => {
+      rangeValue.textContent = `${rangeInput.value} km`;
     });
   </script>
 </body>
