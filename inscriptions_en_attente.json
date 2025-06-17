@@ -1,0 +1,38 @@
+<?php
+// ... partie début inchangée
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // ... nettoyage des champs
+
+    // Générer un token unique pour validation
+    $token = bin2hex(random_bytes(16));
+
+    // Charger inscriptions en attente
+    $fichierJson = 'inscriptions_en_attente.json';
+    $inscriptions = [];
+    if (file_exists($fichierJson)) {
+        $jsonContent = file_get_contents($fichierJson);
+        $inscriptions = json_decode($jsonContent, true) ?? [];
+    }
+
+    // Ajouter nouvelle inscription en attente
+    $inscriptions[] = [
+        'nom' => $nom,
+        'email' => $email,
+        'salles' => $salles,
+        'token' => $token,
+        'valide' => false,
+        'date' => date("Y-m-d H:i:s")
+    ];
+
+    // Sauvegarder dans le fichier
+    file_put_contents($fichierJson, json_encode($inscriptions, JSON_PRETTY_PRINT));
+
+    // Préparer lien validation
+    $validationLink = "https://tondomaine.com/valider_inscription.php?email=" . urlencode($email) . "&token=$token";
+
+    // ... emails inchangés, utiliser $validationLink
+
+    // ...
+}
+?>
