@@ -5,7 +5,6 @@
   <title>Inscription - AFFINIX</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css"> <!-- tu peux relier ici ton fichier css global -->
   <style>
     body {
       margin: 0;
@@ -15,16 +14,28 @@
       color: #fff;
     }
 
+    .guirlande {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      height: 120px;
+      background: url('img/guirlande-neon.png') repeat-x top;
+      pointer-events: none;
+      z-index: 1;
+    }
+
     .inscription-wrapper {
       display: flex;
       flex-direction: column;
-      padding: 60px 20px;
+      padding: 50px 30px;
       max-width: 500px;
-      margin: 120px 5% 100px auto; /* encadré sur la droite */
-      background: rgba(10, 0, 30, 0.7);
-      border: 2px solid #a86eff;
-      border-radius: 25px;
+      margin: 120px 5% 100px auto;
+      background: rgba(20, 0, 40, 0.75);
+      border: 2px solid #ff6dfb;
+      border-radius: 20px;
       box-shadow: 0 0 30px #ff6dfb;
+      position: relative;
+      z-index: 2;
     }
 
     h1 {
@@ -37,28 +48,33 @@
     label {
       display: block;
       margin: 15px 0 5px;
-      color: #ffffff;
+      font-size: 15px;
     }
 
     input[type="text"],
     input[type="email"],
     textarea,
-    select,
     input[type="range"] {
       width: 100%;
       padding: 12px;
       border-radius: 10px;
       border: none;
       font-size: 15px;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
     }
 
     input[type="range"] {
       accent-color: #ff6dfb;
     }
 
+    .rayon-output {
+      margin-top: -10px;
+      margin-bottom: 15px;
+      font-size: 14px;
+      color: #ffbaff;
+    }
+
     button {
-      margin-top: 20px;
       background: #a86eff;
       color: #fff;
       font-size: 18px;
@@ -73,16 +89,6 @@
     button:hover {
       background: #ff6dfb;
     }
-
-    .guirlande {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      height: 100px;
-      background: url('img/guirlande-neon.png') repeat-x top;
-      pointer-events: none;
-      z-index: 1;
-    }
   </style>
 </head>
 <body>
@@ -92,19 +98,19 @@
   <div class="inscription-wrapper">
     <h1>Rejoins AFFINIX</h1>
     <form name="inscription" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/salles.html">
-      <input type="hidden" name="form-name" value="inscription">
+      <input type="hidden" name="form-name" value="inscription" />
       <p hidden><label>Ne pas remplir : <input name="bot-field" /></label></p>
 
       <label for="prenom">Prénom ou Pseudo :</label>
       <input type="text" id="prenom" name="prenom" required>
 
-      <label for="description">Décris-toi en quelques mots :</label>
+      <label for="description">Décris-toi :</label>
       <textarea id="description" name="description" rows="4" required></textarea>
 
-      <label for="email">Adresse email :</label>
+      <label for="email">Email :</label>
       <input type="email" id="email" name="email" required>
 
-      <label>Salles que tu veux explorer :</label>
+      <label>Salles choisies :</label>
       <label><input type="checkbox" name="salles[]" value="relation-serieuse"> 💖 Relation sérieuse</label>
       <label><input type="checkbox" name="salles[]" value="amicale"> 💬 Rencontre amicale</label>
       <label><input type="checkbox" name="salles[]" value="fun"> 🎉 Rencontre fun</label>
@@ -114,9 +120,19 @@
       <input type="text" id="departement" name="departement" placeholder="Ex : 75 ou Paris" required>
 
       <label for="rayon">Rayon de recherche (km) :</label>
-      <input type="range" id="rayon" name="rayon" min="5" max="100" value="50" step="1">
+      <input
+        type="range"
+        id="rayon"
+        name="rayon"
+        min="5"
+        max="100"
+        value="50"
+        step="1"
+        oninput="document.getElementById('rayonValue').innerText = this.value + ' km';"
+      >
+      <div class="rayon-output">🌐 Rayon actuel : <span id="rayonValue">50 km</span></div>
 
-      <button type="submit">Valider et Entrer</button>
+      <button type="submit">Valider mon inscription</button>
     </form>
   </div>
 
