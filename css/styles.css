@@ -66,7 +66,7 @@ body.inscription {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url('../images/fond-tokyo.jpg') center center no-repeat;
+  background: url('img/fond-inscription-tokyo.jpg') no-repeat center center fixed;
   background-size: cover;
   font-family: 'Orbitron', sans-serif;
 }
