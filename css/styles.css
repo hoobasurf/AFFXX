@@ -66,21 +66,21 @@ body.inscription {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url('../img/fond-inscription-tokyo.jpg') no-repeat center center fixed;
+  background: url('../img/fond-inscription-tokyo.jpg') no-repeat center center;
   background-size: cover;
   font-family: 'Orbitron', sans-serif;
 }
 
 .inscription-container {
-  background: transparent; /* ✅ Plus de fond noir/gris */
+  background: transparent;
   padding: 30px 25px;
   border-radius: 20px;
   box-shadow: 0 0 20px #a64cff, 0 0 40px #6a00ff;
   text-align: center;
   width: 90%;
   max-width: 360px;
-  border: 2px solid #a64cff; /* ✅ Ajout du contour néon */
-  backdrop-filter: none; /* ❌ pas de flou, 100% transparent */
+  border: 2px solid #a64cff;
+  backdrop-filter: none;
 }
 
 .inscription-container h1 {
@@ -103,9 +103,15 @@ body.inscription {
   color: white;
 }
 
-.inscription-container textarea { resize: none; height: 70px; }
+.inscription-container textarea {
+  resize: none;
+  height: 70px;
+}
 
-.zone-search { display: flex; gap: 10px; }
+.zone-search {
+  display: flex;
+  gap: 10px;
+}
 
 .inscription-container button {
   width: 100%;
@@ -268,22 +274,14 @@ body.page-parents {
   pointer-events: none;
 }
 
+/* === GLOBAL FIX === */
 html, body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
-  background: #000; /* ou ton fond violet, si tu veux éviter le blanc */
+  overflow: hidden;
+  background: #000;
+  width: 100%;
   height: 100%;
-}
-
-body.inscription, html {
   border: none;
   outline: none;
-  box-shadow: none;
 }
-
-* {
-  outline: none;
-  box-shadow: none !important;
-}
-
