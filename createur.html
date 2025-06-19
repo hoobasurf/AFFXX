@@ -22,11 +22,11 @@
 
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script>
-    emailjs.init("TON_USER_ID"); // remplace par ton vrai user ID EmailJS
+    emailjs.init("nKWP2R-xO7xNVFXOp");
 
     document.getElementById("contact-form").addEventListener("submit", function(event) {
       event.preventDefault();
-      emailjs.sendForm("TON_SERVICE_ID", "TON_TEMPLATE_ID", this)
+      emailjs.sendForm("service_q91e0wb", "template_pf6049c", this)
         .then(() => {
           document.getElementById("confirmation-message").style.display = "block";
           this.reset();
