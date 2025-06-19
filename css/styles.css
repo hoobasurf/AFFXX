@@ -72,13 +72,15 @@ body.inscription {
 }
 
 .inscription-container {
-  background: rgba(0, 0, 0, 0);
+  background: transparent; /* ✅ Plus de fond noir/gris */
   padding: 30px 25px;
   border-radius: 20px;
   box-shadow: 0 0 20px #a64cff, 0 0 40px #6a00ff;
   text-align: center;
   width: 90%;
   max-width: 360px;
+  border: 2px solid #a64cff; /* ✅ Ajout du contour néon */
+  backdrop-filter: blur(0px); /* ❌ pas de flou, 100% transparent */
 }
 
 .inscription-container h1 {
