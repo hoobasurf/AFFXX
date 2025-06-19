@@ -1,5 +1,5 @@
 (function(){
-  emailjs.init("brice.paneela@icloud.com"); // Remplace par ton User ID EmailJS
+  emailjs.init("nKWP2R-xO7xNVFXOp"); // Remplace par ton User ID EmailJS
 })();
 
 document.getElementById('signup-form').addEventListener('submit', function(event) {
