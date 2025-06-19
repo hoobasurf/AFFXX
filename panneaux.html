@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Choisis ta salle – Affinix</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 2rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1.5rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .panel {
+      background: #222;
+      border-radius: 12px;
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 0 5px #0ff;
+      font-size: 1.1rem;
+      user-select: none;
+    }
+    .panel:hover {
+      background-color: #0ff;
+      color: #000;
+      box-shadow: 0 0 15px #0ff;
+    }
+  </style>
+</head>
+<body>
+  <h1>Bienvenue dans les salles Affinix</h1>
+
+  <div class="grid">
+    <div class="panel" onclick="location.href='salle1.html'">💬 Rencontre Amicale</div>
+    <div class="panel" onclick="location.href='salle2.html'">💖 Relation Sérieuse</div>
+    <div class="panel" onclick="location.href='salle3.html'">🎉 Rencontre Fun</div>
+    <div class="panel" onclick="location.href='salle4.html'">👨‍👩‍👧 Parents Solos</div>
+    <div class="panel" onclick="location.href='salle5.html'">🎮 Univers Passions</div>
+    <div class="panel" onclick="location.href='salle6.html'">🧬 Connexion Unique</div>
+  </div>
+</body>
+</html>
