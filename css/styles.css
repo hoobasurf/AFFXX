@@ -80,7 +80,7 @@ body.inscription {
   width: 90%;
   max-width: 360px;
   border: 2px solid #a64cff; /* ✅ Ajout du contour néon */
-  backdrop-filter: blur(0px); /* ❌ pas de flou, 100% transparent */
+  backdrop-filter: none; /* ❌ pas de flou, 100% transparent */
 }
 
 .inscription-container h1 {
