@@ -160,7 +160,7 @@ body.inscription {
   box-shadow: 0 0 20px #6a00ff, 0 0 40px #a64cff;
 }
 
-/* Éviter carré blanc en bas */
+/* Éviter carré blanc en bas - MODIFIE ICI */
 body.inscription::after {
   content: "";
   position: fixed;
@@ -168,7 +168,7 @@ body.inscription::after {
   left: 0;
   width: 100vw;
   height: 140px;
-  background: #000;
+  background: transparent !important; /* changé de #000 à transparent */
   z-index: 9999;
   pointer-events: none;
 }
@@ -268,40 +268,3 @@ body.page-parents {
 
 .panel:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 15px 5px currentColor, 0 0 25px 10px currentColor;
-}
-
-.panel.clicked {
-  animation: neonFlash 0.5s ease-in-out;
-}
-
-@keyframes neonFlash {
-  0%, 100% {
-    box-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
-  }
-  50% {
-    box-shadow: 0 0 25px currentColor, 0 0 40px currentColor;
-  }
-}
-
-/* === RESPONSIVE === */
-@media (max-width: 768px) {
-  .panels-container {
-    flex-direction: column;
-    gap: 15px;
-    top: 55%;
-    transform: translate(-50%, -50%);
-  }
-
-  .panel {
-    min-width: 120px;
-    font-size: 12px;
-    padding: 10px 14px;
-  }
-
-  .inscription-container {
-    padding: 20px;
-  }
-
-  .inscription-container h1 {
-    font-size: 24px
