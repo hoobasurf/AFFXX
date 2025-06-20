@@ -135,7 +135,11 @@
     <h1>Rejoins AFFINIX</h1>
     <form name="inscription" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/salle.html">
       <input type="hidden" name="form-name" value="inscription" />
-      <p hidden><label>Ne pas remplir : <input name="bot-field" /></label></p>
+      
+      <!-- ✅ Champ anti-bot invisible corrigé -->
+      <div style="position: absolute; left: -9999px;">
+        <label>Ne pas remplir : <input name="bot-field" /></label>
+      </div>
 
       <label for="prenom">Prénom ou Pseudo :</label>
       <input type="text" id="prenom" name="prenom" required>
