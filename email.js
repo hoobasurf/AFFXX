@@ -4,13 +4,15 @@
 
 document.getElementById('signup-form').addEventListener('submit', function(event) {
   event.preventDefault();
-  const serviceID = 'default_service';
-  const templateID = 'template_affinix'; // Remplace par ton Template ID
+  const serviceID = 'service_q91e0wb';
+  const templateID = 'template_pf6049c'; // Remplace par ton Template ID
 
   emailjs.sendForm(serviceID, templateID, this)
     .then(() => {
       document.getElementById("status-message").textContent = "🎉 Email envoyé ! Vérifie ta boîte.";
-      window.location.href = "confirmation.html";
+      setTimeout(() => {
+        window.location.href = "panneaux.html";  // redirection vers la page des panneaux
+      }, 2000);  // délai 2s avant redirection
     }, (err) => {
       document.getElementById("status-message").textContent = "Erreur lors de l’envoi.";
       console.log(err);
