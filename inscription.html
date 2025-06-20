@@ -4,14 +4,24 @@
   <meta charset="UTF-8" />
   <title>Inscription - AFFINIX</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Préchargement de la police -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
+
   <style>
-    body {
+    html, body {
       margin: 0;
+      padding: 0;
+      background-color: #000; /* Fond noir par défaut */
+      color: #fff;
       font-family: 'Orbitron', sans-serif;
+    }
+
+    body {
       background: url('img/fond-inscription-tokyo.jpg') no-repeat center center fixed;
       background-size: cover;
-      color: #fff;
       min-height: 100vh;
       display: flex;
       justify-content: center;
@@ -136,7 +146,7 @@
     <form name="inscription" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/salle.html">
       <input type="hidden" name="form-name" value="inscription" />
       
-      <!-- ✅ Champ anti-bot invisible corrigé -->
+      <!-- Champ caché anti-bot -->
       <div style="position: absolute; left: -9999px;">
         <label>Ne pas remplir : <input name="bot-field" /></label>
       </div>
@@ -178,8 +188,6 @@
     </form>
   </div>
 
-  <!-- ✅ Script externe -->
   <script src="script.js"></script>
-
 </body>
 </html>
