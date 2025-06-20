@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Match - AFFINIX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Orbitron', sans-serif;
+      background: url('img/fond-tokyo.jpg') no-repeat center center fixed;
+      background-size: cover;
+      overflow: hidden;
+    }
+
+    .match-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 20px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .match-filtres {
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      padding: 15px;
+      border-radius: 15px;
+      margin-bottom: auto;
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .profil-card {
+      width: 90%;
+      max-width: 300px;
+      height: 400px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      border: 2px solid #ff6dfb;
+      box-shadow: 0 0 15px #ffbaff;
+      backdrop-filter: blur(6px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      font-size: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .swipe-buttons {
+      display: flex;
+      gap: 40px;
+      margin-bottom: 30px;
+    }
+
+    .swipe-buttons button {
+      width: 60px;
+      height: 60px;
+      font-size: 24px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 12px #fff;
+      background-color: #ff6dfb;
+      color: white;
+      transition: 0.3s;
+    }
+
+    .swipe-buttons button:hover {
+      transform: scale(1.2);
+    }
+
+    @media (max-width: 600px) {
+      .profil-card {
+        height: 300px;
+        font-size: 18px;
+      }
+
+      .swipe-buttons button {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="match-wrapper">
+    <div class="match-filtres">
+      <label for="typeRecherche">🔍 Type de match :</label>
+      <select id="typeRecherche" onchange="filtrerProfils()">
+        <option value="amicale">💬 Rencontre Amicale</option>
+        <option value="relation-serieuse">💖 Relation Sérieuse</option>
+        <option value="fun">🎉 Rencontre Fun</option>
+        <option value="parents">👨‍👩‍👧 Parents Solos</option>
+      </select>
+    </div>
+
+    <div class="profil-card" id="profilCard">
+      Chargement du profil...
+    </div>
+
+    <div class="swipe-buttons">
+      <button onclick="dislike()">❌</button>
+      <button onclick="like()">❤️</button>
+    </div>
+  </div>
+
+  <script>
+    const profils = {
+      'amicale': ['Amina, 25 ans - Paris', 'Lucas, 29 ans - Bordeaux'],
+      'relation-serieuse': ['Claire, 30 ans - Lyon', 'Rayan, 33 ans - Marseille'],
+      'fun': ['Léo, 22 ans - Lille', 'Sophie, 26 ans - Nantes'],
+      'parents': ['Julie, 35 ans - Toulouse', 'Thomas, 38 ans - Nice']
+    };
+
+    let index = 0;
+    let currentType = 'amicale';
+
+    function afficherProfil() {
+      const card = document.getElementById('profilCard');
+      const liste = profils[currentType];
+      if (index >= liste.length) {
+        card.innerText = '🎉 Plus de profils pour cette catégorie.';
+        return;
+      }
+      card.innerText = liste[index];
+    }
+
+    function like() {
+      index++;
+      afficherProfil();
+    }
+
+    function dislike() {
+      index++;
+      afficherProfil();
+    }
+
+    function filtrerProfils() {
+      currentType = document.getElementById('typeRecherche').value;
+      index = 0;
+      afficherProfil();
+    }
+
+    window.onload = afficherProfil;
+  </script>
+
+</body>
+</html>
