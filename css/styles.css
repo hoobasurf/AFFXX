@@ -384,3 +384,8 @@ footer, .footer, .bottom-bar {
     overflow-x: hidden;
   }
 }
+
+footer {
+  display: none !important;
+}
+
