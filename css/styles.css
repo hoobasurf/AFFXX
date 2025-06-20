@@ -285,3 +285,24 @@ html, body {
   border: none;
   outline: none;
 }
+
+.btn-match {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #ff6dfb;
+  color: white;
+  padding: 14px 20px;
+  border-radius: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  box-shadow: 0 0 15px #ffbaff;
+  z-index: 1000;
+  transition: 0.3s ease;
+}
+
+.btn-match:hover {
+  transform: scale(1.1);
+  background: #e855e0;
+}
+
