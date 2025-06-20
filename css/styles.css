@@ -94,7 +94,7 @@ body.inscription {
   background-size: cover;
   min-height: 100vh;
   position: relative;
-  overflow: hidden;
+  overflow: hidden !important; /* empêche scroll vertical */
 }
 
 /* Bloc principal formulaire inscription */
@@ -160,17 +160,20 @@ body.inscription {
   box-shadow: 0 0 20px #6a00ff, 0 0 40px #a64cff;
 }
 
-/* Éviter carré blanc en bas - MODIFIE ICI */
+/* Suppression complète du pseudo-élément carré blanc/noir en bas */
 body.inscription::after {
-  content: "";
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100vw;
-  height: 140px;
-  background: transparent !important; /* changé de #000 à transparent */
-  z-index: 9999;
-  pointer-events: none;
+  content: none !important;
+  display: none !important;
+  background: transparent !important;
+}
+
+/* Forcer à masquer toute barre ou footer en bas */
+footer, .footer, .bottom-bar {
+  display: none !important;
+  background: transparent !important;
+  position: fixed !important;
+  bottom: 0 !important;
+  z-index: 99999 !important;
 }
 
 /* === PAGE PARENTS SOLO === */
@@ -268,3 +271,8 @@ body.page-parents {
 
 .panel:hover {
   transform: scale(1.05);
+  box-shadow: 0 0 15px 5px currentColor, 0 0 25px 10px currentColor;
+}
+
+.panel.clicked {
+  animation: neon
