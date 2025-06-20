@@ -133,7 +133,7 @@
 
   <div class="inscription-wrapper">
     <h1>Rejoins AFFINIX</h1>
-    <form name="inscription" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/salle.html" onsubmit="reloadOnSubmit(event)">
+    <form name="inscription" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/salle.html">
       <input type="hidden" name="form-name" value="inscription" />
       <p hidden><label>Ne pas remplir : <input name="bot-field" /></label></p>
 
@@ -174,29 +174,8 @@
     </form>
   </div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const form = document.querySelector('form');
-      if (!form) return;
-
-      form.addEventListener('submit', (e) => {
-        const prenom = form.querySelector('input[name="prenom"]').value.trim();
-        const email = form.querySelector('input[name="email"]').value.trim();
-        const salles = [...form.querySelectorAll('input[name="salles[]"]:checked')];
-
-        let errors = [];
-
-        if (prenom.length < 2) errors.push("Le prénom est trop court.");
-        if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) errors.push("Email invalide.");
-        if (salles.length === 0) errors.push("Veuillez choisir au moins une salle.");
-
-        if (errors.length > 0) {
-          e.preventDefault();
-          alert(errors.join("\n"));
-        }
-      });
-    });
-  </script>
+  <!-- ✅ Script externe -->
+  <script src="script.js"></script>
 
 </body>
 </html>
