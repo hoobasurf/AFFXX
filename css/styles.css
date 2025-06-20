@@ -323,3 +323,64 @@ body.inscription::after {
   z-index: 9999;
   pointer-events: none;
 }
+
+/* Reset marges et padding, éviter débordements */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+  background-color: #000000; /* Fond noir */
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+/* Assurer que le body occupe toute la hauteur */
+body {
+  min-height: 100vh;
+  background-image: url('../images/background.jpg'); /* adapte si besoin */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* Conteneur principal */
+.main-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background-color: transparent !important;
+}
+
+/* Cacher tout élément avec fond blanc non voulu */
+div, section, form {
+  background-color: transparent !important;
+}
+
+/* Footer ou élément en bas : s’assurer qu’il ne crée pas de fond */
+footer, .footer, .bottom-bar {
+  background-color: transparent !important;
+  position: relative !important;
+  bottom: auto !important;
+}
+
+/* Éviter les marges négatives ou excessives en bas */
+* {
+  box-sizing: border-box;
+}
+
+/* Exemple : bouton bas page, pas de fond blanc */
+.btn-submit {
+  background-color: transparent !important;
+  border: 1px solid white;
+  color: white;
+}
+
+/* Correction pour mobile / responsive si nécessaire */
+@media (max-width: 768px) {
+  body, html {
+    overflow-x: hidden;
+  }
+}
