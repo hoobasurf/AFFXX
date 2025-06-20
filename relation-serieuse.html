@@ -1,16 +1,51 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Relation Sérieuse</title>
-  <link rel="stylesheet" href="style.css">
-  <script defer src="script.js"></script>
+  <link rel="stylesheet" href="css/neon.css" />
+  <script defer src="js/chat.js"></script>
 </head>
-<body class="tokyo">
-  <div class="inscription-container">
-    <h1>💖 Relation Sérieuse</h1>
-    <button onclick="window.location.href='salle.html'">⬅ Retour à la ville</button>
+<body>
+  <div class="neon-border">
+    <h1 class="header">Relation Sérieuse</h1>
+    <p style="text-align:center; font-size:1.2rem;">
+      Bienvenue dans la salle dédiée aux relations sérieuses. Trouvez votre âme sœur ici.
+    </p>
+    <ul class="profile-list">
+      <li class="profile-item" onclick="openChat('Élodie')">
+        <img src="https://i.pravatar.cc/60?img=11" alt="Élodie" class="profile-avatar" />
+        <div class="profile-info">
+          <strong>Élodie, 29 ans</strong><br/>
+          <small>Passionnée de voyages et de lecture.</small>
+        </div>
+      </li>
+      <li class="profile-item" onclick="openChat('Julien')">
+        <img src="https://i.pravatar.cc/60?img=12" alt="Julien" class="profile-avatar" />
+        <div class="profile-info">
+          <strong>Julien, 32 ans</strong><br/>
+          <small>Amateur de musique jazz et de randonnée.</small>
+        </div>
+      </li>
+      <li class="profile-item" onclick="openChat('Sophie')">
+        <img src="https://i.pravatar.cc/60?img=13" alt="Sophie" class="profile-avatar" />
+        <div class="profile-info">
+          <strong>Sophie, 28 ans</strong><br/>
+          <small>Fan de cuisine italienne et de yoga.</small>
+        </div>
+      </li>
+    </ul>
+    <a href="salle.html" class="back-button">← Retour à la salle des panneaux</a>
+  </div>
+
+  <div id="chatPopup" class="chat-popup">
+    <div>
+      <strong id="chatTitle">Chat</strong>
+      <button onclick="closeChat()">X</button>
+    </div>
+    <textarea id="chatMessage" placeholder="Écris ton message..."></textarea>
+    <button onclick="sendMessage()">Envoyer</button>
   </div>
 </body>
 </html>
