@@ -59,6 +59,26 @@
     .createur   { border-color: #9b59b6; color: #9b59b6; }
     .retour     { border-color: #aaa; color: #aaa; }
 
+    .btn-match {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #ff6dfb;
+      color: white;
+      padding: 14px 20px;
+      border-radius: 30px;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 0 15px #ffbaff;
+      z-index: 1000;
+      transition: 0.3s ease;
+    }
+
+    .btn-match:hover {
+      transform: scale(1.1);
+      background: #e855e0;
+    }
+
     @media screen and (max-width: 500px) {
       h1 {
         font-size: 20px;
@@ -68,6 +88,11 @@
       .button {
         font-size: 16px;
         padding: 12px;
+      }
+
+      .btn-match {
+        padding: 12px 16px;
+        font-size: 14px;
       }
     }
   </style>
@@ -81,5 +106,8 @@
   <a href="parents.html" class="button parents">👨‍👩‍👧 Parents Solos</a>
   <a href="createur.html" class="button createur">🧙‍♂️ Le Créateur</a>
   <a href="index.html" class="button retour">⬅️ Retour</a>
+
+  <!-- ✅ Bouton Match en bas à droite -->
+  <a href="match.html" class="btn-match">❤️ Match</a>
 </body>
 </html>
