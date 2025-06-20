@@ -1,88 +1,85 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <title>Les Salles - AFFINIX</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/styles.css" />
+  <meta charset="UTF-8">
+  <title>Choisis ta salle - AFFINIX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
   <style>
     body {
-      background: url("img/fond-neon-violet.jpg") no-repeat center center fixed;
-      background-size: cover;
-      font-family: 'Orbitron', sans-serif;
-      color: #fff;
       margin: 0;
+      padding: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: url('img/fond-tokyo.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       flex-direction: column;
-      text-align: center;
-    }
-    .panels-container {
-      display: flex;
-      flex-wrap: wrap;
-      max-width: 700px;
-      gap: 15px;
+      align-items: center;
       justify-content: center;
-      margin-top: 20px;
+      min-height: 100vh;
     }
-    .panel {
-      background: rgba(168, 110, 255, 0.8);
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 30px;
+      text-shadow: 0 0 10px #fff;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 10px 20px;
+      border-radius: 12px;
+    }
+
+    .button {
+      width: 80%;
+      max-width: 300px;
+      margin: 12px;
+      padding: 15px;
+      border: 2px solid #fff;
       border-radius: 15px;
-      padding: 25px 40px;
-      cursor: pointer;
-      font-size: 18px;
       text-align: center;
-      transition: background 0.3s ease, transform 0.2s ease;
-      user-select: none;
-      min-width: 200px;
-      box-shadow: 0 0 10px #a86eff;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      transition: 0.3s;
+      display: block;
+      box-shadow: 0 0 10px #fff;
+      background: rgba(0, 0, 0, 0.5);
     }
-    .panel:hover {
-      background: #d8a6ff;
-      color: #000;
+
+    .button:hover {
+      background: rgba(255, 255, 255, 0.2);
       transform: scale(1.05);
     }
-    .panel.clicked {
-      animation: clickAnim 0.3s forwards;
-    }
-    @keyframes clickAnim {
-      0% { transform: scale(1); background-color: #a86eff; }
-      50% { transform: scale(0.95); background-color: #d8a6ff; }
-      100% { transform: scale(1); background-color: #a86eff; }
+
+    .amicale    { border-color: #00f0ff; color: #00f0ff; }
+    .serieuse   { border-color: #ff66c4; color: #ff66c4; }
+    .fun        { border-color: #ffd700; color: #ffd700; }
+    .parents    { border-color: #ff4444; color: #ff4444; }
+    .createur   { border-color: #9b59b6; color: #9b59b6; }
+    .retour     { border-color: #aaa; color: #aaa; }
+
+    @media screen and (max-width: 500px) {
+      h1 {
+        font-size: 20px;
+        margin-bottom: 20px;
+      }
+
+      .button {
+        font-size: 16px;
+        padding: 12px;
+      }
     }
   </style>
 </head>
 <body>
   <h1>Choisis ta salle</h1>
-  <div class="panels-container">
-    <div class="panel" onclick="handleClick(this, 'rencontre-amicale.html')">💬 Rencontre Amicale</div>
-    <div class="panel" onclick="handleClick(this, 'relation-serieuse.html')">💖 Relation Sérieuse</div>
-    <div class="panel" onclick="handleClick(this, 'rencontre-fun.html')">🎉 Rencontre Fun</div>
-    <div class="panel" onclick="handleClick(this, 'parents.html')">👨‍👩‍👧 Parents Solos</div>
-    <div class="panel" onclick="handleClick(this, 'createur.html')">🧙‍♂️ Le Créateur</div>
-    <div class="panel" onclick="handleBackClick(this)">⬅️ Retour</div>
-  </div>
 
-  <script>
-    function handleClick(panel, url) {
-      if (navigator.vibrate) navigator.vibrate(100);
-      panel.classList.add('clicked');
-      setTimeout(() => {
-        panel.classList.remove('clicked');
-        window.location.href = url;
-      }, 300);
-    }
-    function handleBackClick(panel) {
-      if (navigator.vibrate) navigator.vibrate(100);
-      panel.classList.add('clicked');
-      setTimeout(() => {
-        panel.classList.remove('clicked');
-        history.back();
-      }, 300);
-    }
-  </script>
+  <a href="amicale.html" class="button amicale">💬 Rencontre Amicale</a>
+  <a href="serieuse.html" class="button serieuse">💖 Relation Sérieuse</a>
+  <a href="fun.html" class="button fun">🎉 Rencontre Fun</a>
+  <a href="parents.html" class="button parents">👨‍👩‍👧 Parents Solos</a>
+  <a href="createur.html" class="button createur">🧙‍♂️ Le Créateur</a>
+  <a href="index.html" class="button retour">⬅️ Retour</a>
 </body>
 </html>
