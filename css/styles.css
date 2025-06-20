@@ -69,6 +69,8 @@ body.inscription {
   background: url('../img/fond-inscription-tokyo.jpg') no-repeat center center;
   background-size: cover;
   font-family: 'Orbitron', sans-serif;
+  position: relative;
+  min-height: 100vh;
 }
 
 .inscription-container {
@@ -81,6 +83,7 @@ body.inscription {
   max-width: 360px;
   border: 2px solid #a64cff;
   backdrop-filter: none;
+  z-index: 10;
 }
 
 .inscription-container h1 {
@@ -196,6 +199,7 @@ body.page-parents {
   gap: 20px;
   width: 90%;
   max-width: 900px;
+  z-index: 5;
 }
 
 .panel {
@@ -286,6 +290,7 @@ html, body {
   outline: none;
 }
 
+/* Bouton match */
 .btn-match {
   position: fixed;
   bottom: 20px;
@@ -313,8 +318,8 @@ body.inscription::after {
   bottom: 0;
   left: 0;
   width: 100vw;
-  height: 120px;
+  height: 140px;
   background: #000;
-  z-index: 0;
+  z-index: 9999;
   pointer-events: none;
 }
