@@ -1,16 +1,43 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
 
-/* === ACCUEIL === */
-body.home {
+/* === GLOBAL RESET & BASE === */
+html, body {
   margin: 0;
   padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scroll vertical autorisé si besoin */
+  background-color: #000000; /* Fond noir global */
+  color: white;
+  font-family: 'Orbitron', sans-serif;
+  border: none;
+  outline: none;
+}
+
+/* Conteneur principal pour toutes les pages */
+.main-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background-color: transparent !important;
+}
+
+/* Forcer transparence partout sauf où background est voulu */
+div, section, form, footer, .footer, .bottom-bar {
+  background-color: transparent !important;
+  position: relative !important;
+  bottom: auto !important;
+}
+
+/* === PAGE ACCUEIL === */
+body.home {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
-  background: url('../images/background.jpg') center center no-repeat;
+  background: url('../images/background.jpg') center center no-repeat fixed;
   background-size: cover;
-  background-attachment: fixed;
-  font-family: 'Orbitron', sans-serif;
 }
 
 .welcome-text {
@@ -44,10 +71,8 @@ body.home {
   50%     { box-shadow: 0 0 20px #ff00ff, 0 0 40px #ff66ff; }
 }
 
-/* === TOKYO === */
+/* === PAGE TOKYO === */
 body.tokyo {
-  margin: 0;
-  padding: 0;
   height: 100vh;
   width: 100vw;
   overflow: hidden;
@@ -57,24 +82,24 @@ body.tokyo {
   background-repeat: no-repeat;
   background-size: contain;
   background-attachment: fixed;
-  font-family: 'Orbitron', sans-serif;
   position: relative;
 }
 
-/* === INSCRIPTION (Tokyo style) === */
+/* === PAGE INSCRIPTION (Tokyo style) === */
 body.inscription {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url('../img/fond-inscription-tokyo.jpg') no-repeat center center;
+  background: url('../img/fond-inscription-tokyo.jpg') no-repeat center center fixed;
   background-size: cover;
-  font-family: 'Orbitron', sans-serif;
-  position: relative;
   min-height: 100vh;
+  position: relative;
+  overflow: hidden;
 }
 
+/* Bloc principal formulaire inscription */
 .inscription-container {
-  background: transparent;
+  background: rgba(0, 0, 0, 0.5); /* Ajout de transparence sombre pour éviter blanc */
   padding: 30px 25px;
   border-radius: 20px;
   box-shadow: 0 0 20px #a64cff, 0 0 40px #6a00ff;
@@ -82,8 +107,9 @@ body.inscription {
   width: 90%;
   max-width: 360px;
   border: 2px solid #a64cff;
-  backdrop-filter: none;
   z-index: 10;
+  backdrop-filter: none;
+  color: white;
 }
 
 .inscription-container h1 {
@@ -102,7 +128,7 @@ body.inscription {
   font-size: 14px;
   border: 2px solid #6a00ff;
   border-radius: 12px;
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
   color: white;
 }
 
@@ -134,6 +160,19 @@ body.inscription {
   box-shadow: 0 0 20px #6a00ff, 0 0 40px #a64cff;
 }
 
+/* Éviter carré blanc en bas */
+body.inscription::after {
+  content: "";
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 140px;
+  background: #000;
+  z-index: 9999;
+  pointer-events: none;
+}
+
 /* === PAGE PARENTS SOLO === */
 body.page-parents {
   display: flex;
@@ -143,7 +182,8 @@ body.page-parents {
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
-  font-family: 'Orbitron', sans-serif;
+  height: 100vh;
+  width: 100vw;
 }
 
 .page-parents .inscription-container {
@@ -155,6 +195,7 @@ body.page-parents {
   width: 90%;
   max-width: 400px;
   animation: fadeIn 1s ease-out;
+  color: white;
 }
 
 .page-parents .inscription-container h1 {
@@ -263,61 +304,4 @@ body.page-parents {
   }
 
   .inscription-container h1 {
-    font-size: 24px;
-  }
-
-  .inscription-container button {
-    font-size: 16px;
-  }
-}
-
-/* === FADE OUT === */
-.fade-out {
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
-  pointer-events: none;
-}
-
-/* === GLOBAL FIX === */
-html, body {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background: #000;
-  width: 100%;
-  height: 100%;
-  border: none;
-  outline: none;
-}
-
-/* Bouton match */
-.btn-match {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #ff6dfb;
-  color: white;
-  padding: 14px 20px;
-  border-radius: 30px;
-  font-weight: bold;
-  text-decoration: none;
-  box-shadow: 0 0 15px #ffbaff;
-  z-index: 1000;
-  transition: 0.3s ease;
-}
-
-.btn-match:hover {
-  transform: scale(1.1);
-  background: #e855e0;
-}
-
-/* === CORRECTION CARRÉ BLANC BAS DE PAGE SUR INSCRIPTION === */
-body.inscription::after {
-  content: "";
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100vw;
-  height: 140px;
-  background: #000;
-  z-index: 9999
+    font-size: 24px
