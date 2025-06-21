@@ -1,65 +1,28 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Match - Affinix</title>
-  <style>
-    body, html {
-      height: 100%;
-      margin: 0; padding: 0;
-      font-family: Arial, sans-serif;
-      background: url('images/fond-tokyo.jpg') no-repeat center center fixed;
-      background-size: cover;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: white;
-    }
-    .match-container {
-      background: rgba(0,0,0,0.6);
-      border-radius: 20px;
-      padding: 30px;
-      width: 350px;
-      max-width: 90vw;
-      text-align: center;
-      box-shadow: 0 0 20px #aa44ff;
-      user-select: none;
-    }
-    .profile-placeholder {
-      width: 300px;
-      height: 400px;
-      background: #222;
-      border-radius: 15px;
-      box-shadow: 0 0 15px #bb33ee;
-      margin: 0 auto 20px auto;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 1.5rem;
-      color: #888;
-    }
-    #profileType {
-      font-weight: bold;
-      font-size: 1.1rem;
-      color: #ff99ff;
-      text-shadow: 0 0 8px #aa44ff;
-    }
-  </style>
-</head>
-<body>
-  <div class="match-container">
-    <div class="profile-placeholder">Pas de profil</div>
-    <div id="profileType">Relation: - | Rencontre: -</div>
-  </div>
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
-  <script>
-    function afficherTypeRelation() {
-      const typeRelation = localStorage.getItem('typeRelation') || '-';
-      const rencontre = localStorage.getItem('rencontre') || '-';
-      document.getElementById('profileType').textContent = `Relation: ${typeRelation} | Rencontre: ${rencontre}`;
+const auth = getAuth();
+const db = getFirestore();
+
+async function afficherProfils() {
+  const currentUser = auth.currentUser;
+  const querySnapshot = await getDocs(collection(db, "users"));
+
+  querySnapshot.forEach((doc) => {
+    if (doc.id !== currentUser.uid) { // Exclure le profil connecté
+      const profil = doc.data();
+      if (profil.email !== "neela@example.com") { // Exclure "Neela" si jamais
+        // Affiche le profil dans ton DOM
+        console.log(profil);
+      }
     }
-    afficherTypeRelation();
-  </script>
-</body>
-</html>
+  });
+}
+
+auth.onAuthStateChanged(user => {
+  if (user) {
+    afficherProfils();
+  } else {
+    console.log("Utilisateur non connecté");
+  }
+});
