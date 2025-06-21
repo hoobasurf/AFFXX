@@ -9,6 +9,16 @@ const errorMessage = document.getElementById('error-message');
 
 let isLogin = true; // true = connexion, false = inscription
 
+// Mapping simple des erreurs Firebase en français
+const errorMap = {
+  'auth/invalid-email': "Email invalide.",
+  'auth/user-disabled': "Utilisateur désactivé.",
+  'auth/user-not-found': "Utilisateur non trouvé.",
+  'auth/wrong-password': "Mot de passe incorrect.",
+  'auth/email-already-in-use': "Email déjà utilisé.",
+  'auth/weak-password': "Mot de passe trop faible (min 6 caractères)."
+};
+
 toggleLink.addEventListener('click', () => {
   isLogin = !isLogin;
   if (isLogin) {
@@ -23,7 +33,9 @@ toggleLink.addEventListener('click', () => {
   errorMessage.textContent = "";
 });
 
-submitBtn.addEventListener('click', () => {
+submitBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+
   const email = emailInput.value.trim();
   const password = passwordInput.value.trim();
 
@@ -33,31 +45,32 @@ submitBtn.addEventListener('click', () => {
   }
 
   errorMessage.textContent = "";
+  submitBtn.disabled = true;
 
   if (isLogin) {
     // Connexion
     signInWithEmailAndPassword(auth, email, password)
-      .then(userCredential => {
-        // Connecté avec succès
-        window.location.href = 'profil.html'; // redirige vers profil
+      .then(() => {
+        window.location.href = 'profil.html';
       })
       .catch(error => {
-        errorMessage.textContent = error.message;
+        errorMessage.textContent = errorMap[error.code] || error.message;
+        submitBtn.disabled = false;
       });
   } else {
     // Inscription
     createUserWithEmailAndPassword(auth, email, password)
-      .then(userCredential => {
-        // Utilisateur créé, redirige vers profil
+      .then(() => {
         window.location.href = 'profil.html';
       })
       .catch(error => {
-        errorMessage.textContent = error.message;
+        errorMessage.textContent = errorMap[error.code] || error.message;
+        submitBtn.disabled = false;
       });
   }
 });
 
-// Si déjà connecté, rediriger direct vers profil
+// Redirection si déjà connecté
 onAuthStateChanged(auth, user => {
   if (user) {
     window.location.href = 'profil.html';
