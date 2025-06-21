@@ -5,11 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Match - Affinix</title>
   <style>
-    /* --- RESET & BASE --- */
+    /* RESET & BASE */
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
     }
     body, html {
       height: 100%;
@@ -22,9 +21,8 @@
       align-items: center;
       flex-direction: column;
       position: relative;
+      background-attachment: fixed;
     }
-
-    /* --- CONTAINER --- */
     .match-container {
       position: relative;
       width: 350px;
@@ -40,8 +38,6 @@
       padding: 20px;
       user-select: none;
     }
-
-    /* --- PROFILE CARD --- */
     .profile-card {
       width: 300px;
       height: 400px;
@@ -50,159 +46,4 @@
       box-shadow: 0 0 15px #bb33ee;
       background-size: cover;
       background-position: center;
-      position: relative;
-      cursor: grab;
-      transition: transform 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      color: #eee;
-      padding: 15px;
-      font-size: 1.1rem;
-      text-shadow: 0 0 10px #d63cff;
-    }
-
-    /* --- BUTTONS --- */
-    .buttons {
-      display: flex;
-      gap: 40px;
-      margin-top: 15px;
-    }
-
-    button {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      border: none;
-      font-size: 2.5rem;
-      cursor: pointer;
-      box-shadow: 0 0 15px #ff33dd;
-      color: white;
-      transition: box-shadow 0.3s ease;
-      background: linear-gradient(45deg, #ff33dd, #8833ff);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    button:hover {
-      box-shadow:
-        0 0 20px #ff55ee,
-        0 0 30px #aa66ff,
-        0 0 40px #ff55ee,
-        0 0 50px #aa66ff;
-    }
-
-    /* Icon colors */
-    .reject {
-      background: linear-gradient(45deg, #ff3366, #cc2255);
-      box-shadow: 0 0 15px #ff3366;
-    }
-    .accept {
-      background: linear-gradient(45deg, #33ffcc, #22ccaa);
-      box-shadow: 0 0 15px #33ffcc;
-    }
-
-    /* --- PREVENT IMAGE SHIFT --- */
-    /* Important to keep background fixed and centered without shifting */
-    body, html {
-      background-attachment: fixed;
-    }
-
-  </style>
-</head>
-<body>
-  <div class="match-container">
-    <div class="profile-card" id="profileCard" style="background-image:url('images/profil1.jpg')">
-      <div class="profile-info">
-        <h2>Neela, 10 ans</h2>
-        <p>J’aime les licornes et les aventures magiques.</p>
-      </div>
-    </div>
-
-    <div class="buttons">
-      <button class="reject" id="rejectBtn" aria-label="Refuser">&times;</button>
-      <button class="accept" id="acceptBtn" aria-label="Accepter">&#10084;</button>
-    </div>
-  </div>
-
-  <script>
-    // Swipe functionality on profile card
-    const card = document.getElementById('profileCard');
-
-    let startX = 0;
-    let currentX = 0;
-    let isDragging = false;
-
-    card.addEventListener('pointerdown', (e) => {
-      isDragging = true;
-      startX = e.clientX;
-      card.style.transition = 'none';
-      card.setPointerCapture(e.pointerId);
-    });
-
-    card.addEventListener('pointermove', (e) => {
-      if (!isDragging) return;
-      currentX = e.clientX - startX;
-      card.style.transform = `translateX(${currentX}px) rotate(${currentX * 0.1}deg)`;
-    });
-
-    function resetCard() {
-      card.style.transition = 'transform 0.3s ease';
-      card.style.transform = 'translateX(0) rotate(0)';
-      currentX = 0;
-    }
-
-    card.addEventListener('pointerup', (e) => {
-      isDragging = false;
-      card.style.transition = 'transform 0.3s ease';
-
-      if (currentX > 100) {
-        // Accept swipe
-        card.style.transform = 'translateX(1000px) rotate(20deg)';
-        console.log('Accepté par swipe');
-        // TODO: ajoute ici la fonction accept
-        setTimeout(resetCard, 400);
-      } else if (currentX < -100) {
-        // Reject swipe
-        card.style.transform = 'translateX(-1000px) rotate(-20deg)';
-        console.log('Refusé par swipe');
-        // TODO: ajoute ici la fonction refuse
-        setTimeout(resetCard, 400);
-      } else {
-        resetCard();
-      }
-    });
-
-    card.addEventListener('pointercancel', () => {
-      if (isDragging) {
-        resetCard();
-        isDragging = false;
-      }
-    });
-
-    card.addEventListener('pointerleave', (e) => {
-      if (isDragging && e.pointerType === 'mouse') {
-        // Quand la souris sort de la carte, on annule le drag
-        resetCard();
-        isDragging = false;
-      }
-    });
-
-    // Boutons clique
-    document.getElementById('acceptBtn').addEventListener('click', () => {
-      console.log('Accepté par bouton');
-      // TODO: action accepter
-      card.style.transition = 'transform 0.3s ease';
-      card.style.transform = 'translateX(1000px) rotate(20deg)';
-      setTimeout(resetCard, 400);
-    });
-    document.getElementById('rejectBtn').addEventListener('click', () => {
-      console.log('Refusé par bouton');
-      // TODO: action refuser
-      card.style.transition = 'transform 0.3s ease';
-      card.style.transform = 'translateX(-1000px) rotate(-20deg)';
-      setTimeout(resetCard, 400);
-    });
-  </script>
-</body>
-</html>
+      position:
