@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
   <style>
-    body {
+    body.match {
       margin: 0;
       padding: 0;
       font-family: 'Orbitron', sans-serif;
@@ -15,10 +15,9 @@
       color: white;
       overflow: hidden;
       height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      width: 100vw;
+      position: relative;
+      transform: none !important;
     }
     #card-deck {
       position: relative;
@@ -105,9 +104,9 @@
     }
   </style>
 </head>
-<body>
+<body class="match">
   <div id="card-deck">
-    <!-- Cartes seront insérées ici par JS -->
+    <!-- Cartes insérées par JS -->
   </div>
   <div class="buttons">
     <button id="btn-refuse" aria-label="Refuser (croix gauche)">✖</button>
@@ -116,7 +115,6 @@
 
   <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
   <script>
-    // Exemple cartes (remplace par ton contenu réel)
     const cardsData = [
       { id: 1, name: 'Alice', img: 'img/user1.jpg' },
       { id: 2, name: 'Bob', img: 'img/user2.jpg' },
@@ -179,7 +177,6 @@
     hammertime.get('pan').set({ direction: Hammer.DIRECTION_HORIZONTAL });
 
     let isDragging = false;
-    let startX = 0;
     let currentCard = null;
 
     function resetCard(card) {
@@ -191,7 +188,6 @@
       if (currentIndex < 0) return;
       currentCard = cards[currentIndex];
       isDragging = true;
-      startX = ev.deltaX;
       currentCard.style.transition = 'none';
     });
 
