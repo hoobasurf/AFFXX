@@ -1,298 +1,46 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+/* === STYLES POUR TEST DES SALLES AFFINIX === */
 
-/* === GLOBAL RESET & BASE === */
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-  overflow-x: hidden;
-  overflow-y: auto; /* Scroll vertical autorisé si besoin */
-  background-color: #000000; /* Fond noir global */
-  color: white;
-  font-family: 'Orbitron', sans-serif;
-  border: none;
-  outline: none;
-}
-
-/* Conteneur principal pour toutes les pages */
-.main-container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  background-color: transparent !important;
-}
-
-/* Forcer transparence partout sauf où background est voulu */
-div, section, form, footer, .footer, .bottom-bar {
-  background-color: transparent !important;
-  position: relative !important;
-  bottom: auto !important;
-}
-
-/* === PAGE ACCUEIL === */
-body.home {
+.salle {
   height: 100vh;
   width: 100vw;
-  overflow: hidden;
-  background: url('../images/background.jpg') center center no-repeat fixed;
-  background-size: cover;
-}
-
-.welcome-text {
-  position: absolute;
-  top: 10%;
-  width: 100%;
-  text-align: center;
-  font-size: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 32px;
+  font-weight: bold;
+  text-shadow: 0 0 10px currentColor;
+  transition: all 1s ease-in-out;
+  animation: fadeZoom 2s ease;
   color: white;
-  text-shadow: 0 0 10px #ff66ff;
 }
 
-.enter-button {
-  position: absolute;
-  bottom: 50px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 20px 50px;
-  font-size: 26px;
+@keyframes fadeZoom {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.rencontre-amicale {
+  background: linear-gradient(135deg, #00ffff, #003333);
+  color: #00ffff;
+}
+
+.relation-serieuse {
+  background: linear-gradient(135deg, #ff66ff, #330033);
   color: #ff66ff;
-  background-color: rgba(0, 0, 0, 0.4);
-  border: 2px solid #ff00ff;
-  border-radius: 12px;
-  cursor: pointer;
-  animation: neonPulse 2s infinite;
-  box-shadow: 0 0 12px #ff00ff, 0 0 25px #ff66ff;
 }
 
-@keyframes neonPulse {
-  0%, 100% { box-shadow: 0 0 12px #ff00ff, 0 0 25px #ff66ff; }
-  50%     { box-shadow: 0 0 20px #ff00ff, 0 0 40px #ff66ff; }
+.rencontre-fun {
+  background: linear-gradient(135deg, #ffcc00, #332b00);
+  color: #ffcc00;
 }
 
-/* === PAGE TOKYO === */
-body.tokyo {
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
-  background-color: #000000;
-  background-image: url('../images/fond-tokyo.jpg');
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-attachment: fixed;
-  position: relative;
-}
-
-/* === PAGE INSCRIPTION (Tokyo style) === */
-body.inscription {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: url('../img/fond-inscription-tokyo.jpg') no-repeat center center fixed;
-  background-size: cover;
-  min-height: 100vh;
-  position: relative;
-  overflow: hidden !important; /* empêche scroll vertical */
-}
-
-/* Bloc principal formulaire inscription */
-.inscription-container {
-  background: rgba(0, 0, 0, 0.5); /* Ajout de transparence sombre pour éviter blanc */
-  padding: 30px 25px;
-  border-radius: 20px;
-  box-shadow: 0 0 20px #a64cff, 0 0 40px #6a00ff;
-  text-align: center;
-  width: 90%;
-  max-width: 360px;
-  border: 2px solid #a64cff;
-  z-index: 10;
-  backdrop-filter: none;
-  color: white;
-}
-
-.inscription-container h1 {
-  margin-bottom: 15px;
-  font-size: 28px;
-  color: #e0e0ff;
-  text-shadow: 0 0 10px #ff66ff;
-}
-
-.inscription-container input,
-.inscription-container textarea,
-.inscription-container select {
-  width: 100%;
-  margin-bottom: 15px;
-  padding: 10px;
-  font-size: 14px;
-  border: 2px solid #6a00ff;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-}
-
-.inscription-container textarea {
-  resize: none;
-  height: 70px;
-}
-
-.zone-search {
-  display: flex;
-  gap: 10px;
-}
-
-.inscription-container button {
-  width: 100%;
-  padding: 12px;
-  font-size: 18px;
-  background: #6a00ff;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  box-shadow: 0 0 15px #6a00ff, 0 0 30px #a64cff;
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
-}
-
-.inscription-container button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px #6a00ff, 0 0 40px #a64cff;
-}
-
-/* Suppression complète du pseudo-élément carré blanc/noir en bas */
-body.inscription::after {
-  content: none !important;
-  display: none !important;
-  background: transparent !important;
-}
-
-/* Forcer à masquer toute barre ou footer en bas */
-footer, .footer, .bottom-bar {
-  display: none !important;
-  background: transparent !important;
-  position: fixed !important;
-  bottom: 0 !important;
-  z-index: 99999 !important;
-}
-
-/* === PAGE PARENTS SOLO === */
-body.page-parents {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-image: url('../images/fond-tokyo.jpg');
-  background-size: cover;
-  background-position: center center;
-  background-attachment: fixed;
-  height: 100vh;
-  width: 100vw;
-}
-
-.page-parents .inscription-container {
-  background: rgba(0, 0, 0, 0.6);
-  padding: 30px;
-  border-radius: 20px;
-  box-shadow: 0 0 20px #ff3366, 0 0 40px #ff99aa;
-  text-align: center;
-  width: 90%;
-  max-width: 400px;
-  animation: fadeIn 1s ease-out;
-  color: white;
-}
-
-.page-parents .inscription-container h1 {
-  font-size: 28px;
-  color: #ff99aa;
-  text-shadow: 0 0 8px #ff3366;
-  margin-bottom: 20px;
-}
-
-.page-parents .inscription-container button {
-  padding: 12px 20px;
-  font-size: 16px;
-  background-color: #ff3366;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  box-shadow: 0 0 10px #ff3366, 0 0 20px #ff99aa;
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
-}
-
-.page-parents .inscription-container button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 15px #ff3366, 0 0 30px #ff99aa;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* === PANNEAUX (VILLE) === */
-.panels-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  width: 90%;
-  max-width: 900px;
-  z-index: 5;
-}
-
-.panel {
-  min-width: 140px;
-  padding: 12px 18px;
-  text-align: center;
-  font-size: 14px;
-  color: white;
-  border-radius: 12px;
-  border: 2px solid currentColor;
-  cursor: pointer;
-  background-color: rgba(0, 0, 0, 0.5);
-  transition: all 0.3s ease-in-out;
-  box-shadow: 0 0 8px currentColor;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.panel[onclick*="rencontre-amicale"] { color: #00ffff; }
-.panel[onclick*="relation-serieuse"] { color: #ff66ff; }
-.panel[onclick*="rencontre-fun"]     { color: #ffcc00; }
-.panel[onclick*="parents"]           { color: #ff3366; }
-.panel[onclick*="retour"]            { color: #66ff66; }
-.panel[onclick*="createur"]          { color: #9966ff; }
-
-.panel:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 15px 5px currentColor, 0 0 25px 10px currentColor;
-}
-
-.panel.clicked {
-  animation: neon
-html, body {
-  overflow-x: hidden;
-  margin: 0;
-  padding: 0;
-  width: 100vw;
-  height: 100vh;
-}
-
-transform: none !important;
-
-  /* === PAGE MATCH FIX FOND === */
-body.match {
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  background: url('../images/fond-tokyo.jpg') center center no-repeat fixed;
-  background-size: cover;
-  position: relative;
-  transform: none !important;
+.parents-solos {
+  background: linear-gradient(135deg, #ff3366, #330000);
+  color: #ff3366;
 }
