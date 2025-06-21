@@ -1,96 +1,166 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Bienvenue sur Affinix</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+
     body {
-      background: #000010;
-      color: white;
+      margin: 0;
+      background-color: #0a001f;
+      color: #ff4fc4;
       font-family: 'Orbitron', sans-serif;
+      overflow-x: hidden;
+      height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
+      padding-top: 40px;
     }
-    .welcome-text {
-      font-size: 2.5rem;
-      margin-bottom: 40px;
-      opacity: 0;
-      animation: fadeIn 2s forwards 0.3s;
-      text-shadow:
-         0 0 5px #8f8fff,
-         0 0 10px #8f8fff,
-         0 0 20px #8f8fff;
-    }
-    .enter-button {
-      padding: 20px 60px;
-      font-size: 1.5rem;
-      border: none;
-      border-radius: 40px;
-      cursor: pointer;
-      background: linear-gradient(270deg, #ff4fc4, #6a5aff, #6affc1, #ff4fc4);
-      background-size: 800% 800%;
-      color: white;
-      box-shadow:
-        0 0 15px #ff4fc4,
-        0 0 30px #6a5aff,
-        0 0 45px #6affc1;
-      animation: fadeIn 2s forwards 1.3s, galaxyGlow 8s linear infinite;
-      opacity: 0;
-      transition: transform 0.2s ease;
+
+    /* Conteneur fixe en haut */
+    .welcome-container {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2.2rem;
+      letter-spacing: 0.15em;
+      white-space: nowrap;
+      display: flex;
+      justify-content: center;
       user-select: none;
+      z-index: 10;
     }
-    .enter-button:hover {
-      transform: scale(1.05);
-      box-shadow:
-        0 0 25px #ff4fc4,
-        0 0 45px #6a5aff,
-        0 0 60px #6affc1,
-        0 0 80px #ff4fc4;
+
+    .letter {
+      opacity: 0;
+      color: #ff4fc4;
+      text-shadow:
+        0 0 5px #ff4fc4,
+        0 0 10px #c700d6,
+        0 0 20px #c700d6,
+        0 0 30px #ff4fc4;
+      animation: starAppear 0.5s forwards;
+      filter: drop-shadow(0 0 5px #ff4fc4);
+      transform-origin: center bottom;
     }
-    @keyframes fadeIn {
-      to {
+
+    @keyframes starAppear {
+      0% {
+        opacity: 0;
+        transform: scale(0) rotate(0deg);
+        filter: drop-shadow(0 0 0 #ff4fc4);
+      }
+      50% {
         opacity: 1;
+        transform: scale(1.3) rotate(20deg);
+        filter: drop-shadow(0 0 10px #ff4fc4);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+        filter: drop-shadow(0 0 15px #ff4fc4);
       }
     }
-    @keyframes galaxyGlow {
-      0% {
+
+    /* Bouton centré */
+    .enter-button {
+      margin-top: 160px;
+      padding: 18px 60px;
+      font-size: 1.6rem;
+      border: none;
+      border-radius: 35px;
+      cursor: pointer;
+      background: linear-gradient(
+        270deg,
+        #ff4fc4,
+        #c700d6,
+        #9b00cc,
+        #ff4fc4
+      );
+      background-size: 600% 600%;
+      color: white;
+      box-shadow:
+        0 0 20px #ff4fc4,
+        0 0 40px #c700d6,
+        0 0 60px #9b00cc;
+      animation: neonGlow 4s ease-in-out infinite;
+      transition: transform 0.2s ease;
+      user-select: none;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      opacity: 0;
+      animation-fill-mode: forwards;
+      animation-name: fadeInButton, neonGlow;
+      animation-duration: 1.5s, 4s;
+      animation-delay: 3s, 0s;
+      animation-timing-function: ease, ease-in-out;
+      animation-iteration-count: 1, infinite;
+    }
+
+    .enter-button:hover {
+      transform: scale(1.08);
+      box-shadow:
+        0 0 30px #ff4fc4,
+        0 0 50px #c700d6,
+        0 0 70px #9b00cc;
+    }
+
+    @keyframes neonGlow {
+      0%, 100% {
         background-position: 0% 50%;
         box-shadow:
-          0 0 15px #ff4fc4,
-          0 0 30px #6a5aff,
-          0 0 45px #6affc1;
+          0 0 20px #ff4fc4,
+          0 0 40px #c700d6,
+          0 0 60px #9b00cc;
       }
       50% {
         background-position: 100% 50%;
         box-shadow:
-          0 0 25px #ff4fc4,
-          0 0 45px #6a5aff,
-          0 0 60px #6affc1;
+          0 0 35px #ff4fc4,
+          0 0 60px #c700d6,
+          0 0 90px #9b00cc;
       }
-      100% {
-        background-position: 0% 50%;
-        box-shadow:
-          0 0 15px #ff4fc4,
-          0 0 30px #6a5aff,
-          0 0 45px #6affc1;
+    }
+
+    @keyframes fadeInButton {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
       }
     }
   </style>
 </head>
-<body class="home">
+<body>
 
-  <div class="welcome-text">Bienvenue sur Affinix</div>
+  <div class="welcome-container" aria-label="Bienvenue sur Affinix" role="heading" aria-level="1"></div>
+
   <button class="enter-button" onclick="location.href='inscription.html'">Entrer</button>
 
-  <!-- Scripts JS -->
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-  <script src="email.js"></script>
+  <script>
+    // Texte à afficher lettre par lettre
+    const welcomeText = "Bienvenue sur Affinix";
+    const container = document.querySelector('.welcome-container');
+
+    // Fonction pour créer chaque lettre avec délai d'apparition
+    function createLetters(text) {
+      for(let i = 0; i < text.length; i++) {
+        const span = document.createElement('span');
+        span.textContent = text[i];
+        span.classList.add('letter');
+        span.style.animationDelay = `${i * 0.15}s`;
+        container.appendChild(span);
+      }
+    }
+
+    createLetters(welcomeText);
+  </script>
 
 </body>
 </html>
