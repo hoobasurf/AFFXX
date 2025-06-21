@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ville AFFINIX</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="salle-default">
+
+  <div class="panels-container">
+    <div class="panel" data-salle="amicale">💬 Rencontre Amicale</div>
+    <div class="panel" data-salle="serieuse">💖 Relation Sérieuse</div>
+    <div class="panel" data-salle="fun">🎉 Rencontre Fun</div>
+    <div class="panel" data-salle="parents">👨‍👩‍👧 Parents Solos</div>
+    <div class="panel" data-salle="passions">🎮 Univers Passions</div>
+    <div class="panel" data-salle="destin">🧬 Connexion Unique</div>
+  </div>
+
+  <script>
+    const panels = document.querySelectorAll('.panel');
+    panels.forEach(panel => {
+      panel.addEventListener('click', () => {
+        const salle = panel.dataset.salle;
+        document.body.className = `salle-${salle}`;
+      });
+    });
+  </script>
+
+</body>
+</html>
