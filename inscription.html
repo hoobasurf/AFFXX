@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Inscription - AFFINIX</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
+
   <!-- Préchargement de la police -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,7 +14,7 @@
     html, body {
       margin: 0;
       padding: 0;
-      background-color: #000; /* Fond noir par défaut */
+      background-color: #000;
       color: #fff;
       font-family: 'Orbitron', sans-serif;
     }
@@ -67,6 +67,7 @@
 
     input[type="text"],
     input[type="email"],
+    input[type="password"],
     textarea,
     input[type="range"] {
       width: 100%;
@@ -121,12 +122,20 @@
       background: #ff6dfb;
     }
 
+    #error-message {
+      color: #ff6dfb;
+      font-size: 13px;
+      margin-top: 10px;
+      text-align: center;
+    }
+
     @media (max-width: 400px) {
       h1 {
         font-size: 20px;
       }
       input[type="text"],
       input[type="email"],
+      input[type="password"],
       textarea {
         font-size: 13px;
       }
@@ -143,39 +152,35 @@
 
   <div class="inscription-wrapper">
     <h1>Rejoins AFFINIX</h1>
-    <form name="inscription" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/salle.html">
-      <input type="hidden" name="form-name" value="inscription" />
-      
-      <!-- Champ caché anti-bot -->
-      <div style="position: absolute; left: -9999px;">
-        <label>Ne pas remplir : <input name="bot-field" /></label>
-      </div>
 
+    <form id="firebase-form">
       <label for="prenom">Prénom ou Pseudo :</label>
-      <input type="text" id="prenom" name="prenom" required>
+      <input type="text" id="prenom" required>
 
       <label for="description">Décris-toi :</label>
-      <textarea id="description" name="description" rows="4" required></textarea>
+      <textarea id="description" rows="4" required></textarea>
 
       <label for="email">Email :</label>
-      <input type="email" id="email" name="email" required>
+      <input type="email" id="email" required>
+
+      <label for="password">Mot de passe :</label>
+      <input type="password" id="password" required>
 
       <label>Salles choisies :</label>
       <div class="checkbox-group">
-        <label><input type="checkbox" name="salles[]" value="relation-serieuse"> 💖 Relation sérieuse</label>
-        <label><input type="checkbox" name="salles[]" value="amicale"> 💬 Rencontre amicale</label>
-        <label><input type="checkbox" name="salles[]" value="fun"> 🎉 Rencontre fun</label>
-        <label><input type="checkbox" name="salles[]" value="parents"> 👨‍👩‍👧 Parents solos</label>
+        <label><input type="checkbox" name="salles" value="relation-serieuse"> 💖 Relation sérieuse</label>
+        <label><input type="checkbox" name="salles" value="amicale"> 💬 Rencontre amicale</label>
+        <label><input type="checkbox" name="salles" value="fun"> 🎉 Rencontre fun</label>
+        <label><input type="checkbox" name="salles" value="parents"> 👨‍👩‍👧 Parents solos</label>
       </div>
 
       <label for="departement">Ton département :</label>
-      <input type="text" id="departement" name="departement" placeholder="Ex : 75 ou Paris" required>
+      <input type="text" id="departement" placeholder="Ex : 75 ou Paris" required>
 
       <label for="rayon">Rayon de recherche (km) :</label>
       <input
         type="range"
         id="rayon"
-        name="rayon"
         min="5"
         max="100"
         value="50"
@@ -185,9 +190,53 @@
       <div class="rayon-output">🌐 Rayon actuel : <span id="rayonValue">50 km</span></div>
 
       <button type="submit">Valider mon inscription</button>
+      <div id="error-message"></div>
     </form>
   </div>
 
-  <script src="script.js"></script>
+  <script type="module">
+    import { auth, db, createUserWithEmailAndPassword, ref, set } from './firebase-init.js';
+
+    const form = document.getElementById('firebase-form');
+    const errorDiv = document.getElementById('error-message');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorDiv.textContent = "";
+
+      const prenom = document.getElementById('prenom').value.trim();
+      const description = document.getElementById('description').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const departement = document.getElementById('departement').value.trim();
+      const rayon = document.getElementById('rayon').value;
+
+      const salles = Array.from(document.querySelectorAll('input[name="salles"]:checked')).map(cb => cb.value);
+
+      if (!prenom || !description || !email || !password || !departement || salles.length === 0) {
+        errorDiv.textContent = "Veuillez remplir tous les champs obligatoires.";
+        return;
+      }
+
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const uid = userCredential.user.uid;
+
+        await set(ref(db, 'users/' + uid), {
+          prenom,
+          description,
+          email,
+          departement,
+          rayon,
+          salles
+        });
+
+        window.location.href = 'salle.html';
+      } catch (error) {
+        errorDiv.textContent = error.message;
+      }
+    });
+  </script>
+
 </body>
 </html>
