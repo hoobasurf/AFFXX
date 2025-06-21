@@ -285,3 +285,14 @@ html, body {
 }
 
 transform: none !important;
+
+  /* === PAGE MATCH FIX FOND === */
+body.match {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: url('../images/fond-tokyo.jpg') center center no-repeat fixed;
+  background-size: cover;
+  position: relative;
+  transform: none !important;
+}
