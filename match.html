@@ -5,45 +5,61 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Match - Affinix</title>
   <style>
-    /* RESET & BASE */
-    * {
-      box-sizing: border-box;
-      margin: 0; padding: 0;
-    }
     body, html {
       height: 100%;
-      overflow-x: hidden;
-      font-family: 'Arial', sans-serif;
+      margin: 0; padding: 0;
+      font-family: Arial, sans-serif;
       background: url('images/fond-tokyo.jpg') no-repeat center center fixed;
       background-size: cover;
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
-      position: relative;
-      background-attachment: fixed;
+      color: white;
     }
     .match-container {
-      position: relative;
-      width: 350px;
-      max-width: 90vw;
-      height: 550px;
       background: rgba(0,0,0,0.6);
       border-radius: 20px;
+      padding: 30px;
+      width: 350px;
+      max-width: 90vw;
+      text-align: center;
       box-shadow: 0 0 20px #aa44ff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px;
       user-select: none;
     }
-    .profile-card {
+    .profile-placeholder {
       width: 300px;
       height: 400px;
       background: #222;
       border-radius: 15px;
       box-shadow: 0 0 15px #bb33ee;
-      background-size: cover;
-      background-position: center;
-      position:
+      margin: 0 auto 20px auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      color: #888;
+    }
+    #profileType {
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: #ff99ff;
+      text-shadow: 0 0 8px #aa44ff;
+    }
+  </style>
+</head>
+<body>
+  <div class="match-container">
+    <div class="profile-placeholder">Pas de profil</div>
+    <div id="profileType">Relation: - | Rencontre: -</div>
+  </div>
+
+  <script>
+    function afficherTypeRelation() {
+      const typeRelation = localStorage.getItem('typeRelation') || '-';
+      const rencontre = localStorage.getItem('rencontre') || '-';
+      document.getElementById('profileType').textContent = `Relation: ${typeRelation} | Rencontre: ${rencontre}`;
+    }
+    afficherTypeRelation();
+  </script>
+</body>
+</html>
