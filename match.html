@@ -2,214 +2,92 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Match - AFFINIX</title>
+  <title>Affinix - Match</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet" />
   <style>
-    body.match {
+    html, body {
       margin: 0;
       padding: 0;
       font-family: 'Orbitron', sans-serif;
       background: url('img/fond-tokyo.jpg') no-repeat center center fixed;
       background-size: cover;
       color: white;
+      height: 100%;
       overflow: hidden;
-      height: 100vh;
+    }
+
+    .main-container {
+      position: relative;
       width: 100vw;
-      position: relative;
-      transform: none !important;
-    }
-    #card-deck {
-      position: relative;
-      width: 320px;
-      height: 480px;
-      max-width: 90vw;
-      max-height: 80vh;
-      margin-bottom: 30px;
-      user-select: none;
-      touch-action: pan-y;
-    }
-    .card {
-      position: absolute;
-      width: 320px;
-      height: 480px;
-      max-width: 90vw;
-      max-height: 80vh;
-      border-radius: 20px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      transition: box-shadow 0.3s ease;
-      will-change: transform;
-      cursor: grab;
-    }
-    .card:active {
-      cursor: grabbing;
-    }
-    .buttons {
-      width: 320px;
-      max-width: 90vw;
+      height: 100vh;
       display: flex;
-      justify-content: space-between;
-      margin-bottom: 20px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1;
     }
+
+    .profile-card {
+      position: relative;
+      width: 80vw;
+      max-width: 400px;
+      background-color: rgba(0, 0, 0, 0.6);
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 0 25px rgba(255, 0, 255, 0.4);
+      z-index: 2;
+    }
+
+    .profile-card img {
+      width: 100%;
+      border-radius: 15px;
+      margin-bottom: 15px;
+    }
+
+    .buttons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-around;
+      width: 200px;
+      z-index: 2;
+    }
+
     button {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
+      background: none;
       border: none;
-      font-size: 30px;
+      font-size: 40px;
       cursor: pointer;
-      box-shadow: 0 0 15px rgba(255,255,255,0.6);
-      transition: transform 0.2s ease;
-      user-select: none;
-    }
-    button:active {
-      transform: scale(0.9);
-    }
-    #btn-refuse {
-      background: #ff4444;
       color: white;
-      box-shadow: 0 0 20px #ff4444;
-      position: relative;
+      transition: transform 0.2s;
     }
-    #btn-refuse::after {
-      content: '✖ Gauche';
-      font-size: 12px;
-      position: absolute;
-      bottom: -20px;
-      left: 50%;
-      transform: translateX(-50%);
-      color: #ff4444;
-      font-weight: bold;
-      font-family: 'Orbitron', sans-serif;
-    }
-    #btn-like {
-      background: #ff6dfb;
-      color: white;
-      box-shadow: 0 0 20px #ff6dfb;
-      position: relative;
-    }
-    #btn-like::after {
-      content: '❤ Droite';
-      font-size: 12px;
-      position: absolute;
-      bottom: -20px;
-      left: 50%;
-      transform: translateX(-50%);
-      color: #ff6dfb;
-      font-weight: bold;
-      font-family: 'Orbitron', sans-serif;
+
+    button:hover {
+      transform: scale(1.2);
     }
   </style>
 </head>
-<body class="match">
-  <div id="card-deck">
-    <!-- Cartes insérées par JS -->
-  </div>
-  <div class="buttons">
-    <button id="btn-refuse" aria-label="Refuser (croix gauche)">✖</button>
-    <button id="btn-like" aria-label="Accepter (cœur droite)">❤</button>
+<body>
+  <div class="main-container">
+    <div class="profile-card">
+      <img src="img/profile1.jpg" alt="Profil" />
+      <h2>Nom du profil</h2>
+      <p>Description courte du profil ici.</p>
+    </div>
+    <div class="buttons">
+      <button id="reject" title="Refuser">❌</button>
+      <button id="accept" title="Accepter">❤️</button>
+    </div>
   </div>
 
-  <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
   <script>
-    const cardsData = [
-      { id: 1, name: 'Alice', img: 'img/user1.jpg' },
-      { id: 2, name: 'Bob', img: 'img/user2.jpg' },
-      { id: 3, name: 'Carla', img: 'img/user3.jpg' }
-    ];
-
-    const cardDeck = document.getElementById('card-deck');
-    let currentIndex = cardsData.length - 1;
-
-    // Créer les cartes et les empiler
-    cardsData.forEach((card, index) => {
-      const div = document.createElement('div');
-      div.classList.add('card');
-      div.style.backgroundImage = `url(${card.img})`;
-      div.dataset.id = card.id;
-      div.style.zIndex = index;
-      cardDeck.appendChild(div);
+    // Exemple simple : console log au clic
+    document.getElementById('reject').addEventListener('click', () => {
+      console.log('Refusé');
     });
-
-    const cards = Array.from(document.querySelectorAll('.card'));
-
-    function saveChoice(cardId, choice) {
-      let history = JSON.parse(localStorage.getItem('swipeHistory')) || [];
-      history.push({ id: cardId, choice: choice, date: new Date().toISOString() });
-      localStorage.setItem('swipeHistory', JSON.stringify(history));
-    }
-
-    function removeTopCard(choice) {
-      if (currentIndex < 0) return;
-      const card = cards[currentIndex];
-      const cardId = card.dataset.id;
-      saveChoice(cardId, choice);
-
-      card.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
-      card.style.opacity = '0';
-
-      if(choice === 'match') {
-        card.style.transform = 'translateX(100vw) rotate(30deg)';
-      } else {
-        card.style.transform = 'translateX(-100vw) rotate(-30deg)';
-      }
-
-      currentIndex--;
-      setTimeout(() => {
-        if (currentIndex < 0) {
-          alert('Fin des cartes');
-        }
-      }, 500);
-    }
-
-    document.getElementById('btn-like').addEventListener('click', () => {
-      removeTopCard('match');
-    });
-    document.getElementById('btn-refuse').addEventListener('click', () => {
-      removeTopCard('refus');
-    });
-
-    // Swipe Hammer.js
-    const hammertime = new Hammer(cardDeck);
-    hammertime.get('pan').set({ direction: Hammer.DIRECTION_HORIZONTAL });
-
-    let isDragging = false;
-    let currentCard = null;
-
-    function resetCard(card) {
-      card.style.transition = 'transform 0.3s ease';
-      card.style.transform = 'translateX(0) translateY(0) rotate(0deg)';
-    }
-
-    hammertime.on('panstart', ev => {
-      if (currentIndex < 0) return;
-      currentCard = cards[currentIndex];
-      isDragging = true;
-      currentCard.style.transition = 'none';
-    });
-
-    hammertime.on('panmove', ev => {
-      if (!isDragging || !currentCard) return;
-      const deltaX = ev.deltaX;
-      const rotate = deltaX / 15;
-      currentCard.style.transform = `translateX(${deltaX}px) translateY(${Math.abs(ev.deltaY) / 2}px) rotate(${rotate}deg)`;
-    });
-
-    hammertime.on('panend', ev => {
-      if (!isDragging || !currentCard) return;
-      isDragging = false;
-      const deltaX = ev.deltaX;
-      if (deltaX > 100) {
-        removeTopCard('match');
-      } else if (deltaX < -100) {
-        removeTopCard('refus');
-      } else {
-        resetCard(currentCard);
-      }
-      currentCard = null;
+    document.getElementById('accept').addEventListener('click', () => {
+      console.log('Accepté');
     });
   </script>
 </body>
