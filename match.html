@@ -8,212 +8,213 @@
   <style>
     body {
       margin: 0;
+      padding: 0;
       font-family: 'Orbitron', sans-serif;
-      background: #111;
+      background: url('img/fond-tokyo.jpg') no-repeat center center fixed;
+      background-size: cover;
       color: white;
+      overflow: hidden;
+      height: 100vh;
       display: flex;
       flex-direction: column;
-      height: 100vh;
-      overflow: hidden;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
     }
-
-    h1 {
-      margin: 20px 0 0 0;
-      font-size: 24px;
-      text-align: center;
-    }
-
-    #deck {
+    #card-deck {
       position: relative;
       width: 320px;
-      max-width: 90vw;
       height: 480px;
-      margin: 40px auto 20px auto;
-      perspective: 1000px;
-    }
-
-    .card {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 15px;
-      background: #222;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.7);
-      border: 3px solid #ff6dfb; /* Couleur néon rose par défaut */
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      font-size: 20px;
-      text-align: center;
+      max-width: 90vw;
+      max-height: 80vh;
+      margin-bottom: 30px;
       user-select: none;
       touch-action: pan-y;
+    }
+    .card {
+      position: absolute;
+      width: 320px;
+      height: 480px;
+      max-width: 90vw;
+      max-height: 80vh;
+      border-radius: 20px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       transition: box-shadow 0.3s ease;
-    }
-
-    .card img {
-      max-width: 90%;
-      max-height: 60%;
-      border-radius: 10px;
-      margin-bottom: 15px;
-      object-fit: cover;
-    }
-
-    .card h2 {
-      margin: 0;
-      margin-bottom: 10px;
-    }
-
-    .card p {
-      margin: 0 15px;
-      font-size: 16px;
-      line-height: 1.3;
-    }
-
-    /* Effet sur le dessus */
-    .card.top {
-      box-shadow: 0 0 20px 6px #ff6dfb;
+      will-change: transform;
       cursor: grab;
     }
-
-    /* Boutons en bas */
-    .bottom-buttons {
-      position: fixed;
-      bottom: 20px;
-      width: 100%;
+    .card:active {
+      cursor: grabbing;
+    }
+    .buttons {
+      width: 320px;
+      max-width: 90vw;
       display: flex;
       justify-content: space-between;
-      padding: 0 20px;
-      box-sizing: border-box;
-      max-width: 480px;
-      margin: 0 auto;
-      left: 0;
-      right: 0;
+      margin-bottom: 20px;
     }
-
-    .btn-chat, .btn-match {
-      background: #ff6dfb;
-      color: white;
-      padding: 14px 20px;
-      border-radius: 30px;
-      font-weight: bold;
-      text-decoration: none;
-      box-shadow: 0 0 15px #ffbaff;
-      transition: 0.3s ease;
+    button {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: none;
+      font-size: 30px;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(255,255,255,0.6);
+      transition: transform 0.2s ease;
       user-select: none;
+    }
+    button:active {
+      transform: scale(0.9);
+    }
+    #btn-refuse {
+      background: #ff4444;
+      color: white;
+      box-shadow: 0 0 20px #ff4444;
+      position: relative;
+    }
+    #btn-refuse::after {
+      content: '✖ Gauche';
+      font-size: 12px;
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #ff4444;
+      font-weight: bold;
       font-family: 'Orbitron', sans-serif;
     }
-
-    .btn-chat:hover, .btn-match:hover {
-      background: #e855e0;
-      transform: scale(1.1);
+    #btn-like {
+      background: #ff6dfb;
+      color: white;
+      box-shadow: 0 0 20px #ff6dfb;
+      position: relative;
     }
-
-    /* Responsive */
-    @media (max-width: 400px) {
-      #deck {
-        height: 400px;
-      }
-
-      .card {
-        font-size: 18px;
-      }
+    #btn-like::after {
+      content: '❤ Droite';
+      font-size: 12px;
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #ff6dfb;
+      font-weight: bold;
+      font-family: 'Orbitron', sans-serif;
     }
   </style>
 </head>
 <body>
-  <h1>Découvre tes matchs</h1>
-
-  <div id="deck">
-    <!-- Les cartes seront insérées ici dynamiquement -->
+  <div id="card-deck">
+    <!-- Cartes seront insérées ici par JS -->
+  </div>
+  <div class="buttons">
+    <button id="btn-refuse" aria-label="Refuser (croix gauche)">✖</button>
+    <button id="btn-like" aria-label="Accepter (cœur droite)">❤</button>
   </div>
 
-  <div class="bottom-buttons">
-    <a href="chat.html" class="btn-chat">💬 Chat</a>
-    <a href="match.html" class="btn-match">❤️ Match</a>
-  </div>
-
-  <!-- Hammer.js depuis CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
+  <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
   <script>
-    // Exemple simple de cartes à matcher
+    // Exemple cartes (remplace par ton contenu réel)
     const cardsData = [
-      { name: 'Alice', desc: 'Passionnée de musique et voyages.', img: 'img/alice.jpg' },
-      { name: 'Bob', desc: 'Aime les sports extrêmes et la nature.', img: 'img/bob.jpg' },
-      { name: 'Clara', desc: 'Artiste dans l’âme, adore peindre.', img: 'img/clara.jpg' },
-      { name: 'David', desc: 'Geek et fan de jeux vidéo.', img: 'img/david.jpg' }
+      { id: 1, name: 'Alice', img: 'img/user1.jpg' },
+      { id: 2, name: 'Bob', img: 'img/user2.jpg' },
+      { id: 3, name: 'Carla', img: 'img/user3.jpg' }
     ];
 
-    const deck = document.getElementById('deck');
+    const cardDeck = document.getElementById('card-deck');
+    let currentIndex = cardsData.length - 1;
 
-    // Crée et affiche les cartes
-    function createCards() {
-      cardsData.forEach((data, index) => {
-        const card = document.createElement('div');
-        card.classList.add('card');
-        if (index === 0) card.classList.add('top');
-        card.style.zIndex = cardsData.length - index;
-        card.innerHTML = `
-          <img src="${data.img}" alt="${data.name}" />
-          <h2>${data.name}</h2>
-          <p>${data.desc}</p>
-        `;
-        deck.appendChild(card);
-      });
+    // Créer les cartes et les empiler
+    cardsData.forEach((card, index) => {
+      const div = document.createElement('div');
+      div.classList.add('card');
+      div.style.backgroundImage = `url(${card.img})`;
+      div.dataset.id = card.id;
+      div.style.zIndex = index;
+      cardDeck.appendChild(div);
+    });
+
+    const cards = Array.from(document.querySelectorAll('.card'));
+
+    function saveChoice(cardId, choice) {
+      let history = JSON.parse(localStorage.getItem('swipeHistory')) || [];
+      history.push({ id: cardId, choice: choice, date: new Date().toISOString() });
+      localStorage.setItem('swipeHistory', JSON.stringify(history));
     }
 
-    createCards();
+    function removeTopCard(choice) {
+      if (currentIndex < 0) return;
+      const card = cards[currentIndex];
+      const cardId = card.dataset.id;
+      saveChoice(cardId, choice);
 
-    // Gestion des swipes avec Hammer.js
-    const topCard = () => deck.querySelector('.card.top');
+      card.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+      card.style.opacity = '0';
 
-    function removeTopCard() {
-      const card = topCard();
-      if (card) {
-        card.remove();
-        // Ajouter classe top à la suivante
-        const next = deck.querySelector('.card');
-        if (next) next.classList.add('top');
+      if(choice === 'match') {
+        card.style.transform = 'translateX(100vw) rotate(30deg)';
+      } else {
+        card.style.transform = 'translateX(-100vw) rotate(-30deg)';
       }
-    }
 
-    function initSwipe() {
-      let card = topCard();
-      if (!card) return;
-
-      const hammertime = new Hammer(card);
-
-      hammertime.on('pan', function(ev) {
-        card.style.transition = 'none';
-        const x = ev.deltaX;
-        const y = ev.deltaY;
-        const rotation = x / 20;
-        card.style.transform = `translate(${x}px, ${y}px) rotate(${rotation}deg)`;
-      });
-
-      hammertime.on('panend', function(ev) {
-        card.style.transition = 'transform 0.3s ease';
-
-        const x = ev.deltaX;
-        if (Math.abs(x) > 120) {
-          // Swipe validé
-          const direction = x > 0 ? 1 : -1;
-          card.style.transform = `translate(${direction * 1000}px, 0) rotate(${direction * 45}deg)`;
-          setTimeout(() => {
-            removeTopCard();
-            initSwipe();
-          }, 300);
-        } else {
-          // Revenir au centre
-          card.style.transform = 'translate(0,0) rotate(0)';
+      currentIndex--;
+      setTimeout(() => {
+        if (currentIndex < 0) {
+          alert('Fin des cartes');
         }
-      });
+      }, 500);
     }
 
-    // Initialise la gestion du swipe sur la carte du dessus
-    initSwipe();
+    document.getElementById('btn-like').addEventListener('click', () => {
+      removeTopCard('match');
+    });
+    document.getElementById('btn-refuse').addEventListener('click', () => {
+      removeTopCard('refus');
+    });
+
+    // Swipe Hammer.js
+    const hammertime = new Hammer(cardDeck);
+    hammertime.get('pan').set({ direction: Hammer.DIRECTION_HORIZONTAL });
+
+    let isDragging = false;
+    let startX = 0;
+    let currentCard = null;
+
+    function resetCard(card) {
+      card.style.transition = 'transform 0.3s ease';
+      card.style.transform = 'translateX(0) translateY(0) rotate(0deg)';
+    }
+
+    hammertime.on('panstart', ev => {
+      if (currentIndex < 0) return;
+      currentCard = cards[currentIndex];
+      isDragging = true;
+      startX = ev.deltaX;
+      currentCard.style.transition = 'none';
+    });
+
+    hammertime.on('panmove', ev => {
+      if (!isDragging || !currentCard) return;
+      const deltaX = ev.deltaX;
+      const rotate = deltaX / 15;
+      currentCard.style.transform = `translateX(${deltaX}px) translateY(${Math.abs(ev.deltaY) / 2}px) rotate(${rotate}deg)`;
+    });
+
+    hammertime.on('panend', ev => {
+      if (!isDragging || !currentCard) return;
+      isDragging = false;
+      const deltaX = ev.deltaX;
+      if (deltaX > 100) {
+        removeTopCard('match');
+      } else if (deltaX < -100) {
+        removeTopCard('refus');
+      } else {
+        resetCard(currentCard);
+      }
+      currentCard = null;
+    });
   </script>
 </body>
 </html>
