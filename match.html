@@ -1,164 +1,219 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Match - AFFINIX</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
   <style>
-    html, body {
+    body {
       margin: 0;
-      padding: 0;
-      height: 100%;
       font-family: 'Orbitron', sans-serif;
-      background: url('img/fond-tokyo.jpg') no-repeat center center fixed;
-      background-size: cover;
-      overflow: hidden;
-    }
-
-    .match-wrapper {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      padding: 20px;
-      box-sizing: border-box;
+      background: #111;
+      color: white;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
-      align-items: center;
-    }
-
-    .match-filtres {
-      background: rgba(0, 0, 0, 0.6);
-      color: #fff;
-      padding: 15px;
-      border-radius: 15px;
-      margin-bottom: auto;
-      text-align: center;
-      width: 100%;
-      max-width: 400px;
-    }
-
-    .profil-card {
-      width: 90%;
-      max-width: 300px;
-      height: 400px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      border: 2px solid #ff6dfb;
-      box-shadow: 0 0 15px #ffbaff;
-      backdrop-filter: blur(6px);
-      display: flex;
+      height: 100vh;
+      overflow: hidden;
       justify-content: center;
       align-items: center;
-      color: #fff;
+    }
+
+    h1 {
+      margin: 20px 0 0 0;
+      font-size: 24px;
+      text-align: center;
+    }
+
+    #deck {
+      position: relative;
+      width: 320px;
+      max-width: 90vw;
+      height: 480px;
+      margin: 40px auto 20px auto;
+      perspective: 1000px;
+    }
+
+    .card {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 15px;
+      background: #222;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.7);
+      border: 3px solid #ff6dfb; /* Couleur néon rose par défaut */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       font-size: 20px;
       text-align: center;
-      margin-bottom: 20px;
+      user-select: none;
+      touch-action: pan-y;
+      transition: box-shadow 0.3s ease;
     }
 
-    .swipe-buttons {
+    .card img {
+      max-width: 90%;
+      max-height: 60%;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      object-fit: cover;
+    }
+
+    .card h2 {
+      margin: 0;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      margin: 0 15px;
+      font-size: 16px;
+      line-height: 1.3;
+    }
+
+    /* Effet sur le dessus */
+    .card.top {
+      box-shadow: 0 0 20px 6px #ff6dfb;
+      cursor: grab;
+    }
+
+    /* Boutons en bas */
+    .bottom-buttons {
+      position: fixed;
+      bottom: 20px;
+      width: 100%;
       display: flex;
-      gap: 40px;
-      margin-bottom: 30px;
+      justify-content: space-between;
+      padding: 0 20px;
+      box-sizing: border-box;
+      max-width: 480px;
+      margin: 0 auto;
+      left: 0;
+      right: 0;
     }
 
-    .swipe-buttons button {
-      width: 60px;
-      height: 60px;
-      font-size: 24px;
-      border-radius: 50%;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 0 12px #fff;
-      background-color: #ff6dfb;
+    .btn-chat, .btn-match {
+      background: #ff6dfb;
       color: white;
-      transition: 0.3s;
+      padding: 14px 20px;
+      border-radius: 30px;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 0 15px #ffbaff;
+      transition: 0.3s ease;
+      user-select: none;
+      font-family: 'Orbitron', sans-serif;
     }
 
-    .swipe-buttons button:hover {
-      transform: scale(1.2);
+    .btn-chat:hover, .btn-match:hover {
+      background: #e855e0;
+      transform: scale(1.1);
     }
 
-    @media (max-width: 600px) {
-      .profil-card {
-        height: 300px;
-        font-size: 18px;
+    /* Responsive */
+    @media (max-width: 400px) {
+      #deck {
+        height: 400px;
       }
 
-      .swipe-buttons button {
-        width: 50px;
-        height: 50px;
-        font-size: 20px;
+      .card {
+        font-size: 18px;
       }
     }
   </style>
 </head>
 <body>
+  <h1>Découvre tes matchs</h1>
 
-  <div class="match-wrapper">
-    <div class="match-filtres">
-      <label for="typeRecherche">🔍 Type de match :</label>
-      <select id="typeRecherche" onchange="filtrerProfils()">
-        <option value="amicale">💬 Rencontre Amicale</option>
-        <option value="relation-serieuse">💖 Relation Sérieuse</option>
-        <option value="fun">🎉 Rencontre Fun</option>
-        <option value="parents">👨‍👩‍👧 Parents Solos</option>
-      </select>
-    </div>
-
-    <div class="profil-card" id="profilCard">
-      Chargement du profil...
-    </div>
-
-    <div class="swipe-buttons">
-      <button onclick="dislike()">❌</button>
-      <button onclick="like()">❤️</button>
-    </div>
+  <div id="deck">
+    <!-- Les cartes seront insérées ici dynamiquement -->
   </div>
 
+  <div class="bottom-buttons">
+    <a href="chat.html" class="btn-chat">💬 Chat</a>
+    <a href="match.html" class="btn-match">❤️ Match</a>
+  </div>
+
+  <!-- Hammer.js depuis CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
   <script>
-    const profils = {
-      'amicale': ['Amina, 25 ans - Paris', 'Lucas, 29 ans - Bordeaux'],
-      'relation-serieuse': ['Claire, 30 ans - Lyon', 'Rayan, 33 ans - Marseille'],
-      'fun': ['Léo, 22 ans - Lille', 'Sophie, 26 ans - Nantes'],
-      'parents': ['Julie, 35 ans - Toulouse', 'Thomas, 38 ans - Nice']
-    };
+    // Exemple simple de cartes à matcher
+    const cardsData = [
+      { name: 'Alice', desc: 'Passionnée de musique et voyages.', img: 'img/alice.jpg' },
+      { name: 'Bob', desc: 'Aime les sports extrêmes et la nature.', img: 'img/bob.jpg' },
+      { name: 'Clara', desc: 'Artiste dans l’âme, adore peindre.', img: 'img/clara.jpg' },
+      { name: 'David', desc: 'Geek et fan de jeux vidéo.', img: 'img/david.jpg' }
+    ];
 
-    let index = 0;
-    let currentType = 'amicale';
+    const deck = document.getElementById('deck');
 
-    function afficherProfil() {
-      const card = document.getElementById('profilCard');
-      const liste = profils[currentType];
-      if (index >= liste.length) {
-        card.innerText = '🎉 Plus de profils pour cette catégorie.';
-        return;
+    // Crée et affiche les cartes
+    function createCards() {
+      cardsData.forEach((data, index) => {
+        const card = document.createElement('div');
+        card.classList.add('card');
+        if (index === 0) card.classList.add('top');
+        card.style.zIndex = cardsData.length - index;
+        card.innerHTML = `
+          <img src="${data.img}" alt="${data.name}" />
+          <h2>${data.name}</h2>
+          <p>${data.desc}</p>
+        `;
+        deck.appendChild(card);
+      });
+    }
+
+    createCards();
+
+    // Gestion des swipes avec Hammer.js
+    const topCard = () => deck.querySelector('.card.top');
+
+    function removeTopCard() {
+      const card = topCard();
+      if (card) {
+        card.remove();
+        // Ajouter classe top à la suivante
+        const next = deck.querySelector('.card');
+        if (next) next.classList.add('top');
       }
-      card.innerText = liste[index];
     }
 
-    function like() {
-      index++;
-      afficherProfil();
+    function initSwipe() {
+      let card = topCard();
+      if (!card) return;
+
+      const hammertime = new Hammer(card);
+
+      hammertime.on('pan', function(ev) {
+        card.style.transition = 'none';
+        const x = ev.deltaX;
+        const y = ev.deltaY;
+        const rotation = x / 20;
+        card.style.transform = `translate(${x}px, ${y}px) rotate(${rotation}deg)`;
+      });
+
+      hammertime.on('panend', function(ev) {
+        card.style.transition = 'transform 0.3s ease';
+
+        const x = ev.deltaX;
+        if (Math.abs(x) > 120) {
+          // Swipe validé
+          const direction = x > 0 ? 1 : -1;
+          card.style.transform = `translate(${direction * 1000}px, 0) rotate(${direction * 45}deg)`;
+          setTimeout(() => {
+            removeTopCard();
+            initSwipe();
+          }, 300);
+        } else {
+          // Revenir au centre
+          card.style.transform = 'translate(0,0) rotate(0)';
+        }
+      });
     }
 
-    function dislike() {
-      index++;
-      afficherProfil();
-    }
-
-    function filtrerProfils() {
-      currentType = document.getElementById('typeRecherche').value;
-      index = 0;
-      afficherProfil();
-    }
-
-    window.onload = afficherProfil;
+    // Initialise la gestion du swipe sur la carte du dessus
+    initSwipe();
   </script>
-
 </body>
 </html>
