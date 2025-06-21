@@ -276,3 +276,11 @@ body.page-parents {
 
 .panel.clicked {
   animation: neon
+html, body {
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+}
+  
