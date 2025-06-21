@@ -2,67 +2,192 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Inscription Affinix</title>
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+  <title>Inscription - AFFINIX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Préchargement de la police -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
-      authDomain: "affinix-3a930.firebaseapp.com",
-      databaseURL: "https://affinix-3a930-default-rtdb.firebaseio.com",
-      projectId: "affinix-3a930",
-      storageBucket: "affinix-3a930.appspot.com",
-      messagingSenderId: "498829285833",
-      appId: "1:498829285833:web:344dacf5b6bcc818167018"
-    };
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #000; /* Fond noir par défaut */
+      color: #fff;
+      font-family: 'Orbitron', sans-serif;
+    }
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
+    body {
+      background: url('img/fond-inscription-tokyo.jpg') no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
 
-    window.registerUser = async () => {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      const typeRelation = document.getElementById("typeRelation").value;
-      const rencontre = document.getElementById("rencontre").value;
+    .guirlande {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      height: 100px;
+      background: url('img/guirlande-neon.png') repeat-x top;
+      pointer-events: none;
+      z-index: 1;
+    }
 
-      try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
+    .inscription-wrapper {
+      width: 100%;
+      max-width: 500px;
+      padding: 30px 20px;
+      background: transparent;
+      border: 2px solid #ff6dfb;
+      border-radius: 20px;
+      box-shadow: 0 0 20px #ff6dfb;
+      position: relative;
+      z-index: 2;
+    }
 
-        await setDoc(doc(db, "users", user.uid), {
-          email,
-          typeRelation,
-          rencontre,
-          createdAt: new Date()
-        });
+    h1 {
+      color: #ffbaff;
+      font-size: 24px;
+      margin-bottom: 20px;
+      text-shadow: 0 0 6px #ffbaff;
+      text-align: center;
+    }
 
-        alert("Inscription réussie !");
-      } catch (error) {
-        alert("Erreur inscription : " + error.message);
+    label {
+      display: block;
+      margin: 12px 0 6px;
+      font-size: 14px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea,
+    input[type="range"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    input[type="range"] {
+      accent-color: #ff6dfb;
+    }
+
+    .rayon-output {
+      margin-top: -8px;
+      margin-bottom: 15px;
+      font-size: 13px;
+      color: #ffbaff;
+    }
+
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      padding: 5px 0;
+      cursor: pointer;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #ff6dfb;
+    }
+
+    button {
+      background: #a86eff;
+      color: #fff;
+      font-size: 16px;
+      padding: 12px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ffbaff;
+      transition: 0.3s;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background: #ff6dfb;
+    }
+
+    @media (max-width: 400px) {
+      h1 {
+        font-size: 20px;
+      }
+      input[type="text"],
+      input[type="email"],
+      textarea {
+        font-size: 13px;
+      }
+      button {
+        font-size: 15px;
+        padding: 10px;
       }
     }
-  </script>
+  </style>
 </head>
 <body>
-  <h1>Inscription Affinix</h1>
-  <form onsubmit="event.preventDefault(); registerUser();">
-    <input type="email" id="email" placeholder="Email" required /><br/>
-    <input type="password" id="password" placeholder="Mot de passe" required /><br/>
-    <select id="typeRelation" required>
-      <option value="">Choisissez un type de relation</option>
-      <option value="amicale">Rencontre amicale</option>
-      <option value="serieuse">Relation sérieuse</option>
-      <option value="fun">Rencontre fun</option>
-    </select><br/>
-    <select id="rencontre" required>
-      <option value="">Choisissez un type de rencontre</option>
-      <option value="online">En ligne</option>
-      <option value="en_personne">En personne</option>
-    </select><br/>
-    <button type="submit">S’inscrire</button>
-  </form>
+
+  <div class="guirlande"></div>
+
+  <div class="inscription-wrapper">
+    <h1>Rejoins AFFINIX</h1>
+    <form name="inscription" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/salle.html">
+      <input type="hidden" name="form-name" value="inscription" />
+      
+      <!-- Champ caché anti-bot -->
+      <div style="position: absolute; left: -9999px;">
+        <label>Ne pas remplir : <input name="bot-field" /></label>
+      </div>
+
+      <label for="prenom">Prénom ou Pseudo :</label>
+      <input type="text" id="prenom" name="prenom" required>
+
+      <label for="description">Décris-toi :</label>
+      <textarea id="description" name="description" rows="4" required></textarea>
+
+      <label for="email">Email :</label>
+      <input type="email" id="email" name="email" required>
+
+      <label>Salles choisies :</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox" name="salles[]" value="relation-serieuse"> 💖 Relation sérieuse</label>
+        <label><input type="checkbox" name="salles[]" value="amicale"> 💬 Rencontre amicale</label>
+        <label><input type="checkbox" name="salles[]" value="fun"> 🎉 Rencontre fun</label>
+        <label><input type="checkbox" name="salles[]" value="parents"> 👨‍👩‍👧 Parents solos</label>
+      </div>
+
+      <label for="departement">Ton département :</label>
+      <input type="text" id="departement" name="departement" placeholder="Ex : 75 ou Paris" required>
+
+      <label for="rayon">Rayon de recherche (km) :</label>
+      <input
+        type="range"
+        id="rayon"
+        name="rayon"
+        min="5"
+        max="100"
+        value="50"
+        step="1"
+        oninput="document.getElementById('rayonValue').innerText = this.value + ' km';"
+      >
+      <div class="rayon-output">🌐 Rayon actuel : <span id="rayonValue">50 km</span></div>
+
+      <button type="submit">Valider mon inscription</button>
+    </form>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
