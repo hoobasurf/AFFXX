@@ -343,3 +343,76 @@ body.match {
   background: linear-gradient(135deg, #ff3366, #330000);
   color: #ff3366;
 }
+/* Animation pour bouton Entrer */
+@keyframes neonBlink {
+  0%, 100% {
+    box-shadow:
+      0 0 5px #ff4fc4,
+      0 0 10px #c700d6,
+      0 0 20px #ff4fc4;
+    color: #ff4fc4;
+    background-color: #1a001f;
+  }
+  50% {
+    box-shadow:
+      0 0 10px #c700d6,
+      0 0 20px #ff4fc4,
+      0 0 30px #c700d6;
+    color: #c700d6;
+    background-color: #2a002f;
+  }
+}
+
+.enter-button {
+  animation: neonBlink 2s ease-in-out infinite;
+  border-radius: 30px;
+  padding: 15px 50px;
+  font-size: 1.5rem;
+  border: none;
+  cursor: pointer;
+  background-color: #1a001f;
+  color: #ff4fc4;
+  transition: transform 0.3s ease;
+}
+.enter-button:hover {
+  transform: scale(1.05);
+}
+
+/* Animation pour bouton Voir la ville */
+@keyframes neonBlinkVille {
+  0%, 100% {
+    box-shadow:
+      0 0 5px #66ffcc,
+      0 0 10px #00cc99,
+      0 0 20px #66ffcc;
+    color: #66ffcc;
+    background-color: #002a25;
+  }
+  50% {
+    box-shadow:
+      0 0 10px #00cc99,
+      0 0 20px #66ffcc,
+      0 0 30px #00cc99;
+    color: #00cc99;
+    background-color: #004d40;
+  }
+}
+
+button.voir-ville {
+  animation: neonBlinkVille 2.5s ease-in-out infinite;
+  border-radius: 30px;
+  padding: 15px 50px;
+  font-size: 1.3rem;
+  border: none;
+  cursor: pointer;
+  background-color: #002a25;
+  color: #66ffcc;
+  transition: transform 0.3s ease;
+  display: block;
+  margin: 40px auto;
+}
+
+button.voir-ville:hover {
+  transform: scale(1.05);
+}
+  
