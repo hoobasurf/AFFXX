@@ -5,6 +5,83 @@
   <title>Bienvenue sur Affinix</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/styles.css">
+  <style>
+    body {
+      background: #000010;
+      color: white;
+      font-family: 'Orbitron', sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .welcome-text {
+      font-size: 2.5rem;
+      margin-bottom: 40px;
+      opacity: 0;
+      animation: fadeIn 2s forwards 0.3s;
+      text-shadow:
+         0 0 5px #8f8fff,
+         0 0 10px #8f8fff,
+         0 0 20px #8f8fff;
+    }
+    .enter-button {
+      padding: 20px 60px;
+      font-size: 1.5rem;
+      border: none;
+      border-radius: 40px;
+      cursor: pointer;
+      background: linear-gradient(270deg, #ff4fc4, #6a5aff, #6affc1, #ff4fc4);
+      background-size: 800% 800%;
+      color: white;
+      box-shadow:
+        0 0 15px #ff4fc4,
+        0 0 30px #6a5aff,
+        0 0 45px #6affc1;
+      animation: fadeIn 2s forwards 1.3s, galaxyGlow 8s linear infinite;
+      opacity: 0;
+      transition: transform 0.2s ease;
+      user-select: none;
+    }
+    .enter-button:hover {
+      transform: scale(1.05);
+      box-shadow:
+        0 0 25px #ff4fc4,
+        0 0 45px #6a5aff,
+        0 0 60px #6affc1,
+        0 0 80px #ff4fc4;
+    }
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+    @keyframes galaxyGlow {
+      0% {
+        background-position: 0% 50%;
+        box-shadow:
+          0 0 15px #ff4fc4,
+          0 0 30px #6a5aff,
+          0 0 45px #6affc1;
+      }
+      50% {
+        background-position: 100% 50%;
+        box-shadow:
+          0 0 25px #ff4fc4,
+          0 0 45px #6a5aff,
+          0 0 60px #6affc1;
+      }
+      100% {
+        background-position: 0% 50%;
+        box-shadow:
+          0 0 15px #ff4fc4,
+          0 0 30px #6a5aff,
+          0 0 45px #6affc1;
+      }
+    }
+  </style>
 </head>
 <body class="home">
 
