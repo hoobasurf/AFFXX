@@ -137,6 +137,13 @@
         padding: 10px;
       }
     }
+
+    #message {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #ffbaff;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -145,15 +152,18 @@
 
   <div class="inscription-wrapper">
     <h1>Rejoins AFFINIX</h1>
-    <form id="signup-form">
+    <form id="inscriptionForm">
       <label for="prenom">Prénom ou Pseudo :</label>
       <input type="text" id="prenom" name="prenom" required>
 
-      <label for="motdepasse">Mot de passe :</label>
-      <input type="password" id="motdepasse" name="motdepasse" required>
+      <label for="description">Décris-toi :</label>
+      <textarea id="description" name="description" rows="4" required></textarea>
 
       <label for="email">Email :</label>
       <input type="email" id="email" name="email" required>
+
+      <label for="password">Mot de passe :</label>
+      <input type="password" id="password" name="password" required>
 
       <label>Salles choisies :</label>
       <div class="checkbox-group">
@@ -162,9 +172,6 @@
         <label><input type="checkbox" name="salles" value="fun"> 🎉 Rencontre fun</label>
         <label><input type="checkbox" name="salles" value="parents"> 👨‍👩‍👧 Parents solos</label>
       </div>
-
-      <label for="description">Décris-toi :</label>
-      <textarea id="description" name="description" rows="4" required></textarea>
 
       <label for="departement">Ton département :</label>
       <input type="text" id="departement" name="departement" placeholder="Ex : 75 ou Paris" required>
@@ -184,79 +191,78 @@
 
       <button type="submit">Valider mon inscription</button>
     </form>
+
+    <div id="message"></div>
   </div>
 
   <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
   <script>
-    // Firebase config
+    // Config Firebase Affinix
     const firebaseConfig = {
       apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
       authDomain: "affinix-3a930.firebaseapp.com",
       projectId: "affinix-3a930",
       storageBucket: "affinix-3a930.appspot.com",
       messagingSenderId: "498829285833",
-      appId: "1:498829285833:web:xxxxxxxxxxxxxxxxxxxx" // Remplace par ton appId complet Firebase
+      appId: "1:498829285833:web:xxxxxxxxxxxxxxxxxxxxxx"
     };
 
-    // Initialize Firebase
+    // Initialiser Firebase
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
 
-    // Form submit handler
-    const form = document.getElementById('signup-form');
+    const form = document.getElementById('inscriptionForm');
+    const messageDiv = document.getElementById('message');
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      messageDiv.textContent = '';
 
       const prenom = form.prenom.value.trim();
-      const email = form.email.value.trim();
-      const motdepasse = form.motdepasse.value;
       const description = form.description.value.trim();
+      const email = form.email.value.trim();
+      const password = form.password.value;
       const departement = form.departement.value.trim();
       const rayon = form.rayon.value;
+      const salles = Array.from(form.querySelectorAll('input[name="salles"]:checked')).map(cb => cb.value);
 
-      // Récupérer les salles cochées
-      const sallesChoisies = [];
-      form.querySelectorAll('input[name="salles"]:checked').forEach(cb => {
-        sallesChoisies.push(cb.value);
-      });
-
-      if (!prenom || !email || !motdepasse) {
-        alert("Merci de remplir les champs obligatoires.");
-        return;
-      }
-      if (sallesChoisies.length === 0) {
-        alert("Merci de choisir au moins une salle.");
+      if (salles.length === 0) {
+        messageDiv.textContent = "Merci de choisir au moins une salle.";
         return;
       }
 
       try {
-        // Création du compte Firebase Auth
-        const userCredential = await auth.createUserWithEmailAndPassword(email, motdepasse);
-        const user = userCredential.user;
+        // Créer un utilisateur Firebase Authentication
+        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+        const uid = userCredential.user.uid;
 
-        // Enregistrer les données utilisateur dans Firestore
-        await db.collection('users').doc(user.uid).set({
+        // Sauvegarder les données supplémentaires dans Firestore
+        await db.collection('users').doc(uid).set({
           prenom,
-          email,
           description,
+          email,
           departement,
           rayon,
-          salles: sallesChoisies
+          salles
         });
 
-        alert("Inscription réussie !");
-        // Redirection vers la page salle (à adapter)
-        window.location.href = "salle.html";
-
+        messageDiv.style.color = '#80ff80';
+        messageDiv.textContent = "Inscription réussie ! Redirection...";
+        // Redirection vers la page connexion ou salle
+        setTimeout(() => {
+          window.location.href = 'connexion.html';
+        }, 1500);
       } catch (error) {
-        alert("Erreur inscription : " + error.message);
+        messageDiv.style.color = '#ff8080';
+        messageDiv.textContent = error.message;
       }
     });
   </script>
+
 </body>
 </html>
