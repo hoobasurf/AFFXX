@@ -5,144 +5,131 @@
   <title>Connexion - AFFINIX</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Police Orbitron -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
+      authDomain: "affinix-3a930.firebaseapp.com",
+      projectId: "affinix-3a930",
+      storageBucket: "affinix-3a930.appspot.com",
+      messagingSenderId: "498829285833",
+      appId: "1:498829285833:web:affinix-default-app"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+  </script>
 
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      background-color: #000;
-      color: #fff;
-      font-family: 'Orbitron', sans-serif;
-    }
-
     body {
-      background: url('img/fond-inscription-tokyo.jpg') no-repeat center center fixed;
-      background-size: cover;
-      min-height: 100vh;
+      background: #000;
+      color: #fff;
+      font-family: 'Arial', sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 20px;
-    }
-
-    .guirlande {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      height: 100px;
-      background: url('img/guirlande-neon.png') repeat-x top;
-      pointer-events: none;
-      z-index: 1;
+      height: 100vh;
+      margin: 0;
     }
 
     .connexion-wrapper {
-      width: 100%;
+      background: #1a1a1a;
+      padding: 30px;
+      border-radius: 10px;
+      border: 2px solid #ff6dfb;
+      box-shadow: 0 0 15px #ff6dfb;
+      width: 90%;
       max-width: 400px;
-      padding: 30px 20px;
-      background: transparent;
-      border: 2px solid #a86eff;
-      border-radius: 20px;
-      box-shadow: 0 0 20px #a86eff;
-      position: relative;
-      z-index: 2;
     }
 
-    h1 {
-      color: #ffbaff;
-      font-size: 24px;
-      margin-bottom: 20px;
-      text-shadow: 0 0 6px #ffbaff;
+    h2 {
       text-align: center;
+      color: #ffbaff;
+      margin-bottom: 20px;
     }
 
     label {
       display: block;
-      margin: 12px 0 6px;
-      font-size: 14px;
+      margin: 10px 0 5px;
     }
 
     input[type="email"],
     input[type="password"] {
       width: 100%;
       padding: 10px;
-      border-radius: 8px;
       border: none;
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
-
-    .remember-me {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      margin-top: 10px;
-    }
-
-    .remember-me input {
-      width: 16px;
-      height: 16px;
-      accent-color: #ff6dfb;
+      border-radius: 6px;
+      margin-bottom: 15px;
+      font-size: 16px;
     }
 
     button {
-      background: #a86eff;
-      color: #fff;
-      font-size: 16px;
+      width: 100%;
       padding: 12px;
+      font-size: 16px;
+      background: #a86eff;
+      color: white;
       border: none;
       border-radius: 30px;
       cursor: pointer;
-      box-shadow: 0 0 10px #ffbaff;
-      transition: 0.3s;
-      width: 100%;
-      margin-top: 20px;
     }
 
     button:hover {
       background: #ff6dfb;
     }
-
-    @media (max-width: 400px) {
-      h1 {
-        font-size: 20px;
-      }
-      input[type="email"],
-      input[type="password"] {
-        font-size: 13px;
-      }
-      button {
-        font-size: 15px;
-        padding: 10px;
-      }
-    }
   </style>
 </head>
 <body>
 
-  <div class="guirlande"></div>
-
   <div class="connexion-wrapper">
-    <h1>Connexion à AFFINIX</h1>
-    <form id="loginForm" action="/salle.html" method="POST">
-      <label for="email">Adresse email :</label>
-      <input type="email" id="email" name="email" required>
+    <h2>Connexion</h2>
+    <form id="connexionForm">
+      <label for="email">Email :</label>
+      <input type="email" id="email" required>
 
       <label for="password">Mot de passe :</label>
-      <input type="password" id="password" name="password" required>
+      <input type="password" id="password" required>
 
-      <div class="remember-me">
-        <input type="checkbox" id="remember" name="remember">
-        <label for="remember">Se souvenir de moi</label>
-      </div>
-
-      <button type="submit">Connexion</button>
+      <button type="submit">Se connecter</button>
     </form>
   </div>
+
+  <script>
+    document.getElementById("connexionForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      try {
+        const userCredential = await auth.signInWithEmailAndPassword(email, password);
+        const user = userCredential.user;
+
+        const doc = await db.collection("utilisateurs").doc(user.uid).get();
+        if (!doc.exists) {
+          alert("Profil utilisateur introuvable.");
+          return;
+        }
+
+        const data = doc.data();
+        const salles = data.salles || [];
+
+        if (salles.length === 0) {
+          alert("Aucune salle sélectionnée.");
+          return;
+        }
+
+        const redirection = salles[0]; // première salle cochée
+        window.location.href = `${redirection}.html`;
+
+      } catch (error) {
+        alert("Erreur : " + error.message);
+      }
+    });
+  </script>
 
 </body>
 </html>
