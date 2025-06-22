@@ -2,81 +2,147 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Connexion / Inscription - Affinix</title>
+  <title>Connexion - AFFINIX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Police Orbitron -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
+
   <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      color: #fff;
+      font-family: 'Orbitron', sans-serif;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: #121212;
-      color: #eee;
+      background: url('img/fond-inscription-tokyo.jpg') no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
+      padding: 20px;
     }
-    .container {
-      background: #222;
-      padding: 30px;
-      border-radius: 10px;
-      width: 320px;
-      box-shadow: 0 0 15px #aa44ff;
+
+    .guirlande {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      height: 100px;
+      background: url('img/guirlande-neon.png') repeat-x top;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .connexion-wrapper {
+      width: 100%;
+      max-width: 400px;
+      padding: 30px 20px;
+      background: transparent;
+      border: 2px solid #a86eff;
+      border-radius: 20px;
+      box-shadow: 0 0 20px #a86eff;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      color: #ffbaff;
+      font-size: 24px;
+      margin-bottom: 20px;
+      text-shadow: 0 0 6px #ffbaff;
       text-align: center;
     }
-    input {
+
+    label {
+      display: block;
+      margin: 12px 0 6px;
+      font-size: 14px;
+    }
+
+    input[type="email"],
+    input[type="password"] {
       width: 100%;
       padding: 10px;
-      margin: 10px 0;
-      border-radius: 5px;
+      border-radius: 8px;
       border: none;
-      font-size: 1em;
-      box-sizing: border-box;
+      font-size: 14px;
+      margin-bottom: 10px;
     }
+
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+
+    .remember-me input {
+      width: 16px;
+      height: 16px;
+      accent-color: #ff6dfb;
+    }
+
     button {
-      padding: 10px 20px;
-      margin-top: 10px;
+      background: #a86eff;
+      color: #fff;
+      font-size: 16px;
+      padding: 12px;
       border: none;
-      background: #aa44ff;
-      color: white;
-      font-size: 1em;
-      border-radius: 5px;
+      border-radius: 30px;
       cursor: pointer;
+      box-shadow: 0 0 10px #ffbaff;
+      transition: 0.3s;
       width: 100%;
-      transition: background 0.3s ease;
+      margin-top: 20px;
     }
-    button:hover:not(:disabled) {
-      background: #cc66ff;
+
+    button:hover {
+      background: #ff6dfb;
     }
-    button:disabled {
-      opacity: 0.6;
-      cursor: default;
-    }
-    .toggle-link {
-      margin-top: 15px;
-      color: #ccc;
-      cursor: pointer;
-      text-decoration: underline;
-      display: block;
-      user-select: none;
-    }
-    .error {
-      color: #ff5555;
-      margin-top: 10px;
-      min-height: 1.2em;
+
+    @media (max-width: 400px) {
+      h1 {
+        font-size: 20px;
+      }
+      input[type="email"],
+      input[type="password"] {
+        font-size: 13px;
+      }
+      button {
+        font-size: 15px;
+        padding: 10px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2 id="form-title">Connexion</h2>
 
-    <input type="email" id="email" placeholder="Email" required autocomplete="username" />
-    <input type="password" id="password" placeholder="Mot de passe" required autocomplete="current-password" />
+  <div class="guirlande"></div>
 
-    <button id="submit-btn">Se connecter</button>
-    <span class="toggle-link" id="toggle-mode">Pas encore inscrit ? Crée un compte</span>
-    <div class="error" id="error-message"></div>
+  <div class="connexion-wrapper">
+    <h1>Connexion à AFFINIX</h1>
+    <form id="loginForm" action="/salle.html" method="POST">
+      <label for="email">Adresse email :</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="password">Mot de passe :</label>
+      <input type="password" id="password" name="password" required>
+
+      <div class="remember-me">
+        <input type="checkbox" id="remember" name="remember">
+        <label for="remember">Se souvenir de moi</label>
+      </div>
+
+      <button type="submit">Connexion</button>
+    </form>
   </div>
 
-  <script type="module" src="connexion.js"></script>
 </body>
 </html>
