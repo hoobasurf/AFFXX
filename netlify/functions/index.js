@@ -1,39 +1,31 @@
-const functions = require("firebase-functions");
-const nodemailer = require("nodemailer");
-const cors = require("cors")({ origin: true });
+const functions = require('firebase-functions');
+const nodemailer = require('nodemailer');
 
+// Configurer ton transporteur SMTP avec ton email et mot de passe d'application
 const transporter = nodemailer.createTransport({
-  service: "icloud",
+  service: 'gmail',
   auth: {
-    user: "brice.paneela@icloud.com",
-    pass: "pmah-mhzn-ktwz-vwhp", // mot de passe app iCloud
-  },
+    user: 'brice.paneela@icloud.com', // ton email
+    pass: 'pmah-mhzn-ktwz-vwhp'       // ton mot de passe application
+  }
 });
 
-exports.sendVerificationEmail = functions.https.onRequest((req, res) => {
-  cors(req, res, () => {
-    const { email, selfieUrl } = req.body;
-
+// Exemple simple d’une fonction Cloud Function
+exports.verifySelfie = functions.https.onRequest(async (req, res) => {
+  try {
+    // Exemple : envoie d’un mail ou traitement
     const mailOptions = {
-      from: "brice.paneela@icloud.com",
-      to: "brice.paneela@icloud.com",
-      subject: "Nouvelle vérification de profil AFFINIX ✨",
-      html: `
-        <h2>Nouvelle demande de vérification</h2>
-        <p><strong>Email :</strong> ${email}</p>
-        <p><strong>Selfie envoyé :</strong></p>
-        <img src="${selfieUrl}" alt="Selfie" style="max-width:100%; height:auto;"/>
-      `,
+      from: 'brice.paneela@icloud.com',
+      to: 'destinataire@example.com',
+      subject: 'Test Firebase Function',
+      text: 'Hello from Firebase!'
     };
 
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.error("Erreur lors de l'envoi du mail :", error);
-        res.status(500).send("Erreur d'envoi");
-      } else {
-        console.log("Email envoyé :", info.response);
-        res.status(200).send("Email envoyé !");
-      }
-    });
-  });
+    await transporter.sendMail(mailOptions);
+
+    res.status(200).send('Email sent successfully!');
+  } catch (error) {
+    console.error('Error sending email:', error);
+    res.status(500).send('Error sending email');
+  }
 });
