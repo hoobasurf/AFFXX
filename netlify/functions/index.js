@@ -1,30 +1,34 @@
 const functions = require('firebase-functions');
 const nodemailer = require('nodemailer');
+const express = require('express');
+const app = express();
 
-// Transporteur sécurisé via variables d'environnement
+app.use(express.json());
+
+// Transporteur SMTP sécurisé (mot de passe d’application)
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: functions.config().gmail.user,
-    pass: functions.config().gmail.pass
+    user: 'brice.paneela@icloud.com',
+    pass: 'pmah-mhzn-ktwz-vwhp'
   }
 });
 
-// Cloud Function qui envoie un email
-exports.verifySelfie = functions.https.onRequest(async (req, res) => {
+// Route GET (test simple pour voir si la fonction fonctionne)
+app.get('/', async (req, res) => {
   try {
-    const mailOptions = {
-      from: functions.config().gmail.user,
-      to: 'destinataire@example.com', // remplace par ton vrai destinataire
-      subject: 'Test Firebase Function',
-      text: 'Hello from Firebase!'
-    };
-
-    await transporter.sendMail(mailOptions);
-
-    res.status(200).send('Email sent successfully!');
+    await transporter.sendMail({
+      from: 'brice.paneela@icloud.com',
+      to: 'brice.paneela@icloud.com',
+      subject: 'Test réussi depuis Affinix',
+      text: 'La fonction Firebase a bien été déployée !'
+    });
+    res.status(200).send('✅ Email envoyé avec succès !');
   } catch (error) {
-    console.error('Error sending email:', error);
-    res.status(500).send('Error sending email');
+    console.error('Erreur d’envoi :', error);
+    res.status(500).send('❌ Échec de l’envoi d’email');
   }
 });
+
+// Export Cloud Function (⚠️ sans .region() car tu es en 1st Gen)
+exports.verifySelfie = functions.https.onRequest(app);
