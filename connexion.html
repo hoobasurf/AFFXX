@@ -3,131 +3,213 @@
 <head>
   <meta charset="UTF-8" />
   <title>Connexion - AFFINIX</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <!-- Police Orbitron -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
+  
+  <style>
+    html, body {
+      margin: 0; padding: 0;
+      height: 100%;
+      background-color: #000;
+      font-family: 'Orbitron', sans-serif;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      background: url('img/fond-inscription-tokyo.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .container {
+      background: rgba(0,0,0,0.7);
+      padding: 30px;
+      border-radius: 20px;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 0 20px #ff6dfb;
+      text-align: center;
+    }
+    h1 {
+      color: #ffbaff;
+      margin-bottom: 20px;
+      text-shadow: 0 0 8px #ffbaff;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      text-align: left;
+      font-size: 14px;
+    }
+    input[type="email"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 6px;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
+    }
+    button {
+      margin-top: 25px;
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: none;
+      border-radius: 30px;
+      background-color: #a86eff;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ffbaff;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #ff6dfb;
+    }
+    #choix-salles {
+      margin-top: 30px;
+      text-align: left;
+    }
+    #choix-salles ul {
+      list-style: none;
+      padding: 0;
+    }
+    #choix-salles ul li {
+      margin: 10px 0;
+    }
+    #choix-salles ul li a {
+      color: #ffbaff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 18px;
+      padding: 8px 15px;
+      border: 2px solid #ff6dfb;
+      border-radius: 20px;
+      display: inline-block;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    #choix-salles ul li a:hover {
+      background-color: #ff6dfb;
+      color: #000;
+    }
+    #error-msg {
+      color: #ff6dfb;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
 
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <div class="container">
+    <h1>Connexion AFFINIX</h1>
+    <form id="login-form">
+      <label for="email">Email :</label>
+      <input type="email" id="email" required />
+
+      <label for="password">Mot de passe :</label>
+      <input type="password" id="password" required />
+
+      <button type="submit">Se connecter</button>
+    </form>
+
+    <div id="error-msg"></div>
+
+    <div id="choix-salles" style="display:none;">
+      <h2>Choisis une salle</h2>
+      <ul id="liste-salles"></ul>
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+
   <script>
+    // Configuration Firebase (tes infos)
     const firebaseConfig = {
       apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
       authDomain: "affinix-3a930.firebaseapp.com",
       projectId: "affinix-3a930",
       storageBucket: "affinix-3a930.appspot.com",
       messagingSenderId: "498829285833",
-      appId: "1:498829285833:web:affinix-default-app"
+      appId: "1:498829285833:web:xxxxxxxxxxxxxxxxxxxxxx"
     };
+
+    // Init Firebase
     firebase.initializeApp(firebaseConfig);
+
     const auth = firebase.auth();
     const db = firebase.firestore();
-  </script>
 
-  <style>
-    body {
-      background: #000;
-      color: #fff;
-      font-family: 'Arial', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
+    const form = document.getElementById('login-form');
+    const errorMsg = document.getElementById('error-msg');
+    const choixSallesDiv = document.getElementById('choix-salles');
+    const listeSallesUl = document.getElementById('liste-salles');
 
-    .connexion-wrapper {
-      background: #1a1a1a;
-      padding: 30px;
-      border-radius: 10px;
-      border: 2px solid #ff6dfb;
-      box-shadow: 0 0 15px #ff6dfb;
-      width: 90%;
-      max-width: 400px;
-    }
+    // Mapping des salles vers leurs pages
+    const sallePages = {
+      'relation-serieuse': 'relation-serieuse.html',
+      'amicale': 'amicale.html',
+      'fun': 'fun.html',
+      'parents': 'parents.html',
+      // ajoute ici d'autres salles si besoin
+    };
 
-    h2 {
-      text-align: center;
-      color: #ffbaff;
-      margin-bottom: 20px;
-    }
-
-    label {
-      display: block;
-      margin: 10px 0 5px;
-    }
-
-    input[type="email"],
-    input[type="password"] {
-      width: 100%;
-      padding: 10px;
-      border: none;
-      border-radius: 6px;
-      margin-bottom: 15px;
-      font-size: 16px;
-    }
-
-    button {
-      width: 100%;
-      padding: 12px;
-      font-size: 16px;
-      background: #a86eff;
-      color: white;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #ff6dfb;
-    }
-  </style>
-</head>
-<body>
-
-  <div class="connexion-wrapper">
-    <h2>Connexion</h2>
-    <form id="connexionForm">
-      <label for="email">Email :</label>
-      <input type="email" id="email" required>
-
-      <label for="password">Mot de passe :</label>
-      <input type="password" id="password" required>
-
-      <button type="submit">Se connecter</button>
-    </form>
-  </div>
-
-  <script>
-    document.getElementById("connexionForm").addEventListener("submit", async function(e) {
+    form.addEventListener('submit', (e) => {
       e.preventDefault();
+      errorMsg.textContent = '';
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
 
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
+      auth.signInWithEmailAndPassword(email, password)
+        .then(({ user }) => {
+          // Récupérer les salles choisies dans Firestore, doc user = uid
+          return db.collection('users').doc(user.uid).get();
+        })
+        .then((doc) => {
+          if (!doc.exists) {
+            errorMsg.textContent = "Aucun profil trouvé. Contacte le support.";
+            return;
+          }
+          const data = doc.data();
+          const salles = data.salles || [];
 
-      try {
-        const userCredential = await auth.signInWithEmailAndPassword(email, password);
-        const user = userCredential.user;
+          if (salles.length === 0) {
+            errorMsg.textContent = "Aucune salle sélectionnée dans votre profil.";
+            return;
+          }
 
-        const doc = await db.collection("utilisateurs").doc(user.uid).get();
-        if (!doc.exists) {
-          alert("Profil utilisateur introuvable.");
-          return;
-        }
+          if (salles.length === 1) {
+            // Une seule salle: rediriger directement
+            const url = sallePages[salles[0]] || 'salle.html';
+            window.location.href = url;
+          } else {
+            // Plusieurs salles: afficher choix
+            form.style.display = 'none';
+            choixSallesDiv.style.display = 'block';
+            listeSallesUl.innerHTML = '';
 
-        const data = doc.data();
-        const salles = data.salles || [];
-
-        if (salles.length === 0) {
-          alert("Aucune salle sélectionnée.");
-          return;
-        }
-
-        const redirection = salles[0]; // première salle cochée
-        window.location.href = `${redirection}.html`;
-
-      } catch (error) {
-        alert("Erreur : " + error.message);
-      }
+            salles.forEach(salle => {
+              const page = sallePages[salle] || 'salle.html';
+              const li = document.createElement('li');
+              const a = document.createElement('a');
+              a.href = page;
+              a.textContent = {
+                'relation-serieuse': '💖 Relation sérieuse',
+                'amicale': '💬 Rencontre amicale',
+                'fun': '🎉 Rencontre fun',
+                'parents': '👨‍👩‍👧 Parents solos'
+              }[salle] || salle;
+              li.appendChild(a);
+              listeSallesUl.appendChild(li);
+            });
+          }
+        })
+        .catch((error) => {
+          errorMsg.textContent = error.message;
+        });
     });
   </script>
 
