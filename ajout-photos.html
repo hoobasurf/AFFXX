@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Ajout de Photos - Affinix</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f0f0f0; }
+    .container { background: white; padding: 20px; border-radius: 10px; max-width: 400px; margin: auto; }
+    input[type="file"] { display: block; margin-bottom: 10px; }
+    button { padding: 10px 20px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Ajoute jusqu’à 5 photos de profil</h2>
+    <form id="photoForm">
+      <input type="file" name="photos" id="photos" accept="image/*" multiple required>
+      <button type="submit">Continuer</button>
+    </form>
+  </div>
+
+  <script type="module">
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-storage.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+    import { getFirestore, doc, updateDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
+      authDomain: "affinix-3a930.firebaseapp.com",
+      projectId: "affinix-3a930",
+      storageBucket: "affinix-3a930.appspot.com",
+      messagingSenderId: "498829285833",
+      appId: "1:498829285833:web:xxx"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+
+    document.getElementById("photoForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const files = document.getElementById("photos").files;
+      if (files.length > 5) return alert("Tu ne peux télécharger que 5 photos max.");
+      
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          const urls = [];
+          for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const storageRef = ref(storage, `users/${user.uid}/profile${i + 1}.jpg`);
+            await uploadBytes(storageRef, file);
+            const url = await getDownloadURL(storageRef);
+            urls.push(url);
+          }
+          await updateDoc(doc(db, "users", user.uid), { photos: urls });
+          window.location.href = "verification-selfie.html";
+        }
+      });
+    });
+  </script>
+</body>
+</html>
