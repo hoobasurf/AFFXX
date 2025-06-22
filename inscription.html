@@ -1,268 +1,88 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <title>Inscription - AFFINIX</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <!-- Préchargement de la police -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+  import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword
+  } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+  import {
+    getFirestore,
+    doc,
+    setDoc,
+    getDoc
+  } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      background-color: #000; /* Fond noir par défaut */
-      color: #fff;
-      font-family: 'Orbitron', sans-serif;
+  const firebaseConfig = {
+    apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
+    authDomain: "affinix-3a930.firebaseapp.com",
+    projectId: "affinix-3a930",
+    storageBucket: "affinix-3a930.appspot.com",
+    messagingSenderId: "498829285833",
+    appId: "1:498829285833:web:344dacf5b6bcc818167018"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  const form = document.getElementById("inscriptionForm");
+  const messageDiv = document.getElementById("message");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    messageDiv.textContent = "";
+
+    const prenom = form.prenom.value.trim();
+    const description = form.description.value.trim();
+    const email = form.email.value.trim();
+    const password = form.password.value;
+    const departement = form.departement.value.trim();
+    const rayon = form.rayon.value;
+    const salles = Array.from(
+      form.querySelectorAll('input[name="salles"]:checked')
+    ).map((cb) => cb.value);
+
+    if (salles.length === 0) {
+      messageDiv.textContent = "Merci de choisir au moins une salle.";
+      return;
     }
 
-    body {
-      background: url('img/fond-inscription-tokyo.jpg') no-repeat center center fixed;
-      background-size: cover;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const uid = userCredential.user.uid;
 
-    .guirlande {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      height: 100px;
-      background: url('img/guirlande-neon.png') repeat-x top;
-      pointer-events: none;
-      z-index: 1;
-    }
+      await setDoc(doc(db, "users", uid), {
+        prenom,
+        description,
+        email,
+        departement,
+        rayon,
+        salles
+      });
 
-    .inscription-wrapper {
-      width: 100%;
-      max-width: 500px;
-      padding: 30px 20px;
-      background: transparent;
-      border: 2px solid #ff6dfb;
-      border-radius: 20px;
-      box-shadow: 0 0 20px #ff6dfb;
-      position: relative;
-      z-index: 2;
-    }
-
-    h1 {
-      color: #ffbaff;
-      font-size: 24px;
-      margin-bottom: 20px;
-      text-shadow: 0 0 6px #ffbaff;
-      text-align: center;
-    }
-
-    label {
-      display: block;
-      margin: 12px 0 6px;
-      font-size: 14px;
-    }
-
-    input[type="text"],
-    input[type="email"],
-    input[type="password"],
-    textarea,
-    input[type="range"] {
-      width: 100%;
-      padding: 10px;
-      border-radius: 8px;
-      border: none;
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
-
-    input[type="range"] {
-      accent-color: #ff6dfb;
-    }
-
-    .rayon-output {
-      margin-top: -8px;
-      margin-bottom: 15px;
-      font-size: 13px;
-      color: #ffbaff;
-    }
-
-    .checkbox-group label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      padding: 5px 0;
-      cursor: pointer;
-    }
-
-    .checkbox-group input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      accent-color: #ff6dfb;
-    }
-
-    button {
-      background: #a86eff;
-      color: #fff;
-      font-size: 16px;
-      padding: 12px;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      box-shadow: 0 0 10px #ffbaff;
-      transition: 0.3s;
-      width: 100%;
-      margin-top: 20px;
-    }
-
-    button:hover {
-      background: #ff6dfb;
-    }
-
-    @media (max-width: 400px) {
-      h1 {
-        font-size: 20px;
-      }
-      input[type="text"],
-      input[type="email"],
-      input[type="password"],
-      textarea {
-        font-size: 13px;
-      }
-      button {
-        font-size: 15px;
-        padding: 10px;
-      }
-    }
-
-    #message {
-      margin-top: 15px;
-      font-size: 14px;
-      color: #ffbaff;
-      text-align: center;
-    }
-  </style>
-</head>
-<body>
-
-  <div class="guirlande"></div>
-
-  <div class="inscription-wrapper">
-    <h1>Rejoins AFFINIX</h1>
-    <form id="inscriptionForm">
-      <label for="prenom">Prénom ou Pseudo :</label>
-      <input type="text" id="prenom" name="prenom" required>
-
-      <label for="description">Décris-toi :</label>
-      <textarea id="description" name="description" rows="4" required></textarea>
-
-      <label for="email">Email :</label>
-      <input type="email" id="email" name="email" required>
-
-      <label for="password">Mot de passe :</label>
-      <input type="password" id="password" name="password" required>
-
-      <label>Salles choisies :</label>
-      <div class="checkbox-group">
-        <label><input type="checkbox" name="salles" value="relation-serieuse"> 💖 Relation sérieuse</label>
-        <label><input type="checkbox" name="salles" value="amicale"> 💬 Rencontre amicale</label>
-        <label><input type="checkbox" name="salles" value="fun"> 🎉 Rencontre fun</label>
-        <label><input type="checkbox" name="salles" value="parents"> 👨‍👩‍👧 Parents solos</label>
-      </div>
-
-      <label for="departement">Ton département :</label>
-      <input type="text" id="departement" name="departement" placeholder="Ex : 75 ou Paris" required>
-
-      <label for="rayon">Rayon de recherche (km) :</label>
-      <input
-        type="range"
-        id="rayon"
-        name="rayon"
-        min="5"
-        max="100"
-        value="50"
-        step="1"
-        oninput="document.getElementById('rayonValue').innerText = this.value + ' km';"
-      >
-      <div class="rayon-output">🌐 Rayon actuel : <span id="rayonValue">50 km</span></div>
-
-      <button type="submit">Valider mon inscription</button>
-    </form>
-
-    <div id="message"></div>
-  </div>
-
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-
-  <script>
-    // Config Firebase Affinix
-    const firebaseConfig = {
-      apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
-      authDomain: "affinix-3a930.firebaseapp.com",
-      projectId: "affinix-3a930",
-      storageBucket: "affinix-3a930.appspot.com",
-      messagingSenderId: "498829285833",
-      appId: "1:498829285833:web:xxxxxxxxxxxxxxxxxxxxxx"
-    };
-
-    // Initialiser Firebase
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-
-    const form = document.getElementById('inscriptionForm');
-    const messageDiv = document.getElementById('message');
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      messageDiv.textContent = '';
-
-      const prenom = form.prenom.value.trim();
-      const description = form.description.value.trim();
-      const email = form.email.value.trim();
-      const password = form.password.value;
-      const departement = form.departement.value.trim();
-      const rayon = form.rayon.value;
-      const salles = Array.from(form.querySelectorAll('input[name="salles"]:checked')).map(cb => cb.value);
-
-      if (salles.length === 0) {
-        messageDiv.textContent = "Merci de choisir au moins une salle.";
-        return;
-      }
-
-      try {
-        // Créer un utilisateur Firebase Authentication
-        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-        const uid = userCredential.user.uid;
-
-        // Sauvegarder les données supplémentaires dans Firestore
-        await db.collection('users').doc(uid).set({
-          prenom,
-          description,
-          email,
-          departement,
-          rayon,
-          salles
-        });
-
-        messageDiv.style.color = '#80ff80';
-        messageDiv.textContent = "Inscription réussie ! Redirection...";
-        // Redirection vers la page connexion ou salle
-        setTimeout(() => {
-          window.location.href = 'connexion.html';
-        }, 1500);
-      } catch (error) {
-        messageDiv.style.color = '#ff8080';
+      messageDiv.style.color = "#80ff80";
+      messageDiv.textContent = "Inscription réussie ! Redirection...";
+      setTimeout(() => {
+        window.location.href = "ajout-photos.html";
+      }, 1500);
+    } catch (error) {
+      if (error.code === "auth/email-already-in-use") {
+        // Connexion auto
+        try {
+          const userCredential = await signInWithEmailAndPassword(auth, email, password);
+          messageDiv.style.color = "#80ff80";
+          messageDiv.textContent = "Connexion réussie ! Redirection...";
+          setTimeout(() => {
+            window.location.href = "ajout-photos.html";
+          }, 1500);
+        } catch (err) {
+          messageDiv.style.color = "#ff8080";
+          messageDiv.textContent = "Email déjà utilisé. Mauvais mot de passe.";
+        }
+      } else {
+        messageDiv.style.color = "#ff8080";
         messageDiv.textContent = error.message;
       }
-    });
-  </script>
-
-</body>
-</html>
+    }
+  });
+</script>
