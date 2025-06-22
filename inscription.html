@@ -5,20 +5,37 @@
   <title>Inscription - AFFINIX</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Préchargement de la police -->
+  <!-- Police -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
+      authDomain: "affinix-3a930.firebaseapp.com",
+      projectId: "affinix-3a930",
+      storageBucket: "affinix-3a930.appspot.com",
+      messagingSenderId: "498829285833",
+      appId: "1:498829285833:web:affinix-default-app"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+  </script>
 
   <style>
     html, body {
       margin: 0;
       padding: 0;
-      background-color: #000; /* Fond noir par défaut */
+      background-color: #000;
       color: #fff;
       font-family: 'Orbitron', sans-serif;
     }
-
     body {
       background: url('img/fond-inscription-tokyo.jpg') no-repeat center center fixed;
       background-size: cover;
@@ -28,7 +45,6 @@
       align-items: center;
       padding: 20px;
     }
-
     .guirlande {
       position: fixed;
       top: 0;
@@ -38,7 +54,6 @@
       pointer-events: none;
       z-index: 1;
     }
-
     .inscription-wrapper {
       width: 100%;
       max-width: 500px;
@@ -50,7 +65,6 @@
       position: relative;
       z-index: 2;
     }
-
     h1 {
       color: #ffbaff;
       font-size: 24px;
@@ -58,13 +72,11 @@
       text-shadow: 0 0 6px #ffbaff;
       text-align: center;
     }
-
     label {
       display: block;
       margin: 12px 0 6px;
       font-size: 14px;
     }
-
     input[type="text"],
     input[type="email"],
     input[type="password"],
@@ -77,18 +89,15 @@
       font-size: 14px;
       margin-bottom: 10px;
     }
-
     input[type="range"] {
       accent-color: #ff6dfb;
     }
-
     .rayon-output {
       margin-top: -8px;
       margin-bottom: 15px;
       font-size: 13px;
       color: #ffbaff;
     }
-
     .checkbox-group label {
       display: flex;
       align-items: center;
@@ -97,13 +106,11 @@
       padding: 5px 0;
       cursor: pointer;
     }
-
     .checkbox-group input[type="checkbox"] {
       width: 18px;
       height: 18px;
       accent-color: #ff6dfb;
     }
-
     button {
       background: #a86eff;
       color: #fff;
@@ -117,18 +124,15 @@
       width: 100%;
       margin-top: 20px;
     }
-
     button:hover {
       background: #ff6dfb;
     }
-
     @media (max-width: 400px) {
       h1 {
         font-size: 20px;
       }
       input[type="text"],
       input[type="email"],
-      input[type="password"],
       textarea {
         font-size: 13px;
       }
@@ -139,20 +143,14 @@
     }
   </style>
 </head>
+
 <body>
 
   <div class="guirlande"></div>
 
   <div class="inscription-wrapper">
     <h1>Rejoins AFFINIX</h1>
-    <form name="inscription" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/salle.html">
-      <input type="hidden" name="form-name" value="inscription" />
-
-      <!-- Champ caché anti-bot -->
-      <div style="position: absolute; left: -9999px;">
-        <label>Ne pas remplir : <input name="bot-field" /></label>
-      </div>
-
+    <form id="inscriptionForm">
       <label for="prenom">Prénom ou Pseudo :</label>
       <input type="text" id="prenom" name="prenom" required>
 
@@ -193,6 +191,42 @@
     </form>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    document.getElementById("inscriptionForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const prenom = document.getElementById("prenom").value;
+      const description = document.getElementById("description").value;
+      const departement = document.getElementById("departement").value;
+      const rayon = document.getElementById("rayon").value;
+
+      const salles = [];
+      document.querySelectorAll('input[name="salles[]"]:checked').forEach((checkbox) => {
+        salles.push(checkbox.value);
+      });
+
+      try {
+        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+        const user = userCredential.user;
+
+        await db.collection("utilisateurs").doc(user.uid).set({
+          prenom,
+          email,
+          description,
+          departement,
+          rayon,
+          salles,
+          dateInscription: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        window.location.href = "/salle.html";
+      } catch (error) {
+        alert("Erreur : " + error.message);
+      }
+    });
+  </script>
+
 </body>
 </html>
