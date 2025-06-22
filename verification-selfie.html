@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Selfie de Vérification - Affinix</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f0f0f0; padding: 20px; }
+    .container { background: white; padding: 20px; border-radius: 10px; max-width: 400px; margin: auto; }
+    input[type="file"] { margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Prends un selfie pour vérification</h2>
+    <form id="selfieForm">
+      <input type="file" id="selfie" accept="image/*" required>
+      <button type="submit">Envoyer le selfie</button>
+    </form>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-storage.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+    import { getFirestore, doc, updateDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
+      authDomain: "affinix-3a930.firebaseapp.com",
+      projectId: "affinix-3a930",
+      storageBucket: "affinix-3a930.appspot.com",
+      messagingSenderId: "498829285833",
+      appId: "1:498829285833:web:xxx"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const storage = getStorage(app);
+    const db = getFirestore(app);
+
+    document.getElementById("selfieForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const file = document.getElementById("selfie").files[0];
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          const selfieRef = ref(storage, `users/${user.uid}/selfie.jpg`);
+          await uploadBytes(selfieRef, file);
+          const selfieURL = await getDownloadURL(selfieRef);
+          await updateDoc(doc(db, "users", user.uid), {
+            selfieURL: selfieURL,
+            verifie: false,
+            tentativeVerif: 0
+          });
+          alert("Selfie envoyé. Tu recevras un message après vérification.");
+          window.location.href = "dashboard.html";
+        }
+      });
+    });
+  </script>
+</body>
+</html>
