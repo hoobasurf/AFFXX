@@ -50,6 +50,30 @@
   <!-- Scripts JS -->
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script src="email.js"></script>
-  
+
+  <!-- Firebase SDK (si pas encore inclus dans ta page) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script>
+    // Ta config Firebase ici, adapte avec tes clés !
+    const firebaseConfig = {
+      apiKey: "TON_API_KEY",
+      authDomain: "TON_AUTH_DOMAIN",
+      projectId: "TON_PROJECT_ID",
+      storageBucket: "TON_STORAGE_BUCKET",
+      messagingSenderId: "TON_MESSAGING_SENDER_ID",
+      appId: "TON_APP_ID"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    firebase.auth().onAuthStateChanged(user => {
+      if (!user) {
+        // Si pas connecté, redirige vers page d'inscription
+        window.location.href = "inscription.html";
+      }
+      // Sinon reste ici (index.html)
+    });
+  </script>
+
 </body>
 </html>
