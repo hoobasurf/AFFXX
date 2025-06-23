@@ -16,11 +16,19 @@
   </form>
   <p>Pas encore inscrit ? <a href="inscription.html">Inscription</a></p>
 
+  <!-- Script de connexion + redirection -->
   <script type="module">
     import { auth } from './js/firebase-init.js';
-    import { signInWithEmailAndPassword } from "firebase/auth";
+    import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 
     const form = document.getElementById('login-form');
+
+    // BONUS : Redirection automatique si déjà connecté
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        window.location.href = "panneaux.html";
+      }
+    });
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -29,7 +37,7 @@
 
       try {
         await signInWithEmailAndPassword(auth, email, password);
-        window.location.href = "index.html"; // Redirection après connexion réussie
+        window.location.href = "panneaux.html"; // Redirection après connexion réussie
       } catch (error) {
         alert("Erreur : " + error.message);
       }
