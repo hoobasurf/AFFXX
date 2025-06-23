@@ -12,15 +12,15 @@
   <form id="signup-form">
     <input type="email" id="email" placeholder="Email" required />
     <input type="password" id="password" placeholder="Mot de passe" required />
-    
-    <fieldset style="margin-top: 1rem;">
-      <legend>Choisis tes salles</legend>
-      <label><input type="checkbox" name="salles" value="salle1" /> 💬 Rencontre Amicale</label><br />
-      <label><input type="checkbox" name="salles" value="salle2" /> 💖 Relation Sérieuse</label><br />
-      <label><input type="checkbox" name="salles" value="salle3" /> 🎉 Rencontre Fun</label><br />
-      <label><input type="checkbox" name="salles" value="salle4" /> 👨‍👩‍👧 Parents Solos</label><br />
-      <label><input type="checkbox" name="salles" value="salle5" /> 🎮 Univers Passions</label><br />
-      <label><input type="checkbox" name="salles" value="salle6" /> 🧬 Connexion Unique</label>
+
+    <fieldset style="margin-top: 15px; border: none; padding: 0;">
+      <legend style="color: white; margin-bottom: 10px; font-weight: bold;">Choisissez vos salles :</legend>
+      <label><input type="checkbox" name="rooms" value="salle1" /> 💬 Rencontre Amicale</label><br/>
+      <label><input type="checkbox" name="rooms" value="salle2" /> 💖 Relation Sérieuse</label><br/>
+      <label><input type="checkbox" name="rooms" value="salle3" /> 🎉 Rencontre Fun</label><br/>
+      <label><input type="checkbox" name="rooms" value="salle4" /> 👨‍👩‍👧 Parents Solos</label><br/>
+      <label><input type="checkbox" name="rooms" value="salle5" /> 🎮 Univers Passions</label><br/>
+      <label><input type="checkbox" name="rooms" value="salle6" /> 🧬 Connexion Unique</label><br/>
     </fieldset>
 
     <div style="margin-top: 10px;">
@@ -30,50 +30,43 @@
       </label>
     </div>
 
-    <button type="submit">S'inscrire</button>
+    <button type="submit" style="margin-top: 15px;">S'inscrire</button>
   </form>
   <p>Déjà inscrit ? <a href="connexion.html">Connexion</a></p>
 
   <script type="module">
-    import { auth, db } from './js/firebase-init.js';
+    import { auth } from './js/firebase-init.js';
     import { createUserWithEmailAndPassword } from "firebase/auth";
-    import { doc, setDoc } from "firebase/firestore";
 
     const form = document.getElementById('signup-form');
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+
       const email = form.email.value;
       const password = form.password.value;
-      const rememberMe = document.getElementById('rememberMe').checked;
 
       // Récupérer les salles cochées
-      const checkedSalles = Array.from(form.querySelectorAll('input[name="salles"]:checked'))
-                                 .map(cb => cb.value);
+      const checkedRooms = Array.from(form.querySelectorAll('input[name="rooms"]:checked'))
+                              .map(input => input.value);
 
-      if (checkedSalles.length === 0) {
+      if (checkedRooms.length === 0) {
         alert("Veuillez choisir au moins une salle.");
         return;
       }
 
       try {
-        // Créer utilisateur Firebase
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const uid = userCredential.user.uid;
+        await createUserWithEmailAndPassword(auth, email, password);
 
-        // Stocker les salles choisies dans Firestore sous users/{uid}
-        await setDoc(doc(db, "users", uid), {
-          sallesChoisies: checkedSalles
-        });
+        // Enregistrer les salles choisies dans localStorage
+        localStorage.setItem("selectedRooms", JSON.stringify(checkedRooms));
 
-        // Stocker localement si case cochée
-        if (rememberMe) {
+        // Si la case "Se souvenir de moi" est cochée, on enregistre l'email
+        if (document.getElementById('rememberMe').checked) {
           localStorage.setItem('rememberedUser', email);
         }
 
-        // Redirection vers panneau.html (page des salles)
-        window.location.href = "panneau.html";
-
+        window.location.href = "panneau.html"; // redirection vers les panneaux
       } catch (error) {
         if (error.code === 'auth/email-already-in-use') {
           alert("Ce compte existe déjà. Veuillez vous connecter.");
