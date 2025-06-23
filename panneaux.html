@@ -37,51 +37,83 @@
       color: #000;
       box-shadow: 0 0 15px #0ff;
     }
-    /* Style simple pour le bouton déconnexion */
-    #logout-btn {
-      margin-top: 20px;
-      padding: 10px 20px;
-      cursor: pointer;
-      background-color: #0ff;
-      border: none;
-      border-radius: 8px;
-      color: #000;
-      font-weight: bold;
-      transition: background-color 0.3s ease;
+
+    .logout {
+      margin-top: 2rem;
     }
-    #logout-btn:hover {
-      background-color: #0cc;
+    .logout button {
+      background: #f00;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #f00;
+      transition: background 0.3s ease;
+    }
+    .logout button:hover {
+      background: #c00;
     }
   </style>
 </head>
 <body>
+
   <h1>Bienvenue dans les salles Affinix</h1>
 
-  <div class="grid">
-    <div class="panel" onclick="location.href='salle1.html'">💬 Rencontre Amicale</div>
-    <div class="panel" onclick="location.href='salle2.html'">💖 Relation Sérieuse</div>
-    <div class="panel" onclick="location.href='salle3.html'">🎉 Rencontre Fun</div>
-    <div class="panel" onclick="location.href='salle4.html'">👨‍👩‍👧 Parents Solos</div>
-    <div class="panel" onclick="location.href='salle5.html'">🎮 Univers Passions</div>
-    <div class="panel" onclick="location.href='salle6.html'">🧬 Connexion Unique</div>
+  <div class="grid" id="sallesContainer">
+    <!-- Les salles cochées lors de l'inscription apparaîtront ici dynamiquement -->
   </div>
 
-  <button id="logout-btn">Déconnexion</button>
+  <div class="logout">
+    <button id="logoutBtn">Déconnexion</button>
+  </div>
 
   <script type="module">
     import { auth } from './js/firebase-init.js';
-    import { signOut } from "firebase/auth";
+    import { signOut, onAuthStateChanged } from "firebase/auth";
 
-    const logoutBtn = document.getElementById('logout-btn');
+    // Liste des salles (avec clé et label)
+    const salles = {
+      salle1: "💬 Rencontre Amicale",
+      salle2: "💖 Relation Sérieuse",
+      salle3: "🎉 Rencontre Fun",
+      salle4: "👨‍👩‍👧 Parents Solos",
+      salle5: "🎮 Univers Passions",
+      salle6: "🧬 Connexion Unique"
+    };
 
-    logoutBtn.addEventListener('click', async () => {
-      try {
-        await signOut(auth);
-        window.location.href = 'connexion.html';
-      } catch (error) {
-        alert("Erreur lors de la déconnexion : " + error.message);
+    // Vérifie si l'utilisateur est connecté
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.href = "connexion.html";
+      } else {
+        // Récupère les salles choisies dans localStorage
+        const data = JSON.parse(localStorage.getItem("userSalles"));
+        const container = document.getElementById("sallesContainer");
+
+        if (data) {
+          Object.keys(salles).forEach(key => {
+            if (data.includes(key)) {
+              const div = document.createElement("div");
+              div.className = "panel";
+              div.textContent = salles[key];
+              div.onclick = () => window.location.href = key + ".html";
+              container.appendChild(div);
+            }
+          });
+        } else {
+          container.innerHTML = "<p>Aucune salle sélectionnée. Merci de vous réinscrire.</p>";
+        }
       }
     });
+
+    // Bouton déconnexion
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
+      await signOut(auth);
+      window.location.href = "index.html";
+    });
   </script>
+
 </body>
 </html>
