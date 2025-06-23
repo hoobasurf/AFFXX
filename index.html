@@ -6,21 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="css/styles.css" />
   <style>
-    /* Animation clignotement néon rose/violet pour le bouton */
     @keyframes neonBlink {
       0%, 100% {
-        box-shadow:
-          0 0 5px #ff4fc4,
-          0 0 10px #c700d6,
-          0 0 20px #ff4fc4;
+        box-shadow: 0 0 5px #ff4fc4, 0 0 10px #c700d6, 0 0 20px #ff4fc4;
         color: #ff4fc4;
         background-color: #1a001f;
       }
       50% {
-        box-shadow:
-          0 0 10px #c700d6,
-          0 0 20px #ff4fc4,
-          0 0 30px #c700d6;
+        box-shadow: 0 0 10px #c700d6, 0 0 20px #ff4fc4, 0 0 30px #c700d6;
         color: #c700d6;
         background-color: #2a002f;
       }
@@ -37,6 +30,7 @@
       color: #ff4fc4;
       transition: transform 0.3s ease;
     }
+
     .enter-button:hover {
       transform: scale(1.05);
     }
@@ -45,13 +39,11 @@
 <body class="home">
 
   <div class="welcome-text">Bienvenue sur Affinix</div>
-  <button class="enter-button" onclick="location.href='connexion.html'">Entrer</button>
+  <button class="enter-button">Entrer</button>
 
-  <!-- Scripts JS -->
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script src="email.js"></script>
 
-  <!-- Firebase SDK import + redirection si connecté -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
@@ -70,8 +62,11 @@
 
     onAuthStateChanged(auth, user => {
       if (user) {
-        // Utilisateur connecté, rediriger vers la page principale (exemple: panneaux.html)
         window.location.href = "panneaux.html";
+      } else {
+        document.querySelector('.enter-button').onclick = () => {
+          window.location.href = "connexion.html";
+        };
       }
     });
   </script>
