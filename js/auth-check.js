@@ -14,15 +14,17 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 onAuthStateChanged(auth, user => {
+  const path = window.location.pathname;
+
   if (!user) {
-    // Utilisateur non connecté -> redirection vers login.html
-    if(window.location.pathname !== "/login.html" && window.location.pathname !== "/signup.html") {
-      window.location.href = "login.html";
+    // Pas connecté -> redirige sauf si on est déjà sur connexion ou inscription
+    if (path !== "/connexion.html" && path !== "/inscription.html") {
+      window.location.href = "connexion.html";
     }
   } else {
-    // Utilisateur connecté -> si sur login ou signup, le renvoyer vers la page principale
-    if(window.location.pathname === "/login.html" || window.location.pathname === "/signup.html") {
-      window.location.href = "index.html"; // ou ta page principale
+    // Connecté -> pas autorisé à rester sur connexion ou inscription
+    if (path === "/connexion.html" || path === "/inscription.html") {
+      window.location.href = "index.html";
     }
   }
 });
