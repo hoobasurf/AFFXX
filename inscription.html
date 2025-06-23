@@ -13,6 +13,16 @@
     <input type="email" id="email" placeholder="Email" required />
     <input type="password" id="password" placeholder="Mot de passe" required />
     
+    <fieldset style="margin-top: 1rem;">
+      <legend>Choisis tes salles</legend>
+      <label><input type="checkbox" name="salles" value="salle1" /> 💬 Rencontre Amicale</label><br />
+      <label><input type="checkbox" name="salles" value="salle2" /> 💖 Relation Sérieuse</label><br />
+      <label><input type="checkbox" name="salles" value="salle3" /> 🎉 Rencontre Fun</label><br />
+      <label><input type="checkbox" name="salles" value="salle4" /> 👨‍👩‍👧 Parents Solos</label><br />
+      <label><input type="checkbox" name="salles" value="salle5" /> 🎮 Univers Passions</label><br />
+      <label><input type="checkbox" name="salles" value="salle6" /> 🧬 Connexion Unique</label>
+    </fieldset>
+
     <div style="margin-top: 10px;">
       <label>
         <input type="checkbox" id="rememberMe" />
@@ -25,8 +35,9 @@
   <p>Déjà inscrit ? <a href="connexion.html">Connexion</a></p>
 
   <script type="module">
-    import { auth } from './js/firebase-init.js';
+    import { auth, db } from './js/firebase-init.js';
     import { createUserWithEmailAndPassword } from "firebase/auth";
+    import { doc, setDoc } from "firebase/firestore";
 
     const form = document.getElementById('signup-form');
 
@@ -34,16 +45,35 @@
       e.preventDefault();
       const email = form.email.value;
       const password = form.password.value;
+      const rememberMe = document.getElementById('rememberMe').checked;
+
+      // Récupérer les salles cochées
+      const checkedSalles = Array.from(form.querySelectorAll('input[name="salles"]:checked'))
+                                 .map(cb => cb.value);
+
+      if (checkedSalles.length === 0) {
+        alert("Veuillez choisir au moins une salle.");
+        return;
+      }
 
       try {
-        await createUserWithEmailAndPassword(auth, email, password);
+        // Créer utilisateur Firebase
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const uid = userCredential.user.uid;
 
-        // Si la case est cochée, on enregistre l'utilisateur localement
-        if (document.getElementById('rememberMe').checked) {
+        // Stocker les salles choisies dans Firestore sous users/{uid}
+        await setDoc(doc(db, "users", uid), {
+          sallesChoisies: checkedSalles
+        });
+
+        // Stocker localement si case cochée
+        if (rememberMe) {
           localStorage.setItem('rememberedUser', email);
         }
 
-        window.location.href = "salle.html"; // redirection vers les panneaux
+        // Redirection vers panneau.html (page des salles)
+        window.location.href = "panneau.html";
+
       } catch (error) {
         if (error.code === 'auth/email-already-in-use') {
           alert("Ce compte existe déjà. Veuillez vous connecter.");
