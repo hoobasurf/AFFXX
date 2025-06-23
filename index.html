@@ -8,12 +8,18 @@
   <style>
     @keyframes neonBlink {
       0%, 100% {
-        box-shadow: 0 0 5px #ff4fc4, 0 0 10px #c700d6, 0 0 20px #ff4fc4;
+        box-shadow:
+          0 0 5px #ff4fc4,
+          0 0 10px #c700d6,
+          0 0 20px #ff4fc4;
         color: #ff4fc4;
         background-color: #1a001f;
       }
       50% {
-        box-shadow: 0 0 10px #c700d6, 0 0 20px #ff4fc4, 0 0 30px #c700d6;
+        box-shadow:
+          0 0 10px #c700d6,
+          0 0 20px #ff4fc4,
+          0 0 30px #c700d6;
         color: #c700d6;
         background-color: #2a002f;
       }
@@ -41,9 +47,7 @@
   <div class="welcome-text">Bienvenue sur Affinix</div>
   <button class="enter-button">Entrer</button>
 
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-  <script src="email.js"></script>
-
+  <!-- Firebase : redirection auto -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
@@ -60,13 +64,13 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    onAuthStateChanged(auth, user => {
+    onAuthStateChanged(auth, (user) => {
       if (user) {
+        // Utilisateur connecté : on redirige vers les salles
         window.location.href = "panneaux.html";
       } else {
-        document.querySelector('.enter-button').onclick = () => {
-          window.location.href = "connexion.html";
-        };
+        // Utilisateur non connecté : on redirige vers connexion
+        window.location.href = "connexion.html";
       }
     });
   </script>
