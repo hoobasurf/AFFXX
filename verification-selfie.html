@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Selfie de Vérification - Affinix</title>
+  <meta charset="UTF-8" />
+  <title>Vérification Selfie - Affinix</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #f0f0f0; padding: 20px; }
-    .container { background: white; padding: 20px; border-radius: 10px; max-width: 400px; margin: auto; }
-    input[type="file"] { margin-bottom: 10px; }
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f9f9f9; }
+    .container { max-width: 400px; margin: auto; background: white; padding: 20px; border-radius: 10px; text-align: center; }
+    video, canvas { border-radius: 10px; max-width: 100%; }
+    button { margin-top: 10px; padding: 10px 20px; }
   </style>
 </head>
 <body>
   <div class="container">
     <h2>Prends un selfie pour vérification</h2>
-    <form id="selfieForm">
-      <input type="file" id="selfie" accept="image/*" required>
-      <button type="submit">Envoyer le selfie</button>
-    </form>
+    <video id="video" autoplay playsinline width="320" height="240"></video>
+    <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
+    <br />
+    <button id="takePhotoBtn">Prendre la photo</button>
+    <button id="sendPhotoBtn" disabled>Envoyer pour vérification</button>
   </div>
 
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-storage.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
-    import { getFirestore, doc, updateDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
@@ -35,24 +35,50 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    const storage = getStorage(app);
-    const db = getFirestore(app);
 
-    document.getElementById("selfieForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const file = document.getElementById("selfie").files[0];
+    const video = document.getElementById("video");
+    const canvas = document.getElementById("canvas");
+    const takePhotoBtn = document.getElementById("takePhotoBtn");
+    const sendPhotoBtn = document.getElementById("sendPhotoBtn");
+
+    // Demander la caméra
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => { video.srcObject = stream; })
+      .catch(() => alert("Impossible d'accéder à la caméra"));
+
+    takePhotoBtn.addEventListener("click", () => {
+      const context = canvas.getContext("2d");
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      canvas.style.display = "block";
+      sendPhotoBtn.disabled = false;
+    });
+
+    sendPhotoBtn.addEventListener("click", async () => {
+      const dataUrl = canvas.toDataURL("image/jpeg");
       onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          const selfieRef = ref(storage, `users/${user.uid}/selfie.jpg`);
-          await uploadBytes(selfieRef, file);
-          const selfieURL = await getDownloadURL(selfieRef);
-          await updateDoc(doc(db, "users", user.uid), {
-            selfieURL: selfieURL,
-            verifie: false,
-            tentativeVerif: 0
+        if (!user) {
+          alert("Tu dois être connecté.");
+          return;
+        }
+
+        // Envoi du selfie au backend pour vérification
+        try {
+          const response = await fetch("/.netlify/functions/verifySelfie", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ uid: user.uid, selfie: dataUrl })
           });
-          alert("Selfie envoyé. Tu recevras un message après vérification.");
-          window.location.href = "dashboard.html";
+          const result = await response.json();
+
+          if (result.verified) {
+            alert("Validation réussie ! Tu peux continuer.");
+            window.location.href = "merci.html"; // page suivante
+          } else {
+            alert("La vérification a échoué : " + result.message);
+            // Optionnel : proposer un nouveau selfie ou autre action
+          }
+        } catch (err) {
+          alert("Erreur serveur : " + err.message);
         }
       });
     });
