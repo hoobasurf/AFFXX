@@ -12,6 +12,14 @@
   <form id="signup-form">
     <input type="email" id="email" placeholder="Email" required />
     <input type="password" id="password" placeholder="Mot de passe" required />
+    
+    <div style="margin-top: 10px;">
+      <label>
+        <input type="checkbox" id="rememberMe" />
+        Se souvenir de moi
+      </label>
+    </div>
+
     <button type="submit">S'inscrire</button>
   </form>
   <p>Déjà inscrit ? <a href="connexion.html">Connexion</a></p>
@@ -29,9 +37,20 @@
 
       try {
         await createUserWithEmailAndPassword(auth, email, password);
-        window.location.href = "index.html"; // Redirection après inscription réussie
+
+        // Si la case est cochée, on enregistre l'utilisateur localement
+        if (document.getElementById('rememberMe').checked) {
+          localStorage.setItem('rememberedUser', email);
+        }
+
+        window.location.href = "salle.html"; // redirection vers les panneaux
       } catch (error) {
-        alert("Erreur : " + error.message);
+        if (error.code === 'auth/email-already-in-use') {
+          alert("Ce compte existe déjà. Veuillez vous connecter.");
+          window.location.href = "connexion.html";
+        } else {
+          alert("Erreur : " + error.message);
+        }
       }
     });
   </script>
