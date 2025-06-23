@@ -8,8 +8,7 @@
   import {
     getFirestore,
     doc,
-    setDoc,
-    getDoc
+    setDoc
   } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -31,6 +30,7 @@
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     messageDiv.textContent = "";
+    messageDiv.style.color = "inherit";
 
     const prenom = form.prenom.value.trim();
     const description = form.description.value.trim();
@@ -38,11 +38,10 @@
     const password = form.password.value;
     const departement = form.departement.value.trim();
     const rayon = form.rayon.value;
-    const salles = Array.from(
-      form.querySelectorAll('input[name="salles"]:checked')
-    ).map((cb) => cb.value);
+    const salles = Array.from(form.querySelectorAll('input[name="salles"]:checked')).map(cb => cb.value);
 
     if (salles.length === 0) {
+      messageDiv.style.color = "#ff8080";
       messageDiv.textContent = "Merci de choisir au moins une salle.";
       return;
     }
@@ -69,7 +68,7 @@
       if (error.code === "auth/email-already-in-use") {
         // Connexion auto
         try {
-          const userCredential = await signInWithEmailAndPassword(auth, email, password);
+          await signInWithEmailAndPassword(auth, email, password);
           messageDiv.style.color = "#80ff80";
           messageDiv.textContent = "Connexion réussie ! Redirection...";
           setTimeout(() => {
