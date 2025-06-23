@@ -2,75 +2,39 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Connexion / Inscription - Affinix</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #121212;
-      color: #eee;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-    .container {
-      background: #222;
-      padding: 30px;
-      border-radius: 10px;
-      width: 320px;
-      box-shadow: 0 0 15px #aa44ff;
-      text-align: center;
-    }
-    input {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 5px;
-      border: none;
-      font-size: 1em;
-    }
-    button {
-      padding: 10px 20px;
-      margin-top: 10px;
-      border: none;
-      background: #aa44ff;
-      color: white;
-      font-size: 1em;
-      border-radius: 5px;
-      cursor: pointer;
-      width: 100%;
-    }
-    button:hover {
-      background: #cc66ff;
-    }
-    .toggle-link, .reset-link {
-      margin-top: 15px;
-      color: #ccc;
-      cursor: pointer;
-      text-decoration: underline;
-      display: block;
-      font-size: 14px;
-    }
-    .error {
-      color: #ff5555;
-      margin-top: 10px;
-    }
-  </style>
+  <title>Connexion - Affinix</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-  <div class="container">
-    <h2 id="form-title">Connexion</h2>
 
+  <h1>Connexion</h1>
+  <form id="login-form">
     <input type="email" id="email" placeholder="Email" required />
     <input type="password" id="password" placeholder="Mot de passe" required />
+    <button type="submit">Se connecter</button>
+  </form>
+  <p>Pas encore inscrit ? <a href="inscription.html">Inscription</a></p>
 
-    <button id="submit-btn">Se connecter</button>
-    <span class="toggle-link" id="toggle-mode">Pas encore inscrit ? Crée un compte</span>
-    <a class="reset-link" href="reset-password.html">Mot de passe oublié ?</a>
-    <div class="error" id="error-message"></div>
-  </div>
+  <script type="module">
+    import { auth } from './js/firebase-init.js';
+    import { signInWithEmailAndPassword } from "firebase/auth";
 
-  <script type="module" src="connexion.js"></script>
+    const form = document.getElementById('login-form');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = form.email.value;
+      const password = form.password.value;
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        window.location.href = "index.html"; // Redirection après connexion réussie
+      } catch (error) {
+        alert("Erreur : " + error.message);
+      }
+    });
+  </script>
+
 </body>
 </html>
