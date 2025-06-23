@@ -26,7 +26,7 @@
     // BONUS : Redirection automatique si déjà connecté
     onAuthStateChanged(auth, user => {
       if (user) {
-        window.location.href = "panneaux.html";
+        window.location.href = "panneau.html";
       }
     });
 
@@ -37,7 +37,7 @@
 
       try {
         await signInWithEmailAndPassword(auth, email, password);
-        window.location.href = "panneaux.html"; // Redirection après connexion réussie
+        window.location.href = "panneau.html"; // Redirection après connexion réussie
       } catch (error) {
         alert("Erreur : " + error.message);
       }
