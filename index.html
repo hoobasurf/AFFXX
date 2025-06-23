@@ -45,7 +45,7 @@
 <body class="home">
 
   <div class="welcome-text">Bienvenue sur Affinix</div>
-  <button class="enter-button" onclick="location.href='inscription.html'">Entrer</button>
+  <button class="enter-button" onclick="location.href='connexion.html'">Entrer</button>
 
   <!-- Scripts JS -->
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
@@ -70,7 +70,7 @@
 
     onAuthStateChanged(auth, user => {
       if (user) {
-        // Utilisateur connecté, rediriger vers la page principale
+        // Utilisateur connecté, rediriger vers la page principale (exemple: panneaux.html)
         window.location.href = "panneaux.html";
       }
     });
