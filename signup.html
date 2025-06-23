@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Inscription - Affinix</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f0f0f0; }
+    .container {
+      max-width: 400px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #28a745;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #1e7e34;
+    }
+    .error {
+      color: red;
+      margin-bottom: 15px;
+    }
+    .link {
+      text-align: center;
+      margin-top: 10px;
+    }
+    .link a {
+      color: #007bff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Créer un compte</h2>
+    <div id="error" class="error"></div>
+    <form id="signupForm">
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Mot de passe" required minlength="6" />
+      <button type="submit">S’inscrire</button>
+    </form>
+    <div class="link">
+      <p>Déjà inscrit ? <a href="login.html">Se connecter</a></p>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
+      authDomain: "affinix-3a930.firebaseapp.com",
+      projectId: "affinix-3a930",
+      storageBucket: "affinix-3a930.appspot.com",
+      messagingSenderId: "498829285833",
+      appId: "1:498829285833:web:xxx"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    onAuthStateChanged(auth, user => {
+      if(user) {
+        window.location.href = "index.html"; // Redirige vers la page principale si déjà connecté
+      }
+    });
+
+    const signupForm = document.getElementById("signupForm");
+    const errorDiv = document.getElementById("error");
+
+    signupForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      errorDiv.textContent = "";
+
+      try {
+        await createUserWithEmailAndPassword(auth, email, password);
+        // La redirection est gérée par onAuthStateChanged
+      } catch (err) {
+        if(err.code === "auth/email-already-in-use") {
+          errorDiv.textContent = "Cet email est déjà utilisé.";
+        } else if(err.code === "auth/invalid-email") {
+          errorDiv.textContent = "Email invalide.";
+        } else if(err.code === "auth/weak-password") {
+          errorDiv.textContent = "Le mot de passe doit contenir au moins 6 caractères.";
+        } else {
+          errorDiv.textContent = "Erreur : " + err.message;
+        }
+      }
+    });
+  </script>
+</body>
+</html>
