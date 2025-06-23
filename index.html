@@ -45,15 +45,16 @@
 <body class="home">
 
   <div class="welcome-text">Bienvenue sur Affinix</div>
-  <button class="enter-button" onclick="location.href='inscription.html'">Entrer</button>
+  <button class="enter-button" disabled>Chargement...</button>
 
   <!-- Scripts JS -->
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script src="email.js"></script>
 
-  <!-- Firebase SDK import -->
+  <!-- Firebase SDK import et logique bouton -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
@@ -65,12 +66,33 @@
       appId: "1:498829285833:web:344dacf5b6bcc818167018"
     };
 
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
-  </script>
+    const auth = getAuth(app);
 
-  <!-- Ajout du contrôle d'authentification -->
-  <script src="js/auth-check.js" type="module"></script>
+    const btn = document.querySelector(".enter-button");
+
+    // Désactive le bouton et change texte tant que l'état n'est pas connu
+    btn.disabled = true;
+    btn.textContent = "Chargement...";
+
+    onAuthStateChanged(auth, user => {
+      if(user) {
+        // Utilisateur connecté
+        btn.disabled = false;
+        btn.textContent = "Entrer";
+        btn.onclick = () => {
+          window.location.href = "index.html"; // Page principale après connexion
+        }
+      } else {
+        // Utilisateur non connecté
+        btn.disabled = false;
+        btn.textContent = "S'inscrire / Se connecter";
+        btn.onclick = () => {
+          window.location.href = "inscription.html"; // Page inscription ou connexion
+        }
+      }
+    });
+  </script>
   
 </body>
 </html>
