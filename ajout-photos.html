@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Ajout de Photos - Affinix</title>
   <style>
     body { font-family: Arial, sans-serif; padding: 20px; background: #f0f0f0; }
@@ -14,7 +14,15 @@
   <div class="container">
     <h2>Ajoute jusqu’à 5 photos de profil</h2>
     <form id="photoForm">
-      <input type="file" name="photos" id="photos" accept="image/*" multiple required>
+      <input 
+        type="file" 
+        name="photos" 
+        id="photos" 
+        accept="image/*" 
+        multiple 
+        required
+        onchange="checkFiles(this)"
+      />
       <button type="submit">Continuer</button>
     </form>
   </div>
@@ -39,11 +47,27 @@
     const db = getFirestore(app);
     const storage = getStorage(app);
 
+    function checkFiles(input) {
+      if (input.files.length > 5) {
+        alert("Tu ne peux sélectionner que 5 photos maximum.");
+        input.value = "";
+      }
+    }
+
     document.getElementById("photoForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       const files = document.getElementById("photos").files;
-      if (files.length > 5) return alert("Tu ne peux télécharger que 5 photos max.");
-      
+
+      if (files.length === 0) {
+        alert("Merci de sélectionner au moins une photo.");
+        return;
+      }
+
+      if (files.length > 5) {
+        alert("Tu ne peux télécharger que 5 photos max.");
+        return;
+      }
+
       onAuthStateChanged(auth, async (user) => {
         if (user) {
           const urls = [];
@@ -56,6 +80,8 @@
           }
           await updateDoc(doc(db, "users", user.uid), { photos: urls });
           window.location.href = "verification-selfie.html";
+        } else {
+          alert("Tu dois être connecté pour ajouter des photos.");
         }
       });
     });
