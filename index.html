@@ -45,13 +45,13 @@
 <body class="home">
 
   <div class="welcome-text">Bienvenue sur Affinix</div>
-  <button class="enter-button" disabled>Chargement...</button>
+  <button class="enter-button" onclick="location.href='inscription.html'">Entrer</button>
 
   <!-- Scripts JS -->
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script src="email.js"></script>
 
-  <!-- Firebase SDK import et logique bouton -->
+  <!-- Firebase SDK import + redirection si connecté -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
@@ -59,9 +59,8 @@
     const firebaseConfig = {
       apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
       authDomain: "affinix-3a930.firebaseapp.com",
-      databaseURL: "https://affinix-3a930-default-rtdb.firebaseio.com",
       projectId: "affinix-3a930",
-      storageBucket: "affinix-3a930.firebasestorage.app",
+      storageBucket: "affinix-3a930.appspot.com",
       messagingSenderId: "498829285833",
       appId: "1:498829285833:web:344dacf5b6bcc818167018"
     };
@@ -69,27 +68,10 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    const btn = document.querySelector(".enter-button");
-
-    // Désactive le bouton et change texte tant que l'état n'est pas connu
-    btn.disabled = true;
-    btn.textContent = "Chargement...";
-
     onAuthStateChanged(auth, user => {
-      if(user) {
-        // Utilisateur connecté
-        btn.disabled = false;
-        btn.textContent = "Entrer";
-        btn.onclick = () => {
-          window.location.href = "index.html"; // Page principale après connexion
-        }
-      } else {
-        // Utilisateur non connecté
-        btn.disabled = false;
-        btn.textContent = "S'inscrire / Se connecter";
-        btn.onclick = () => {
-          window.location.href = "inscription.html"; // Page inscription ou connexion
-        }
+      if (user) {
+        // Utilisateur connecté, rediriger vers la page principale (exemple: panneaux.html)
+        window.location.href = "panneaux.html";
       }
     });
   </script>
