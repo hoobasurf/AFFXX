@@ -2,13 +2,5 @@
   functions = "netlify/functions"
   publish = "."
 
-  # Permet d’installer automatiquement les dépendances des fonctions
 [[plugins]]
   package = "@netlify/plugin-functions-install-core"
-
-[[headers]]
-  for = "/*"
-  [headers.values]
-    Cache-Control = "no-cache, no-store, must-revalidate"
-    Pragma = "no-cache"
-    Expires = "0"
