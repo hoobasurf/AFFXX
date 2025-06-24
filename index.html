@@ -1,64 +1,76 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Entrée AFFXX</title>
-<style>
-  body {
-    margin: 0;
-    height: 100vh;
-    background-color: #121212;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-
-  form {
-    width: 320px;
-    background-color: #1e1e1e;
-    padding: 30px 40px 40px;
-    border-radius: 16px;
-    box-shadow: 0 0 25px rgba(255, 45, 85, 0.7);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  button {
-    background-color: #ff2d55;
-    border: none;
-    color: white;
-    padding: 16px 50px;
-    font-size: 1.8rem;
-    border-radius: 30px;
-    cursor: pointer;
-    box-shadow: 0 0 14px #ff2d55;
-    animation: blink 1.6s infinite;
-    transition: box-shadow 0.3s ease;
-    margin-top: 20px;
-  }
-  button:hover {
-    box-shadow: 0 0 30px #ff2d55;
-  }
-
-  @keyframes blink {
-    0%, 100% {
-      opacity: 1;
-      box-shadow: 0 0 14px #ff2d55;
+  <meta charset="UTF-8">
+  <title>Affinix</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
     }
-    50% {
-      opacity: 0.5;
-      box-shadow: 0 0 30px #ff2d55;
+    body {
+      background: url('background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: sans-serif;
+      position: relative;
     }
-  }
-</style>
+
+    /* Conteneur de salle */
+    .first-room-container {
+      position: relative;
+      z-index: 0;
+    }
+
+    /* Bouton Entrer stylisé néon */
+    .enter-button {
+      position: fixed;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%) scale(1);
+      padding: 18px 50px;
+      font-size: 28px;
+      color: #ff66ff;
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 2px solid #ff00ff;
+      border-radius: 14px;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      z-index: 1000;
+      animation: neonPulse 2.2s ease-in-out infinite;
+      box-shadow:
+        0 0 10px #ff00ff,
+        0 0 20px #ff66ff;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .enter-button:hover {
+      transform: translateX(-50%) scale(1.1);
+      box-shadow:
+        0 0 20px #ff00ff,
+        0 0 30px #ff66ff;
+    }
+
+    @keyframes neonPulse {
+      0%, 100% {
+        opacity: 1;
+        box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff66ff;
+      }
+      50% {
+        opacity: 0.8;
+        box-shadow: 0 0 20px #ff00ff, 0 0 35px #ff66ff;
+      }
+    }
+  </style>
 </head>
 <body>
-  <form>
-    <!-- Ici on enlève les inputs Nom, Email, Message -->
-    <button type="submit">Entrer</button>
-  </form>
+
+  <div class="first-room-container">
+    <!-- Contenu de la salle -->
+  </div>
+
+  <button class="enter-button" onclick="location.href='salles.html'">Entrer</button>
+
 </body>
 </html>
