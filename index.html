@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <title>Bienvenue sur AFFINIX</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       padding: 0;
-      background: url('https://raw.githubusercontent.com/hoobasurf/AFFXX/main/0D17FB56-78A8-46EE-9EC2-FEED5AE21005.png') no-repeat center center fixed;
+      height: 100vh;
+      background: url('fond-tokyo.jpg') no-repeat center center fixed;
       background-size: cover;
       font-family: 'Orbitron', sans-serif;
       color: white;
@@ -18,49 +18,42 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
       text-align: center;
     }
 
     .welcome {
       position: absolute;
-      top: 20px;
+      top: 30px;
       font-size: 2em;
       color: #ff66cc;
-      text-shadow: 2px 2px 8px #000;
-      background-color: rgba(0, 0, 0, 0.5);
-      padding: 10px 20px;
-      border-radius: 20px;
+      background-color: rgba(0, 0, 0, 0.4);
+      padding: 10px 25px;
+      border-radius: 25px;
+      text-shadow: 2px 2px 10px black;
     }
 
     h1 {
-      font-size: 3em;
-      margin-bottom: 0.2em;
+      font-size: 3.5em;
+      margin-bottom: 1em;
       color: #ff77e9;
       text-shadow: 2px 2px 5px #000;
-    }
-
-    p {
-      font-size: 1.2em;
-      margin-bottom: 2em;
-      text-shadow: 1px 1px 3px #000;
     }
 
     button {
       background-color: #ff00cc;
       border: none;
-      padding: 15px 30px;
+      padding: 15px 35px;
       font-size: 1.2em;
-      border-radius: 30px;
+      border-radius: 40px;
       color: white;
       cursor: pointer;
-      box-shadow: 0 0 15px #ff00cc;
+      box-shadow: 0 0 20px #ff00cc;
       transition: all 0.3s ease;
     }
 
     button:hover {
-      background-color: #cc00aa;
-      box-shadow: 0 0 25px #ff00cc;
+      background-color: #cc0099;
+      box-shadow: 0 0 30px #ff00cc;
     }
   </style>
 </head>
@@ -69,7 +62,6 @@
   <div class="welcome">Bienvenue sur Affinix</div>
 
   <h1>AFFINIX</h1>
-  <p>Effleurer le passé pour connecter le futur…</p>
   <button onclick="window.location.href='inscription.html'">Entrer</button>
 
 </body>
