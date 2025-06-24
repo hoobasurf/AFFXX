@@ -1,8 +1,8 @@
 [build]
-  publish = "public"
   functions = "netlify/functions"
-  command = "npm install && npm run build"
+  publish = "."
 
+  # Permet d’installer automatiquement les dépendances des fonctions
 [[plugins]]
   package = "@netlify/plugin-functions-install-core"
 
