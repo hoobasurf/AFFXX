@@ -2,67 +2,19 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Bienvenue sur AFFINIX</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      background: url('fond-tokyo.jpg') no-repeat center center fixed;
-      background-size: cover;
-      font-family: 'Orbitron', sans-serif;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
-
-    .welcome {
-      position: absolute;
-      top: 30px;
-      font-size: 2em;
-      color: #ff66cc;
-      background-color: rgba(0, 0, 0, 0.4);
-      padding: 10px 25px;
-      border-radius: 25px;
-      text-shadow: 2px 2px 10px black;
-    }
-
-    h1 {
-      font-size: 3.5em;
-      margin-bottom: 1em;
-      color: #ff77e9;
-      text-shadow: 2px 2px 5px #000;
-    }
-
-    button {
-      background-color: #ff00cc;
-      border: none;
-      padding: 15px 35px;
-      font-size: 1.2em;
-      border-radius: 40px;
-      color: white;
-      cursor: pointer;
-      box-shadow: 0 0 20px #ff00cc;
-      transition: all 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #cc0099;
-      box-shadow: 0 0 30px #ff00cc;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Affinix - Site de rencontre</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
-  <div class="welcome">Bienvenue sur Affinix</div>
-
-  <h1>AFFINIX</h1>
-  <button onclick="window.location.href='inscription.html'">Entrer</button>
-
+  <div class="hero-bg">
+    <div class="overlay">
+      <div class="content">
+        <h1>Bienvenue sur Affinix</h1>
+        <p>Rencontrez, échangez, partagez dans l'univers qui vous ressemble.</p>
+        <a href="profil.html" class="enter-btn">Entrer</a>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
