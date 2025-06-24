@@ -12,14 +12,7 @@
   <form id="signup-form">
     <input type="email" id="email" placeholder="Email" required />
     <input type="password" id="password" placeholder="Mot de passe" required />
-
-    <h3>Choisis tes salles :</h3>
-    <label><input type="checkbox" value="salle1" class="salle-checkbox" /> 💬 Rencontre Amicale</label><br />
-    <label><input type="checkbox" value="salle2" class="salle-checkbox" /> 💖 Relation Sérieuse</label><br />
-    <label><input type="checkbox" value="salle3" class="salle-checkbox" /> 🎉 Rencontre Fun</label><br />
-    <label><input type="checkbox" value="salle4" class="salle-checkbox" /> 👨‍👩‍👧 Parents Solos</label><br />
-    <!-- salle5 et salle6 supprimées -->
-
+    
     <div style="margin-top: 10px;">
       <label>
         <input type="checkbox" id="rememberMe" />
@@ -29,13 +22,11 @@
 
     <button type="submit">S'inscrire</button>
   </form>
-
   <p>Déjà inscrit ? <a href="connexion.html">Connexion</a></p>
 
   <script type="module">
-    import { auth, db } from './js/firebase-init.js';
-    import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { auth } from './js/firebase-init.js';
+    import { createUserWithEmailAndPassword } from "firebase/auth";
 
     const form = document.getElementById('signup-form');
 
@@ -44,26 +35,15 @@
       const email = form.email.value;
       const password = form.password.value;
 
-      // Récupérer les salles cochées
-      const selectedSalles = Array.from(document.querySelectorAll('.salle-checkbox:checked')).map(cb => cb.value);
-
       try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
+        await createUserWithEmailAndPassword(auth, email, password);
 
-        // Enregistrement Firestore : email + salles cochées
-        await setDoc(doc(db, "users", user.uid), {
-          email: email,
-          salles: selectedSalles
-        });
-
-        // Stockage local si "se souvenir" est coché
+        // Si la case est cochée, on enregistre l'utilisateur localement
         if (document.getElementById('rememberMe').checked) {
           localStorage.setItem('rememberedUser', email);
         }
 
-        // Redirection vers panneau
-        window.location.href = "panneau.html";
+        window.location.href = "salle.html"; // redirection vers les panneaux
       } catch (error) {
         if (error.code === 'auth/email-already-in-use') {
           alert("Ce compte existe déjà. Veuillez vous connecter.");
