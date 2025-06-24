@@ -37,81 +37,84 @@
       color: #000;
       box-shadow: 0 0 15px #0ff;
     }
-
-    .logout {
+    .btn-deco {
       margin-top: 2rem;
-    }
-    .logout button {
-      background: #f00;
-      color: #fff;
-      border: none;
+      background-color: #f00;
+      color: white;
       padding: 10px 20px;
-      font-size: 1rem;
+      border: none;
       border-radius: 8px;
       cursor: pointer;
-      box-shadow: 0 0 10px #f00;
-      transition: background 0.3s ease;
+      font-size: 1rem;
+      transition: background 0.3s;
     }
-    .logout button:hover {
-      background: #c00;
+    .btn-deco:hover {
+      background-color: #c00;
     }
   </style>
 </head>
 <body>
 
   <h1>Bienvenue dans les salles Affinix</h1>
-
-  <div class="grid" id="sallesContainer">
-    <!-- Les salles cochées lors de l'inscription apparaîtront ici dynamiquement -->
+  <div class="grid" id="panel-container">
+    <!-- Les salles cochées s'affichent ici -->
   </div>
 
-  <div class="logout">
-    <button id="logoutBtn">Déconnexion</button>
-  </div>
+  <button class="btn-deco" id="logout-btn">Déconnexion</button>
 
   <script type="module">
-    import { auth } from './js/firebase-init.js';
-    import { signOut, onAuthStateChanged } from "firebase/auth";
+    import { auth, db } from './js/firebase-init.js';
+    import { signOut, onAuthStateChanged } from 'firebase/auth';
+    import { doc, getDoc } from 'firebase/firestore';
 
-    // Liste des salles (avec clé et label)
-    const salles = {
-      salle1: "💬 Rencontre Amicale",
-      salle2: "💖 Relation Sérieuse",
-      salle3: "🎉 Rencontre Fun",
-      salle4: "👨‍👩‍👧 Parents Solos",
-      salle5: "🎮 Univers Passions",
-      salle6: "🧬 Connexion Unique"
+    const container = document.getElementById('panel-container');
+
+    const panels = {
+      salle1: { label: "💬 Rencontre Amicale", href: "salle1.html" },
+      salle2: { label: "💖 Relation Sérieuse", href: "salle2.html" },
+      salle3: { label: "🎉 Rencontre Fun", href: "salle3.html" },
+      salle4: { label: "👨‍👩‍👧 Parents Solos", href: "salle4.html" },
+      salle5: { label: "🎮 Univers Passions", href: "salle5.html" },
+      salle6: { label: "🧬 Connexion Unique", href: "salle6.html" }
     };
 
-    // Vérifie si l'utilisateur est connecté
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async user => {
       if (!user) {
         window.location.href = "connexion.html";
-      } else {
-        // Récupère les salles choisies dans localStorage
-        const data = JSON.parse(localStorage.getItem("userSalles"));
-        const container = document.getElementById("sallesContainer");
-
-        if (data) {
-          Object.keys(salles).forEach(key => {
-            if (data.includes(key)) {
-              const div = document.createElement("div");
-              div.className = "panel";
-              div.textContent = salles[key];
-              div.onclick = () => window.location.href = key + ".html";
-              container.appendChild(div);
-            }
-          });
-        } else {
-          container.innerHTML = "<p>Aucune salle sélectionnée. Merci de vous réinscrire.</p>";
-        }
+        return;
       }
+
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      const userData = userDoc.data();
+
+      if (!userData || !userData.salles) {
+        container.innerHTML = "<p>Aucune salle sélectionnée.</p>";
+        return;
+      }
+
+      // Afficher les salles cochées
+      userData.salles.forEach(salleKey => {
+        if (panels[salleKey]) {
+          const div = document.createElement("div");
+          div.className = "panel";
+          div.textContent = panels[salleKey].label;
+          div.onclick = () => location.href = panels[salleKey].href;
+          container.appendChild(div);
+        }
+      });
+
+      // Salle spéciale : Le Créateur (toujours visible)
+      const createur = document.createElement("div");
+      createur.className = "panel";
+      createur.textContent = "💡 Le Créateur";
+      createur.onclick = () => location.href = "createur.html";
+      container.appendChild(createur);
     });
 
-    // Bouton déconnexion
-    document.getElementById("logoutBtn").addEventListener("click", async () => {
+    // Déconnexion
+    document.getElementById("logout-btn").addEventListener("click", async () => {
       await signOut(auth);
-      window.location.href = "index.html";
+      window.location.href = "connexion.html";
     });
   </script>
 
