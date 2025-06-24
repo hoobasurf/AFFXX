@@ -4,31 +4,35 @@
   <meta charset="UTF-8" />
   <title>Accueil - Affinix</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Bienvenue sur Affinix</h1>
-  <button id="enterBtn">Entrer</button>
+  <div class="container">
+    <h1>Bienvenue sur Affinix</h1>
+    <button id="enterBtn">Entrer</button>
+  </div>
 
-  <!-- Firebase SDK + init à ajouter ici -->
-
+  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 
   <script>
-    // Ta config Firebase ici
     const firebaseConfig = {
-      // ...
+      apiKey: "TA_CLE_API",
+      authDomain: "TON_PROJET.firebaseapp.com",
+      projectId: "TON_PROJET",
+      storageBucket: "TON_PROJET.appspot.com",
+      messagingSenderId: "XXXX",
+      appId: "1:XXXX:web:XXXX"
     };
     firebase.initializeApp(firebaseConfig);
 
     document.getElementById('enterBtn').addEventListener('click', () => {
       firebase.auth().onAuthStateChanged(user => {
-        if(user){
-          // Utilisateur connecté → vers page connexion
+        if (user) {
           window.location.href = 'connexion.html';
         } else {
-          // Pas connecté → vers inscription
           window.location.href = 'inscription.html';
         }
       });
