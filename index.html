@@ -6,31 +6,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <div class="container">
-    <h1>Bienvenue sur Affinix</h1>
-    <button id="enterBtn">Entrer</button>
-  </div>
+<body class="tokyo-background">
+  <h1>Bienvenue sur Affinix</h1>
+  <button id="enterBtn">Entrer</button>
 
-  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 
   <script>
     const firebaseConfig = {
-      apiKey: "TA_CLE_API",
-      authDomain: "TON_PROJET.firebaseapp.com",
-      projectId: "TON_PROJET",
-      storageBucket: "TON_PROJET.appspot.com",
-      messagingSenderId: "XXXX",
-      appId: "1:XXXX:web:XXXX"
+      // Ajoute ta config ici
     };
     firebase.initializeApp(firebaseConfig);
 
     document.getElementById('enterBtn').addEventListener('click', () => {
       firebase.auth().onAuthStateChanged(user => {
-        if (user) {
+        if(user){
           window.location.href = 'connexion.html';
         } else {
           window.location.href = 'inscription.html';
