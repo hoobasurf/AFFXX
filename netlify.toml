@@ -1,6 +1,3 @@
 [build]
+  publish = "."  # Racine du projet, là où est index.html
   functions = "netlify/functions"
-  publish = "."
-
-[[plugins]]
-  package = "@netlify/plugin-functions-install-core"
