@@ -1,22 +1,66 @@
-<! DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-‹meta charset="UTF-8" />
-‹meta name="viewport" content="width=device-width, initial-scale=1.0" />
-‹title>Affinix - Accueil</title>
-‹title>Affinix - Bienvenue</title>
-<link rel="stylesheet"
-href="style.css" /> </head>
-< body>
-‹div class="container">
-<img src="images/page1.jpg" alt="Page d'accueil" class="background-image"/>
-‹div class="overlay-text"> <h1>Bienvenue dans AFFINIX</h1>
-<a href="page2.html"
-class="enter-button">Entrer</a> ‹div class="welcome-screen">
-<div class="overlay"> <h1>Bienvenue dans l'univers
-d'Affinix</h1>
-<a href="profil.html"
-class="enter-button">Entrer</a>
-</div>
-</div> </ body>
+  <meta charset="UTF-8" />
+  <title>Affinix</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-image: url('images/background-tokyo.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white;
+      text-shadow: 1px 1px 3px black;
+    }
+
+    h1 {
+      font-size: 4em;
+      margin-bottom: 40px;
+      animation: fadeInDown 1.5s ease;
+    }
+
+    .enter-button {
+      padding: 15px 40px;
+      font-size: 1.2em;
+      background-color: rgba(255, 255, 255, 0.15);
+      border: 2px solid white;
+      color: white;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: 0.3s ease;
+      animation: fadeInUp 2s ease;
+    }
+
+    .enter-button:hover {
+      background-color: white;
+      color: black;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <h1>AFFINIX</h1>
+  <a href="inscription.html">
+    <button class="enter-button">ENTRER</button>
+  </a>
+</body>
 </html>
