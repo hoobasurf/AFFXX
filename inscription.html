@@ -4,14 +4,24 @@
   <meta charset="UTF-8" />
   <title>Inscription - AFFINIX</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Préchargement de la police -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
+
   <style>
-    body {
+    html, body {
       margin: 0;
+      padding: 0;
+      background-color: #000; /* Fond noir par défaut */
+      color: #fff;
       font-family: 'Orbitron', sans-serif;
+    }
+
+    body {
       background: url('img/fond-inscription-tokyo.jpg') no-repeat center center fixed;
       background-size: cover;
-      color: #fff;
       min-height: 100vh;
       display: flex;
       justify-content: center;
@@ -111,7 +121,6 @@
       background: #ff6dfb;
     }
 
-    /* Responsive amélioré */
     @media (max-width: 400px) {
       h1 {
         font-size: 20px;
@@ -134,9 +143,13 @@
 
   <div class="inscription-wrapper">
     <h1>Rejoins AFFINIX</h1>
-    <form name="inscription" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/salles.html">
+    <form name="inscription" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/salle.html">
       <input type="hidden" name="form-name" value="inscription" />
-      <p hidden><label>Ne pas remplir : <input name="bot-field" /></label></p>
+      
+      <!-- Champ caché anti-bot -->
+      <div style="position: absolute; left: -9999px;">
+        <label>Ne pas remplir : <input name="bot-field" /></label>
+      </div>
 
       <label for="prenom">Prénom ou Pseudo :</label>
       <input type="text" id="prenom" name="prenom" required>
@@ -175,30 +188,6 @@
     </form>
   </div>
 
-  <!-- VALIDATION JAVASCRIPT -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const form = document.querySelector('form');
-      if (!form) return;
-
-      form.addEventListener('submit', (e) => {
-        const prenom = form.querySelector('input[name="prenom"]').value.trim();
-        const email = form.querySelector('input[name="email"]').value.trim();
-        const salles = [...form.querySelectorAll('input[name="salles[]"]:checked')];
-
-        let errors = [];
-
-        if (prenom.length < 2) errors.push("Le prénom est trop court.");
-        if (!email.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/)) errors.push("Email invalide.");
-        if (salles.length === 0) errors.push("Veuillez choisir au moins une salle.");
-
-        if (errors.length > 0) {
-          e.preventDefault();
-          alert(errors.join("\\n"));
-        }
-      });
-    });
-  </script>
-
+  <script src="script.js"></script>
 </body>
 </html>
