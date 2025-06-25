@@ -2,180 +2,66 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Inscription - AFFINIX</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
+  <title>Inscription AFFINIX</title>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Orbitron', sans-serif;
-      background: url('img/fond-inscription-tokyo.jpg') no-repeat center center fixed;
-      background-size: cover;
-      color: #fff;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-
-    .guirlande {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      height: 100px;
-      background: url('img/guirlande-neon.png') repeat-x top;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .inscription-wrapper {
-      width: 100%;
-      max-width: 500px;
-      padding: 30px 20px;
-      background: transparent;
-      border: 2px solid #ff6dfb;
-      border-radius: 20px;
-      box-shadow: 0 0 20px #ff6dfb;
-      position: relative;
-      z-index: 2;
-    }
-
-    h1 {
-      color: #ffbaff;
-      font-size: 24px;
-      margin-bottom: 20px;
-      text-shadow: 0 0 6px #ffbaff;
-      text-align: center;
-    }
-
-    label {
-      display: block;
-      margin: 12px 0 6px;
-      font-size: 14px;
-    }
-
-    input[type="text"],
-    input[type="email"],
-    textarea,
-    input[type="range"] {
-      width: 100%;
-      padding: 10px;
-      border-radius: 8px;
-      border: none;
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
-
-    input[type="range"] {
-      accent-color: #ff6dfb;
-    }
-
-    .rayon-output {
-      margin-top: -8px;
-      margin-bottom: 15px;
-      font-size: 13px;
-      color: #ffbaff;
-    }
-
-    .checkbox-group label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      padding: 5px 0;
-      cursor: pointer;
-    }
-
-    .checkbox-group input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      accent-color: #ff6dfb;
-    }
-
-    button {
-      background: #a86eff;
-      color: #fff;
-      font-size: 16px;
-      padding: 12px;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      box-shadow: 0 0 10px #ffbaff;
-      transition: 0.3s;
-      width: 100%;
-      margin-top: 20px;
-    }
-
-    button:hover {
-      background: #ff6dfb;
-    }
-
-    @media (max-width: 400px) {
-      h1 {
-        font-size: 20px;
-      }
-      input[type="text"],
-      input[type="email"],
-      textarea {
-        font-size: 13px;
-      }
-      button {
-        font-size: 15px;
-        padding: 10px;
-      }
-    }
+    body { font-family: Arial; padding: 20px; }
+    input, textarea { display: block; margin-bottom: 10px; width: 100%; padding: 8px; }
+    button { padding: 10px 15px; background: #222; color: white; border: none; }
   </style>
 </head>
 <body>
+  <h2>Formulaire d'inscription</h2>
+  <form id="inscription-form">
+    <input type="text" name="prenom" placeholder="Prénom ou pseudo" required />
+    <input type="email" name="email" placeholder="Ton email" required />
+    <textarea name="desc" placeholder="Ta description rapide" required></textarea>
+    <input type="text" name="salles" placeholder="Salles sélectionnées" />
+    <input type="text" name="departement" placeholder="Code postal ou ville" />
+    <input type="number" name="rayon" placeholder="Rayon en km" />
 
-  <div class="guirlande"></div>
+    <button type="submit">Valider mon inscription</button>
+  </form>
 
-  <div class="inscription-wrapper">
-    <h1>Rejoins AFFINIX</h1>
-    <form name="inscription" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/salle.html">
-      <input type="hidden" name="form-name" value="inscription" />
-      <p hidden><label>Ne pas remplir : <input name="bot-field" /></label></p>
+  <script>
+    emailjs.init("TON_USER_ID"); // remplace par ton User ID EmailJS
 
-      <label for="prenom">Prénom ou Pseudo :</label>
-      <input type="text" id="prenom" name="prenom" required>
+    document.getElementById("inscription-form").addEventListener("submit", function (e) {
+      e.preventDefault();
 
-      <label for="description">Décris-toi :</label>
-      <textarea id="description" name="description" rows="4" required></textarea>
+      const form = e.target;
+      const data = {
+        to_name: form.prenom.value,
+        to_email: form.email.value,
+        confirmation_link: `https://ton-site.vercel.app/confirmation.html?user=${encodeURIComponent(form.email.value)}`,
 
-      <label for="email">Email :</label>
-      <input type="email" id="email" name="email" required>
+        user_email: form.email.value,
+        user_desc: form.desc.value,
+        user_salles: form.salles.value,
+        user_departement: form.departement.value,
+        user_rayon: form.rayon.value,
+      };
 
-      <label>Salles choisies :</label>
-      <div class="checkbox-group">
-        <label><input type="checkbox" name="salles[]" value="relation-serieuse"> 💖 Relation sérieuse</label>
-        <label><input type="checkbox" name="salles[]" value="amicale"> 💬 Rencontre amicale</label>
-        <label><input type="checkbox" name="salles[]" value="fun"> 🎉 Rencontre fun</label>
-        <label><input type="checkbox" name="salles[]" value="parents"> 👨‍👩‍👧 Parents solos</label>
-      </div>
+      // 1. Envoi à l'utilisateur
+      emailjs.send("TON_SERVICE_ID", "confirmation_template", data)
+        .then(() => {
+          alert("Email de confirmation envoyé à l'utilisateur ✅");
+        })
+        .catch((err) => {
+          console.error("Erreur envoi confirmation :", err);
+        });
 
-      <label for="departement">Ton département :</label>
-      <input type="text" id="departement" name="departement" placeholder="Ex : 75 ou Paris" required>
+      // 2. Envoi au créateur
+      emailjs.send("TON_SERVICE_ID", "admin_alert_template", data)
+        .then(() => {
+          console.log("Notification envoyée au créateur ✅");
+        })
+        .catch((err) => {
+          console.error("Erreur envoi au créateur :", err);
+        });
 
-      <label for="rayon">Rayon de recherche (km) :</label>
-      <input
-        type="range"
-        id="rayon"
-        name="rayon"
-        min="5"
-        max="100"
-        value="50"
-        step="1"
-        oninput="document.getElementById('rayonValue').innerText = this.value + ' km';"
-      >
-      <div class="rayon-output">🌐 Rayon actuel : <span id="rayonValue">50 km</span></div>
-
-      <button type="submit">Valider mon inscription</button>
-    </form>
-  </div>
-
-  <!-- ✅ Script externe -->
-  <script src="script.js"></script>
-
+      form.reset();
+    });
+  </script>
 </body>
 </html>
