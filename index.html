@@ -2,97 +2,47 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Bienvenue sur Affinix</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Connexion - Affinix</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="css/styles.css" />
-  <style>
-    /* Animation clignotement néon rose/violet pour le bouton */
-    @keyframes neonBlink {
-      0%, 100% {
-        box-shadow:
-          0 0 5px #ff4fc4,
-          0 0 10px #c700d6,
-          0 0 20px #ff4fc4;
-        color: #ff4fc4;
-        background-color: #1a001f;
-      }
-      50% {
-        box-shadow:
-          0 0 10px #c700d6,
-          0 0 20px #ff4fc4,
-          0 0 30px #c700d6;
-        color: #c700d6;
-        background-color: #2a002f;
-      }
-    }
-
-    .enter-button {
-      animation: neonBlink 2s ease-in-out infinite;
-      border-radius: 30px;
-      padding: 15px 50px;
-      font-size: 1.5rem;
-      border: none;
-      cursor: pointer;
-      background-color: #1a001f;
-      color: #ff4fc4;
-      transition: transform 0.3s ease;
-    }
-    .enter-button:hover {
-      transform: scale(1.05);
-    }
-  </style>
 </head>
-<body class="home">
+<body>
 
-  <div class="welcome-text">Bienvenue sur Affinix</div>
-  <button class="enter-button" disabled>Chargement...</button>
+  <h1>Connexion</h1>
+  <form id="login-form">
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Mot de passe" required />
+    <button type="submit">Se connecter</button>
+  </form>
+  <p>Pas encore inscrit ? <a href="inscription.html">Inscription</a></p>
 
-  <!-- Scripts JS -->
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-  <script src="email.js"></script>
-
-  <!-- Firebase SDK import et logique bouton -->
+  <!-- Script de connexion + redirection -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+    import { auth } from './js/firebase-init.js';
+    import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
-      authDomain: "affinix-3a930.firebaseapp.com",
-      databaseURL: "https://affinix-3a930-default-rtdb.firebaseio.com",
-      projectId: "affinix-3a930",
-      storageBucket: "affinix-3a930.firebasestorage.app",
-      messagingSenderId: "498829285833",
-      appId: "1:498829285833:web:344dacf5b6bcc818167018"
-    };
+    const form = document.getElementById('login-form');
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    const btn = document.querySelector(".enter-button");
-
-    // Désactive le bouton et change texte tant que l'état n'est pas connu
-    btn.disabled = true;
-    btn.textContent = "Chargement...";
-
+    // BONUS : Redirection automatique si déjà connecté
     onAuthStateChanged(auth, user => {
-      if(user) {
-        // Utilisateur connecté
-        btn.disabled = false;
-        btn.textContent = "Entrer";
-        btn.onclick = () => {
-          window.location.href = "index.html"; // Page principale après connexion
-        }
-      } else {
-        // Utilisateur non connecté
-        btn.disabled = false;
-        btn.textContent = "S'inscrire / Se connecter";
-        btn.onclick = () => {
-          window.location.href = "inscription.html"; // Page inscription ou connexion
-        }
+      if (user) {
+        window.location.href = "panneaux.html";
+      }
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = form.email.value;
+      const password = form.password.value;
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        window.location.href = "panneaux.html"; // Redirection après connexion réussie
+      } catch (error) {
+        alert("Erreur : " + error.message);
       }
     });
   </script>
-  
+
 </body>
 </html>
