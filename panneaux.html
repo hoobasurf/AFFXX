@@ -1,122 +1,68 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <title>Choisis ta salle – Affinix</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <title>Panneaux - AFFINIX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #111;
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: url('img/fond-tokyo.jpg') no-repeat center center fixed;
+      background-size: cover;
       color: white;
-      padding: 2rem;
-      text-align: center;
     }
-    h1 {
-      margin-bottom: 2rem;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 1.5rem;
-      max-width: 800px;
+
+    .container {
+      max-width: 90%;
       margin: 0 auto;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+      border-radius: 15px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      margin-top: 50px;
     }
-    .panel {
-      background: #222;
+
+    h2 {
+      text-align: center;
+      color: #fff;
+      font-size: 24px;
+      margin-bottom: 20px;
+      text-shadow: 0 0 8px #ff00ff;
+    }
+
+    .salle-btn {
+      display: block;
+      width: 100%;
+      margin: 10px auto;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border: 2px solid #ffffff44;
       border-radius: 12px;
-      padding: 1.5rem;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      box-shadow: 0 0 5px #0ff;
-      font-size: 1.1rem;
-      user-select: none;
+      font-size: 18px;
+      text-align: center;
+      backdrop-filter: blur(4px);
+      text-decoration: none;
+      transition: 0.3s;
     }
-    .panel:hover {
-      background-color: #0ff;
-      color: #000;
-      box-shadow: 0 0 15px #0ff;
-    }
-    .btn-deco {
-      margin-top: 2rem;
-      background-color: #f00;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: background 0.3s;
-    }
-    .btn-deco:hover {
-      background-color: #c00;
+
+    .salle-btn:hover {
+      background: #d94bff;
+      box-shadow: 0 0 15px #ff00ff99;
     }
   </style>
 </head>
 <body>
-
-  <h1>Bienvenue dans les salles Affinix</h1>
-  <div class="grid" id="panel-container">
-    <!-- Les salles cochées s'affichent ici -->
+  <div class="container">
+    <h2>Choisis ta salle</h2>
+    
+    <a class="salle-btn" href="salle-serieuse.html">💖 Relation sérieuse</a>
+    <a class="salle-btn" href="salle-amicale.html">💬 Rencontre amicale</a>
+    <a class="salle-btn" href="salle-fun.html">🎉 Rencontre fun</a>
+    <a class="salle-btn" href="salle-parents.html">👨‍👩‍👧 Parents solos</a>
+    <a class="salle-btn" href="connexion.html">🔙 Déconnexion</a>
   </div>
-
-  <button class="btn-deco" id="logout-btn">Déconnexion</button>
-
-  <script type="module">
-    import { auth, db } from './js/firebase-init.js';
-    import { signOut, onAuthStateChanged } from 'firebase/auth';
-    import { doc, getDoc } from 'firebase/firestore';
-
-    const container = document.getElementById('panel-container');
-
-    const panels = {
-      salle1: { label: "💬 Rencontre Amicale", href: "salle1.html" },
-      salle2: { label: "💖 Relation Sérieuse", href: "salle2.html" },
-      salle3: { label: "🎉 Rencontre Fun", href: "salle3.html" },
-      salle4: { label: "👨‍👩‍👧 Parents Solos", href: "salle4.html" },
-      salle5: { label: "🎮 Univers Passions", href: "salle5.html" },
-      salle6: { label: "🧬 Connexion Unique", href: "salle6.html" }
-    };
-
-    onAuthStateChanged(auth, async user => {
-      if (!user) {
-        window.location.href = "connexion.html";
-        return;
-      }
-
-      const userDoc = await getDoc(doc(db, "users", user.uid));
-      const userData = userDoc.data();
-
-      if (!userData || !userData.salles) {
-        container.innerHTML = "<p>Aucune salle sélectionnée.</p>";
-        return;
-      }
-
-      // Afficher les salles cochées
-      userData.salles.forEach(salleKey => {
-        if (panels[salleKey]) {
-          const div = document.createElement("div");
-          div.className = "panel";
-          div.textContent = panels[salleKey].label;
-          div.onclick = () => location.href = panels[salleKey].href;
-          container.appendChild(div);
-        }
-      });
-
-      // Salle spéciale : Le Créateur (toujours visible)
-      const createur = document.createElement("div");
-      createur.className = "panel";
-      createur.textContent = "💡 Le Créateur";
-      createur.onclick = () => location.href = "createur.html";
-      container.appendChild(createur);
-    });
-
-    // Déconnexion
-    document.getElementById("logout-btn").addEventListener("click", async () => {
-      await signOut(auth);
-      window.location.href = "connexion.html";
-    });
-  </script>
-
 </body>
 </html>
