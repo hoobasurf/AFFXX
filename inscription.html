@@ -2,58 +2,180 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Inscription - Affinix</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="css/styles.css" />
+  <title>Inscription - AFFINIX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: url('img/fond-inscription-tokyo.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .guirlande {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      height: 100px;
+      background: url('img/guirlande-neon.png') repeat-x top;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .inscription-wrapper {
+      width: 100%;
+      max-width: 500px;
+      padding: 30px 20px;
+      background: transparent;
+      border: 2px solid #ff6dfb;
+      border-radius: 20px;
+      box-shadow: 0 0 20px #ff6dfb;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      color: #ffbaff;
+      font-size: 24px;
+      margin-bottom: 20px;
+      text-shadow: 0 0 6px #ffbaff;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin: 12px 0 6px;
+      font-size: 14px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea,
+    input[type="range"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    input[type="range"] {
+      accent-color: #ff6dfb;
+    }
+
+    .rayon-output {
+      margin-top: -8px;
+      margin-bottom: 15px;
+      font-size: 13px;
+      color: #ffbaff;
+    }
+
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      padding: 5px 0;
+      cursor: pointer;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #ff6dfb;
+    }
+
+    button {
+      background: #a86eff;
+      color: #fff;
+      font-size: 16px;
+      padding: 12px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ffbaff;
+      transition: 0.3s;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background: #ff6dfb;
+    }
+
+    @media (max-width: 400px) {
+      h1 {
+        font-size: 20px;
+      }
+      input[type="text"],
+      input[type="email"],
+      textarea {
+        font-size: 13px;
+      }
+      button {
+        font-size: 15px;
+        padding: 10px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-  <h1>Inscription</h1>
-  <form id="signup-form">
-    <input type="email" id="email" placeholder="Email" required />
-    <input type="password" id="password" placeholder="Mot de passe" required />
-    
-    <div style="margin-top: 10px;">
-      <label>
-        <input type="checkbox" id="rememberMe" />
-        Se souvenir de moi
-      </label>
-    </div>
+  <div class="guirlande"></div>
 
-    <button type="submit">S'inscrire</button>
-  </form>
-  <p>Déjà inscrit ? <a href="connexion.html">Connexion</a></p>
+  <div class="inscription-wrapper">
+    <h1>Rejoins AFFINIX</h1>
+    <form name="inscription" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/salle.html">
+      <input type="hidden" name="form-name" value="inscription" />
+      <p hidden><label>Ne pas remplir : <input name="bot-field" /></label></p>
 
-  <script type="module">
-    import { auth } from './js/firebase-init.js';
-    import { createUserWithEmailAndPassword } from "firebase/auth";
+      <label for="prenom">Prénom ou Pseudo :</label>
+      <input type="text" id="prenom" name="prenom" required>
 
-    const form = document.getElementById('signup-form');
+      <label for="description">Décris-toi :</label>
+      <textarea id="description" name="description" rows="4" required></textarea>
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = form.email.value;
-      const password = form.password.value;
+      <label for="email">Email :</label>
+      <input type="email" id="email" name="email" required>
 
-      try {
-        await createUserWithEmailAndPassword(auth, email, password);
+      <label>Salles choisies :</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox" name="salles[]" value="relation-serieuse"> 💖 Relation sérieuse</label>
+        <label><input type="checkbox" name="salles[]" value="amicale"> 💬 Rencontre amicale</label>
+        <label><input type="checkbox" name="salles[]" value="fun"> 🎉 Rencontre fun</label>
+        <label><input type="checkbox" name="salles[]" value="parents"> 👨‍👩‍👧 Parents solos</label>
+      </div>
 
-        // Si la case est cochée, on enregistre l'utilisateur localement
-        if (document.getElementById('rememberMe').checked) {
-          localStorage.setItem('rememberedUser', email);
-        }
+      <label for="departement">Ton département :</label>
+      <input type="text" id="departement" name="departement" placeholder="Ex : 75 ou Paris" required>
 
-        window.location.href = "salle.html"; // redirection vers les panneaux
-      } catch (error) {
-        if (error.code === 'auth/email-already-in-use') {
-          alert("Ce compte existe déjà. Veuillez vous connecter.");
-          window.location.href = "connexion.html";
-        } else {
-          alert("Erreur : " + error.message);
-        }
-      }
-    });
-  </script>
+      <label for="rayon">Rayon de recherche (km) :</label>
+      <input
+        type="range"
+        id="rayon"
+        name="rayon"
+        min="5"
+        max="100"
+        value="50"
+        step="1"
+        oninput="document.getElementById('rayonValue').innerText = this.value + ' km';"
+      >
+      <div class="rayon-output">🌐 Rayon actuel : <span id="rayonValue">50 km</span></div>
+
+      <button type="submit">Valider mon inscription</button>
+    </form>
+  </div>
+
+  <!-- ✅ Script externe -->
+  <script src="script.js"></script>
 
 </body>
 </html>
