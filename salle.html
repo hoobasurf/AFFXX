@@ -100,14 +100,62 @@
 <body>
   <h1>Choisis ta salle</h1>
 
-  <a href="amicale.html" class="button amicale">💬 Rencontre Amicale</a>
-  <a href="serieuse.html" class="button serieuse">💖 Relation Sérieuse</a>
-  <a href="fun.html" class="button fun">🎉 Rencontre Fun</a>
-  <a href="parents.html" class="button parents">👨‍👩‍👧 Parents Solos</a>
-  <a href="createur.html" class="button createur">🧙‍♂️ Le Créateur</a>
+  <a id="amicale" href="amicale.html" class="button amicale">💬 Rencontre Amicale</a>
+  <a id="relation-serieuse" href="serieuse.html" class="button serieuse">💖 Relation Sérieuse</a>
+  <a id="fun" href="fun.html" class="button fun">🎉 Rencontre Fun</a>
+  <a id="parents" href="parents.html" class="button parents">👨‍👩‍👧 Parents Solos</a>
+  <a id="createur" href="createur.html" class="button createur">🧙‍♂️ Le Créateur</a>
   <a href="index.html" class="button retour">⬅️ Retour</a>
 
-  <!-- ✅ Bouton Match en bas à droite -->
+  <!-- ✅ Bouton Match -->
   <a href="match.html" class="btn-match">❤️ Match</a>
+
+  <!-- ✅ Script Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "TON_API_KEY",  // 🔁 À remplacer
+      authDomain: "TON_AUTH_DOMAIN", // 🔁 À remplacer
+      projectId: "affinix-3a930"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const salleLabels = {
+      "relation-serieuse": "💖 Relation sérieuse",
+      "amicale": "💬 Rencontre amicale",
+      "fun": "🎉 Rencontre fun",
+      "parents": "👨‍👩‍👧 Parents solos"
+    };
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = "login.html";
+        return;
+      }
+
+      const userRef = doc(db, "users", user.uid);
+      const docSnap = await getDoc(userRef);
+
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        const salles = data.salles || [];
+
+        Object.keys(salleLabels).forEach(id => {
+          if (!salles.includes(id)) {
+            const el = document.getElementById(id);
+            if (el) el.style.display = "none";
+          }
+        });
+      } else {
+        window.location.href = "inscription.html";
+      }
+    });
+  </script>
 </body>
 </html>
