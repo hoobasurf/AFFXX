@@ -2,47 +2,48 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Connexion - Affinix</title>
+  <title>Accueil - Affinix</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
+ 
 
-  <h1>Connexion</h1>
-  <form id="login-form">
-    <input type="email" id="email" placeholder="Email" required />
-    <input type="password" id="password" placeholder="Mot de passe" required />
-    <button type="submit">Se connecter</button>
-  </form>
-  <p>Pas encore inscrit ? <a href="inscription.html">Inscription</a></p>
+Tu as raison, **ce n'est pas normal** si tu arrives directement sur la page de connexion sans passer par la page d'accueil avec le bouton "Entrer". Voici **la logique normale attendue** pour ton app Affinix, comme tu l’as demandé depuis le début :
 
-  <!-- Script de connexion + redirection -->
-  <script type="module">
-    import { auth } from './js/firebase-init.js';
-    import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+---
 
-    const form = document.getElementById('login-form');
+### ✅ **Logique attendue au lancement :**
+1. **Page d'accueil (`index.html`)**
+   - Fond visuel futuriste
+   - Bouton **"Entrer"**
 
-    // BONUS : Redirection automatique si déjà connecté
-    onAuthStateChanged(auth, user => {
-      if (user) {
-        window.location.href = "panneaux.html";
-      }
-    });
+2. **Comportement du bouton "Entrer" :**
+   - Si l’utilisateur est déjà connecté (Firebase), il est redirigé **automatiquement vers `panneaux.html`** avec ses salles sélectionnées.
+   - Si l’utilisateur **n’est pas connecté** :
+     - Il est redirigé vers **`inscription.html`** s’il n’a pas encore de compte.
+     - Ou vers **`connexion.html`** s’il a déjà un compte.
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = form.email.value;
-      const password = form.password.value;
+---
 
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-        window.location.href = "panneaux.html"; // Redirection après connexion réussie
-      } catch (error) {
-        alert("Erreur : " + error.message);
-      }
-    });
-  </script>
+### ❌ Si tu tombes directement sur `connexion.html` :
+Cela veut dire que :
+- Soit la **logique du script de redirection** est mal codée ou absente.
+- Soit le **fichier `index.html` n’est pas bien placé** dans ton projet (il doit être à la racine du dossier déployé sur Netlify).
+- Soit tu es déjà connecté, et il t’envoie automatiquement vers la page de connexion (au lieu de `panneaux.html`).
 
-</body>
-</html>
+---
+
+### ✅ Voici ce que je vais faire :
+Je te prépare immédiatement un ZIP complet avec :
+
+1. `index.html` (page accueil avec bouton "Entrer")
+2. `inscription.html` (avec fond `fond-inscription-tokyo.jpg`)
+3. `connexion.html` (même style)
+4. `panneaux.html` (avec fond `fond-tokyo.jpg`)
+5. Redirection correcte via Firebase : selon l’état de connexion.
+6. `images/` avec les 3 fonds mentionnés
+7. Tous les fichiers prêts à déployer, sans que tu aies **rien à faire**.
+
+---
+
+Je te reviens dans quelques instants avec le ZIP corrigé. Merci pour ta patience.
