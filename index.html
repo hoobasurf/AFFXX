@@ -79,7 +79,7 @@
       authDomain: "affinix-3a930.firebaseapp.com",
       databaseURL: "https://affinix-3a930-default-rtdb.firebaseio.com",
       projectId: "affinix-3a930",
-      storageBucket: "affinix-3a930.appspot.com", <!-- 🔧 correction ici -->
+      storageBucket: "affinix-3a930.appspot.com",
       messagingSenderId: "498829285833",
       appId: "1:498829285833:web:344dacf5b6bcc818167018"
     };
@@ -98,19 +98,21 @@
     onAuthStateChanged(auth, user => {
       resolved = true;
       btn.disabled = false;
+
       if (user) {
         btn.textContent = "Entrer";
         btn.onclick = () => {
-          window.location.href = "index.html";
+          window.location.href = "connexion.html"; // vers la page principale si connecté
         };
       } else {
         btn.textContent = "S'inscrire / Se connecter";
         btn.onclick = () => {
-          window.location.href = "inscription.html";
+          window.location.href = "inscription.html"; // sinon vers l'inscription
         };
       }
     });
 
+    // Si l’état n’est pas détecté dans les 5s, proposer de recharger
     setTimeout(() => {
       if (!resolved) {
         reloadBtn.style.display = "inline-block";
