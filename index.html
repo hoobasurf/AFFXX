@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="css/styles.css" />
   <style>
-    /* Animation clignotement néon rose/violet pour le bouton */
     @keyframes neonBlink {
       0%, 100% {
         box-shadow:
@@ -36,21 +35,27 @@
       background-color: #1a001f;
       color: #ff4fc4;
       transition: transform 0.3s ease;
+      margin-bottom: 20px;
     }
+
     .enter-button:hover {
       transform: scale(1.05);
     }
 
     .reload-button {
-      margin-top: 20px;
+      display: none;
+      margin-top: 10px;
+      padding: 10px 20px;
+      border-radius: 20px;
       font-size: 1rem;
-      padding: 10px 25px;
-      border-radius: 25px;
-      border: none;
-      background: #ff4fc4;
-      color: white;
+      background-color: #44004d;
+      color: #fff;
+      border: 1px solid #c700d6;
       cursor: pointer;
-      box-shadow: 0 0 10px #c700d6;
+    }
+
+    .reload-button:hover {
+      background-color: #6a0073;
     }
   </style>
 </head>
@@ -58,15 +63,13 @@
 
   <div class="welcome-text">Bienvenue sur Affinix</div>
   <button class="enter-button" disabled>Chargement...</button>
+  <button class="reload-button" onclick="location.reload()">🔁 Recharger la page</button>
 
-  <!-- ✅ Bouton recharger visible immédiatement -->
-  <button class="reload-button" onclick="window.location.reload(true)">🔁 Recharger la page</button>
-
-  <!-- Scripts JS -->
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script src="email.js"></script>
 
-  <!-- Firebase SDK import et logique bouton -->
+  <!-- Firebase + logique bouton -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
@@ -85,28 +88,36 @@
     const auth = getAuth(app);
 
     const btn = document.querySelector(".enter-button");
+    const reloadBtn = document.querySelector(".reload-button");
 
-    // Désactive le bouton et change texte tant que l'état n'est pas connu
     btn.disabled = true;
     btn.textContent = "Chargement...";
 
+    let resolved = false;
+
     onAuthStateChanged(auth, user => {
-      if(user) {
-        // Utilisateur connecté
-        btn.disabled = false;
+      resolved = true;
+      btn.disabled = false;
+      if (user) {
         btn.textContent = "Entrer";
         btn.onclick = () => {
-          window.location.href = "index.html"; // Page principale après connexion
-        }
+          window.location.href = "index.html";
+        };
       } else {
-        // Utilisateur non connecté
-        btn.disabled = false;
         btn.textContent = "S'inscrire / Se connecter";
         btn.onclick = () => {
-          window.location.href = "inscription.html"; // Page inscription ou connexion
-        }
+          window.location.href = "inscription.html";
+        };
       }
     });
+
+    // Après 5 secondes, si rien ne se passe, afficher le bouton "Recharger"
+    setTimeout(() => {
+      if (!resolved) {
+        reloadBtn.style.display = "inline-block";
+      }
+    }, 5000);
   </script>
+
 </body>
 </html>
