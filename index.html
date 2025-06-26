@@ -40,12 +40,27 @@
     .enter-button:hover {
       transform: scale(1.05);
     }
+
+    .reload-button {
+      margin-top: 20px;
+      font-size: 1rem;
+      padding: 10px 25px;
+      border-radius: 25px;
+      border: none;
+      background: #ff4fc4;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 0 10px #c700d6;
+    }
   </style>
 </head>
 <body class="home">
 
   <div class="welcome-text">Bienvenue sur Affinix</div>
   <button class="enter-button" disabled>Chargement...</button>
+
+  <!-- ✅ Bouton recharger visible immédiatement -->
+  <button class="reload-button" onclick="window.location.reload(true)">🔁 Recharger la page</button>
 
   <!-- Scripts JS -->
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
@@ -92,3 +107,6 @@
         }
       }
     });
+  </script>
+</body>
+</html>
