@@ -1,114 +1,88 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Inscription - AFFINIX</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: 'Arial', sans-serif;
       background: url('img/fond-tokyo.jpg') no-repeat center center fixed;
       background-size: cover;
       color: white;
     }
 
-    .container {
+    .form-container {
       max-width: 400px;
       margin: 80px auto;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
       padding: 30px;
-      background: rgba(255, 255, 255, 0.07);
-      backdrop-filter: blur(8px);
       border-radius: 15px;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      box-shadow: 0 0 10px #ff00ff88;
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
-    h1 {
+    h2 {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
       color: #fff;
-      text-shadow: 0 0 8px #ff00ff;
-    }
-
-    label {
-      display: block;
-      margin: 12px 0 6px;
-      font-weight: bold;
-      color: #eee;
-      text-shadow: 0 0 3px #ff00ff66;
+      text-shadow: 0 0 10px #ff00ff;
     }
 
     input[type="email"],
     input[type="password"] {
       width: 100%;
-      padding: 10px;
-      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 20px;
       border: none;
-      outline: none;
-      font-size: 16px;
-      background: rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.2);
       color: white;
-      box-shadow: inset 0 0 6px #ff00ff55;
+      font-size: 16px;
     }
 
-    input[type="submit"] {
-      margin-top: 20px;
+    input::placeholder {
+      color: #eee;
+    }
+
+    button {
       width: 100%;
       padding: 12px;
-      background: #d94bff;
+      background-color: #d94bff;
       border: none;
-      border-radius: 12px;
+      border-radius: 8px;
       color: white;
-      font-size: 18px;
-      font-weight: bold;
+      font-size: 16px;
       cursor: pointer;
-      text-shadow: 0 0 5px #ff00ff;
-      transition: background 0.3s ease;
+      transition: background 0.3s;
     }
 
-    input[type="submit"]:hover {
-      background: #b238db;
-      box-shadow: 0 0 12px #ff00ffcc;
+    button:hover {
+      background-color: #ff00ff;
+      box-shadow: 0 0 10px #ff00ff;
     }
 
-    .error {
-      color: #ff6666;
-      margin-top: 10px;
-      font-weight: bold;
+    .link {
       text-align: center;
-      text-shadow: 0 0 3px #ff0000bb;
-    }
-
-    a {
-      display: block;
       margin-top: 15px;
-      text-align: center;
-      color: #ddd;
-      text-decoration: underline;
-      cursor: pointer;
-      text-shadow: 0 0 3px #ff00ff66;
     }
 
-    a:hover {
-      color: #fff;
+    .link a {
+      color: #ffccff;
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Inscription</h1>
-    <form id="signup-form">
-      <label for="email">Email</label>
-      <input id="email" type="email" required autocomplete="email" />
-
-      <label for="password">Mot de passe</label>
-      <input id="password" type="password" required autocomplete="new-password" />
-
-      <input type="submit" value="S'inscrire" />
-      <div class="error" id="error-message"></div>
-    </form>
-    <a href="login.html">Déjà inscrit ? Connecte-toi ici</a>
+  <div class="form-container">
+    <h2>Créer un compte</h2>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Mot de passe" />
+    <button id="registerBtn">S'inscrire</button>
+    <div class="link">
+      <p>Déjà un compte ? <a href="login.html">Connexion</a></p>
+    </div>
   </div>
 
   <script type="module">
@@ -118,36 +92,23 @@
     const firebaseConfig = {
       apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
       authDomain: "affinix-3a930.firebaseapp.com",
-      projectId: "affinix-3a930",
+      projectId: "affinix-3a930"
     };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    const form = document.getElementById("signup-form");
-    const errorMessage = document.getElementById("error-message");
+    document.getElementById("registerBtn").addEventListener("click", () => {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      errorMessage.textContent = "";
-
-      const email = form.email.value.trim();
-      const password = form.password.value.trim();
-
-      try {
-        await createUserWithEmailAndPassword(auth, email, password);
-        window.location.href = "panneaux.html";
-      } catch (error) {
-        if (error.code === "auth/email-already-in-use") {
-          errorMessage.textContent = "Cet email est déjà utilisé.";
-        } else if (error.code === "auth/invalid-email") {
-          errorMessage.textContent = "Adresse email invalide.";
-        } else if (error.code === "auth/weak-password") {
-          errorMessage.textContent = "Le mot de passe est trop faible.";
-        } else {
-          errorMessage.textContent = "Erreur: " + error.message;
-        }
-      }
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          window.location.href = "panneaux.html";
+        })
+        .catch((error) => {
+          alert("Erreur : " + error.message);
+        });
     });
   </script>
 </body>
