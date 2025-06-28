@@ -1,48 +1,48 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <title>Connexion - Affinix</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="css/styles.css" />
+  <meta charset="UTF-8">
+  <title>Connexion - AFFINIX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Ton style actuel */
+  </style>
 </head>
 <body>
-
-  <h1>Connexion</h1>
-  <form id="login-form">
-    <input type="email" id="email" placeholder="Email" required />
-    <input type="password" id="password" placeholder="Mot de passe" required />
-    <button type="submit">Se connecter</button>
-  </form>
-  <p>Pas encore inscrit ? <a href="inscription.html">Inscription</a></p>
+  <div class="connexion-wrapper">
+    <h1>Connexion AFFINIX</h1>
+    <form id="login-form">
+      <input type="email" id="email" required>
+      <input type="password" id="password" required>
+      <button type="submit">Se connecter</button>
+      <div id="error-message"></div>
+    </form>
+  </div>
 
   <script type="module">
-    import { auth } from './js/firebase-init.js';
-    import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
+    const firebaseConfig = {
+      apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
+      authDomain: "affinix-3a930.firebaseapp.com",
+      projectId: "affinix-3a930"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
     const form = document.getElementById('login-form');
-
-    // Redirection automatique si déjà connecté
-    onAuthStateChanged(auth, user => {
-      if (user) {
-        window.location.href = "panneau.html";
-      }
-    });
+    const msgDiv = document.getElementById('error-message');
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-
       try {
-        await signInWithEmailAndPassword(auth, email, password);
-        window.location.href = "panneau.html"; // Redirection après connexion réussie
-      } catch (error) {
-        alert("Erreur : " + error.message);
+        await signInWithEmailAndPassword(auth, form.email.value, form.password.value);
+        window.location.href = "panneaux.html";
+      } catch (err) {
+        msgDiv.textContent = "Erreur : " + err.message;
       }
     });
   </script>
-
 </body>
 </html>
