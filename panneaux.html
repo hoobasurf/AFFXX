@@ -1,62 +1,14 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <title>Panneaux - AFFINIX</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head><meta charset="UTF-8"><title>Panneaux - AFFINIX</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
-      margin: 0;
-      font-family: 'Arial', sans-serif;
-      background: url('img/fond-tokyo.jpg') no-repeat center center fixed;
-      background-size: cover;
-      color: white;
-    }
-    .container {
-      max-width: 90%;
-      margin: 0 auto;
-      padding: 20px;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(8px);
-      border-radius: 15px;
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      margin-top: 50px;
-    }
-    h2 {
-      text-align: center;
-      color: #fff;
-      font-size: 24px;
-      margin-bottom: 20px;
-      text-shadow: 0 0 8px #ff00ff;
-    }
-    .salle-btn {
-      display: block;
-      width: 100%;
-      margin: 10px auto;
-      padding: 15px;
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
-      border: 2px solid #ffffff44;
-      border-radius: 12px;
-      font-size: 18px;
-      text-align: center;
-      backdrop-filter: blur(4px);
-      text-decoration: none;
-      transition: 0.3s;
-    }
-    .salle-btn:hover {
-      background: #d94bff;
-      box-shadow: 0 0 15px #ff00ff99;
-    }
+    /* Ton style existant */
   </style>
 </head>
 <body>
   <div class="container" id="content" style="display:none;">
     <h2>Choisis ta salle</h2>
-    <a class="salle-btn" href="salle-serieuse.html">💖 Relation sérieuse</a>
-    <a class="salle-btn" href="salle-amicale.html">💬 Rencontre amicale</a>
-    <a class="salle-btn" href="salle-fun.html">🎉 Rencontre fun</a>
-    <a class="salle-btn" href="salle-parents.html">👨‍👩‍👧 Parents solos</a>
+    <!-- Tes liens de salles -->
     <a class="salle-btn" href="#" id="logout">🔙 Déconnexion</a>
   </div>
 
@@ -64,31 +16,25 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
-    const firebaseConfig = {
+    const app = initializeApp({
       apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
       authDomain: "affinix-3a930.firebaseapp.com",
-      databaseURL: "https://affinix-3a930-default-rtdb.firebaseio.com",
-      projectId: "affinix-3a930",
-      storageBucket: "affinix-3a930.appspot.com",
-      messagingSenderId: "498829285833",
-      appId: "1:498829285833:web:344dacf5b6bcc818167018"
-    };
-
-    const app = initializeApp(firebaseConfig);
+      projectId: "affinix-3a930"
+    });
     const auth = getAuth(app);
 
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, user => {
       if (user) {
-        document.getElementById("content").style.display = "block";
+        document.getElementById('content').style.display = 'block';
       } else {
-        window.location.href = "login.html";
+        window.location.href = 'connexion.html';
       }
     });
 
-    document.getElementById("logout").addEventListener("click", async (e) => {
+    document.getElementById('logout').addEventListener('click', async (e) => {
       e.preventDefault();
       await signOut(auth);
-      window.location.href = "login.html";
+      window.location.href = 'connexion.html';
     });
   </script>
 </body>
