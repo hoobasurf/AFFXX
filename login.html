@@ -15,54 +15,64 @@
     }
 
     .container {
+      width: 90%;
       max-width: 400px;
       margin: 100px auto;
-      background: rgba(0, 0, 0, 0.6);
       padding: 30px;
-      border-radius: 12px;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 0 20px #ff00ff44;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 25px #ff00ff55;
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     h1 {
       text-align: center;
-      margin-bottom: 30px;
-      font-size: 26px;
-      text-shadow: 0 0 8px #ff00ff;
+      margin-bottom: 25px;
+      font-size: 28px;
+      text-shadow: 0 0 10px #ff00ff;
     }
 
     input[type="email"],
     input[type="password"] {
       width: 100%;
-      padding: 12px;
-      margin-bottom: 20px;
-      border: none;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
+      padding: 14px;
+      margin: 10px 0;
       font-size: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      color: white;
+      backdrop-filter: blur(6px);
+      outline: none;
+    }
+
+    input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
     }
 
     button {
       width: 100%;
-      padding: 12px;
-      background: #ff00ff;
-      border: none;
-      border-radius: 8px;
+      padding: 14px;
+      margin-top: 15px;
+      background-color: #ff00ff;
       color: white;
       font-size: 16px;
+      border: none;
+      border-radius: 10px;
       cursor: pointer;
       transition: 0.3s;
+      box-shadow: 0 0 10px #ff00ff88;
     }
 
     button:hover {
-      background: #d94bff;
-      box-shadow: 0 0 10px #ff00ff88;
+      background-color: #d94bff;
     }
 
     p {
       text-align: center;
       margin-top: 20px;
+      color: #fff;
     }
 
     a {
@@ -99,7 +109,6 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    // Si déjà connecté → aller directement à panneau
     onAuthStateChanged(auth, (user) => {
       if (user) {
         window.location.href = "panneau.html";
@@ -114,7 +123,6 @@
 
       try {
         await signInWithEmailAndPassword(auth, email, password);
-        // Redirection automatique via onAuthStateChanged
       } catch (error) {
         alert("Erreur : " + error.message);
       }
