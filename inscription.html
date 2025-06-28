@@ -2,39 +2,68 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Inscription - Affinix</title>
+  <title>Inscription - AFFINIX</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/style.css" /> <!-- Ton style existant -->
 </head>
 <body>
-
-  <h1>Inscription</h1>
-  <form id="signup-form">
-    <input type="email" id="email" placeholder="Email" required />
-    <input type="password" id="password" placeholder="Mot de passe" required minlength="6" />
-    <button type="submit">S'inscrire</button>
-  </form>
-  <p>Déjà inscrit ? <a href="login.html">Connexion</a></p>
+  <div class="login-container">
+    <form id="signup-form">
+      <h1>Inscription</h1>
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Mot de passe" required />
+      <button type="submit">S'inscrire</button>
+      <p id="error-message" style="color:red;"></p>
+      <p>Déjà un compte ? <a href="login.html">Connexion</a></p>
+    </form>
+  </div>
 
   <script type="module">
-    import { auth, createUserWithEmailAndPassword } from './js/firebase.js';
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      onAuthStateChanged,
+    } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
-    const form = document.getElementById('signup-form');
+    const firebaseConfig = {
+      apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
+      authDomain: "affinix-3a930.firebaseapp.com",
+      projectId: "affinix-3a930",
+      databaseURL: "https://affinix-3a930-default-rtdb.firebaseio.com",
+      storageBucket: "affinix-3a930.appspot.com",
+      messagingSenderId: "498829285833",
+      appId: "1:498829285833:web:344dacf5b6bcc818167018"
+    };
 
-    form.addEventListener('submit', async (e) => {
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const form = document.getElementById("signup-form");
+    const errorMessage = document.getElementById("error-message");
+
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
+      errorMessage.textContent = "";
       const email = form.email.value;
       const password = form.password.value;
 
       try {
         await createUserWithEmailAndPassword(auth, email, password);
-        alert("Compte créé avec succès !");
-        window.location.href = "panneaux.html"; // redirection après inscription
+        // Inscription OK : redirige vers panneaux.html
+        window.location.href = "panneaux.html";
       } catch (error) {
-        alert("Erreur : " + error.message);
+        // Affiche message d’erreur précis
+        errorMessage.textContent = error.message;
+      }
+    });
+
+    // Si déjà connecté, redirige directement vers panneaux.html
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        window.location.href = "panneaux.html";
       }
     });
   </script>
-
 </body>
 </html>
