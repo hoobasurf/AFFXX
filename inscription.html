@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Inscription - AFFINIX</title>
+  <title>Choix des salles - AFFINIX</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
@@ -13,81 +13,59 @@
       color: white;
     }
 
-    .form-container {
-      max-width: 400px;
-      margin: 80px auto;
-      background: rgba(255, 255, 255, 0.08);
+    .container {
+      max-width: 90%;
+      margin: 50px auto;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(10px);
-      padding: 30px;
       border-radius: 15px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 2px solid rgba(255, 255, 255, 0.2);
     }
 
     h2 {
       text-align: center;
-      margin-bottom: 25px;
-      color: #fff;
-      text-shadow: 0 0 10px #ff00ff;
-    }
-
-    input[type="email"],
-    input[type="password"] {
-      width: 100%;
-      padding: 12px;
+      font-size: 24px;
       margin-bottom: 20px;
-      border: none;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.2);
-      color: white;
-      font-size: 16px;
+      color: #fff;
+      text-shadow: 0 0 8px #ff00ff;
     }
 
-    input::placeholder {
-      color: #eee;
-    }
-
-    button {
+    .salle-btn {
+      display: block;
       width: 100%;
-      padding: 12px;
-      background-color: #d94bff;
-      border: none;
-      border-radius: 8px;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    button:hover {
-      background-color: #ff00ff;
-      box-shadow: 0 0 10px #ff00ff;
-    }
-
-    .link {
+      margin: 10px auto;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border: 2px solid #ffffff44;
+      border-radius: 12px;
+      font-size: 18px;
       text-align: center;
-      margin-top: 15px;
+      backdrop-filter: blur(4px);
+      text-decoration: none;
+      transition: 0.3s;
     }
 
-    .link a {
-      color: #ffccff;
-      text-decoration: none;
+    .salle-btn:hover {
+      background: #d94bff;
+      box-shadow: 0 0 15px #ff00ff99;
     }
   </style>
 </head>
 <body>
-  <div class="form-container">
-    <h2>Créer un compte</h2>
-    <input type="email" id="email" placeholder="Email" />
-    <input type="password" id="password" placeholder="Mot de passe" />
-    <button id="registerBtn">S'inscrire</button>
-    <div class="link">
-      <p>Déjà un compte ? <a href="login.html">Connexion</a></p>
-    </div>
+  <div class="container" id="content" style="display:none;">
+    <h2>Choisis ta salle</h2>
+    <a class="salle-btn" href="salle-serieuse.html">💖 Relation sérieuse</a>
+    <a class="salle-btn" href="salle-amicale.html">💬 Rencontre amicale</a>
+    <a class="salle-btn" href="salle-fun.html">🎉 Rencontre fun</a>
+    <a class="salle-btn" href="salle-parents.html">👨‍👩‍👧 Parents solos</a>
+    <a class="salle-btn" href="#" id="logout">🔙 Déconnexion</a>
   </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
@@ -98,17 +76,20 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    document.getElementById("registerBtn").addEventListener("click", () => {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
+    // Vérifie que l'utilisateur est bien connecté
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        document.getElementById("content").style.display = "block";
+      } else {
+        window.location.href = "login.html";
+      }
+    });
 
-      createUserWithEmailAndPassword(auth, email, password)
-        .then(() => {
-          window.location.href = "panneaux.html";
-        })
-        .catch((error) => {
-          alert("Erreur : " + error.message);
-        });
+    // Déconnexion
+    document.getElementById("logout").addEventListener("click", async (e) => {
+      e.preventDefault();
+      await signOut(auth);
+      window.location.href = "login.html";
     });
   </script>
 </body>
