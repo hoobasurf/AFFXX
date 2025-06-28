@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>Panneaux - AFFINIX</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <style>
     body {
       margin: 0;
@@ -13,7 +12,6 @@
       background-size: cover;
       color: white;
     }
-
     .container {
       max-width: 90%;
       margin: 0 auto;
@@ -24,7 +22,6 @@
       border: 2px solid rgba(255, 255, 255, 0.2);
       margin-top: 50px;
     }
-
     h2 {
       text-align: center;
       color: #fff;
@@ -32,7 +29,6 @@
       margin-bottom: 20px;
       text-shadow: 0 0 8px #ff00ff;
     }
-
     .salle-btn {
       display: block;
       width: 100%;
@@ -47,9 +43,7 @@
       backdrop-filter: blur(4px);
       text-decoration: none;
       transition: 0.3s;
-      cursor: pointer;
     }
-
     .salle-btn:hover {
       background: #d94bff;
       box-shadow: 0 0 15px #ff00ff99;
@@ -57,9 +51,8 @@
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="container" id="content" style="display:none;">
     <h2>Choisis ta salle</h2>
-    
     <a class="salle-btn" href="salle-serieuse.html">💖 Relation sérieuse</a>
     <a class="salle-btn" href="salle-amicale.html">💬 Rencontre amicale</a>
     <a class="salle-btn" href="salle-fun.html">🎉 Rencontre fun</a>
@@ -74,28 +67,26 @@
     const firebaseConfig = {
       apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
       authDomain: "affinix-3a930.firebaseapp.com",
-      projectId: "affinix-3a930",
+      projectId: "affinix-3a930"
     };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    // Vérifie que l'utilisateur est connecté sinon redirige vers login.html
+    // Attendre que Firebase dise si connecté
     onAuthStateChanged(auth, (user) => {
-      if (!user) {
+      if (user) {
+        document.getElementById("content").style.display = "block";
+      } else {
         window.location.href = "login.html";
       }
     });
 
-    // Gestion déconnexion
+    // Déconnexion
     document.getElementById("logout").addEventListener("click", async (e) => {
       e.preventDefault();
-      try {
-        await signOut(auth);
-        window.location.href = "login.html";
-      } catch (error) {
-        alert("Erreur lors de la déconnexion : " + error.message);
-      }
+      await signOut(auth);
+      window.location.href = "login.html";
     });
   </script>
 </body>
