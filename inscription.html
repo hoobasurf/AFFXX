@@ -5,120 +5,120 @@
   <title>Inscription - AFFINIX</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    /* Fond d’écran */
     body {
       margin: 0;
-      height: 100vh;
+      font-family: Arial, sans-serif;
       background: url('img/fond-tokyo.jpg') no-repeat center center fixed;
       background-size: cover;
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #fff;
+      color: white;
     }
-    /* Cadre transparent */
-    .login-container {
-      background: rgba(0, 0, 0, 0.5);
-      padding: 40px 30px;
+
+    .container {
+      max-width: 400px;
+      margin: 80px auto;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(8px);
       border-radius: 15px;
-      box-shadow: 0 0 30px rgba(255, 0, 255, 0.6);
-      width: 320px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 10px #ff00ff88;
     }
+
     h1 {
-      margin-bottom: 20px;
       text-align: center;
+      margin-bottom: 20px;
+      color: #fff;
       text-shadow: 0 0 8px #ff00ff;
     }
+
+    label {
+      display: block;
+      margin: 12px 0 6px;
+      font-weight: bold;
+      color: #eee;
+      text-shadow: 0 0 3px #ff00ff66;
+    }
+
     input[type="email"],
     input[type="password"] {
       width: 100%;
-      padding: 12px 15px;
-      margin-bottom: 15px;
+      padding: 10px;
+      border-radius: 8px;
       border: none;
-      border-radius: 10px;
-      font-size: 16px;
       outline: none;
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
-      box-shadow: inset 0 0 8px #ff00ff88;
-      transition: 0.3s;
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      box-shadow: inset 0 0 6px #ff00ff55;
     }
-    input::placeholder {
-      color: #ddd;
-    }
-    input[type="email"]:focus,
-    input[type="password"]:focus {
-      background: rgba(255, 255, 255, 0.2);
-      box-shadow: inset 0 0 12px #ff00ffcc;
-    }
-    button {
+
+    input[type="submit"] {
+      margin-top: 20px;
       width: 100%;
       padding: 12px;
       background: #d94bff;
       border: none;
-      border-radius: 10px;
-      color: #fff;
-      font-weight: bold;
+      border-radius: 12px;
+      color: white;
       font-size: 18px;
+      font-weight: bold;
       cursor: pointer;
+      text-shadow: 0 0 5px #ff00ff;
+      transition: background 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      background: #b238db;
       box-shadow: 0 0 12px #ff00ffcc;
-      transition: 0.3s;
     }
-    button:hover {
-      background: #ff00ff;
-      box-shadow: 0 0 20px #ff00ffee;
-    }
-    #error-message {
+
+    .error {
+      color: #ff6666;
       margin-top: 10px;
-      min-height: 20px;
-      color: #ff4b6e;
-      text-align: center;
       font-weight: bold;
-      text-shadow: 0 0 4px #ff4b6e;
-    }
-    p {
       text-align: center;
-      margin-top: 20px;
-      color: #eee;
+      text-shadow: 0 0 3px #ff0000bb;
     }
+
     a {
-      color: #d94bff;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    a:hover {
+      display: block;
+      margin-top: 15px;
+      text-align: center;
+      color: #ddd;
       text-decoration: underline;
+      cursor: pointer;
+      text-shadow: 0 0 3px #ff00ff66;
+    }
+
+    a:hover {
+      color: #fff;
     }
   </style>
 </head>
 <body>
-  <div class="login-container">
+  <div class="container">
+    <h1>Inscription</h1>
     <form id="signup-form">
-      <h1>Inscription</h1>
-      <input type="email" id="email" placeholder="Email" required />
-      <input type="password" id="password" placeholder="Mot de passe" required />
-      <button type="submit">S'inscrire</button>
-      <p id="error-message"></p>
-      <p>Déjà un compte ? <a href="login.html">Connexion</a></p>
+      <label for="email">Email</label>
+      <input id="email" type="email" required autocomplete="email" />
+
+      <label for="password">Mot de passe</label>
+      <input id="password" type="password" required autocomplete="new-password" />
+
+      <input type="submit" value="S'inscrire" />
+      <div class="error" id="error-message"></div>
     </form>
+    <a href="login.html">Déjà inscrit ? Connecte-toi ici</a>
   </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-    import {
-      getAuth,
-      createUserWithEmailAndPassword,
-      onAuthStateChanged
-    } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
       authDomain: "affinix-3a930.firebaseapp.com",
       projectId: "affinix-3a930",
-      storageBucket: "affinix-3a930.appspot.com",
-      messagingSenderId: "498829285833",
-      appId: "1:498829285833:web:344dacf5b6bcc818167018"
     };
 
     const app = initializeApp(firebaseConfig);
@@ -130,20 +130,24 @@
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       errorMessage.textContent = "";
+
       const email = form.email.value.trim();
       const password = form.password.value.trim();
 
       try {
         await createUserWithEmailAndPassword(auth, email, password);
+        // Après inscription, rediriger vers panneaux.html ou autre page
         window.location.href = "panneaux.html";
       } catch (error) {
-        errorMessage.textContent = error.message;
-      }
-    });
-
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        window.location.href = "panneaux.html";
+        if (error.code === "auth/email-already-in-use") {
+          errorMessage.textContent = "Cet email est déjà utilisé.";
+        } else if (error.code === "auth/invalid-email") {
+          errorMessage.textContent = "Adresse email invalide.";
+        } else if (error.code === "auth/weak-password") {
+          errorMessage.textContent = "Le mot de passe est trop faible.";
+        } else {
+          errorMessage.textContent = "Erreur: " + error.message;
+        }
       }
     });
   </script>
