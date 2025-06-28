@@ -136,7 +136,6 @@
 
       try {
         await createUserWithEmailAndPassword(auth, email, password);
-        // Après inscription, rediriger vers panneaux.html ou autre page
         window.location.href = "panneaux.html";
       } catch (error) {
         if (error.code === "auth/email-already-in-use") {
