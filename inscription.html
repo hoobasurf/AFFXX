@@ -246,5 +246,12 @@
       }
     });
   </script>
+  createUserWithEmailAndPassword(auth, emailInput.value, passInput.value)
+  .then(() => {
+    window.location.href = "panneaux.html"; // redirection immédiate après inscription
+  })
+  .catch((err) => {
+    msg.textContent = "Erreur : " + err.message;
+  });
 </body>
 </html>
