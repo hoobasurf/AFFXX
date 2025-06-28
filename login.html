@@ -1,132 +1,46 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Connexion - AFFINIX</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: url('img/fond-tokyo.jpg') no-repeat center center fixed;
-      background-size: cover;
-      font-family: Arial, sans-serif;
-      color: white;
-    }
-
-    .container {
-      width: 90%;
-      max-width: 400px;
-      margin: 100px auto;
-      padding: 30px;
-      border-radius: 15px;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 0 25px #ff00ff55;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 25px;
-      font-size: 28px;
-      text-shadow: 0 0 10px #ff00ff;
-    }
-
-    input[type="email"],
-    input[type="password"] {
-      width: 100%;
-      padding: 14px;
-      margin: 10px 0;
-      font-size: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.08);
-      color: white;
-      backdrop-filter: blur(6px);
-      outline: none;
-    }
-
-    input::placeholder {
-      color: rgba(255, 255, 255, 0.6);
-    }
-
-    button {
-      width: 100%;
-      padding: 14px;
-      margin-top: 15px;
-      background-color: #ff00ff;
-      color: white;
-      font-size: 16px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: 0.3s;
-      box-shadow: 0 0 10px #ff00ff88;
-    }
-
-    button:hover {
-      background-color: #d94bff;
-    }
-
-    p {
-      text-align: center;
-      margin-top: 20px;
-      color: #fff;
-    }
-
-    a {
-      color: #ffccff;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <title>Connexion - Affinix</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>Connexion</h1>
-    <form id="login-form">
-      <input type="email" id="email" placeholder="Email" required>
-      <input type="password" id="password" placeholder="Mot de passe" required>
-      <button type="submit">Se connecter</button>
-    </form>
-    <p>Pas encore inscrit ? <a href="inscription.html">Créer un compte</a></p>
-  </div>
+
+  <h1>Connexion</h1>
+  <form id="login-form">
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Mot de passe" required />
+    <button type="submit">Se connecter</button>
+  </form>
+  <p>Pas encore inscrit ? <a href="inscription.html">Inscription</a></p>
 
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+    import { auth, signInWithEmailAndPassword, onAuthStateChanged } from './js/firebase.js';
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
-      authDomain: "affinix-3a930.firebaseapp.com",
-      projectId: "affinix-3a930"
-    };
+    const form = document.getElementById('login-form');
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    onAuthStateChanged(auth, (user) => {
+    // Si déjà connecté, redirection immédiate
+    onAuthStateChanged(auth, user => {
       if (user) {
-        window.location.href = "panneau.html";
+        window.location.href = "panneaux.html";
       }
     });
 
-    const form = document.getElementById('login-form');
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+      const email = form.email.value;
+      const password = form.password.value;
 
       try {
         await signInWithEmailAndPassword(auth, email, password);
+        window.location.href = "panneaux.html"; // redirection après succès
       } catch (error) {
         alert("Erreur : " + error.message);
       }
     });
   </script>
+
 </body>
 </html>
