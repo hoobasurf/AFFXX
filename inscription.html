@@ -3,240 +3,246 @@
 <head>
   <meta charset="UTF-8" />
   <title>Inscription - AFFINIX</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
+
   <style>
-    /* Fond Tokyo */
-    body {
+    html, body {
       margin: 0;
-      font-family: 'Arial', sans-serif;
-      background: url('img/fond-tokyo.jpg') no-repeat center center fixed;
-      background-size: cover;
-      color: white;
-    }
-
-    /* Encadré flouté semi-transparent */
-    .form-container {
-      max-width: 400px;
-      margin: 60px auto;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(8px);
-      border-radius: 15px;
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      padding: 30px;
-      box-sizing: border-box;
-    }
-
-    h2 {
-      text-align: center;
+      padding: 0;
+      background-color: #000;
       color: #fff;
-      font-size: 28px;
-      margin-bottom: 25px;
-      text-shadow: 0 0 8px #ff00ff;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    body {
+      background: url('img/fond-inscription-tokyo.jpg') no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .guirlande {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      height: 100px;
+      background: url('img/guirlande-neon.png') repeat-x top;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .inscription-wrapper {
+      width: 100%;
+      max-width: 500px;
+      padding: 30px 20px;
+      background: transparent;
+      border: 2px solid #ff6dfb;
+      border-radius: 20px;
+      box-shadow: 0 0 20px #ff6dfb;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      color: #ffbaff;
+      font-size: 24px;
+      margin-bottom: 20px;
+      text-shadow: 0 0 6px #ffbaff;
+      text-align: center;
     }
 
     label {
       display: block;
-      margin-bottom: 8px;
-      font-weight: bold;
-      text-shadow: 0 0 3px #ff00ff88;
+      margin: 12px 0 6px;
+      font-size: 14px;
     }
 
     input[type="text"],
-    input[type="number"],
-    select,
-    textarea {
+    input[type="email"],
+    input[type="password"],
+    textarea,
+    input[type="range"] {
       width: 100%;
-      padding: 10px 12px;
-      margin-bottom: 18px;
+      padding: 10px;
       border-radius: 8px;
       border: none;
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      font-size: 16px;
-      box-sizing: border-box;
-      backdrop-filter: blur(4px);
-      resize: vertical;
+      font-size: 14px;
+      margin-bottom: 10px;
     }
 
-    input::placeholder,
-    textarea::placeholder {
-      color: #ddd;
-    }
-
-    /* Bouton néon */
-    button {
-      width: 100%;
-      padding: 15px;
-      font-size: 18px;
-      font-weight: bold;
-      color: white;
-      background: #d94bff;
-      border: none;
-      border-radius: 12px;
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      padding: 5px 0;
       cursor: pointer;
-      box-shadow: 0 0 15px #ff00ff99;
-      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #ff6dfb;
+    }
+
+    button {
+      background: #a86eff;
+      color: #fff;
+      font-size: 16px;
+      padding: 12px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ffbaff;
+      transition: 0.3s;
+      width: 100%;
+      margin-top: 20px;
     }
 
     button:hover {
-      background: #ff00ff;
-      box-shadow: 0 0 25px #ff00ffcc;
+      background: #ff6dfb;
     }
 
-    /* Message d'erreur ou succès */
+    .rayon-output {
+      font-size: 13px;
+      color: #ffbaff;
+      margin-bottom: 10px;
+    }
+
     #message {
-      text-align: center;
       margin-top: 15px;
-      font-weight: bold;
-      text-shadow: 0 0 4px #ff00ff99;
+      font-size: 14px;
+      text-align: center;
     }
 
-    /* Petite info lieu + distance */
-    #locationInfo {
-      color: #eee;
-      font-size: 14px;
-      margin-bottom: 18px;
-      text-align: center;
-      text-shadow: 0 0 4px #ff00ff55;
+    @media (max-width: 400px) {
+      h1 { font-size: 20px; }
+      input, textarea { font-size: 13px; }
+      button { font-size: 15px; padding: 10px; }
     }
   </style>
 </head>
+
 <body>
-  <div class="form-container">
-    <h2>Inscription AFFINIX</h2>
-    <form id="signupForm">
-      <label for="prenom">Prénom</label>
-      <input type="text" id="prenom" name="prenom" placeholder="Ton prénom" required />
+  <div class="guirlande"></div>
 
-      <label for="age">Âge</label>
-      <input type="number" id="age" name="age" placeholder="Ton âge" min="10" max="100" required />
+  <div class="inscription-wrapper">
+    <h1>Rejoins AFFINIX</h1>
+    <form id="inscriptionForm">
+      <label for="prenom">Prénom ou Pseudo :</label>
+      <input type="text" id="prenom" name="prenom" required>
 
-      <label for="genre">Genre</label>
-      <select id="genre" name="genre" required>
-        <option value="" disabled selected>Choisis ton genre</option>
-        <option value="femme">Femme</option>
-        <option value="homme">Homme</option>
-        <option value="autre">Autre</option>
-      </select>
+      <label for="description">Décris-toi :</label>
+      <textarea id="description" name="description" rows="4" required></textarea>
 
-      <label for="ville">Ville</label>
-      <input type="text" id="ville" name="ville" placeholder="Ta ville" required />
+      <label for="email">Email :</label>
+      <input type="email" id="email" name="email" required>
 
-      <label for="description">Description</label>
-      <textarea id="description" name="description" rows="4" placeholder="Parle un peu de toi..." required></textarea>
+      <label for="password">Mot de passe :</label>
+      <input type="password" id="password" name="password" required>
 
-      <div id="locationInfo">Chargement de ta position...</div>
+      <label>Salles choisies :</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox" name="salles" value="relation-serieuse"> 💖 Relation sérieuse</label>
+        <label><input type="checkbox" name="salles" value="amicale"> 💬 Rencontre amicale</label>
+        <label><input type="checkbox" name="salles" value="fun"> 🎉 Rencontre fun</label>
+        <label><input type="checkbox" name="salles" value="parents"> 👨‍👩‍👧 Parents solos</label>
+      </div>
 
-      <button type="submit">S'inscrire</button>
+      <label for="departement">Ton département :</label>
+      <input type="text" id="departement" name="departement" placeholder="Ex : 75 ou Paris" required>
+
+      <label for="rayon">Rayon de recherche (km) :</label>
+      <input
+        type="range"
+        id="rayon"
+        name="rayon"
+        min="5"
+        max="100"
+        value="50"
+        step="1"
+        oninput="document.getElementById('rayonValue').innerText = this.value + ' km';"
+      >
+      <div class="rayon-output">🌐 Rayon actuel : <span id="rayonValue">50 km</span></div>
+
+      <button type="submit">Valider mon inscription</button>
     </form>
+
     <div id="message"></div>
   </div>
 
+  <!-- Firebase SDK avec modules -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-    import {
-      getAuth,
-      createUserWithEmailAndPassword,
-      updateProfile,
-    } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-    import {
-      getFirestore,
-      doc,
-      setDoc,
-    } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
-    // Config Firebase (tes clés ici)
     const firebaseConfig = {
       apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
       authDomain: "affinix-3a930.firebaseapp.com",
       projectId: "affinix-3a930",
       storageBucket: "affinix-3a930.appspot.com",
-      messagingSenderId: "1234567890",
-      appId: "1:1234567890:web:abcdefghijklmno",
-      measurementId: "G-XXXXXXXXXX"
+      messagingSenderId: "498829285833",
+      appId: "1:498829285833:web:344dacf5b6bcc818167018"
     };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    const form = document.getElementById('signupForm');
+    const form = document.getElementById('inscriptionForm');
     const messageDiv = document.getElementById('message');
-    const locationInfo = document.getElementById('locationInfo');
-
-    // Stockage géoloc
-    let userLatitude = null;
-    let userLongitude = null;
-
-    // Obtenir la géolocalisation et afficher distance approx
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          userLatitude = position.coords.latitude;
-          userLongitude = position.coords.longitude;
-          locationInfo.textContent = `Position détectée : lat ${userLatitude.toFixed(4)}, lon ${userLongitude.toFixed(4)}`;
-        },
-        () => {
-          locationInfo.textContent = "Impossible d'obtenir ta position.";
-        }
-      );
-    } else {
-      locationInfo.textContent = "La géolocalisation n'est pas prise en charge par ton navigateur.";
-    }
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       messageDiv.textContent = '';
+      messageDiv.style.color = '#ffbaff';
 
-      // Collecter les valeurs
       const prenom = form.prenom.value.trim();
-      const age = parseInt(form.age.value);
-      const genre = form.genre.value;
-      const ville = form.ville.value.trim();
       const description = form.description.value.trim();
+      const email = form.email.value.trim();
+      const password = form.password.value;
+      const departement = form.departement.value.trim();
+      const rayon = form.rayon.value;
+      const salles = Array.from(form.querySelectorAll('input[name="salles"]:checked')).map(cb => cb.value);
 
-      if (!prenom || !age || !genre || !ville || !description) {
-        messageDiv.textContent = "Merci de remplir tous les champs.";
+      if (salles.length === 0) {
+        messageDiv.style.color = '#ff6666';
+        messageDiv.textContent = "Merci de choisir au moins une salle.";
         return;
       }
 
       try {
-        // Créer utilisateur avec email fictif temporaire : prenom@affinix.net
-        // (Tu peux modifier selon ta méthode réelle)
-        const fakeEmail = `${prenom.toLowerCase()}@affinix.net`;
-        const fakePassword = "Affinix123!"; // mot de passe par défaut (à améliorer)
+        const userCred = await createUserWithEmailAndPassword(auth, email, password);
+        const uid = userCred.user.uid;
 
-        const userCredential = await createUserWithEmailAndPassword(auth, fakeEmail, fakePassword);
-        const user = userCredential.user;
-
-        // Mettre à jour le displayName
-        await updateProfile(user, {
-          displayName: prenom,
+        await setDoc(doc(db, "users", uid), {
+          uid,
+          prenom,
+          description,
+          email,
+          departement,
+          rayon,
+          salles,
+          createdAt: new Date()
         });
 
-        // Enregistrer les infos supplémentaires dans Firestore
-        await setDoc(doc(db, "users", user.uid), {
-          prenom: prenom,
-          age: age,
-          genre: genre,
-          ville: ville,
-          description: description,
-          latitude: userLatitude,
-          longitude: userLongitude,
-          createdAt: new Date().toISOString(),
-        });
-
-        messageDiv.style.color = "#00ff88";
+        messageDiv.style.color = '#aaffaa';
         messageDiv.textContent = "Inscription réussie ! Redirection...";
-
-        // Après 2 sec redirection vers login
         setTimeout(() => {
-          window.location.href = "login.html";
-        }, 2000);
-
+          window.location.href = 'connexion.html';
+        }, 1500);
       } catch (error) {
-        messageDiv.style.color = "#ff4444";
-        messageDiv.textContent = "Erreur lors de l'inscription : " + error.message;
+        messageDiv.style.color = '#ff6666';
+        messageDiv.textContent = error.message;
       }
     });
   </script>
