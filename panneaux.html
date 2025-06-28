@@ -47,6 +47,7 @@
       backdrop-filter: blur(4px);
       text-decoration: none;
       transition: 0.3s;
+      cursor: pointer;
     }
 
     .salle-btn:hover {
@@ -63,7 +64,7 @@
     <a class="salle-btn" href="salle-amicale.html">💬 Rencontre amicale</a>
     <a class="salle-btn" href="salle-fun.html">🎉 Rencontre fun</a>
     <a class="salle-btn" href="salle-parents.html">👨‍👩‍👧 Parents solos</a>
-    <a class="salle-btn" href="connexion.html" id="logout">🔙 Déconnexion</a>
+    <a class="salle-btn" href="#" id="logout">🔙 Déconnexion</a>
   </div>
 
   <script type="module">
@@ -79,18 +80,22 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    // Vérifie que l'utilisateur est connecté
+    // Vérifie que l'utilisateur est connecté sinon redirige vers login.html
     onAuthStateChanged(auth, (user) => {
       if (!user) {
         window.location.href = "login.html";
       }
     });
 
-    // Déconnexion
+    // Gestion déconnexion
     document.getElementById("logout").addEventListener("click", async (e) => {
       e.preventDefault();
-      await signOut(auth);
-      window.location.href = "login.html";
+      try {
+        await signOut(auth);
+        window.location.href = "login.html";
+      } catch (error) {
+        alert("Erreur lors de la déconnexion : " + error.message);
+      }
     });
   </script>
 </body>
