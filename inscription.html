@@ -14,7 +14,7 @@
     html, body {
       margin: 0;
       padding: 0;
-      background-color: #000; /* Fond noir par défaut */
+      background-color: #000;
       color: #fff;
       font-family: 'Orbitron', sans-serif;
     }
@@ -201,7 +201,6 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
   <script>
-    // Config Firebase Affinix
     const firebaseConfig = {
       apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
       authDomain: "affinix-3a930.firebaseapp.com",
@@ -211,7 +210,6 @@
       appId: "1:498829285833:web:xxxxxxxxxxxxxxxxxxxxxx"
     };
 
-    // Initialiser Firebase
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
@@ -237,11 +235,9 @@
       }
 
       try {
-        // Créer un utilisateur Firebase Authentication
         const userCredential = await auth.createUserWithEmailAndPassword(email, password);
         const uid = userCredential.user.uid;
 
-        // Sauvegarder les données supplémentaires dans Firestore
         await db.collection('users').doc(uid).set({
           prenom,
           description,
@@ -253,9 +249,10 @@
 
         messageDiv.style.color = '#80ff80';
         messageDiv.textContent = "Inscription réussie ! Redirection...";
-        // Redirection vers la page connexion ou salle
+        
+        // ✅ Redirection corrigée ici
         setTimeout(() => {
-          window.location.href = 'connexion.html';
+          window.location.href = 'panneaux.html';
         }, 1500);
       } catch (error) {
         messageDiv.style.color = '#ff8080';
