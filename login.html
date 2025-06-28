@@ -1,46 +1,92 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <title>Connexion - Affinix</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="css/styles.css" />
+  <meta charset="UTF-8">
+  <title>Connexion - AFFINIX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: url('img/fond-tokyo.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      text-align: center;
+      padding-top: 100px;
+    }
+
+    .login-container {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 30px;
+      border-radius: 10px;
+      display: inline-block;
+    }
+
+    input {
+      display: block;
+      margin: 10px auto;
+      padding: 10px;
+      width: 80%;
+      border-radius: 5px;
+      border: none;
+    }
+
+    button {
+      padding: 10px 20px;
+      background: #ff00ff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #d600d6;
+    }
+  </style>
 </head>
 <body>
-
-  <h1>Connexion</h1>
-  <form id="login-form">
-    <input type="email" id="email" placeholder="Email" required />
-    <input type="password" id="password" placeholder="Mot de passe" required />
-    <button type="submit">Se connecter</button>
-  </form>
-  <p>Pas encore inscrit ? <a href="inscription.html">Inscription</a></p>
+  <div class="login-container">
+    <h2>Connexion</h2>
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Mot de passe">
+    <button id="loginBtn">Se connecter</button>
+    <p id="message"></p>
+  </div>
 
   <script type="module">
-    import { auth, signInWithEmailAndPassword, onAuthStateChanged } from './js/firebase.js';
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
-    const form = document.getElementById('login-form');
+    const firebaseConfig = {
+      apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
+      authDomain: "affinix-3a930.firebaseapp.com",
+      projectId: "affinix-3a930"
+    };
 
-    // Si déjà connecté, redirection immédiate
-    onAuthStateChanged(auth, user => {
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const loginBtn = document.getElementById("loginBtn");
+    const email = document.getElementById("email");
+    const password = document.getElementById("password");
+    const message = document.getElementById("message");
+
+    loginBtn.addEventListener("click", () => {
+      signInWithEmailAndPassword(auth, email.value, password.value)
+        .then((userCredential) => {
+          window.location.href = "panneaux.html";
+        })
+        .catch((error) => {
+          message.textContent = "Erreur : " + error.message;
+        });
+    });
+
+    // Redirige si déjà connecté (évite la boucle)
+    onAuthStateChanged(auth, (user) => {
       if (user) {
         window.location.href = "panneaux.html";
       }
     });
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = form.email.value;
-      const password = form.password.value;
-
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-        window.location.href = "panneaux.html"; // redirection après succès
-      } catch (error) {
-        alert("Erreur : " + error.message);
-      }
-    });
   </script>
-
 </body>
 </html>
