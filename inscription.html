@@ -1,58 +1,39 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <title>Inscription - AFFINIX</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
-  <style>
-    /* (Voici ton style inchangé) */
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inscription</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="guirlande"></div>
-  <div class="inscription-wrapper">
-    <h1>Rejoins AFFINIX</h1>
-    <form id="inscriptionForm">
-      <!-- Tes champs (prénom, description, e‑mail, mot de passe, etc.) -->
-      <div id="message"></div>
+  <div class="container">
+    <h1>Inscription</h1>
+    <form id="registerForm">
+      <input type="text" id="username" placeholder="Nom d'utilisateur" required>
+      <input type="password" id="password" placeholder="Mot de passe" required>
+      <button type="submit">S'inscrire</button>
     </form>
+    <p>Déjà un compte ? <a href="connexion.html">Se connecter</a></p>
   </div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
-      authDomain: "affinix-3a930.firebaseapp.com",
-      projectId: "affinix-3a930",
-      storageBucket: "affinix-3a930.appspot.com",
-      messagingSenderId: "498829285833",
-      appId: "1:498829285833:web:344dacf5b6bcc818167018"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-    const form = document.getElementById('inscriptionForm');
-    const messageDiv = document.getElementById('message');
-
-    form.addEventListener('submit', async (e) => {
+  <script>
+    const form = document.getElementById('registerForm');
+    form.addEventListener('submit', function (e) {
       e.preventDefault();
-      // collecte des données...
-      try {
-        const userCred = await createUserWithEmailAndPassword(auth, email, password);
-        await setDoc(doc(db, "users", userCred.user.uid), {
-          prenom, description, email, departement, rayon, salles, createdAt: new Date()
-        });
-        messageDiv.textContent = "Inscription réussie ! Redirection...";
-        setTimeout(() => window.location.href = "panneaux.html", 1500);
-      } catch (err) {
-        messageDiv.textContent = err.message;
+
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      if (username && password) {
+        // Enregistrer les données dans le localStorage
+        localStorage.setItem('username', username);
+        localStorage.setItem('password', password);
+
+        // Redirection vers panneaux.html après inscription
+        window.location.href = 'panneaux.html';
+      } else {
+        alert('Veuillez remplir tous les champs.');
       }
     });
   </script>
