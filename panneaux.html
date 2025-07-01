@@ -1,41 +1,113 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head><meta charset="UTF-8"><title>Panneaux - AFFINIX</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+  <meta charset="UTF-8">
+  <title>Choisis ta salle - AFFINIX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
   <style>
-    /* Ton style existant */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: url('img/fond-tokyo.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 30px;
+      text-shadow: 0 0 10px #fff;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 10px 20px;
+      border-radius: 12px;
+    }
+
+    .button {
+      width: 80%;
+      max-width: 300px;
+      margin: 12px;
+      padding: 15px;
+      border: 2px solid #fff;
+      border-radius: 15px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      transition: 0.3s;
+      display: block;
+      box-shadow: 0 0 10px #fff;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .button:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+
+    .amicale    { border-color: #00f0ff; color: #00f0ff; }
+    .serieuse   { border-color: #ff66c4; color: #ff66c4; }
+    .fun        { border-color: #ffd700; color: #ffd700; }
+    .parents    { border-color: #ff4444; color: #ff4444; }
+    .createur   { border-color: #9b59b6; color: #9b59b6; }
+    .retour     { border-color: #aaa; color: #aaa; }
+
+    .btn-match {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #ff6dfb;
+      color: white;
+      padding: 14px 20px;
+      border-radius: 30px;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 0 15px #ffbaff;
+      z-index: 1000;
+      transition: 0.3s ease;
+    }
+
+    .btn-match:hover {
+      transform: scale(1.1);
+      background: #e855e0;
+    }
+
+    @media screen and (max-width: 500px) {
+      h1 {
+        font-size: 20px;
+        margin-bottom: 20px;
+      }
+
+      .button {
+        font-size: 16px;
+        padding: 12px;
+      }
+
+      .btn-match {
+        padding: 12px 16px;
+        font-size: 14px;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="container" id="content" style="display:none;">
-    <h2>Choisis ta salle</h2>
-    <!-- Tes liens de salles -->
-    <a class="salle-btn" href="#" id="logout">🔙 Déconnexion</a>
-  </div>
+  <h1>Choisis ta salle</h1>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+  <a href="amicale.html" class="button amicale">💬 Rencontre Amicale</a>
+  <a href="serieuse.html" class="button serieuse">💖 Relation Sérieuse</a>
+  <a href="fun.html" class="button fun">🎉 Rencontre Fun</a>
+  <a href="parents.html" class="button parents">👨‍👩‍👧 Parents Solos</a>
+  <a href="createur.html" class="button createur">🧙‍♂️ Le Créateur</a>
+  <a href="index.html" class="button retour">⬅️ Retour</a>
 
-    const app = initializeApp({
-      apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
-      authDomain: "affinix-3a930.firebaseapp.com",
-      projectId: "affinix-3a930"
-    });
-    const auth = getAuth(app);
-
-    onAuthStateChanged(auth, user => {
-      if (user) {
-        document.getElementById('content').style.display = 'block';
-      } else {
-        window.location.href = 'connexion.html';
-      }
-    });
-
-    document.getElementById('logout').addEventListener('click', async (e) => {
-      e.preventDefault();
-      await signOut(auth);
-      window.location.href = 'connexion.html';
-    });
-  </script>
+  <!-- ✅ Bouton Match en bas à droite -->
+  <a href="match.html" class="btn-match">❤️ Match</a>
 </body>
 </html>
