@@ -1,24 +1,124 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Connexion - AFFINIX</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
+
   <style>
-    /* Ton style actuel */
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      color: #fff;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    body {
+      background: url('img/fond-inscription-tokyo.jpg') no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .guirlande {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      height: 100px;
+      background: url('img/guirlande-neon.png') repeat-x top;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .connexion-wrapper {
+      width: 100%;
+      max-width: 400px;
+      padding: 30px 20px;
+      background: transparent;
+      border: 2px solid #ff6dfb;
+      border-radius: 20px;
+      box-shadow: 0 0 20px #ff6dfb;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      color: #ffbaff;
+      font-size: 24px;
+      margin-bottom: 20px;
+      text-shadow: 0 0 6px #ffbaff;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin: 12px 0 6px;
+      font-size: 14px;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      background: #a86eff;
+      color: #fff;
+      font-size: 16px;
+      padding: 12px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ffbaff;
+      transition: 0.3s;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background: #ff6dfb;
+    }
+
+    #message {
+      margin-top: 15px;
+      font-size: 14px;
+      text-align: center;
+    }
   </style>
 </head>
+
 <body>
+  <div class="guirlande"></div>
+
   <div class="connexion-wrapper">
     <h1>Connexion AFFINIX</h1>
-    <form id="login-form">
+    <form id="loginForm">
+      <label for="email">Email :</label>
       <input type="email" id="email" required>
+
+      <label for="password">Mot de passe :</label>
       <input type="password" id="password" required>
+
       <button type="submit">Se connecter</button>
-      <div id="error-message"></div>
+      <div id="message"></div>
     </form>
   </div>
 
+  <!-- Firebase (Modules) -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
@@ -31,16 +131,28 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    const form = document.getElementById('login-form');
-    const msgDiv = document.getElementById('error-message');
+
+    const form = document.getElementById('loginForm');
+    const messageDiv = document.getElementById('message');
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      const email = form.email.value.trim();
+      const password = form.password.value;
+
+      messageDiv.style.color = '#ffbaff';
+      messageDiv.textContent = '';
+
       try {
-        await signInWithEmailAndPassword(auth, form.email.value, form.password.value);
-        window.location.href = "panneaux.html";
-      } catch (err) {
-        msgDiv.textContent = "Erreur : " + err.message;
+        await signInWithEmailAndPassword(auth, email, password);
+        messageDiv.style.color = '#80ff80';
+        messageDiv.textContent = "Connexion réussie !";
+        setTimeout(() => {
+          window.location.href = 'panneaux.html';
+        }, 1000);
+      } catch (error) {
+        messageDiv.style.color = '#ff6666';
+        messageDiv.textContent = "Erreur : " + error.message;
       }
     });
   </script>
