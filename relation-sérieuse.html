@@ -2,77 +2,216 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>💖 Relation Sérieuse - AFFINIX</title>
+  <title>Relation Sérieuse - AFFINIX</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+
   <style>
     body {
       margin: 0;
-      padding: 0;
       font-family: 'Orbitron', sans-serif;
       background: url('img/fond-serieuse.jpg') no-repeat center center fixed;
       background-size: cover;
-      color: white;
-      min-height: 100vh;
       display: flex;
       justify-content: center;
-      align-items: center;
-      flex-direction: column;
+      align-items: flex-start;
+      padding: 40px;
+      color: white;
+      min-height: 100vh;
+    }
+
+    .panneau {
+      position: fixed;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.6);
+      padding: 12px 24px;
+      border-radius: 12px;
+      border: 2px solid #ff66c4;
+      box-shadow: 0 0 12px #ff66c4;
+      font-size: 22px;
+      text-align: center;
+      text-shadow: 0 0 10px #ff66c4;
+      z-index: 10;
     }
 
     .container {
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(6px);
-      padding: 30px;
-      border-radius: 20px;
+      display: flex;
+      width: 100%;
+      max-width: 1200px;
+      margin-top: 100px;
+      gap: 20px;
+    }
+
+    .profiles {
+      flex: 1;
+      backdrop-filter: blur(8px);
+      background: rgba(255, 255, 255, 0.05);
       border: 2px solid #ff66c4;
-      box-shadow: 0 0 20px #ff66c4;
-      text-align: center;
-      max-width: 90%;
-      width: 400px;
+      border-radius: 16px;
+      padding: 20px;
+      max-height: 80vh;
+      overflow-y: auto;
     }
 
-    h1 {
-      font-size: 26px;
-      margin-bottom: 15px;
-      text-shadow: 0 0 10px #ff66c4;
-    }
-
-    p {
-      font-size: 15px;
-      line-height: 1.5;
-      margin-bottom: 25px;
-      color: #ffd4f8;
-    }
-
-    a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      background: rgba(0,0,0,0.4);
-      padding: 10px 20px;
-      border-radius: 8px;
-      border: 2px solid #ff66c4;
-      display: inline-block;
+    .profile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+      padding: 10px;
+      border-radius: 12px;
+      border: 1px solid #ff66c4;
+      background: rgba(0, 0, 0, 0.3);
+      cursor: pointer;
       transition: 0.3s;
     }
 
-    a:hover {
-      background: rgba(255,255,255,0.1);
+    .profile:hover {
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 0 10px #ff66c4;
+    }
+
+    .profile img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+
+    .profile .info {
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .profile .info span {
+      display: block;
+      margin: 2px 0;
+    }
+
+    .detail {
+      flex: 2;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid #ff66c4;
+      border-radius: 16px;
+      padding: 20px;
+      position: relative;
+      display: none;
+    }
+
+    .photos {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .photos img {
+      width: 80px;
+      height: 80px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 2px solid #ff66c4;
+    }
+
+    .description {
+      font-size: 14px;
+      margin-bottom: 30px;
+      color: #ffd2f2;
+    }
+
+    .actions {
+      position: absolute;
+      bottom: 15px;
+      left: 15px;
+      right: 15px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .actions button {
+      padding: 10px 20px;
+      border-radius: 10px;
+      border: none;
+      font-family: 'Orbitron';
+      cursor: pointer;
+      font-size: 14px;
+      background-color: #ff66c4;
+      color: white;
+      box-shadow: 0 0 10px #ff66c4;
+      transition: 0.3s;
+    }
+
+    .actions button:hover {
+      background-color: #ff99dd;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+      .detail {
+        margin-top: 20px;
+      }
     }
   </style>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <div class="container">
-    <h1>💖 Relation Sérieuse</h1>
-    <p>Bienvenue dans l’univers dédié à ceux qui cherchent une vraie histoire.  
-    Ici, chaque connexion compte. Reste sincère, bienveillant, et laisse la magie opérer ✨</p>
+  <div class="panneau">💖 Relation Sérieuse</div>
 
-    <a href="panneaux.html">⬅️ Retour à la ville</a>
+  <div class="container">
+    <div class="profiles">
+      <div class="profile" onclick="showDetail('Marie', '28 ans', 'Paris', 'J’aime les balades et les nuits étoilées', ['img/photo1.jpg', 'img/photo2.jpg'])">
+        <img src="img/photo1.jpg" alt="Marie">
+        <div class="info">
+          <span><strong>Marie</strong></span>
+          <span>28 ans</span>
+          <span>Paris</span>
+          <span>💖 💬</span>
+        </div>
+      </div>
+      <!-- Tu peux ajouter d'autres profils ici -->
+    </div>
+
+    <div class="detail" id="detailBox">
+      <div class="photos" id="photosBox"></div>
+      <div class="description" id="descBox">Description ici...</div>
+      <div class="actions">
+        <button onclick="hideDetail()">⬅ Retour</button>
+        <button onclick="startChat()">💬 Chat</button>
+      </div>
+    </div>
   </div>
 
-  <!-- Vérification Firebase -->
+  <!-- Script d'interaction -->
+  <script>
+    function showDetail(name, age, city, desc, photos) {
+      document.getElementById('detailBox').style.display = 'block';
+      document.getElementById('descBox').innerText = `${name}, ${age} - ${city}\n\n${desc}`;
+
+      const photoBox = document.getElementById('photosBox');
+      photoBox.innerHTML = '';
+      photos.forEach(src => {
+        const img = document.createElement('img');
+        img.src = src;
+        photoBox.appendChild(img);
+      });
+    }
+
+    function hideDetail() {
+      document.getElementById('detailBox').style.display = 'none';
+    }
+
+    function startChat() {
+      alert("Fonction de chat à connecter 🔧");
+    }
+  </script>
+
+  <!-- Vérification Firebase Auth -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
@@ -92,5 +231,6 @@
       }
     });
   </script>
+
 </body>
 </html>
