@@ -1,217 +1,167 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Relation Sérieuse - AFFINIX</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
 
   <style>
-    body {
+    html, body {
       margin: 0;
+      padding: 0;
+      height: 100%;
       font-family: 'Orbitron', sans-serif;
       background: url('img/fond-serieuse.jpg') no-repeat center center fixed;
       background-size: cover;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 40px;
+      overflow: hidden;
       color: white;
-      min-height: 100vh;
     }
 
-    .panneau {
+    .guirlande {
       position: fixed;
-      top: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.6);
-      padding: 12px 24px;
-      border-radius: 12px;
-      border: 2px solid #ff66c4;
-      box-shadow: 0 0 12px #ff66c4;
-      font-size: 22px;
-      text-align: center;
-      text-shadow: 0 0 10px #ff66c4;
-      z-index: 10;
+      top: 0;
+      width: 100%;
+      height: 100px;
+      background: url('img/guirlande-neon.png') repeat-x top;
+      pointer-events: none;
+      z-index: 2;
     }
 
     .container {
       display: flex;
-      width: 100%;
-      max-width: 1200px;
-      margin-top: 100px;
-      gap: 20px;
-    }
-
-    .profiles {
-      flex: 1;
-      backdrop-filter: blur(8px);
-      background: rgba(255, 255, 255, 0.05);
-      border: 2px solid #ff66c4;
-      border-radius: 16px;
-      padding: 20px;
-      max-height: 80vh;
-      overflow-y: auto;
-    }
-
-    .profile {
-      display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      margin-bottom: 20px;
-      padding: 10px;
-      border-radius: 12px;
-      border: 1px solid #ff66c4;
-      background: rgba(0, 0, 0, 0.3);
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .profile:hover {
-      background: rgba(255, 255, 255, 0.05);
-      box-shadow: 0 0 10px #ff66c4;
-    }
-
-    .profile img {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
-      border-radius: 50%;
-      margin-bottom: 10px;
-    }
-
-    .profile .info {
-      text-align: center;
-      font-size: 14px;
-    }
-
-    .profile .info span {
-      display: block;
-      margin: 2px 0;
-    }
-
-    .detail {
-      flex: 2;
-      backdrop-filter: blur(10px);
-      background: rgba(255, 255, 255, 0.05);
-      border: 2px solid #ff66c4;
-      border-radius: 16px;
-      padding: 20px;
+      height: 100vh;
       position: relative;
-      display: none;
     }
 
-    .photos {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
+    .card {
+      position: absolute;
+      width: 300px;
+      max-width: 90%;
+      padding: 20px;
+      backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid #ff6dfb;
+      border-radius: 20px;
+      box-shadow: 0 0 20px #ff6dfb;
+      text-align: center;
+      transition: transform 0.4s ease, opacity 0.4s ease;
     }
 
-    .photos img {
-      width: 80px;
-      height: 80px;
-      border-radius: 10px;
+    .card img {
+      width: 100%;
+      height: 280px;
       object-fit: cover;
-      border: 2px solid #ff66c4;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      border: 2px solid #ff6dfb;
     }
 
-    .description {
+    .card h2 {
+      margin: 10px 0 5px;
+      color: #ffbaff;
+      font-size: 20px;
+    }
+
+    .card p {
       font-size: 14px;
-      margin-bottom: 30px;
+      line-height: 1.5;
       color: #ffd2f2;
     }
 
-    .actions {
+    .swipe-up {
       position: absolute;
-      bottom: 15px;
-      left: 15px;
-      right: 15px;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .actions button {
-      padding: 10px 20px;
-      border-radius: 10px;
-      border: none;
-      font-family: 'Orbitron';
-      cursor: pointer;
+      bottom: 40px;
       font-size: 14px;
-      background-color: #ff66c4;
-      color: white;
-      box-shadow: 0 0 10px #ff66c4;
-      transition: 0.3s;
+      opacity: 0.6;
+      animation: pulse 2s infinite;
     }
 
-    .actions button:hover {
-      background-color: #ff99dd;
-    }
-
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-      }
-      .detail {
-        margin-top: 20px;
-      }
+    @keyframes pulse {
+      0% { transform: translateY(0); opacity: 0.5; }
+      50% { transform: translateY(-8px); opacity: 1; }
+      100% { transform: translateY(0); opacity: 0.5; }
     }
   </style>
 </head>
 <body>
 
-  <div class="panneau">💖 Relation Sérieuse</div>
+  <div class="guirlande"></div>
 
-  <div class="container">
-    <div class="profiles">
-      <div class="profile" onclick="showDetail('Marie', '28 ans', 'Paris', 'J’aime les balades et les nuits étoilées', ['img/photo1.jpg', 'img/photo2.jpg'])">
-        <img src="img/photo1.jpg" alt="Marie">
-        <div class="info">
-          <span><strong>Marie</strong></span>
-          <span>28 ans</span>
-          <span>Paris</span>
-          <span>💖 💬</span>
-        </div>
-      </div>
-      <!-- Tu peux ajouter d'autres profils ici -->
+  <div class="container" id="profileContainer">
+    <div class="card">
+      <img src="img/photo1.jpg" alt="Marie">
+      <h2>Marie, 28 ans</h2>
+      <p>Paris — Aime les balades au clair de lune et les romans d’amour futuristes.</p>
     </div>
 
-    <div class="detail" id="detailBox">
-      <div class="photos" id="photosBox"></div>
-      <div class="description" id="descBox">Description ici...</div>
-      <div class="actions">
-        <button onclick="hideDetail()">⬅ Retour</button>
-        <button onclick="startChat()">💬 Chat</button>
-      </div>
+    <div class="card">
+      <img src="img/photo2.jpg" alt="Alex">
+      <h2>Alex, 32 ans</h2>
+      <p>Lyon — Passionné de cuisine et de randonnées nocturnes. 💖</p>
     </div>
+
+    <div class="card">
+      <img src="img/photo3.jpg" alt="Léna">
+      <h2>Léna, 25 ans</h2>
+      <p>Marseille — Artiste rêveuse, cherche une connexion d’âme. ✨</p>
+    </div>
+
+    <div class="swipe-up">⬆ Swipe pour découvrir</div>
   </div>
 
-  <!-- Script d'interaction -->
   <script>
-    function showDetail(name, age, city, desc, photos) {
-      document.getElementById('detailBox').style.display = 'block';
-      document.getElementById('descBox').innerText = `${name}, ${age} - ${city}\n\n${desc}`;
+    const container = document.getElementById("profileContainer");
+    const cards = Array.from(container.getElementsByClassName("card"));
 
-      const photoBox = document.getElementById('photosBox');
-      photoBox.innerHTML = '';
-      photos.forEach(src => {
-        const img = document.createElement('img');
-        img.src = src;
-        photoBox.appendChild(img);
+    let current = 0;
+    showCard(current);
+
+    function showCard(index) {
+      cards.forEach((card, i) => {
+        card.style.transform = `translateY(${(i - index) * 100}%)`;
+        card.style.opacity = i < index ? 0 : 1;
+        card.style.zIndex = cards.length - i;
       });
     }
 
-    function hideDetail() {
-      document.getElementById('detailBox').style.display = 'none';
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowUp" || e.key === "PageUp") {
+        nextCard();
+      }
+    });
+
+    container.addEventListener("touchstart", handleTouchStart, false);
+    container.addEventListener("touchmove", handleTouchMove, false);
+
+    let yStart = null;
+
+    function handleTouchStart(evt) {
+      const firstTouch = evt.touches[0];
+      yStart = firstTouch.clientY;
     }
 
-    function startChat() {
-      alert("Fonction de chat à connecter 🔧");
+    function handleTouchMove(evt) {
+      if (!yStart) return;
+      let yEnd = evt.touches[0].clientY;
+      let yDiff = yStart - yEnd;
+      if (yDiff > 50) {
+        nextCard();
+        yStart = null;
+      }
+    }
+
+    function nextCard() {
+      if (current < cards.length - 1) {
+        current++;
+        showCard(current);
+      }
     }
   </script>
 
-  <!-- Vérification Firebase Auth -->
+  <!-- 🔐 Firebase auth -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
