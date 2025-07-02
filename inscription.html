@@ -3,47 +3,132 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Inscription</title>
+  <title>Inscription - Carrousel photos</title>
   <style>
-    /* Styles existants + ajout pour preview photos */
-    #previewPhotos {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 10px;
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #111;
+      color: #eee;
     }
+    h1 {
+      color: #ff6dfb;
+    }
+    form {
+      max-width: 600px;
+      margin: auto;
+      background: #222;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px #ff6dfb88;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 6px;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="file"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 14px;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
+    }
+    button {
+      background: #ff6dfb;
+      border: none;
+      color: #111;
+      font-weight: bold;
+      font-size: 18px;
+      padding: 12px 25px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      width: 100%;
+    }
+    button:hover {
+      background: #d14baf;
+      color: #fff;
+    }
+
+    /* Carousel preview container */
+    #previewPhotos {
+      margin-top: 15px;
+      display: flex;
+      overflow-x: auto;
+      gap: 14px;
+      padding-bottom: 10px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+    /* Hide scrollbar for Webkit */
+    #previewPhotos::-webkit-scrollbar {
+      display: none;
+    }
+    /* Hide scrollbar for Firefox */
+    #previewPhotos {
+      scrollbar-width: none;
+    }
+
     .photo-thumb {
       position: relative;
-      width: 80px;
-      height: 80px;
-      border-radius: 10px;
+      flex: 0 0 120px;
+      height: 120px;
+      border-radius: 14px;
+      box-shadow: 0 0 12px #ff6dfb88;
+      cursor: pointer;
+      scroll-snap-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       overflow: hidden;
-      box-shadow: 0 0 8px #ff6dfb;
-      cursor: default;
-      flex-shrink: 0;
+      background: #222;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .photo-thumb img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block;
+      border-radius: 14px;
+      pointer-events: none;
+      user-select: none;
+      transition: transform 0.3s ease;
     }
-    .photo-thumb .remove-btn {
+
+    /* Zoom effect on active */
+    .photo-thumb.active {
+      transform: scale(1.4);
+      box-shadow: 0 0 25px #ff6dfbcc;
+      z-index: 10;
+    }
+    .photo-thumb.active img {
+      transform: scale(1.1);
+    }
+
+    .remove-btn {
       position: absolute;
-      top: 2px;
-      right: 2px;
+      top: 6px;
+      right: 6px;
       background: rgba(255, 109, 251, 0.85);
       color: #000;
       border-radius: 50%;
-      width: 18px;
-      height: 18px;
+      width: 22px;
+      height: 22px;
       font-weight: bold;
-      font-size: 16px;
-      line-height: 18px;
+      font-size: 18px;
+      line-height: 22px;
       text-align: center;
       cursor: pointer;
       user-select: none;
-      box-shadow: 0 0 4px #ff6dfb;
+      box-shadow: 0 0 6px #ff6dfbcc;
+      transition: background 0.3s ease;
+    }
+    .remove-btn:hover {
+      background: #d14baf;
+      color: #fff;
     }
   </style>
 </head>
@@ -51,24 +136,16 @@
   <h1>Inscription</h1>
 
   <form id="inscriptionForm" action="#" method="post" enctype="multipart/form-data">
-    <!-- Champs d'inscription classiques (nom, email, etc.) -->
-    <label for="nom">Nom :</label><br />
-    <input type="text" id="nom" name="nom" required /><br /><br />
+    <label for="nom">Nom :</label>
+    <input type="text" id="nom" name="nom" required />
 
-    <label for="email">Email :</label><br />
-    <input type="email" id="email" name="email" required /><br /><br />
+    <label for="email">Email :</label>
+    <input type="email" id="email" name="email" required />
 
-    <!-- Input photo -->
-    <label for="photoInput">Choisissez vos photos (JPG uniquement, max 5) :</label><br />
-    <input
-      type="file"
-      id="photoInput"
-      name="photos"
-      accept=".jpg,.jpeg"
-      multiple
-    /><br />
+    <label for="photoInput">Choisissez vos photos (JPG uniquement, max 5) :</label>
+    <input type="file" id="photoInput" name="photos" accept=".jpg,.jpeg" multiple />
 
-    <div id="previewPhotos"></div><br />
+    <div id="previewPhotos" aria-label="Aperçu des photos sélectionnées" role="list"></div>
 
     <button type="submit">Valider</button>
   </form>
@@ -78,13 +155,15 @@
     const previewPhotos = document.getElementById('previewPhotos');
     let selectedFiles = [];
 
-    function updatePreview() {
-      previewPhotos.innerHTML = '';
-      selectedFiles.forEach((file, index) => {
+    // Fonction pour créer un élément miniature avec suppression
+    function createPhotoThumb(file, index) {
+      return new Promise((resolve) => {
         const reader = new FileReader();
         reader.onload = function (e) {
           const div = document.createElement('div');
           div.classList.add('photo-thumb');
+          div.setAttribute('role', 'listitem');
+          div.setAttribute('tabindex', '0');
 
           const img = document.createElement('img');
           img.src = e.target.result;
@@ -94,17 +173,28 @@
           removeBtn.classList.add('remove-btn');
           removeBtn.textContent = '×';
           removeBtn.title = 'Supprimer cette photo';
-          removeBtn.addEventListener('click', () => {
+          removeBtn.addEventListener('click', (event) => {
+            event.stopPropagation();
             selectedFiles.splice(index, 1);
             updatePreview();
           });
 
           div.appendChild(img);
           div.appendChild(removeBtn);
-          previewPhotos.appendChild(div);
+
+          resolve(div);
         };
         reader.readAsDataURL(file);
       });
+    }
+
+    async function updatePreview() {
+      previewPhotos.innerHTML = '';
+      const thumbs = await Promise.all(
+        selectedFiles.map((file, i) => createPhotoThumb(file, i))
+      );
+      thumbs.forEach((thumb) => previewPhotos.appendChild(thumb));
+      updateActiveThumb();
     }
 
     photoInput.addEventListener('change', (e) => {
@@ -125,8 +215,42 @@
       selectedFiles = selectedFiles.concat(jpgFiles);
       updatePreview();
 
-      // Reset pour pouvoir re-sélectionner les mêmes fichiers si besoin
+      // Reset input pour pouvoir re-sélectionner les mêmes fichiers
       photoInput.value = '';
+    });
+
+    // Fonction pour détecter la miniature la plus centrée dans le scroll
+    function updateActiveThumb() {
+      const thumbs = Array.from(previewPhotos.children);
+      if (thumbs.length === 0) return;
+
+      const containerRect = previewPhotos.getBoundingClientRect();
+      const containerCenter = containerRect.left + containerRect.width / 2;
+
+      let minDistance = Infinity;
+      let activeIndex = 0;
+
+      thumbs.forEach((thumb, i) => {
+        const rect = thumb.getBoundingClientRect();
+        const thumbCenter = rect.left + rect.width / 2;
+        const distance = Math.abs(containerCenter - thumbCenter);
+        if (distance < minDistance) {
+          minDistance = distance;
+          activeIndex = i;
+        }
+        thumb.classList.remove('active');
+      });
+      thumbs[activeIndex].classList.add('active');
+    }
+
+    // Détecter scroll pour mettre à jour la photo active
+    previewPhotos.addEventListener('scroll', () => {
+      window.requestAnimationFrame(updateActiveThumb);
+    });
+
+    // Mettre à jour au chargement initial aussi
+    window.addEventListener('resize', () => {
+      window.requestAnimationFrame(updateActiveThumb);
     });
 
     const form = document.getElementById('inscriptionForm');
@@ -135,7 +259,6 @@
         e.preventDefault();
         alert('Veuillez sélectionner au moins une photo JPG.');
       } else {
-        // TODO: gérer l'upload réel côté serveur/Firebase
         alert(
           `Prêt à envoyer ${selectedFiles.length} photo(s). (Upload à implémenter)`
         );
