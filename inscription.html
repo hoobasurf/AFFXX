@@ -8,27 +8,19 @@
     /* Styles existants + ajout pour preview photos */
     #previewPhotos {
       display: flex;
-      flex-wrap: nowrap;       /* PAS de retour à la ligne */
-      gap: 10px;
+      flex-wrap: wrap;
+      gap: 8px;
       margin-top: 10px;
-      overflow-x: auto;
-      padding-bottom: 10px;
-      scroll-behavior: smooth;
-      -webkit-overflow-scrolling: touch;
-      max-width: 100%;
-      border-bottom: 2px solid #ff6dfb;
-      user-select: none;
     }
     .photo-thumb {
       position: relative;
-      width: 120px;
-      height: 120px;
+      width: 120px;  /* taille modifiée ici */
+      height: 120px; /* taille modifiée ici */
       border-radius: 10px;
       overflow: hidden;
       box-shadow: 0 0 8px #ff6dfb;
       cursor: default;
       flex-shrink: 0;
-      transition: transform 0.3s ease;
     }
     .photo-thumb img {
       width: 100%;
@@ -52,12 +44,6 @@
       cursor: pointer;
       user-select: none;
       box-shadow: 0 0 4px #ff6dfb;
-    }
-    /* Zoom de la photo au centre */
-    .photo-thumb.center {
-      transform: scale(1.2);
-      box-shadow: 0 0 15px #ff6dfb;
-      z-index: 10;
     }
   </style>
 </head>
@@ -92,33 +78,6 @@
     const previewPhotos = document.getElementById('previewPhotos');
     let selectedFiles = [];
 
-    function updateCenterPhoto() {
-      const container = previewPhotos;
-      const photos = container.querySelectorAll('.photo-thumb');
-      const containerRect = container.getBoundingClientRect();
-      const containerCenter = containerRect.left + containerRect.width / 2;
-
-      let closestPhoto = null;
-      let closestDistance = Infinity;
-
-      photos.forEach(photo => {
-        const rect = photo.getBoundingClientRect();
-        const photoCenter = rect.left + rect.width / 2;
-        const distance = Math.abs(containerCenter - photoCenter);
-
-        if (distance < closestDistance) {
-          closestDistance = distance;
-          closestPhoto = photo;
-        }
-
-        photo.classList.remove('center');
-      });
-
-      if (closestPhoto) {
-        closestPhoto.classList.add('center');
-      }
-    }
-
     function updatePreview() {
       previewPhotos.innerHTML = '';
       selectedFiles.forEach((file, index) => {
@@ -138,16 +97,11 @@
           removeBtn.addEventListener('click', () => {
             selectedFiles.splice(index, 1);
             updatePreview();
-            updateCenterPhoto();
           });
 
           div.appendChild(img);
           div.appendChild(removeBtn);
           previewPhotos.appendChild(div);
-
-          if (index === selectedFiles.length - 1) {
-            updateCenterPhoto();
-          }
         };
         reader.readAsDataURL(file);
       });
@@ -171,12 +125,8 @@
       selectedFiles = selectedFiles.concat(jpgFiles);
       updatePreview();
 
-      // Reset input pour pouvoir re-sélectionner les mêmes fichiers si besoin
+      // Reset pour pouvoir re-sélectionner les mêmes fichiers si besoin
       photoInput.value = '';
-    });
-
-    previewPhotos.addEventListener('scroll', () => {
-      updateCenterPhoto();
     });
 
     const form = document.getElementById('inscriptionForm');
