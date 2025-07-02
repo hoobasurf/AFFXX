@@ -2,158 +2,16 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Inscription - AFFINIX</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
-
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Inscription</title>
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      background-color: #000;
-      color: #fff;
-      font-family: 'Orbitron', sans-serif;
-    }
-
-    body {
-      background: url('img/fond-inscription-tokyo.jpg') no-repeat center center fixed;
-      background-size: cover;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-
-    .guirlande {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      height: 100px;
-      background: url('img/guirlande-neon.png') repeat-x top;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .inscription-wrapper {
-      width: 100%;
-      max-width: 500px;
-      padding: 30px 20px;
-      background: transparent;
-      border: 2px solid #ff6dfb;
-      border-radius: 20px;
-      box-shadow: 0 0 20px #ff6dfb;
-      position: relative;
-      z-index: 2;
-    }
-
-    h1 {
-      color: #ffbaff;
-      font-size: 24px;
-      margin-bottom: 20px;
-      text-shadow: 0 0 6px #ffbaff;
-      text-align: center;
-    }
-
-    label {
-      display: block;
-      margin: 12px 0 6px;
-      font-size: 14px;
-    }
-
-    input[type="text"],
-    input[type="email"],
-    input[type="password"],
-    textarea,
-    input[type="range"] {
-      width: 100%;
-      padding: 10px;
-      border-radius: 8px;
-      border: none;
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
-
-    input[type="range"] {
-      accent-color: #ff6dfb;
-    }
-
-    .rayon-output {
-      margin-top: -8px;
-      margin-bottom: 15px;
-      font-size: 13px;
-      color: #ffbaff;
-    }
-
-    .checkbox-group label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      padding: 5px 0;
-      cursor: pointer;
-    }
-
-    .checkbox-group input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      accent-color: #ff6dfb;
-    }
-
-    button {
-      background: #a86eff;
-      color: #fff;
-      font-size: 16px;
-      padding: 12px;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      box-shadow: 0 0 10px #ffbaff;
-      transition: 0.3s;
-      width: 100%;
-      margin-top: 20px;
-    }
-
-    button:hover {
-      background: #ff6dfb;
-    }
-
-    #message {
-      margin-top: 15px;
-      font-size: 14px;
-      color: #ffbaff;
-      text-align: center;
-    }
-
-    .remember {
-      margin-top: 10px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-    }
-
-    .remember input[type="checkbox"] {
-      width: 16px;
-      height: 16px;
-      accent-color: #ff6dfb;
-    }
-
-    /* --- AJOUT PHOTO PREVIEW --- */
-    #photoInput {
-      margin-top: 15px;
-    }
-
+    /* Styles existants + ajout pour preview photos */
     #previewPhotos {
-      margin-top: 10px;
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
+      margin-top: 10px;
     }
-
     .photo-thumb {
       position: relative;
       width: 80px;
@@ -162,15 +20,14 @@
       overflow: hidden;
       box-shadow: 0 0 8px #ff6dfb;
       cursor: default;
+      flex-shrink: 0;
     }
-
     .photo-thumb img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
     }
-
     .photo-thumb .remove-btn {
       position: absolute;
       top: 2px;
@@ -191,86 +48,99 @@
   </style>
 </head>
 <body>
+  <h1>Inscription</h1>
 
-  <div class="guirlande"></div>
+  <form id="inscriptionForm" action="#" method="post" enctype="multipart/form-data">
+    <!-- Champs d'inscription classiques (nom, email, etc.) -->
+    <label for="nom">Nom :</label><br />
+    <input type="text" id="nom" name="nom" required /><br /><br />
 
-  <div class="inscription-wrapper">
-    <h1>Rejoins AFFINIX</h1>
-    <form id="inscriptionForm">
-      <label for="prenom">Prénom ou Pseudo :</label>
-      <input type="text" id="prenom" name="prenom" required>
+    <label for="email">Email :</label><br />
+    <input type="email" id="email" name="email" required /><br /><br />
 
-      <label for="description">Décris-toi :</label>
-      <textarea id="description" name="description" rows="4" required></textarea>
+    <!-- Input photo -->
+    <label for="photoInput">Choisissez vos photos (JPG uniquement, max 5) :</label><br />
+    <input
+      type="file"
+      id="photoInput"
+      name="photos"
+      accept=".jpg,.jpeg"
+      multiple
+    /><br />
 
-      <label for="email">Email :</label>
-      <input type="email" id="email" name="email" required>
+    <div id="previewPhotos"></div><br />
 
-      <label for="password">Mot de passe :</label>
-      <input type="password" id="password" name="password" required>
-
-      <label>Salles choisies :</label>
-      <div class="checkbox-group">
-        <label><input type="checkbox" name="salles" value="relation-serieuse"> 💖 Relation sérieuse</label>
-        <label><input type="checkbox" name="salles" value="amicale"> 💬 Rencontre amicale</label>
-        <label><input type="checkbox" name="salles" value="fun"> 🎉 Rencontre fun</label>
-        <label><input type="checkbox" name="salles" value="parents"> 👨‍👩‍👧 Parents solos</label>
-      </div>
-
-      <label for="departement">Ton département :</label>
-      <input type="text" id="departement" name="departement" placeholder="Ex : 75 ou Paris" required>
-
-      <label for="rayon">Rayon de recherche (km) :</label>
-      <input type="range" id="rayon" name="rayon" min="5" max="100" value="50" step="1"
-        oninput="document.getElementById('rayonValue').innerText = this.value + ' km';">
-      <div class="rayon-output">🌐 Rayon actuel : <span id="rayonValue">50 km</span></div>
-
-      <div class="remember">
-        <input type="checkbox" id="remember" name="remember">
-        <label for="remember">Se souvenir de moi</label>
-      </div>
-
-      <!-- Upload photos input -->
-      <label for="photoInput">Photos de profil (1 à 5) :</label>
-      <input type="file" id="photoInput" accept=".jpg,.jpeg" multiple />
-
-      <!-- Preview photos -->
-      <div id="previewPhotos"></div>
-
-      <button type="submit">Valider mon inscription</button>
-    </form>
-
-    <div id="message"></div>
-  </div>
-
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+    <button type="submit">Valider</button>
+  </form>
 
   <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
-      authDomain: "affinix-3a930.firebaseapp.com",
-      projectId: "affinix-3a930",
-      storageBucket: "affinix-3a930.appspot.com",
-      messagingSenderId: "498829285833",
-      appId: "1:498829285833:web:344dacf5b6bcc818167018"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-    const storage = firebase.storage();
-
-    const form = document.getElementById('inscriptionForm');
-    const messageDiv = document.getElementById('message');
     const photoInput = document.getElementById('photoInput');
     const previewPhotos = document.getElementById('previewPhotos');
-
-    // Stocke les fichiers sélectionnés
     let selectedFiles = [];
 
-    // Fonction pour mettre à jour l'affichage des miniatures
-    function
+    function updatePreview() {
+      previewPhotos.innerHTML = '';
+      selectedFiles.forEach((file, index) => {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const div = document.createElement('div');
+          div.classList.add('photo-thumb');
+
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          img.alt = file.name;
+
+          const removeBtn = document.createElement('span');
+          removeBtn.classList.add('remove-btn');
+          removeBtn.textContent = '×';
+          removeBtn.title = 'Supprimer cette photo';
+          removeBtn.addEventListener('click', () => {
+            selectedFiles.splice(index, 1);
+            updatePreview();
+          });
+
+          div.appendChild(img);
+          div.appendChild(removeBtn);
+          previewPhotos.appendChild(div);
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    photoInput.addEventListener('change', (e) => {
+      const files = Array.from(e.target.files);
+
+      if (selectedFiles.length + files.length > 5) {
+        alert('Vous pouvez sélectionner jusqu’à 5 photos maximum.');
+        return;
+      }
+
+      const jpgFiles = files.filter(
+        (f) => f.type === 'image/jpeg' || f.type === 'image/jpg'
+      );
+      if (jpgFiles.length !== files.length) {
+        alert('Seules les photos JPG/JPEG sont acceptées.');
+      }
+
+      selectedFiles = selectedFiles.concat(jpgFiles);
+      updatePreview();
+
+      // Reset pour pouvoir re-sélectionner les mêmes fichiers si besoin
+      photoInput.value = '';
+    });
+
+    const form = document.getElementById('inscriptionForm');
+    form.addEventListener('submit', (e) => {
+      if (selectedFiles.length === 0) {
+        e.preventDefault();
+        alert('Veuillez sélectionner au moins une photo JPG.');
+      } else {
+        // TODO: gérer l'upload réel côté serveur/Firebase
+        alert(
+          `Prêt à envoyer ${selectedFiles.length} photo(s). (Upload à implémenter)`
+        );
+      }
+    });
+  </script>
+</body>
+</html>
