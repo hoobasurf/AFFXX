@@ -141,6 +141,53 @@
       height: 16px;
       accent-color: #ff6dfb;
     }
+
+    /* --- AJOUT PHOTO PREVIEW --- */
+    #photoInput {
+      margin-top: 15px;
+    }
+
+    #previewPhotos {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .photo-thumb {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 8px #ff6dfb;
+      cursor: default;
+    }
+
+    .photo-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .photo-thumb .remove-btn {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      background: rgba(255, 109, 251, 0.85);
+      color: #000;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 18px;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+      box-shadow: 0 0 4px #ff6dfb;
+    }
   </style>
 </head>
 <body>
@@ -183,6 +230,13 @@
         <label for="remember">Se souvenir de moi</label>
       </div>
 
+      <!-- Upload photos input -->
+      <label for="photoInput">Photos de profil (1 à 5) :</label>
+      <input type="file" id="photoInput" accept=".jpg,.jpeg" multiple />
+
+      <!-- Preview photos -->
+      <div id="previewPhotos"></div>
+
       <button type="submit">Valider mon inscription</button>
     </form>
 
@@ -193,6 +247,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
 
   <script>
     const firebaseConfig = {
@@ -207,58 +262,15 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
+    const storage = firebase.storage();
 
     const form = document.getElementById('inscriptionForm');
     const messageDiv = document.getElementById('message');
+    const photoInput = document.getElementById('photoInput');
+    const previewPhotos = document.getElementById('previewPhotos');
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      messageDiv.textContent = '';
+    // Stocke les fichiers sélectionnés
+    let selectedFiles = [];
 
-      const prenom = form.prenom.value.trim();
-      const description = form.description.value.trim();
-      const email = form.email.value.trim();
-      const password = form.password.value;
-      const departement = form.departement.value.trim();
-      const rayon = form.rayon.value;
-      const salles = Array.from(form.querySelectorAll('input[name="salles"]:checked')).map(cb => cb.value);
-      const remember = form.remember.checked;
-
-      if (salles.length === 0) {
-        messageDiv.textContent = "Merci de choisir au moins une salle.";
-        return;
-      }
-
-      try {
-        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-        const uid = userCredential.user.uid;
-
-        await db.collection('users').doc(uid).set({
-          prenom,
-          description,
-          email,
-          departement,
-          rayon,
-          salles,
-          remember
-        });
-
-        if (remember) {
-          localStorage.setItem("rememberUser", "true");
-        }
-
-        messageDiv.style.color = '#80ff80';
-        messageDiv.textContent = "Inscription réussie ! Redirection...";
-
-        setTimeout(() => {
-          window.location.href = 'panneaux.html';
-        }, 1500);
-      } catch (error) {
-        messageDiv.style.color = '#ff8080';
-        messageDiv.textContent = error.message;
-      }
-    });
-  </script>
-
-</body>
-</html>
+    // Fonction pour mettre à jour l'affichage des miniatures
+    function
