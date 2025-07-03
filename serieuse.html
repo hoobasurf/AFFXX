@@ -1,20 +1,17 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <title>Relation Sérieuse - AFFINIX</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <title>💖 Relation Sérieuse - AFFINIX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
-
   <style>
-    html, body {
+    body {
       margin: 0;
       padding: 0;
-      height: 100%;
       font-family: 'Orbitron', sans-serif;
-      background: url('img/fond-serieuse.jpg') no-repeat center center fixed;
+      background: url('img/fond-serieuse-final.jpg') no-repeat center center fixed;
       background-size: cover;
-      overflow: hidden;
       color: white;
     }
 
@@ -25,64 +22,85 @@
       height: 100px;
       background: url('img/guirlande-neon.png') repeat-x top;
       pointer-events: none;
-      z-index: 2;
+      z-index: 1;
     }
 
-    .container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      position: relative;
-    }
-
-    .card {
-      position: absolute;
-      width: 300px;
-      max-width: 90%;
+    .panel-wrapper {
+      max-width: 420px;
+      margin: 80px auto 40px;
       padding: 20px;
-      backdrop-filter: blur(12px);
-      background: rgba(255, 255, 255, 0.05);
-      border: 2px solid #ff6dfb;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
       border-radius: 20px;
-      box-shadow: 0 0 20px #ff6dfb;
-      text-align: center;
-      transition: transform 0.4s ease, opacity 0.4s ease;
-    }
-
-    .card img {
-      width: 100%;
-      height: 280px;
-      object-fit: cover;
-      border-radius: 12px;
-      margin-bottom: 10px;
       border: 2px solid #ff6dfb;
+      box-shadow: 0 0 20px #ff6dfb;
     }
 
-    .card h2 {
-      margin: 10px 0 5px;
+    h1 {
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 25px;
       color: #ffbaff;
-      font-size: 20px;
+      text-shadow: 0 0 8px #ff6dfb;
     }
 
-    .card p {
+    .profile {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 20px;
+      background: rgba(255,255,255,0.05);
+      padding: 12px;
+      border-radius: 15px;
+      border: 1px solid #ffffff44;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .profile:hover {
+      background: rgba(255,255,255,0.08);
+    }
+
+    .profile img {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid #ffbaff;
+    }
+
+    .profile-info {
+      flex: 1;
+    }
+
+    .profile-info h2 {
+      margin: 0;
+      font-size: 18px;
+      color: #fff;
+    }
+
+    .profile-info p {
+      margin: 2px 0;
       font-size: 14px;
-      line-height: 1.5;
-      color: #ffd2f2;
+      color: #ddd;
     }
 
-    .swipe-up {
-      position: absolute;
-      bottom: 40px;
-      font-size: 14px;
-      opacity: 0.6;
-      animation: pulse 2s infinite;
+    .return-btn {
+      display: block;
+      text-align: center;
+      margin: 25px auto 10px;
+      font-size: 16px;
+      text-decoration: none;
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid #ff66c4;
+      padding: 10px 20px;
+      border-radius: 12px;
+      width: fit-content;
     }
 
-    @keyframes pulse {
-      0% { transform: translateY(0); opacity: 0.5; }
-      50% { transform: translateY(-8px); opacity: 1; }
-      100% { transform: translateY(0); opacity: 0.5; }
+    .return-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
     }
   </style>
 </head>
@@ -90,97 +108,47 @@
 
   <div class="guirlande"></div>
 
-  <div class="container" id="profileContainer">
-    <div class="card">
-      <img src="img/photo1.jpg" alt="Marie">
-      <h2>Marie, 28 ans</h2>
-      <p>Paris — Aime les balades au clair de lune et les romans d’amour futuristes.</p>
+  <div class="panel-wrapper">
+    <h1>💖 Relation Sérieuse</h1>
+
+    <div class="profile" onclick="window.location.href='profil.html?id=ameliz'">
+      <img src="img/profil1.jpg" alt="Améliz">
+      <div class="profile-info">
+        <h2>Améliz</h2>
+        <p>31 ans, Paris</p>
+        <p>Salles : 💖 🎉</p>
+      </div>
     </div>
 
-    <div class="card">
-      <img src="img/photo2.jpg" alt="Alex">
-      <h2>Alex, 32 ans</h2>
-      <p>Lyon — Passionné de cuisine et de randonnées nocturnes. 💖</p>
+    <div class="profile" onclick="window.location.href='profil.html?id=jade'">
+      <img src="img/profil2.jpg" alt="Jade">
+      <div class="profile-info">
+        <h2>Jade</h2>
+        <p>26 ans, Lyon</p>
+        <p>Salles : 💖 💬</p>
+      </div>
     </div>
 
-    <div class="card">
-      <img src="img/photo3.jpg" alt="Léna">
-      <h2>Léna, 25 ans</h2>
-      <p>Marseille — Artiste rêveuse, cherche une connexion d’âme. ✨</p>
+    <div class="profile" onclick="window.location.href='profil.html?id=laura'">
+      <img src="img/profil3.jpg" alt="Laura">
+      <div class="profile-info">
+        <h2>Laura</h2>
+        <p>29 ans, Marseille</p>
+        <p>Salles : 💖 👨‍👩‍👧</p>
+      </div>
     </div>
 
-    <div class="swipe-up">⬆ Swipe pour découvrir</div>
+    <div class="profile" onclick="window.location.href='profil.html?id=chloe'">
+      <img src="img/profil4.jpg" alt="Chloé">
+      <div class="profile-info">
+        <h2>Chloé</h2>
+        <p>34 ans, Toulouse</p>
+        <p>Salles : 💖 💬 🎉</p>
+      </div>
+    </div>
+
+    <a href="panneaux.html" class="return-btn">⬅️ Retour à la ville</a>
   </div>
-
-  <script>
-    const container = document.getElementById("profileContainer");
-    const cards = Array.from(container.getElementsByClassName("card"));
-
-    let current = 0;
-    showCard(current);
-
-    function showCard(index) {
-      cards.forEach((card, i) => {
-        card.style.transform = `translateY(${(i - index) * 100}%)`;
-        card.style.opacity = i < index ? 0 : 1;
-        card.style.zIndex = cards.length - i;
-      });
-    }
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowUp" || e.key === "PageUp") {
-        nextCard();
-      }
-    });
-
-    container.addEventListener("touchstart", handleTouchStart, false);
-    container.addEventListener("touchmove", handleTouchMove, false);
-
-    let yStart = null;
-
-    function handleTouchStart(evt) {
-      const firstTouch = evt.touches[0];
-      yStart = firstTouch.clientY;
-    }
-
-    function handleTouchMove(evt) {
-      if (!yStart) return;
-      let yEnd = evt.touches[0].clientY;
-      let yDiff = yStart - yEnd;
-      if (yDiff > 50) {
-        nextCard();
-        yStart = null;
-      }
-    }
-
-    function nextCard() {
-      if (current < cards.length - 1) {
-        current++;
-        showCard(current);
-      }
-    }
-  </script>
-
-  <!-- 🔐 Firebase auth -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
-      authDomain: "affinix-3a930.firebaseapp.com",
-      projectId: "affinix-3a930"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        window.location.href = "login.html";
-      }
-    });
-  </script>
 
 </body>
 </html>
