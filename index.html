@@ -28,16 +28,35 @@
       z-index: 1;
     }
 
-    .welcome-text {
+    .content {
       position: absolute;
-      top: 35%;
+      top: 40%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 28px;
-      color: #ffbaff;
-      text-shadow: 0 0 12px #ffbaff;
       text-align: center;
       z-index: 2;
+    }
+
+    .logo {
+      width: 90px;
+      height: 90px;
+      margin: 0 auto 15px;
+      background: url('img/logo-af.png') no-repeat center center;
+      background-size: contain;
+      filter: drop-shadow(0 0 10px #ffbaff);
+    }
+
+    .title {
+      font-size: 28px;
+      color: #ffbaff;
+      text-shadow: 0 0 10px #ffbaff;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      color: #ffe6fa;
+      text-shadow: 0 0 5px #ffbaff;
     }
 
     .btn-neon {
@@ -74,7 +93,11 @@
 <body>
   <div class="guirlande"></div>
 
-  <div class="welcome-text">Bienvenue sur Affinix</div>
+  <div class="content">
+    <div class="logo"></div>
+    <div class="title">Bienvenue sur Affinix</div>
+    <div class="subtitle">Un monde magique pour créer des connexions sincères</div>
+  </div>
 
   <button class="btn-neon btn-connexion" onclick="location.href='connexion.html'">Connexion</button>
   <button class="btn-neon btn-inscription" onclick="location.href='inscription.html'">Inscription</button>
