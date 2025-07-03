@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Inscription - AFFINIX</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
@@ -202,11 +202,10 @@
       </div>
 
       <label for="departement">Ton département :</label>
-      <input type="text" id="departement" name="departement" placeholder="Ex : 75 ou Paris" required>
+      <input type="text" id="departement" name="departement" required>
 
       <label for="rayon">Rayon de recherche (km) :</label>
-      <input type="range" id="rayon" name="rayon" min="5" max="100" value="50" step="1"
-        oninput="document.getElementById('rayonValue').innerText = this.value + ' km';">
+      <input type="range" id="rayon" name="rayon" min="5" max="100" value="50" step="1" oninput="document.getElementById('rayonValue').innerText = this.value + ' km';">
       <div class="rayon-output">🌐 Rayon actuel : <span id="rayonValue">50 km</span></div>
 
       <label for="photos">Ajoute jusqu'à 5 photos :</label>
@@ -341,6 +340,11 @@
           window.location.href = 'panneaux.html';
         }, 1500);
       } catch (error) {
+        if (error.code === "auth/email-already-in-use") {
+          messageDiv.textContent = "Ce compte existe déjà. Utilise la page de connexion.";
+          return;
+        }
+
         messageDiv.style.color = '#ff8080';
         messageDiv.textContent = error.message;
       }
