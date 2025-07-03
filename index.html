@@ -5,6 +5,7 @@
   <title>Bienvenue sur Affinix</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
+
   <style>
     html, body {
       margin: 0;
@@ -13,10 +14,6 @@
       background: url('img/fond-inscription-tokyo.jpg') no-repeat center center fixed;
       background-size: cover;
       height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
       overflow: hidden;
       color: white;
     }
@@ -32,62 +29,54 @@
     }
 
     .welcome-text {
+      position: absolute;
+      top: 35%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       font-size: 28px;
-      margin-bottom: 30px;
       color: #ffbaff;
       text-shadow: 0 0 12px #ffbaff;
+      text-align: center;
       z-index: 2;
     }
 
-    .button-group {
-      display: flex;
-      gap: 20px;
-      z-index: 2;
-    }
-
-    .enter-button {
-      animation: neonBlink 2s ease-in-out infinite;
-      border-radius: 30px;
-      padding: 15px 40px;
-      font-size: 1.3rem;
+    .btn-neon {
+      position: fixed;
+      bottom: 20px;
+      padding: 12px 25px;
+      font-size: 14px;
       border: none;
-      cursor: pointer;
+      border-radius: 30px;
       background-color: #1a001f;
       color: #ff4fc4;
       box-shadow: 0 0 5px #ff4fc4,
                   0 0 10px #c700d6,
                   0 0 20px #ff4fc4;
+      cursor: pointer;
       transition: transform 0.3s ease;
+      z-index: 3;
     }
 
-    .enter-button:hover {
+    .btn-neon:hover {
       transform: scale(1.05);
       background-color: #2a002f;
     }
 
-    @keyframes neonBlink {
-      0%, 100% {
-        box-shadow:
-          0 0 5px #ff4fc4,
-          0 0 10px #c700d6,
-          0 0 20px #ff4fc4;
-      }
-      50% {
-        box-shadow:
-          0 0 10px #c700d6,
-          0 0 20px #ff4fc4,
-          0 0 30px #c700d6;
-      }
+    .btn-connexion {
+      left: 20px;
+    }
+
+    .btn-inscription {
+      right: 20px;
     }
   </style>
 </head>
 <body>
   <div class="guirlande"></div>
+
   <div class="welcome-text">Bienvenue sur Affinix</div>
 
-  <div class="button-group">
-    <button class="enter-button" onclick="window.location.href='connexion.html'">🔐 Connexion</button>
-    <button class="enter-button" onclick="window.location.href='inscription.html'">📝 Inscription</button>
-  </div>
+  <button class="btn-neon btn-connexion" onclick="location.href='connexion.html'">Connexion</button>
+  <button class="btn-neon btn-inscription" onclick="location.href='inscription.html'">Inscription</button>
 </body>
 </html>
