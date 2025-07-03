@@ -68,8 +68,7 @@
     input[type="email"],
     input[type="password"],
     textarea,
-    input[type="range"],
-    input[type="file"] {
+    input[type="range"] {
       width: 100%;
       padding: 10px;
       border-radius: 8px;
@@ -104,19 +103,18 @@
       accent-color: #ff6dfb;
     }
 
-    #preview {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
+    .remember {
       margin-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
     }
 
-    #preview img {
-      width: 70px;
-      height: 70px;
-      object-fit: cover;
-      border-radius: 8px;
-      border: 2px solid #ff6dfb;
+    .remember input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: #ff6dfb;
     }
 
     button {
@@ -143,9 +141,41 @@
       color: #ffbaff;
       text-align: center;
     }
+
+    #photoPreview img {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 2px solid #ffbaff;
+    }
+
+    .photo-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    .delete-photo {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: #ff6dfb;
+      color: #000;
+      font-weight: bold;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      text-align: center;
+      cursor: pointer;
+      line-height: 20px;
+      font-size: 14px;
+      box-shadow: 0 0 4px #ffbaff;
+    }
   </style>
 </head>
+
 <body>
+
   <div class="guirlande"></div>
 
   <div class="inscription-wrapper">
@@ -163,10 +193,6 @@
       <label for="password">Mot de passe :</label>
       <input type="password" id="password" name="password" required>
 
-      <label>Ajoute entre 1 et 5 photos :</label>
-      <input type="file" id="photos" name="photos" accept="image/*" multiple required />
-      <div id="preview"></div>
-
       <label>Salles choisies :</label>
       <div class="checkbox-group">
         <label><input type="checkbox" name="salles" value="relation-serieuse"> 💖 Relation sérieuse</label>
@@ -182,6 +208,15 @@
       <input type="range" id="rayon" name="rayon" min="5" max="100" value="50" step="1"
         oninput="document.getElementById('rayonValue').innerText = this.value + ' km';">
       <div class="rayon-output">🌐 Rayon actuel : <span id="rayonValue">50 km</span></div>
+
+      <label for="photos">Ajoute jusqu'à 5 photos :</label>
+      <input type="file" id="photos" name="photos" accept="image/*" multiple required>
+      <div id="photoPreview" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
+
+      <div class="remember">
+        <input type="checkbox" id="remember" name="remember">
+        <label for="remember">Se souvenir de moi</label>
+      </div>
 
       <button type="submit">Valider mon inscription</button>
     </form>
@@ -213,36 +248,45 @@
     const form = document.getElementById('inscriptionForm');
     const messageDiv = document.getElementById('message');
     const photoInput = document.getElementById('photos');
-    const preview = document.getElementById('preview');
+    const preview = document.getElementById('photoPreview');
+    let selectedFiles = [];
 
-    photoInput.addEventListener('change', () => {
+    photoInput.addEventListener('change', (e) => {
+      const files = Array.from(e.target.files);
+      selectedFiles = [...selectedFiles, ...files].slice(0, 5);
+      renderPreviews();
+    });
+
+    function renderPreviews() {
       preview.innerHTML = '';
-      const files = photoInput.files;
-      if (files.length > 5) {
-        alert("Tu peux ajouter jusqu'à 5 photos maximum.");
-        photoInput.value = '';
-        return;
-      }
-      for (let i = 0; i < files.length; i++) {
+      selectedFiles.forEach((file, index) => {
         const reader = new FileReader();
-        reader.onload = (e) => {
+        reader.onload = function (e) {
+          const container = document.createElement('div');
+          container.classList.add('photo-container');
           const img = document.createElement('img');
           img.src = e.target.result;
-          preview.appendChild(img);
+
+          const del = document.createElement('span');
+          del.textContent = '×';
+          del.classList.add('delete-photo');
+          del.onclick = () => {
+            selectedFiles.splice(index, 1);
+            renderPreviews();
+          };
+
+          container.appendChild(img);
+          container.appendChild(del);
+          preview.appendChild(container);
         };
-        reader.readAsDataURL(files[i]);
-      }
-    });
+        reader.readAsDataURL(file);
+      });
+    }
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       messageDiv.textContent = '';
-
-      const files = photoInput.files;
-      if (files.length === 0) {
-        messageDiv.textContent = "Merci d'ajouter au moins 1 photo.";
-        return;
-      }
+      messageDiv.style.color = '#ffbaff';
 
       const prenom = form.prenom.value.trim();
       const description = form.description.value.trim();
@@ -251,9 +295,15 @@
       const departement = form.departement.value.trim();
       const rayon = form.rayon.value;
       const salles = Array.from(form.querySelectorAll('input[name="salles"]:checked')).map(cb => cb.value);
+      const remember = form.remember.checked;
 
       if (salles.length === 0) {
         messageDiv.textContent = "Merci de choisir au moins une salle.";
+        return;
+      }
+
+      if (selectedFiles.length === 0) {
+        messageDiv.textContent = "Ajoute au moins une photo pour valider l'inscription.";
         return;
       }
 
@@ -262,11 +312,12 @@
         const uid = userCredential.user.uid;
 
         const photoUrls = [];
-        for (let i = 0; i < files.length; i++) {
-          const storageRef = storage.ref().child(`users/${uid}/photo${i + 1}.jpg`);
-          await storageRef.put(files[i]);
-          const downloadURL = await storageRef.getDownloadURL();
-          photoUrls.push(downloadURL);
+        for (let i = 0; i < selectedFiles.length; i++) {
+          const file = selectedFiles[i];
+          const storageRef = storage.ref().child(`users/${uid}/photo${i + 1}`);
+          await storageRef.put(file);
+          const url = await storageRef.getDownloadURL();
+          photoUrls.push(url);
         }
 
         await db.collection('users').doc(uid).set({
@@ -276,12 +327,16 @@
           departement,
           rayon,
           salles,
+          remember,
           photos: photoUrls
         });
 
+        if (remember) {
+          localStorage.setItem("rememberUser", "true");
+        }
+
         messageDiv.style.color = '#80ff80';
         messageDiv.textContent = "Inscription réussie ! Redirection...";
-
         setTimeout(() => {
           window.location.href = 'panneaux.html';
         }, 1500);
@@ -291,5 +346,6 @@
       }
     });
   </script>
+
 </body>
 </html>
