@@ -4,119 +4,90 @@
   <meta charset="UTF-8" />
   <title>Bienvenue sur Affinix</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="css/styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
   <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: url('img/fond-inscription-tokyo.jpg') no-repeat center center fixed;
+      background-size: cover;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      overflow: hidden;
+      color: white;
+    }
+
+    .guirlande {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      height: 100px;
+      background: url('img/guirlande-neon.png') repeat-x top;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .welcome-text {
+      font-size: 28px;
+      margin-bottom: 30px;
+      color: #ffbaff;
+      text-shadow: 0 0 12px #ffbaff;
+      z-index: 2;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 20px;
+      z-index: 2;
+    }
+
+    .enter-button {
+      animation: neonBlink 2s ease-in-out infinite;
+      border-radius: 30px;
+      padding: 15px 40px;
+      font-size: 1.3rem;
+      border: none;
+      cursor: pointer;
+      background-color: #1a001f;
+      color: #ff4fc4;
+      box-shadow: 0 0 5px #ff4fc4,
+                  0 0 10px #c700d6,
+                  0 0 20px #ff4fc4;
+      transition: transform 0.3s ease;
+    }
+
+    .enter-button:hover {
+      transform: scale(1.05);
+      background-color: #2a002f;
+    }
+
     @keyframes neonBlink {
       0%, 100% {
         box-shadow:
           0 0 5px #ff4fc4,
           0 0 10px #c700d6,
           0 0 20px #ff4fc4;
-        color: #ff4fc4;
-        background-color: #1a001f;
       }
       50% {
         box-shadow:
           0 0 10px #c700d6,
           0 0 20px #ff4fc4,
           0 0 30px #c700d6;
-        color: #c700d6;
-        background-color: #2a002f;
       }
-    }
-
-    .enter-button {
-      animation: neonBlink 2s ease-in-out infinite;
-      border-radius: 30px;
-      padding: 15px 50px;
-      font-size: 1.5rem;
-      border: none;
-      cursor: pointer;
-      background-color: #1a001f;
-      color: #ff4fc4;
-      transition: transform 0.3s ease;
-      margin-bottom: 20px;
-    }
-
-    .enter-button:hover {
-      transform: scale(1.05);
-    }
-
-    .reload-button {
-      display: none;
-      margin-top: 10px;
-      padding: 10px 20px;
-      border-radius: 20px;
-      font-size: 1rem;
-      background-color: #44004d;
-      color: #fff;
-      border: 1px solid #c700d6;
-      cursor: pointer;
-    }
-
-    .reload-button:hover {
-      background-color: #6a0073;
     }
   </style>
 </head>
-<body class="home">
-
+<body>
+  <div class="guirlande"></div>
   <div class="welcome-text">Bienvenue sur Affinix</div>
-  <button class="enter-button" disabled>Chargement...</button>
-  <button class="reload-button" onclick="location.reload()">🔁 Recharger la page</button>
 
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-  <script src="email.js"></script>
-
-  <!-- Firebase + logique bouton -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
-
-    const firebaseConfig = {
-  apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
-  authDomain: "affinix-3a930.firebaseapp.com",
-  databaseURL: "https://affinix-3a930-default-rtdb.firebaseio.com",
-  projectId: "affinix-3a930",
-  storageBucket: "affinix-3a930.appspot.com",
-  messagingSenderId: "498829285833",
-  appId: "1:498829285833:web:344dacf5b6bcc818167018"
-};
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    const btn = document.querySelector(".enter-button");
-    const reloadBtn = document.querySelector(".reload-button");
-
-    btn.disabled = true;
-    btn.textContent = "Chargement...";
-
-    let resolved = false;
-
-    onAuthStateChanged(auth, user => {
-      resolved = true;
-      btn.disabled = false;
-      if (user) {
-        btn.textContent = "Entrer";
-        btn.onclick = () => {
-          window.location.href = "connexion.html"; // ← redirection modifiée ici
-        };
-      } else {
-        btn.textContent = "S'inscrire / Se connecter";
-        btn.onclick = () => {
-          window.location.href = "inscription.html";
-        };
-      }
-    });
-
-    setTimeout(() => {
-      if (!resolved) {
-        reloadBtn.style.display = "inline-block";
-      }
-    }, 5000);
-  </script>
-
+  <div class="button-group">
+    <button class="enter-button" onclick="window.location.href='connexion.html'">🔐 Connexion</button>
+    <button class="enter-button" onclick="window.location.href='inscription.html'">📝 Inscription</button>
+  </div>
 </body>
 </html>
