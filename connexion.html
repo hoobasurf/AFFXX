@@ -23,7 +23,7 @@
       background: url('img/fond-inscription-tokyo.jpg') no-repeat center center fixed;
       background-size: cover;
       min-height: 100vh;
-      display: flex; /* ✅ Correction : centré verticalement */
+      display: flex;
       justify-content: center;
       align-items: center;
       padding: 20px;
@@ -98,6 +98,20 @@
       font-size: 14px;
       text-align: center;
     }
+
+    .remember {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+    }
+
+    .remember input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: #ff6dfb;
+    }
   </style>
 </head>
 
@@ -112,6 +126,11 @@
 
       <label for="password">Mot de passe :</label>
       <input type="password" id="password" required>
+
+      <div class="remember">
+        <input type="checkbox" id="remember" name="remember">
+        <label for="remember">Se souvenir de moi</label>
+      </div>
 
       <button type="submit">Se connecter</button>
       <div id="message"></div>
@@ -139,14 +158,23 @@
       e.preventDefault();
       const email = form.email.value.trim();
       const password = form.password.value;
+      const remember = form.remember.checked;
 
       messageDiv.style.color = '#ffbaff';
       messageDiv.textContent = '';
 
       try {
         await signInWithEmailAndPassword(auth, email, password);
+
+        if (remember) {
+          localStorage.setItem("rememberUser", "true");
+        } else {
+          localStorage.removeItem("rememberUser");
+        }
+
         messageDiv.style.color = '#80ff80';
         messageDiv.textContent = "Connexion réussie !";
+
         setTimeout(() => {
           window.location.href = 'panneaux.html';
         }, 1000);
