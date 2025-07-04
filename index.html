@@ -1,116 +1,112 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Bienvenue sur Affinix</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     html, body {
       margin: 0;
       padding: 0;
-      font-family: 'Orbitron', sans-serif;
-      background: url('img/fond-inscription-tokyo.jpg') no-repeat center center fixed;
-      background-size: cover;
-      height: 100vh;
       overflow: hidden;
-      color: white;
+      height: 100%;
+      font-family: 'Orbitron', sans-serif;
     }
 
-    .guirlande {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      height: 100px;
-      background: url('img/guirlande-neon.png') repeat-x top;
-      pointer-events: none;
-      z-index: 1;
+    body {
+      background: url('img/fond-accueil.jpg') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+      color: #fff;
     }
 
-    .content {
+    .overlay {
       position: absolute;
-      top: 40%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      top: 20%;
+      width: 100%;
       text-align: center;
-      z-index: 2;
+      padding: 0 20px;
     }
 
-    .logo {
-      width: 90px;
-      height: 90px;
-      margin: 0 auto 15px;
-      background: url('img/logo-af.png') no-repeat center center;
-      background-size: contain;
-      filter: drop-shadow(0 0 10px #ffbaff);
+    .overlay h1 {
+      font-size: 2.2rem;
+      margin: 0;
+      text-shadow: 0 0 8px #ff4fc4, 0 0 16px #c700d6;
+      color: #ffffff;
     }
 
-    .title {
-      font-size: 30px;
-      color: #ff6dfb;
-      text-shadow: 0 0 10px #ff6dfb, 0 0 20px #ff6dfb;
-      margin-bottom: 10px;
-    }
-
-    .subtitle {
-      font-size: 16px;
-      color: #ffe6fa;
-      text-shadow: 0 0 5px #ffbaff;
-      margin-bottom: 15px;
-    }
-
-    .univers {
-      font-size: 16px;
+    .overlay p {
+      margin-top: 20px;
+      font-size: 1.1rem;
       font-weight: bold;
-      background: linear-gradient(90deg, #ff6dfb, #a86eff);
+      background: linear-gradient(90deg, #ff4fc4, #b18bff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 6px #ff6dfb;
+      text-shadow: 0 0 4px #ff00c3;
     }
 
-    .btn-neon {
-      position: fixed;
-      bottom: 20px;
-      padding: 12px 25px;
-      font-size: 14px;
+    .buttons {
+      position: absolute;
+      bottom: 30px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 30px;
+    }
+
+    .buttons a {
+      background: #1a001f;
+      color: #ff4fc4;
+      padding: 12px 28px;
       border: none;
       border-radius: 30px;
-      background-color: #1a001f;
-      color: #ff4fc4;
-      box-shadow: 0 0 5px #ff4fc4,
-                  0 0 10px #c700d6,
-                  0 0 20px #ff4fc4;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-      z-index: 3;
+      font-size: 1rem;
+      text-decoration: none;
+      animation: neonBlink 2s ease-in-out infinite;
+      box-shadow: 0 0 10px #ff4fc4;
+      transition: transform 0.3s;
     }
 
-    .btn-neon:hover {
+    .buttons a:hover {
       transform: scale(1.05);
-      background-color: #2a002f;
     }
 
-    .btn-connexion {
-      left: 20px;
+    @keyframes neonBlink {
+      0%, 100% {
+        box-shadow: 0 0 8px #ff4fc4, 0 0 16px #c700d6;
+      }
+      50% {
+        box-shadow: 0 0 12px #c700d6, 0 0 24px #ff4fc4;
+      }
     }
 
-    .btn-inscription {
-      right: 20px;
+    @media (max-width: 500px) {
+      .overlay h1 {
+        font-size: 1.6rem;
+      }
+
+      .overlay p {
+        font-size: 1rem;
+      }
+
+      .buttons a {
+        font-size: 0.9rem;
+        padding: 10px 22px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="guirlande"></div>
 
-  <div class="content">
-    <div class="logo"></div>
-    <div class="title">Bienvenue sur Affinix</div>
-    <div class="subtitle">Un monde magique pour créer des connexions sincères</div>
-    <div class="univers">Prépare-toi à une connexion hors du commun… dans l’Univers.</div>
+  <div class="overlay">
+    <h1><img src="img/logo-affinix.png" alt="AFFINIX" style="height: 50px;"></h1>
+    <p>Connecte-toi et prépare-toi à une rencontre magique dans l’univers Affinix…</p>
   </div>
 
-  <button class="btn-neon btn-connexion" onclick="location.href='connexion.html'">Connexion</button>
-  <button class="btn-neon btn-inscription" onclick="location.href='inscription.html'">Inscription</button>
+  <div class="buttons">
+    <a href="connexion.html">Connexion</a>
+    <a href="inscription.html">Inscription</a>
+  </div>
+
 </body>
 </html>
