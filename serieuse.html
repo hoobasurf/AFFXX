@@ -4,15 +4,18 @@
   <meta charset="UTF-8">
   <title>💖 Relation Sérieuse - AFFINIX</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+
   <style>
     body {
       margin: 0;
       padding: 0;
       font-family: 'Orbitron', sans-serif;
-      background: url('img/fond-serieuse-final.jpg') no-repeat center center fixed;
+      background: url('img/fond-serieuse.jpg') no-repeat center center fixed;
       background-size: cover;
       color: white;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
 
     .guirlande {
@@ -25,130 +28,63 @@
       z-index: 1;
     }
 
-    .panel-wrapper {
-      max-width: 420px;
-      margin: 80px auto 40px;
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(4px);
+      min-height: 100vh;
       padding: 20px;
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      border: 2px solid #ff6dfb;
-      box-shadow: 0 0 20px #ff6dfb;
+      box-sizing: border-box;
+      z-index: 2;
+      position: relative;
     }
 
     h1 {
       text-align: center;
-      font-size: 24px;
-      margin-bottom: 25px;
-      color: #ffbaff;
-      text-shadow: 0 0 8px #ff6dfb;
+      font-size: 26px;
+      color: #ff66c4;
+      text-shadow: 0 0 8px #ff66c4;
+      margin-top: 100px;
     }
 
-    .profile {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      margin-bottom: 20px;
-      background: rgba(255,255,255,0.05);
-      padding: 12px;
-      border-radius: 15px;
-      border: 1px solid #ffffff44;
-      transition: 0.3s;
-      cursor: pointer;
-    }
-
-    .profile:hover {
-      background: rgba(255,255,255,0.08);
-    }
-
-    .profile img {
-      width: 70px;
-      height: 70px;
-      object-fit: cover;
-      border-radius: 50%;
-      border: 2px solid #ffbaff;
-    }
-
-    .profile-info {
-      flex: 1;
-    }
-
-    .profile-info h2 {
-      margin: 0;
-      font-size: 18px;
-      color: #fff;
-    }
-
-    .profile-info p {
-      margin: 2px 0;
-      font-size: 14px;
+    .empty-message {
+      text-align: center;
+      font-size: 16px;
       color: #ddd;
+      margin-top: 40px;
     }
 
     .return-btn {
-      display: block;
-      text-align: center;
-      margin: 25px auto 10px;
-      font-size: 16px;
-      text-decoration: none;
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      padding: 12px 18px;
+      background: rgba(255, 102, 196, 0.8);
+      border-radius: 30px;
       color: white;
-      background: rgba(255, 255, 255, 0.1);
-      border: 2px solid #ff66c4;
-      padding: 10px 20px;
-      border-radius: 12px;
-      width: fit-content;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      z-index: 3;
+      box-shadow: 0 0 8px #ff66c4;
+      transition: 0.3s;
     }
 
     .return-btn:hover {
-      background: rgba(255, 255, 255, 0.2);
+      background: #ff1493;
     }
   </style>
 </head>
 <body>
-
   <div class="guirlande"></div>
 
-  <div class="panel-wrapper">
-    <h1>💖 Relation Sérieuse</h1>
-
-    <div class="profile" onclick="window.location.href='profil.html?id=ameliz'">
-      <img src="img/profil1.jpg" alt="Améliz">
-      <div class="profile-info">
-        <h2>Améliz</h2>
-        <p>31 ans, Paris</p>
-        <p>Salles : 💖 🎉</p>
-      </div>
+  <div class="overlay">
+    <h1>💖 Salle Relation Sérieuse</h1>
+    <div class="empty-message">
+      Aucun profil n’est encore visible pour cette salle.<br>Essaie un peu plus tard 💫
     </div>
-
-    <div class="profile" onclick="window.location.href='profil.html?id=jade'">
-      <img src="img/profil2.jpg" alt="Jade">
-      <div class="profile-info">
-        <h2>Jade</h2>
-        <p>26 ans, Lyon</p>
-        <p>Salles : 💖 💬</p>
-      </div>
-    </div>
-
-    <div class="profile" onclick="window.location.href='profil.html?id=laura'">
-      <img src="img/profil3.jpg" alt="Laura">
-      <div class="profile-info">
-        <h2>Laura</h2>
-        <p>29 ans, Marseille</p>
-        <p>Salles : 💖 👨‍👩‍👧</p>
-      </div>
-    </div>
-
-    <div class="profile" onclick="window.location.href='profil.html?id=chloe'">
-      <img src="img/profil4.jpg" alt="Chloé">
-      <div class="profile-info">
-        <h2>Chloé</h2>
-        <p>34 ans, Toulouse</p>
-        <p>Salles : 💖 💬 🎉</p>
-      </div>
-    </div>
-
-    <a href="panneaux.html" class="return-btn">⬅️ Retour à la ville</a>
   </div>
 
+  <a href="panneaux.html" class="return-btn">⬅️ Retour à la ville</a>
 </body>
 </html>
