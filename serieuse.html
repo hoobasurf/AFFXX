@@ -4,8 +4,7 @@
   <meta charset="UTF-8">
   <title>💖 Relation Sérieuse - AFFINIX</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
   <style>
     body {
       margin: 0;
@@ -14,77 +13,180 @@
       background: url('img/fond-serieuse.jpg') no-repeat center center fixed;
       background-size: cover;
       color: white;
-      min-height: 100vh;
-      overflow-x: hidden;
     }
 
-    .guirlande {
-      position: fixed;
-      top: 0;
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 60px 20px 120px;
+    }
+
+    .profile-card {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 15px;
+      padding: 15px;
+      width: 260px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+      border: 2px solid;
+    }
+
+    .profile-card.fille { border-color: #ff69b4; }
+    .profile-card.garcon { border-color: #00bfff; }
+
+    .profile-card img {
       width: 100%;
-      height: 100px;
-      background: url('img/guirlande-neon.png') repeat-x top;
-      pointer-events: none;
-      z-index: 1;
+      height: 230px;
+      object-fit: cover;
+      border-radius: 12px;
     }
 
-    .overlay {
-      background-color: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(4px);
-      min-height: 100vh;
-      padding: 20px;
-      box-sizing: border-box;
-      z-index: 2;
-      position: relative;
+    .info {
+      margin-top: 10px;
     }
 
-    h1 {
-      text-align: center;
-      font-size: 26px;
-      color: #ff66c4;
-      text-shadow: 0 0 8px #ff66c4;
-      margin-top: 100px;
+    .info h3 {
+      margin: 0;
+      font-size: 18px;
+      color: #fff;
     }
 
-    .empty-message {
-      text-align: center;
-      font-size: 16px;
+    .info p {
+      margin: 4px 0;
+      font-size: 14px;
       color: #ddd;
-      margin-top: 40px;
     }
 
-    .return-btn {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      padding: 12px 18px;
-      background: rgba(255, 102, 196, 0.8);
+    .btn {
+      margin-top: 12px;
+      display: inline-block;
+      padding: 8px 16px;
       border-radius: 30px;
-      color: white;
-      font-weight: bold;
-      border: none;
+      font-size: 14px;
       cursor: pointer;
-      text-decoration: none;
-      z-index: 3;
-      box-shadow: 0 0 8px #ff66c4;
+      background: #ff6dfb;
+      color: #fff;
+      border: none;
       transition: 0.3s;
     }
 
-    .return-btn:hover {
-      background: #ff1493;
+    .btn:hover {
+      background: #ffbaff;
+    }
+
+    /* Popup fiche */
+    .popup {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .popup-content {
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid #ff6dfb;
+      padding: 20px;
+      max-width: 90%;
+      border-radius: 20px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      color: #fff;
+    }
+
+    .swiper {
+      display: flex;
+      overflow-x: auto;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .swiper img {
+      height: 200px;
+      border-radius: 12px;
+    }
+
+    .close-btn {
+      background: #a86eff;
+      border: none;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .chat-btn {
+      background: #6f9dff;
+      border: none;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      margin-left: 10px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <div class="guirlande"></div>
 
-  <div class="overlay">
-    <h1>💖 Salle Relation Sérieuse</h1>
-    <div class="empty-message">
-      Aucun profil n’est encore visible pour cette salle.<br>Essaie un peu plus tard 💫
+  <div class="container">
+    <!-- Exemple fille -->
+    <div class="profile-card fille">
+      <img src="img/fille1.jpg" alt="Profil Fille">
+      <div class="info">
+        <h3>Léna, 28 ans</h3>
+        <p>📍 Paris</p>
+        <p>💖 Relation sérieuse, 💬 Amicale</p>
+        <button class="btn" onclick="openProfile('Léna', ['img/fille1.jpg', 'img/fille2.jpg'], 'Je suis douce, drôle et j’adore les balades en forêt.')">Voir profil</button>
+      </div>
+    </div>
+
+    <!-- Exemple garçon -->
+    <div class="profile-card garcon">
+      <img src="img/garcon1.jpg" alt="Profil Garçon">
+      <div class="info">
+        <h3>Alex, 30 ans</h3>
+        <p>📍 Lyon</p>
+        <p>💖 Relation sérieuse</p>
+        <button class="btn" onclick="openProfile('Alex', ['img/garcon1.jpg', 'img/garcon2.jpg'], 'Passionné de musique et prêt pour une belle histoire.')">Voir profil</button>
+      </div>
+    </div>
+
+    <!-- Ajoute d'autres profils ici si tu veux -->
+  </div>
+
+  <!-- POPUP -->
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <div class="swiper" id="swiper"></div>
+      <p id="desc"></p>
+      <button class="close-btn" onclick="closePopup()">⬅ Retour</button>
+      <button class="chat-btn">💬 Chat</button>
     </div>
   </div>
 
-  <a href="panneaux.html" class="return-btn">⬅️ Retour à la ville</a>
+  <script>
+    function openProfile(name, images, description) {
+      const swiper = document.getElementById('swiper');
+      const desc = document.getElementById('desc');
+      swiper.innerHTML = '';
+      images.forEach(src => {
+        const img = document.createElement('img');
+        img.src = src;
+        swiper.appendChild(img);
+      });
+      desc.textContent = description;
+      document.getElementById('popup').style.display = 'flex';
+    }
+
+    function closePopup() {
+      document.getElementById('popup').style.display = 'none';
+    }
+  </script>
+
 </body>
 </html>
