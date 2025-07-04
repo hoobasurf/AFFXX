@@ -43,11 +43,12 @@
 
     .buttons {
       position: absolute;
-      bottom: 120px; /* ⬅⬅⬅ Plus haut qu’avant (était 60px) */
+      bottom: 120px;
       width: 100%;
       display: flex;
       justify-content: space-between;
-      padding: 0 30px;
+      padding: 0 40px; /* ✅ augmenté ici (de 30px à 40px) */
+      box-sizing: border-box;
     }
 
     .neon-btn {
@@ -80,8 +81,8 @@
       }
 
       .buttons {
-        bottom: 140px; /* encore plus haut sur mobile */
-        padding: 0 20px;
+        bottom: 140px;
+        padding: 0 28px; /* ✅ aussi élargi ici pour mobile */
       }
     }
   </style>
