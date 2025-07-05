@@ -1,213 +1,186 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Relation Sérieuse - AFFINIX</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     body {
       margin: 0;
+      padding: 0;
+      display: flex;
       font-family: 'Orbitron', sans-serif;
-      background: url("img/fond-serieuse.jpg") no-repeat center center fixed;
+      background: url('img/fond-serieuse.jpg') no-repeat center center fixed;
       background-size: cover;
       color: white;
-    }
-
-    .title-panel {
-      text-align: center;
-      margin-top: 30px;
-      font-size: 28px;
-      color: #fff;
-      padding: 15px 30px;
-      border: 3px solid #ff66c4;
-      border-radius: 12px;
-      display: inline-block;
-      box-shadow: 0 0 16px #ff66c4;
-      text-shadow: 0 0 12px #ff66c4;
-    }
-
-    .container {
-      display: flex;
-      justify-content: space-around;
-      padding: 40px 20px;
-      flex-wrap: wrap;
+      height: 100vh;
     }
 
     .sidebar {
-      width: 260px;
-      background: rgba(0, 0, 0, 0.5);
-      border: 2px solid #ff66c4;
-      border-radius: 12px;
+      width: 35%;
+      background: rgba(0, 0, 0, 0.6);
       padding: 20px;
-      box-shadow: 0 0 12px #ff66c4;
+      overflow-y: auto;
+      backdrop-filter: blur(8px);
     }
 
-    .profile {
-      display: flex;
-      align-items: center;
+    .profile-card {
+      border: 2px solid #ff66c4;
+      border-radius: 15px;
       margin-bottom: 20px;
       padding: 10px;
       background: rgba(255, 255, 255, 0.05);
-      border-radius: 10px;
       cursor: pointer;
       transition: 0.3s;
     }
 
-    .profile:hover {
-      background: rgba(255, 255, 255, 0.15);
+    .profile-card:hover {
+      background: rgba(255, 255, 255, 0.1);
     }
 
-    .profile img {
-      width: 50px;
-      height: 50px;
-      border-radius: 10px;
+    .profile-card img {
+      width: 100%;
+      height: 180px;
       object-fit: cover;
-      margin-right: 10px;
+      border-radius: 12px;
+      margin-bottom: 8px;
     }
 
-    .profile-info {
+    .profile-card .info {
+      font-size: 14px;
+      color: #ffd6fa;
+    }
+
+    .main {
+      flex: 1;
+      padding: 30px;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(8px);
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
     }
 
-    .profile-info span {
-      font-size: 14px;
-      line-height: 1.2;
-    }
-
-    .details {
-      flex: 1;
-      margin-left: 20px;
-      background: rgba(0, 0, 0, 0.4);
-      border: 2px solid #ff66c4;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 0 20px #ff66c4;
-    }
-
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
+    .carousel {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
       margin-bottom: 20px;
     }
 
-    .gallery img {
-      width: 100%;
-      height: auto;
-      border-radius: 8px;
-      object-fit: cover;
-    }
-
-    .details h2 {
-      color: #ffbaff;
-      font-size: 20px;
-      margin-bottom: 10px;
+    .carousel img {
+      height: 160px;
+      border-radius: 10px;
+      border: 2px solid #ff66c4;
     }
 
     .description {
-      font-size: 14px;
-      line-height: 1.4;
+      font-size: 15px;
+      color: #ffbaff;
       margin-bottom: 20px;
     }
 
-    .icons {
-      font-size: 20px;
-      margin-top: 10px;
-    }
-
-    .buttons {
+    .actions {
       display: flex;
       justify-content: space-between;
     }
 
-    .buttons button {
-      padding: 12px 20px;
-      font-size: 16px;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
+    .actions button {
+      background: #ff66c4;
       color: white;
-      background-color: transparent;
-      border: 2px solid #ff66c4;
-      box-shadow: 0 0 10px #ff66c4;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 14px;
       transition: 0.3s;
     }
 
-    .buttons button:hover {
-      background: #ff66c4;
-      color: black;
-    }
-
-    @media (max-width: 900px) {
-      .container {
-        flex-direction: column;
-        align-items: center;
-      }
-      .sidebar, .details {
-        width: 90%;
-        margin-bottom: 30px;
-      }
+    .actions button:hover {
+      background: #ff94dc;
     }
   </style>
 </head>
 <body>
 
-  <div style="text-align: center;">
-    <div class="title-panel">RELATION SÉRIEUSE</div>
-  </div>
-
-  <div class="container">
-    <!-- Liste profils -->
-    <div class="sidebar">
-      <div class="profile" onclick="showProfile('Laura')">
-        <img src="img/profils/laura1.jpg" alt="Laura">
-        <div class="profile-info">
-          <span><strong>Laura</strong>, 29</span>
-          <span>Paris</span>
-          <span>💖 💬 👨‍👩‍👧</span>
-        </div>
-      </div>
-      <div class="profile" onclick="showProfile('Chloe')">
-        <img src="img/profils/chloe1.jpg" alt="Chloé">
-        <div class="profile-info">
-          <span><strong>Chloé</strong>, 25</span>
-          <span>Marseille</span>
-          <span>💖 🎉 👨‍👩‍👧</span>
-        </div>
-      </div>
-      <!-- Ajoutez d'autres profils ici -->
+  <div class="sidebar">
+    <div class="profile-card" onclick="loadProfile('1')">
+      <img src="img/profil1.jpg" alt="Profil 1" />
+      <div class="info">Elena, 28 ans – Paris 💖 💬</div>
     </div>
-
-    <!-- Fiche détaillée -->
-    <div class="details" id="detailBox">
-      <div class="gallery">
-        <img src="img/profils/laura1.jpg">
-        <img src="img/profils/laura2.jpg">
-        <img src="img/profils/laura3.jpg">
-        <img src="img/profils/laura4.jpg">
-        <img src="img/profils/laura5.jpg">
-        <img src="img/profils/laura6.jpg">
-      </div>
-
-      <h2>Laura, 29</h2>
-      <div class="description">
-        À la recherche d’une belle histoire basée sur la confiance et la complicité.
-      </div>
-
-      <div class="icons">💖 💬 👨‍👩‍👧</div>
-
-      <div class="buttons">
-        <button onclick="history.back()">← Retour</button>
-        <button onclick="alert('Chat à venir')">💬 Chat</button>
-      </div>
+    <div class="profile-card" onclick="loadProfile('2')">
+      <img src="img/profil2.jpg" alt="Profil 2" />
+      <div class="info">Jade, 31 ans – Lyon 💖 🎉</div>
+    </div>
+    <div class="profile-card" onclick="loadProfile('3')">
+      <img src="img/profil3.jpg" alt="Profil 3" />
+      <div class="info">Laura, 26 ans – Marseille 💖 💬 🎉</div>
     </div>
   </div>
+
+  <div class="main" id="detail">
+    <div>
+      <div class="carousel" id="carousel">
+        <img src="img/profil1-2.jpg" />
+        <img src="img/profil1-3.jpg" />
+        <img src="img/profil1-4.jpg" />
+      </div>
+      <div class="description" id="description">
+        Passionnée d’astronomie et de musique. J’aime les balades nocturnes et discuter de tout. 💫
+      </div>
+    </div>
+    <div class="actions">
+      <button onclick="goBack()">⬅️ Retour</button>
+      <button onclick="startChat()">💬 Chat</button>
+    </div>
+  </div>
+
+  <script>
+    function loadProfile(id) {
+      const carousels = {
+        "1": [
+          "img/profil1-2.jpg",
+          "img/profil1-3.jpg",
+          "img/profil1-4.jpg"
+        ],
+        "2": [
+          "img/profil2-2.jpg",
+          "img/profil2-3.jpg"
+        ],
+        "3": [
+          "img/profil3-2.jpg",
+          "img/profil3-3.jpg",
+          "img/profil3-4.jpg"
+        ]
+      };
+
+      const descriptions = {
+        "1": "Passionnée d’astronomie et de musique. J’aime les balades nocturnes et discuter de tout. 💫",
+        "2": "Rêveuse mais ancrée dans le réel. J’adore les romans, la pâtisserie et les couchers de soleil.",
+        "3": "Énergique et douce à la fois. Je recherche une relation vraie et pleine de complicité."
+      };
+
+      const carouselDiv = document.getElementById('carousel');
+      const descriptionDiv = document.getElementById('description');
+      carouselDiv.innerHTML = '';
+      carousels[id].forEach(src => {
+        const img = document.createElement('img');
+        img.src = src;
+        carouselDiv.appendChild(img);
+      });
+      descriptionDiv.textContent = descriptions[id];
+    }
+
+    function goBack() {
+      alert("Retour à la sélection");
+    }
+
+    function startChat() {
+      alert("Lancement du chat avec ce profil...");
+    }
+  </script>
 
 </body>
 </html>
