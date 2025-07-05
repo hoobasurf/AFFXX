@@ -56,7 +56,6 @@
     const photoDataInput = document.getElementById('photoData');
     const uploadForm = document.getElementById('uploadForm');
 
-    // Demande l'accès à la caméra
     navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
       .then(stream => {
         video.srcObject = stream;
@@ -73,7 +72,7 @@
       photo.style.display = 'block';
       canvas.style.display = 'none';
       sendBtn.style.display = 'inline-block';
-      photoDataInput.value = dataURL; // Prépare la donnée à envoyer
+      photoDataInput.value = dataURL;
     });
 
     uploadForm.addEventListener('submit', e => {
@@ -82,18 +81,21 @@
         alert("Veuillez prendre une photo avant d'envoyer.");
         return;
       }
-      // Exemple d'envoi via fetch (à adapter à ton backend)
-      fetch('/upload-selfie', {
+
+      fetch('https://us-central1-ton-projet.cloudfunctions.net/uploadSelfie', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ photo: photoDataInput.value })
       })
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error('Erreur serveur');
+        return res.json();
+      })
       .then(data => {
         alert("Photo envoyée avec succès !");
-        // Ici, tu peux rediriger ou réinitialiser le formulaire
+        photo.style.display = 'none';
+        sendBtn.style.display = 'none';
+        photoDataInput.value = '';
       })
       .catch(err => {
         alert("Erreur lors de l'envoi : " + err.message);
