@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>💖 Relation Sérieuse - AFFINIX</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>Relation Sérieuse - AFFINIX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       padding: 0;
@@ -17,176 +21,185 @@
 
     .container {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 20px;
       gap: 20px;
-      padding: 60px 20px 120px;
+      height: 100vh;
+    }
+
+    .sidebar {
+      width: 30%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid #ff6dfb;
+      border-radius: 15px;
+      padding: 20px;
+      overflow-y: auto;
     }
 
     .profile-card {
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 15px;
-      padding: 15px;
-      width: 260px;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-      border: 2px solid;
-    }
-
-    .profile-card.fille { border-color: #ff69b4; }
-    .profile-card.garcon { border-color: #00bfff; }
-
-    .profile-card img {
-      width: 100%;
-      height: 230px;
-      object-fit: cover;
-      border-radius: 12px;
-    }
-
-    .info {
-      margin-top: 10px;
-    }
-
-    .info h3 {
-      margin: 0;
-      font-size: 18px;
-      color: #fff;
-    }
-
-    .info p {
-      margin: 4px 0;
-      font-size: 14px;
-      color: #ddd;
-    }
-
-    .btn {
-      margin-top: 12px;
-      display: inline-block;
-      padding: 8px 16px;
-      border-radius: 30px;
-      font-size: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 15px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 2px solid #ff6dfb;
+      border-radius: 10px;
+      padding: 10px;
       cursor: pointer;
-      background: #ff6dfb;
-      color: #fff;
-      border: none;
       transition: 0.3s;
     }
 
-    .btn:hover {
-      background: #ffbaff;
+    .profile-card:hover {
+      background: rgba(255, 255, 255, 0.08);
     }
 
-    /* Popup fiche */
-    .popup {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.8);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
+    .profile-card img {
+      width: 70px;
+      height: 70px;
+      border-radius: 8px;
+      object-fit: cover;
     }
 
-    .popup-content {
-      background: rgba(255, 255, 255, 0.1);
-      border: 2px solid #ff6dfb;
-      padding: 20px;
-      max-width: 90%;
-      border-radius: 20px;
+    .profile-info {
       text-align: center;
-      backdrop-filter: blur(10px);
-      color: #fff;
+      margin-top: 5px;
     }
 
-    .swiper {
+    .main-profile {
+      width: 68%;
+      background: rgba(0, 0, 0, 0.5);
+      border: 2px solid #ff6dfb;
+      border-radius: 15px;
+      padding: 20px;
       display: flex;
-      overflow-x: auto;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 10px;
-      margin-bottom: 15px;
     }
 
-    .swiper img {
-      height: 200px;
-      border-radius: 12px;
+    .photo-grid img {
+      width: 100%;
+      border-radius: 10px;
+      object-fit: cover;
     }
 
-    .close-btn {
-      background: #a86eff;
-      border: none;
-      color: #fff;
-      padding: 8px 16px;
-      border-radius: 20px;
-      cursor: pointer;
+    .details {
+      margin-top: 20px;
+    }
+
+    .details h2 {
+      font-size: 22px;
+      color: #ffbaff;
+      margin-bottom: 5px;
+    }
+
+    .details p {
+      font-size: 16px;
+    }
+
+    .badges {
       margin-top: 10px;
+      font-size: 24px;
+      display: flex;
+      gap: 15px;
     }
 
-    .chat-btn {
-      background: #6f9dff;
-      border: none;
-      color: white;
-      padding: 8px 16px;
-      border-radius: 20px;
-      margin-left: 10px;
-      cursor: pointer;
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .buttons a {
+      padding: 10px 25px;
+      border-radius: 10px;
+      background: #ff6dfb;
+      color: #000;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 0 10px #ff6dfb;
+      transition: 0.3s;
+    }
+
+    .buttons a:hover {
+      background: #ff9eff;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        height: auto;
+      }
+      .sidebar,
+      .main-profile {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
-
   <div class="container">
-    <!-- Exemple fille -->
-    <div class="profile-card fille">
-      <img src="img/fille1.jpg" alt="Profil Fille">
-      <div class="info">
-        <h3>Léna, 28 ans</h3>
-        <p>📍 Paris</p>
-        <p>💖 Relation sérieuse, 💬 Amicale</p>
-        <button class="btn" onclick="openProfile('Léna', ['img/fille1.jpg', 'img/fille2.jpg'], 'Je suis douce, drôle et j’adore les balades en forêt.')">Voir profil</button>
+    <!-- Sidebar gauche -->
+    <div class="sidebar">
+      <div class="profile-card" onclick="loadProfile('Laura')">
+        <img src="img/profil1.jpg" alt="Laura">
+        <div class="profile-info">
+          <strong>Laura</strong><br>
+          29 • Paris<br>💖 💬 🎉
+        </div>
+      </div>
+      <div class="profile-card" onclick="loadProfile('Chloe')">
+        <img src="img/profil2.jpg" alt="Chloé">
+        <div class="profile-info">
+          <strong>Chloé</strong><br>
+          25 • Marseille<br>💖 🎉 👨‍👩‍👧
+        </div>
+      </div>
+      <div class="profile-card" onclick="loadProfile('Camille')">
+        <img src="img/profil3.jpg" alt="Camille">
+        <div class="profile-info">
+          <strong>Camille</strong><br>
+          31 • Lyon<br>💬 💖 👨‍👩‍👧
+        </div>
       </div>
     </div>
 
-    <!-- Exemple garçon -->
-    <div class="profile-card garcon">
-      <img src="img/garcon1.jpg" alt="Profil Garçon">
-      <div class="info">
-        <h3>Alex, 30 ans</h3>
-        <p>📍 Lyon</p>
-        <p>💖 Relation sérieuse</p>
-        <button class="btn" onclick="openProfile('Alex', ['img/garcon1.jpg', 'img/garcon2.jpg'], 'Passionné de musique et prêt pour une belle histoire.')">Voir profil</button>
+    <!-- Zone principale -->
+    <div class="main-profile" id="mainProfile">
+      <div class="photo-grid">
+        <img src="img/profil1.jpg" alt="">
+        <img src="img/profil1.jpg" alt="">
+        <img src="img/profil1.jpg" alt="">
+        <img src="img/profil1.jpg" alt="">
+        <img src="img/profil1.jpg" alt="">
+        <img src="img/profil1.jpg" alt="">
       </div>
-    </div>
-
-    <!-- Ajoute d'autres profils ici si tu veux -->
-  </div>
-
-  <!-- POPUP -->
-  <div class="popup" id="popup">
-    <div class="popup-content">
-      <div class="swiper" id="swiper"></div>
-      <p id="desc"></p>
-      <button class="close-btn" onclick="closePopup()">⬅ Retour</button>
-      <button class="chat-btn">💬 Chat</button>
+      <div class="details">
+        <h2>Laura, 29 ans</h2>
+        <p>À la recherche d’une belle histoire basée sur la confiance et la complicité.</p>
+        <div class="badges">
+          💖 💬 👨‍👩‍👧
+        </div>
+      </div>
+      <div class="buttons">
+        <a href="panneaux.html">⬅ Retour</a>
+        <a href="chat.html">💬 Chat</a>
+      </div>
     </div>
   </div>
 
   <script>
-    function openProfile(name, images, description) {
-      const swiper = document.getElementById('swiper');
-      const desc = document.getElementById('desc');
-      swiper.innerHTML = '';
-      images.forEach(src => {
-        const img = document.createElement('img');
-        img.src = src;
-        swiper.appendChild(img);
-      });
-      desc.textContent = description;
-      document.getElementById('popup').style.display = 'flex';
-    }
-
-    function closePopup() {
-      document.getElementById('popup').style.display = 'none';
+    function loadProfile(name) {
+      // Simulation de switch de profil
+      // Dans la version finale, tu pourras charger dynamiquement les vraies données ici
+      alert("Chargement du profil de " + name);
     }
   </script>
-
 </body>
 </html>
