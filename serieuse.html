@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Relation Sérieuse - AFFINIX</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -12,194 +12,202 @@
 
     body {
       margin: 0;
-      padding: 0;
       font-family: 'Orbitron', sans-serif;
-      background: url('img/fond-serieuse.jpg') no-repeat center center fixed;
+      background: url("img/fond-serieuse.jpg") no-repeat center center fixed;
       background-size: cover;
       color: white;
     }
 
+    .title-panel {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 28px;
+      color: #fff;
+      padding: 15px 30px;
+      border: 3px solid #ff66c4;
+      border-radius: 12px;
+      display: inline-block;
+      box-shadow: 0 0 16px #ff66c4;
+      text-shadow: 0 0 12px #ff66c4;
+    }
+
     .container {
       display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      padding: 20px;
-      gap: 20px;
-      height: 100vh;
+      justify-content: space-around;
+      padding: 40px 20px;
+      flex-wrap: wrap;
     }
 
     .sidebar {
-      width: 30%;
-      background: rgba(255, 255, 255, 0.05);
-      border: 2px solid #ff6dfb;
-      border-radius: 15px;
+      width: 260px;
+      background: rgba(0, 0, 0, 0.5);
+      border: 2px solid #ff66c4;
+      border-radius: 12px;
       padding: 20px;
-      overflow-y: auto;
+      box-shadow: 0 0 12px #ff66c4;
     }
 
-    .profile-card {
+    .profile {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      margin-bottom: 15px;
-      background: rgba(0, 0, 0, 0.4);
-      border: 2px solid #ff6dfb;
-      border-radius: 10px;
+      margin-bottom: 20px;
       padding: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
       cursor: pointer;
       transition: 0.3s;
     }
 
-    .profile-card:hover {
-      background: rgba(255, 255, 255, 0.08);
+    .profile:hover {
+      background: rgba(255, 255, 255, 0.15);
     }
 
-    .profile-card img {
-      width: 70px;
-      height: 70px;
+    .profile img {
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      object-fit: cover;
+      margin-right: 10px;
+    }
+
+    .profile-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .profile-info span {
+      font-size: 14px;
+      line-height: 1.2;
+    }
+
+    .details {
+      flex: 1;
+      margin-left: 20px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 2px solid #ff66c4;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 0 20px #ff66c4;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: auto;
       border-radius: 8px;
       object-fit: cover;
     }
 
-    .profile-info {
-      text-align: center;
-      margin-top: 5px;
-    }
-
-    .main-profile {
-      width: 68%;
-      background: rgba(0, 0, 0, 0.5);
-      border: 2px solid #ff6dfb;
-      border-radius: 15px;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .photo-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-
-    .photo-grid img {
-      width: 100%;
-      border-radius: 10px;
-      object-fit: cover;
-    }
-
-    .details {
-      margin-top: 20px;
-    }
-
     .details h2 {
-      font-size: 22px;
       color: #ffbaff;
-      margin-bottom: 5px;
+      font-size: 20px;
+      margin-bottom: 10px;
     }
 
-    .details p {
-      font-size: 16px;
+    .description {
+      font-size: 14px;
+      line-height: 1.4;
+      margin-bottom: 20px;
     }
 
-    .badges {
+    .icons {
+      font-size: 20px;
       margin-top: 10px;
-      font-size: 24px;
-      display: flex;
-      gap: 15px;
     }
 
     .buttons {
       display: flex;
       justify-content: space-between;
-      margin-top: 20px;
     }
 
-    .buttons a {
-      padding: 10px 25px;
-      border-radius: 10px;
-      background: #ff6dfb;
-      color: #000;
-      text-decoration: none;
-      font-weight: bold;
-      box-shadow: 0 0 10px #ff6dfb;
+    .buttons button {
+      padding: 12px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      color: white;
+      background-color: transparent;
+      border: 2px solid #ff66c4;
+      box-shadow: 0 0 10px #ff66c4;
       transition: 0.3s;
     }
 
-    .buttons a:hover {
-      background: #ff9eff;
+    .buttons button:hover {
+      background: #ff66c4;
+      color: black;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
       .container {
         flex-direction: column;
-        height: auto;
+        align-items: center;
       }
-      .sidebar,
-      .main-profile {
-        width: 100%;
+      .sidebar, .details {
+        width: 90%;
+        margin-bottom: 30px;
       }
     }
   </style>
 </head>
 <body>
+
+  <div style="text-align: center;">
+    <div class="title-panel">RELATION SÉRIEUSE</div>
+  </div>
+
   <div class="container">
-    <!-- Sidebar gauche -->
+    <!-- Liste profils -->
     <div class="sidebar">
-      <div class="profile-card" onclick="loadProfile('Laura')">
-        <img src="img/profil1.jpg" alt="Laura">
+      <div class="profile" onclick="showProfile('Laura')">
+        <img src="img/profils/laura1.jpg" alt="Laura">
         <div class="profile-info">
-          <strong>Laura</strong><br>
-          29 • Paris<br>💖 💬 🎉
+          <span><strong>Laura</strong>, 29</span>
+          <span>Paris</span>
+          <span>💖 💬 👨‍👩‍👧</span>
         </div>
       </div>
-      <div class="profile-card" onclick="loadProfile('Chloe')">
-        <img src="img/profil2.jpg" alt="Chloé">
+      <div class="profile" onclick="showProfile('Chloe')">
+        <img src="img/profils/chloe1.jpg" alt="Chloé">
         <div class="profile-info">
-          <strong>Chloé</strong><br>
-          25 • Marseille<br>💖 🎉 👨‍👩‍👧
+          <span><strong>Chloé</strong>, 25</span>
+          <span>Marseille</span>
+          <span>💖 🎉 👨‍👩‍👧</span>
         </div>
       </div>
-      <div class="profile-card" onclick="loadProfile('Camille')">
-        <img src="img/profil3.jpg" alt="Camille">
-        <div class="profile-info">
-          <strong>Camille</strong><br>
-          31 • Lyon<br>💬 💖 👨‍👩‍👧
-        </div>
-      </div>
+      <!-- Ajoutez d'autres profils ici -->
     </div>
 
-    <!-- Zone principale -->
-    <div class="main-profile" id="mainProfile">
-      <div class="photo-grid">
-        <img src="img/profil1.jpg" alt="">
-        <img src="img/profil1.jpg" alt="">
-        <img src="img/profil1.jpg" alt="">
-        <img src="img/profil1.jpg" alt="">
-        <img src="img/profil1.jpg" alt="">
-        <img src="img/profil1.jpg" alt="">
+    <!-- Fiche détaillée -->
+    <div class="details" id="detailBox">
+      <div class="gallery">
+        <img src="img/profils/laura1.jpg">
+        <img src="img/profils/laura2.jpg">
+        <img src="img/profils/laura3.jpg">
+        <img src="img/profils/laura4.jpg">
+        <img src="img/profils/laura5.jpg">
+        <img src="img/profils/laura6.jpg">
       </div>
-      <div class="details">
-        <h2>Laura, 29 ans</h2>
-        <p>À la recherche d’une belle histoire basée sur la confiance et la complicité.</p>
-        <div class="badges">
-          💖 💬 👨‍👩‍👧
-        </div>
+
+      <h2>Laura, 29</h2>
+      <div class="description">
+        À la recherche d’une belle histoire basée sur la confiance et la complicité.
       </div>
+
+      <div class="icons">💖 💬 👨‍👩‍👧</div>
+
       <div class="buttons">
-        <a href="panneaux.html">⬅ Retour</a>
-        <a href="chat.html">💬 Chat</a>
+        <button onclick="history.back()">← Retour</button>
+        <button onclick="alert('Chat à venir')">💬 Chat</button>
       </div>
     </div>
   </div>
 
-  <script>
-    function loadProfile(name) {
-      // Simulation de switch de profil
-      // Dans la version finale, tu pourras charger dynamiquement les vraies données ici
-      alert("Chargement du profil de " + name);
-    }
-  </script>
 </body>
 </html>
