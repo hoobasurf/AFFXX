@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Selfie pour vérification</title>
+  <style>
+    video, canvas, img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+    #snap {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background: #00ffff;
+      border: none;
+      border-radius: 8px;
+      color: #000;
+      font-weight: bold;
+    }
+    #sendBtn {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background: #00aa00;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-weight: bold;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h2>Prends un selfie pour vérification</h2>
+
+  <video id="video" autoplay playsinline width="320" height="240"></video><br />
+  <button id="snap">Prendre la photo</button><br />
+
+  <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
+  <img id="photo" alt="Aperçu de la photo prise" style="display:none;" />
+
+  <form id="uploadForm">
+    <input type="hidden" id="photoData" name="photoData" />
+    <button type="submit" id="sendBtn">Envoyer la photo pour vérification</button>
+  </form>
+
+  <script>
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const photo = document.getElementById('photo');
+    const snap = document.getElementById('snap');
+    const sendBtn = document.getElementById('sendBtn');
+    const photoDataInput = document.getElementById('photoData');
+    const uploadForm = document.getElementById('uploadForm');
+
+    // Demande l'accès à la caméra
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
+      .then(stream => {
+        video.srcObject = stream;
+      })
+      .catch(err => {
+        alert('Erreur accès caméra : ' + err.message);
+      });
+
+    snap.addEventListener('click', () => {
+      const context = canvas.getContext('2d');
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      const dataURL = canvas.toDataURL('image/png');
+      photo.src = dataURL;
+      photo.style.display = 'block';
+      canvas.style.display = 'none';
+      sendBtn.style.display = 'inline-block';
+      photoDataInput.value = dataURL; // Prépare la donnée à envoyer
+    });
+
+    uploadForm.addEventListener('submit', e => {
+      e.preventDefault();
+      if (!photoDataInput.value) {
+        alert("Veuillez prendre une photo avant d'envoyer.");
+        return;
+      }
+      // Exemple d'envoi via fetch (à adapter à ton backend)
+      fetch('/upload-selfie', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ photo: photoDataInput.value })
+      })
+      .then(res => res.json())
+      .then(data => {
+        alert("Photo envoyée avec succès !");
+        // Ici, tu peux rediriger ou réinitialiser le formulaire
+      })
+      .catch(err => {
+        alert("Erreur lors de l'envoi : " + err.message);
+      });
+    });
+  </script>
+</body>
+</html>
