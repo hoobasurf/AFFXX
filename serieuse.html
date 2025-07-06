@@ -1,172 +1,187 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <title>Relation Sérieuse - AFFINIX</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <title>💖 Relation Sérieuse - AFFINIX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
   <style>
     body {
       margin: 0;
-      padding: 0;
       font-family: 'Orbitron', sans-serif;
       background: url('img/fond-serieuse.jpg') no-repeat center center fixed;
       background-size: cover;
       color: white;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
     }
 
     .container {
       display: flex;
-      height: 100vh;
       width: 100%;
-      padding: 30px;
-      box-sizing: border-box;
-      backdrop-filter: blur(2px);
+      height: 100%;
     }
 
     .left-panel {
-      width: 35%;
-      border-right: 2px solid #ff66c4;
-      padding-right: 20px;
-      overflow-y: auto;
-    }
-
-    .left-panel h2 {
-      font-size: 20px;
-      margin-bottom: 20px;
-      color: #ff66c4;
-      text-shadow: 0 0 10px #ff66c4;
-    }
-
-    .profile-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .profile-list li {
-      display: flex;
-      align-items: center;
+      width: 40%;
+      padding: 20px;
       background-color: rgba(0,0,0,0.4);
-      margin-bottom: 15px;
-      border: 2px solid #ff66c4;
-      padding: 10px;
+      overflow-y: auto;
+      box-shadow: inset -2px 0 4px rgba(255,255,255,0.1);
+    }
+
+    .profile-card {
+      background: rgba(255,255,255,0.05);
+      border: 2px solid #ff6dfb;
       border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 15px;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: 0.2s;
     }
 
-    .profile-list li:hover {
-      background-color: rgba(255, 102, 196, 0.1);
+    .profile-card:hover {
+      background: rgba(255,255,255,0.1);
     }
 
-    .profile-list img {
-      width: 50px;
-      height: 50px;
-      object-fit: cover;
+    .profile-card img {
+      width: 100%;
       border-radius: 10px;
-      margin-right: 10px;
+      object-fit: cover;
     }
 
-    .info h3 {
-      margin: 0;
+    .profile-info {
+      margin-top: 8px;
+    }
+
+    .profile-info h3 {
+      margin: 5px 0;
       font-size: 16px;
       color: #ffbaff;
     }
 
-    .info p {
+    .profile-info p {
       margin: 0;
       font-size: 13px;
-    }
-
-    .info span {
-      font-size: 14px;
+      color: #ccc;
     }
 
     .right-panel {
-      width: 65%;
-      padding-left: 30px;
-      display: flex;
+      width: 60%;
+      padding: 20px;
+      background-color: rgba(0,0,0,0.6);
+      border-left: 2px solid #ff6dfb;
+      display: none;
       flex-direction: column;
       justify-content: space-between;
+      position: relative;
     }
 
     .carousel {
       display: flex;
       overflow-x: auto;
+      scroll-snap-type: x mandatory;
       gap: 10px;
     }
 
     .carousel img {
-      height: 180px;
+      width: 250px;
+      height: 250px;
+      object-fit: cover;
       border-radius: 10px;
-      border: 2px solid #ff66c4;
+      scroll-snap-align: start;
     }
 
     .description {
       margin-top: 20px;
-      font-size: 15px;
+      font-size: 14px;
+      color: #eee;
     }
 
-    .actions {
+    .bottom-buttons {
       display: flex;
       justify-content: space-between;
       margin-top: 30px;
     }
 
-    .actions button {
-      background-color: transparent;
-      border: 2px solid #ff66c4;
-      color: #fff;
+    .btn {
       padding: 10px 20px;
-      font-size: 14px;
-      border-radius: 10px;
+      border-radius: 20px;
+      border: 2px solid #ff6dfb;
+      background: rgba(255,255,255,0.05);
+      color: #ffbaff;
       cursor: pointer;
-      transition: 0.3s;
+      font-weight: bold;
     }
 
-    .actions button:hover {
-      background-color: rgba(255, 102, 196, 0.2);
+    .btn:hover {
+      background: #ff6dfb;
+      color: #000;
+    }
+
+    @media (max-width: 800px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .left-panel, .right-panel {
+        width: 100%;
+        height: 50%;
+      }
+
+      .right-panel {
+        position: relative;
+      }
+
+      .carousel img {
+        width: 100%;
+        height: auto;
+      }
     }
   </style>
 </head>
 <body>
+
   <div class="container">
-    <div class="left-panel">
-      <h2>RELATION SÉRIEUSE</h2>
-      <ul class="profile-list">
-        <li onclick="loadProfile(0)">
-          <img src="img/profil1.jpg" alt="Emma">
-          <div class="info">
-            <h3>Emma</h3>
-            <p>28 ans - Paris</p>
-            <span>💖 💬 🎉</span>
-          </div>
-        </li>
-        <li onclick="loadProfile(1)">
-          <img src="img/profil2.jpg" alt="Léa">
-          <div class="info">
-            <h3>Léa</h3>
-            <p>26 ans - Lyon</p>
-            <span>💖 🎉</span>
-          </div>
-        </li>
-      </ul>
+    <div class="left-panel" id="profilesList">
+      <!-- Profils simulés -->
+      <div class="profile-card" onclick="showProfile(0)">
+        <img src="img/profil1.jpg" alt="profil">
+        <div class="profile-info">
+          <h3>Léa</h3>
+          <p>24 ans · Paris</p>
+          <p>💖 💬 🎉</p>
+        </div>
+      </div>
+      <div class="profile-card" onclick="showProfile(1)">
+        <img src="img/profil2.jpg" alt="profil">
+        <div class="profile-info">
+          <h3>Émilie</h3>
+          <p>28 ans · Lyon</p>
+          <p>💖 🎉</p>
+        </div>
+      </div>
+      <div class="profile-card" onclick="showProfile(2)">
+        <img src="img/profil3.jpg" alt="profil">
+        <div class="profile-info">
+          <h3>Camille</h3>
+          <p>26 ans · Marseille</p>
+          <p>💬 💖</p>
+        </div>
+      </div>
     </div>
 
     <div class="right-panel" id="profileDetail">
-      <div class="carousel" id="carousel">
-        <img src="img/photo1.jpg" alt="">
-        <img src="img/photo2.jpg" alt="">
-        <img src="img/photo3.jpg" alt="">
+      <div class="carousel" id="carouselPhotos">
+        <!-- Images ici via JS -->
       </div>
-      <div class="description" id="description">
-        <h3>Emma</h3>
-        <p>À la recherche d’une belle histoire basée sur la confiance et la complicité.</p>
+      <div class="description" id="desc">
+        <!-- Description ici -->
       </div>
-      <div class="actions">
-        <button onclick="window.location.href='panneaux.html'">⬅ Retour</button>
-        <button>💬 Chat</button>
+      <div class="bottom-buttons">
+        <button class="btn" onclick="goBack()">⬅ Revenir</button>
+        <button class="btn">💬 Chat</button>
       </div>
     </div>
   </div>
@@ -174,40 +189,46 @@
   <script>
     const profiles = [
       {
-        name: "Emma",
-        age: 28,
-        city: "Paris",
-        description: "À la recherche d’une belle histoire basée sur la confiance et la complicité.",
-        photos: ["img/photo1.jpg", "img/photo2.jpg", "img/photo3.jpg"],
-        salles: ["💖", "💬", "🎉"]
+        prenom: "Léa",
+        age: 24,
+        ville: "Paris",
+        salles: "💖 💬 🎉",
+        description: "Passionnée de lecture et de balades nocturnes 🌙. Je cherche une vraie connexion ✨",
+        photos: ["img/profil1.jpg", "img/profil1b.jpg", "img/profil1c.jpg"]
       },
       {
-        name: "Léa",
+        prenom: "Émilie",
+        age: 28,
+        ville: "Lyon",
+        salles: "💖 🎉",
+        description: "Ambitieuse, drôle, et toujours prête à découvrir le monde 💫🌍",
+        photos: ["img/profil2.jpg", "img/profil2b.jpg"]
+      },
+      {
+        prenom: "Camille",
         age: 26,
-        city: "Lyon",
-        description: "Je cherche une relation stable et joyeuse dans le respect.",
-        photos: ["img/photo4.jpg", "img/photo5.jpg"],
-        salles: ["💖", "🎉"]
+        ville: "Marseille",
+        salles: "💬 💖",
+        description: "Artiste dans l’âme 🎨. En quête d’un lien sincère et lumineux 💡",
+        photos: ["img/profil3.jpg", "img/profil3b.jpg", "img/profil3c.jpg"]
       }
     ];
 
-    function loadProfile(index) {
-      const profile = profiles[index];
-      const carousel = document.getElementById("carousel");
-      const description = document.getElementById("description");
-
-      carousel.innerHTML = "";
-      profile.photos.forEach(photo => {
-        const img = document.createElement("img");
-        img.src = photo;
-        carousel.appendChild(img);
-      });
-
-      description.innerHTML = `
-        <h3>${profile.name}</h3>
-        <p>${profile.description}</p>
+    function showProfile(index) {
+      const p = profiles[index];
+      document.getElementById('carouselPhotos').innerHTML = p.photos.map(src => `<img src="${src}" alt="">`).join('');
+      document.getElementById('desc').innerHTML = `
+        <h2>${p.prenom}, ${p.age} ans - ${p.ville}</h2>
+        <p style="margin-top:10px;">Salles choisies : ${p.salles}</p>
+        <p style="margin-top:10px;">${p.description}</p>
       `;
+      document.getElementById('profileDetail').style.display = 'flex';
+    }
+
+    function goBack() {
+      document.getElementById('profileDetail').style.display = 'none';
     }
   </script>
+
 </body>
 </html>
