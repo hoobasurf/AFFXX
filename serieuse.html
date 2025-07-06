@@ -4,231 +4,176 @@
   <meta charset="UTF-8">
   <title>💖 Relation Sérieuse - AFFINIX</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+
   <style>
     body {
       margin: 0;
       font-family: 'Orbitron', sans-serif;
       background: url('img/fond-serieuse.jpg') no-repeat center center fixed;
       background-size: cover;
-      color: white;
-      height: 100vh;
       overflow: hidden;
-      display: flex;
+      color: white;
     }
 
     .container {
       display: flex;
-      width: 100%;
-      height: 100%;
+      height: 100vh;
+      width: 100vw;
     }
 
-    .left-panel {
-      width: 40%;
-      padding: 20px;
-      background-color: rgba(0,0,0,0.4);
+    .profile-list {
+      width: 35%;
       overflow-y: auto;
-      box-shadow: inset -2px 0 4px rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      background-color: rgba(255, 255, 255, 0.05);
+      border-right: 2px solid rgba(255, 255, 255, 0.2);
+      padding: 20px;
     }
 
     .profile-card {
-      background: rgba(255,255,255,0.05);
-      border: 2px solid #ff6dfb;
-      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 15px;
       padding: 15px;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
       cursor: pointer;
-      transition: 0.2s;
+      transition: 0.3s;
+      backdrop-filter: blur(4px);
+      border: 2px solid;
     }
 
-    .profile-card:hover {
-      background: rgba(255,255,255,0.1);
-    }
+    .profile-card.girl { border-color: #ff6dfb; }
+    .profile-card.boy { border-color: #6dd3ff; }
 
     .profile-card img {
       width: 100%;
-      border-radius: 10px;
+      height: 180px;
       object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 10px;
     }
 
-    .profile-info {
-      margin-top: 8px;
-    }
-
-    .profile-info h3 {
-      margin: 5px 0;
-      font-size: 16px;
-      color: #ffbaff;
-    }
-
-    .profile-info p {
-      margin: 0;
-      font-size: 13px;
-      color: #ccc;
-    }
-
-    .right-panel {
-      width: 60%;
+    .profile-detail {
+      flex: 1;
       padding: 20px;
-      background-color: rgba(0,0,0,0.6);
-      border-left: 2px solid #ff6dfb;
       display: none;
       flex-direction: column;
       justify-content: space-between;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      border-left: 2px solid rgba(255, 255, 255, 0.2);
       position: relative;
     }
 
-    .carousel {
+    .swiper {
       display: flex;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
       gap: 10px;
+      overflow-x: auto;
+      margin-bottom: 20px;
     }
 
-    .carousel img {
-      width: 250px;
-      height: 250px;
-      object-fit: cover;
-      border-radius: 10px;
-      scroll-snap-align: start;
+    .swiper img {
+      height: 220px;
+      border-radius: 12px;
     }
 
-    .description {
-      margin-top: 20px;
-      font-size: 14px;
-      color: #eee;
+    .desc {
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 20px;
     }
 
-    .bottom-buttons {
+    .actions {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
       display: flex;
       justify-content: space-between;
-      margin-top: 30px;
     }
 
     .btn {
       padding: 10px 20px;
+      font-size: 14px;
       border-radius: 20px;
-      border: 2px solid #ff6dfb;
-      background: rgba(255,255,255,0.05);
-      color: #ffbaff;
       cursor: pointer;
+      border: none;
       font-weight: bold;
+      color: white;
+      background: linear-gradient(90deg, #ff6dfb, #c266ff);
+      box-shadow: 0 0 10px #ff6dfb;
     }
 
     .btn:hover {
-      background: #ff6dfb;
-      color: #000;
+      opacity: 0.9;
     }
 
-    @media (max-width: 800px) {
-      .container {
-        flex-direction: column;
-      }
-
-      .left-panel, .right-panel {
-        width: 100%;
-        height: 50%;
-      }
-
-      .right-panel {
-        position: relative;
-      }
-
-      .carousel img {
-        width: 100%;
-        height: auto;
-      }
+    /* Scroll bar légère */
+    .profile-list::-webkit-scrollbar {
+      width: 6px;
+    }
+    .profile-list::-webkit-scrollbar-thumb {
+      background-color: rgba(255,255,255,0.3);
+      border-radius: 10px;
     }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <div class="left-panel" id="profilesList">
-      <!-- Profils simulés -->
-      <div class="profile-card" onclick="showProfile(0)">
-        <img src="img/profil1.jpg" alt="profil">
-        <div class="profile-info">
-          <h3>Léa</h3>
-          <p>24 ans · Paris</p>
-          <p>💖 💬 🎉</p>
-        </div>
+    <!-- Liste de profils -->
+    <div class="profile-list">
+      <div class="profile-card girl" onclick="showProfile(0)">
+        <img src="img/profil-fille1.jpg" alt="profil 1">
+        <div><strong>Luna</strong>, 26 ans</div>
+        <div>📍 Paris</div>
+        <div>💖 💬 🎉</div>
       </div>
-      <div class="profile-card" onclick="showProfile(1)">
-        <img src="img/profil2.jpg" alt="profil">
-        <div class="profile-info">
-          <h3>Émilie</h3>
-          <p>28 ans · Lyon</p>
-          <p>💖 🎉</p>
-        </div>
+      <div class="profile-card boy" onclick="showProfile(1)">
+        <img src="img/profil-garcon1.jpg" alt="profil 2">
+        <div><strong>Leo</strong>, 30 ans</div>
+        <div>📍 Lyon</div>
+        <div>💖 🎉</div>
       </div>
-      <div class="profile-card" onclick="showProfile(2)">
-        <img src="img/profil3.jpg" alt="profil">
-        <div class="profile-info">
-          <h3>Camille</h3>
-          <p>26 ans · Marseille</p>
-          <p>💬 💖</p>
-        </div>
+      <div class="profile-card girl" onclick="showProfile(2)">
+        <img src="img/profil-fille2.jpg" alt="profil 3">
+        <div><strong>Emma</strong>, 24 ans</div>
+        <div>📍 Marseille</div>
+        <div>💬 🎉</div>
       </div>
     </div>
 
-    <div class="right-panel" id="profileDetail">
-      <div class="carousel" id="carouselPhotos">
-        <!-- Images ici via JS -->
+    <!-- Détail du profil -->
+    <div class="profile-detail" id="detail">
+      <div>
+        <div class="swiper" id="swiper"></div>
+        <div class="desc" id="desc">Description ici...</div>
       </div>
-      <div class="description" id="desc">
-        <!-- Description ici -->
-      </div>
-      <div class="bottom-buttons">
-        <button class="btn" onclick="goBack()">⬅ Revenir</button>
+      <div class="actions">
+        <button class="btn" onclick="closeDetail()">⬅ Revenir</button>
         <button class="btn">💬 Chat</button>
       </div>
     </div>
   </div>
 
   <script>
-    const profiles = [
+    const detail = document.getElementById('detail');
+    const swiper = document.getElementById('swiper');
+    const desc = document.getElementById('desc');
+
+    const profils = [
       {
-        prenom: "Léa",
-        age: 24,
-        ville: "Paris",
-        salles: "💖 💬 🎉",
-        description: "Passionnée de lecture et de balades nocturnes 🌙. Je cherche une vraie connexion ✨",
-        photos: ["img/profil1.jpg", "img/profil1b.jpg", "img/profil1c.jpg"]
+        photos: ['img/profil-fille1.jpg', 'img/profil-fille1-2.jpg', 'img/profil-fille1-3.jpg'],
+        description: "Je suis Luna 🌙, passionnée d’art et de nature. J’aime les longues discussions profondes et sincères 💖.",
       },
       {
-        prenom: "Émilie",
-        age: 28,
-        ville: "Lyon",
-        salles: "💖 🎉",
-        description: "Ambitieuse, drôle, et toujours prête à découvrir le monde 💫🌍",
-        photos: ["img/profil2.jpg", "img/profil2b.jpg"]
+        photos: ['img/profil-garcon1.jpg', 'img/profil-garcon1-2.jpg'],
+        description: "Moi c’est Leo 😎. Développeur le jour, aventurier la nuit. Envie de créer une vraie connexion 💬.",
       },
       {
-        prenom: "Camille",
-        age: 26,
-        ville: "Marseille",
-        salles: "💬 💖",
-        description: "Artiste dans l’âme 🎨. En quête d’un lien sincère et lumineux 💡",
-        photos: ["img/profil3.jpg", "img/profil3b.jpg", "img/profil3c.jpg"]
+        photos: ['img/profil-fille2.jpg', 'img/profil-fille2-2.jpg', 'img/profil-fille2-3.jpg', 'img/profil-fille2-4.jpg'],
+        description: "Emma 💫, rêveuse & spontanée. Je cherche quelqu’un qui me fera rire et vibrer. 🎉",
       }
     ];
 
-    function showProfile(index) {
-      const p = profiles[index];
-      document.getElementById('carouselPhotos').innerHTML = p.photos.map(src => `<img src="${src}" alt="">`).join('');
-      document.getElementById('desc').innerHTML = `
-        <h2>${p.prenom}, ${p.age} ans - ${p.ville}</h2>
-        <p style="margin-top:10px;">Salles choisies : ${p.salles}</p>
-        <p style="margin-top:10px;">${p.description}</p>
-      `;
-      document.getElementById('profileDetail').style.display = 'flex';
-    }
-
-    function goBack() {
-      document.getElementById('profileDetail').style.display = 'none';
-    }
-  </script>
-
-</body>
-</html>
+    function show
