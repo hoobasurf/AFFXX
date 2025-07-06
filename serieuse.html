@@ -4,55 +4,28 @@
   <meta charset="UTF-8">
   <title>💖 Relation Sérieuse - AFFINIX</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
   <style>
-    html, body {
+    body {
       margin: 0;
-      padding: 0;
-      background: url('img/serieuse-bg.jpg') no-repeat center center fixed;
-      background-size: cover;
       font-family: 'Orbitron', sans-serif;
+      background: url('img/fond-serieuse.jpg') no-repeat center center fixed;
+      background-size: cover;
       color: white;
-      height: 100vh;
-      overflow: hidden;
-    }
-
-    .container {
       display: flex;
-      height: 100%;
-      width: 100%;
+      height: 100vh;
     }
 
-    .profil-list {
-      width: 45%;
-      background: rgba(0,0,0,0.4);
-      overflow-y: auto;
+    .sidebar {
+      width: 35%;
+      background-color: rgba(0,0,0,0.5);
       padding: 20px;
-      box-sizing: border-box;
-      backdrop-filter: blur(6px);
+      overflow-y: auto;
+      border-right: 2px solid #ff6dfb;
     }
 
-    .profil-card {
-      background: rgba(255,255,255,0.08);
-      border: 2px solid #ff66c4;
-      border-radius: 12px;
-      padding: 12px;
-      margin-bottom: 15px;
-      text-align: center;
-      cursor: pointer;
-    }
-
-    .profil-card img {
-      width: 100%;
-      max-height: 140px;
-      object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 10px;
-    }
-
-    .detail-view {
-      width: 55%;
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(6px);
+    .main {
+      width: 65%;
       padding: 20px;
       display: none;
       flex-direction: column;
@@ -60,127 +33,170 @@
       position: relative;
     }
 
-    .photo-carousel {
+    .profil-card {
+      background: rgba(255,255,255,0.08);
+      padding: 12px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      cursor: pointer;
+      border: 2px solid #ff6dfb;
+      box-shadow: 0 0 12px #ff6dfb66;
+    }
+
+    .profil-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin-bottom: 8px;
+    }
+
+    .profil-card h3 {
+      margin: 5px 0;
+      color: #ffbaff;
+    }
+
+    .details {
+      display: none;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .carousel {
       display: flex;
       overflow-x: auto;
       gap: 10px;
-      margin-bottom: 15px;
     }
 
-    .photo-carousel img {
-      width: 100%;
-      max-width: 160px;
+    .carousel img {
+      width: 120px;
+      height: 120px;
       border-radius: 10px;
+      object-fit: cover;
+      border: 2px solid #ff6dfb;
     }
 
     .description {
-      font-size: 14px;
-      margin-bottom: 20px;
+      background: rgba(255,255,255,0.08);
+      padding: 15px;
+      border-radius: 12px;
+      border: 1px solid #ff6dfb;
     }
 
-    .bottom-buttons {
+    .buttons {
       display: flex;
       justify-content: space-between;
+      margin-top: auto;
     }
 
-    .btn {
+    .buttons button {
       padding: 10px 20px;
       border-radius: 20px;
-      background: #ff66c4;
       border: none;
-      font-weight: bold;
-      color: white;
+      font-size: 14px;
+      font-family: 'Orbitron', sans-serif;
+      background-color: #ff6dfb;
+      color: #000;
       cursor: pointer;
-    }
-
-    .btn:hover {
-      background: #ff88dc;
+      box-shadow: 0 0 10px #ff6dfb;
     }
 
     @media (max-width: 768px) {
-      .container {
+      body {
         flex-direction: column;
       }
-      .profil-list {
+      .sidebar, .main {
         width: 100%;
-        height: 50%;
-      }
-      .detail-view {
-        width: 100%;
-        height: 50%;
-        display: none;
+        height: auto;
       }
     }
   </style>
 </head>
 <body>
 
-<div class="container">
-  <div class="profil-list" id="profilList">
-    <!-- Profils mock -->
-    <div class="profil-card" onclick="showDetail(0)">
-      <img src="img/mock1.jpg" alt="Profil 1">
-      <div>Camille, 26</div>
-      <div>Paris • 💖 💬</div>
+  <div class="sidebar">
+    <div class="profil-card" onclick="afficherProfil(0)">
+      <img src="img/profil1.jpg" alt="Profil 1">
+      <h3>Emma</h3>
+      <p>28 ans - Paris</p>
+      <p>💖 💬 🎉</p>
     </div>
-    <div class="profil-card" onclick="showDetail(1)">
-      <img src="img/mock2.jpg" alt="Profil 2">
-      <div>Lucas, 30</div>
-      <div>Lyon • 💖 🎉</div>
+    <div class="profil-card" onclick="afficherProfil(1)">
+      <img src="img/profil2.jpg" alt="Profil 2">
+      <h3>Léa</h3>
+      <p>26 ans - Lyon</p>
+      <p>💖 🎉</p>
     </div>
-    <div class="profil-card" onclick="showDetail(2)">
-      <img src="img/mock3.jpg" alt="Profil 3">
-      <div>Sophie, 28</div>
-      <div>Nice • 💖 👨‍👩‍👧</div>
+    <div class="profil-card" onclick="afficherProfil(2)">
+      <img src="img/profil3.jpg" alt="Profil 3">
+      <h3>Sarah</h3>
+      <p>30 ans - Marseille</p>
+      <p>💖 💬</p>
     </div>
   </div>
 
-  <div class="detail-view" id="detailView">
-    <div class="photo-carousel" id="carousel"></div>
-    <div class="description" id="desc"></div>
-    <div class="bottom-buttons">
-      <button class="btn" onclick="hideDetail()">⬅️ Retour</button>
-      <button class="btn">💬 Chat</button>
+  <div class="main" id="main">
+    <div class="details" id="details">
+      <div class="carousel" id="carousel"></div>
+      <div class="description" id="description"></div>
+    </div>
+    <div class="buttons">
+      <button onclick="retour()">⬅️ Retour</button>
+      <button onclick="chat()">💬 Chat</button>
     </div>
   </div>
-</div>
 
-<script>
-  const profils = [
-    {
-      photos: ["img/mock1.jpg", "img/photo1-2.jpg", "img/photo1-3.jpg"],
-      description: "Camille, passionnée de lecture et de nature, cherche une relation stable et sincère à Paris.",
-    },
-    {
-      photos: ["img/mock2.jpg", "img/photo2-2.jpg"],
-      description: "Lucas, fan de musique et de voyages, aime rire et partager des moments simples.",
-    },
-    {
-      photos: ["img/mock3.jpg", "img/photo3-2.jpg", "img/photo3-3.jpg", "img/photo3-4.jpg"],
-      description: "Sophie adore les animaux et les balades en forêt. Maman d’une petite fille, elle cherche quelqu’un de vrai.",
+  <script>
+    const profils = [
+      {
+        nom: "Emma",
+        age: "28",
+        ville: "Paris",
+        description: "Passionnée d’art, de voyages et d’astrophysique romantique.",
+        photos: ["img/profil1.jpg", "img/profil1b.jpg", "img/profil1c.jpg"]
+      },
+      {
+        nom: "Léa",
+        age: "26",
+        ville: "Lyon",
+        description: "Toujours le sourire, grande fan de nature et de randos en amoureux.",
+        photos: ["img/profil2.jpg", "img/profil2b.jpg"]
+      },
+      {
+        nom: "Sarah",
+        age: "30",
+        ville: "Marseille",
+        description: "Soleil, mer et amour... Je cherche celui qui me fera vibrer.",
+        photos: ["img/profil3.jpg", "img/profil3b.jpg", "img/profil3c.jpg", "img/profil3d.jpg"]
+      }
+    ];
+
+    function afficherProfil(index) {
+      const profil = profils[index];
+      document.getElementById("carousel").innerHTML = "";
+      profil.photos.forEach(photo => {
+        const img = document.createElement("img");
+        img.src = photo;
+        document.getElementById("carousel").appendChild(img);
+      });
+
+      document.getElementById("description").innerHTML = `
+        <h3>${profil.nom} - ${profil.age} ans - ${profil.ville}</h3>
+        <p>${profil.description}</p>
+      `;
+
+      document.getElementById("main").style.display = "flex";
+      document.getElementById("details").style.display = "flex";
     }
-  ];
 
-  function showDetail(index) {
-    const detail = document.getElementById("detailView");
-    const carousel = document.getElementById("carousel");
-    const desc = document.getElementById("desc");
+    function retour() {
+      document.getElementById("main").style.display = "none";
+      document.getElementById("details").style.display = "none";
+    }
 
-    carousel.innerHTML = '';
-    profils[index].photos.forEach(url => {
-      const img = document.createElement("img");
-      img.src = url;
-      carousel.appendChild(img);
-    });
-
-    desc.textContent = profils[index].description;
-    detail.style.display = "flex";
-  }
-
-  function hideDetail() {
-    document.getElementById("detailView").style.display = "none";
-  }
-</script>
+    function chat() {
+      alert("Fonction Chat à venir !");
+    }
+  </script>
 
 </body>
 </html>
