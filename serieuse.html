@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <title>Relation Sérieuse - Affinix</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet" />
   <style>
     body {
       margin: 0;
       padding: 0;
       font-family: 'Orbitron', sans-serif;
-      background: url('img/fond-serieuse-violet.jpg') no-repeat center center fixed;
+      background: url('img/fond-serieuse.jpg') no-repeat center center fixed;
       background-size: cover;
       color: #fff;
       overflow: hidden;
@@ -24,23 +24,23 @@
     }
 
     .sidebar {
-      width: 30%;
-      backdrop-filter: blur(10px);
-      border: 2px solid #ff80d5;
-      border-radius: 20px;
-      padding: 20px;
-      margin-right: 20px;
+      width: 28%;
+      max-width: 300px;
       overflow-y: auto;
+      padding-right: 10px;
     }
 
     .profile-card {
-      border: 1px solid #ffbaff;
-      border-radius: 10px;
-      padding: 10px;
-      margin-bottom: 10px;
-      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
       background: rgba(255, 255, 255, 0.05);
-      transition: background 0.3s;
+      border: 1px solid #ff80d5;
+      border-radius: 12px;
+      padding: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
     }
 
     .profile-card:hover {
@@ -48,175 +48,167 @@
     }
 
     .profile-card img {
-      width: 60px;
-      height: 60px;
-      border-radius: 10px;
+      width: 50px;
+      height: 50px;
       object-fit: cover;
-      margin-right: 10px;
+      border-radius: 8px;
     }
 
     .profile-info {
       display: flex;
-      align-items: center;
-    }
-
-    .profile-text {
-      display: flex;
       flex-direction: column;
+      font-size: 14px;
     }
 
-    .profile-text span {
-      margin: 2px 0;
+    .profile-info strong {
+      color: #ffbaff;
     }
 
     .detail {
-      flex-grow: 1;
+      flex: 1;
+      backdrop-filter: blur(8px);
+      background: rgba(0, 0, 0, 0.3);
       border: 2px solid #ff80d5;
       border-radius: 20px;
       padding: 20px;
       position: relative;
-      backdrop-filter: blur(10px);
-      overflow: hidden;
     }
 
     .photo-carousel {
       display: flex;
       overflow-x: auto;
-      scroll-snap-type: x mandatory;
       gap: 10px;
       margin-bottom: 15px;
+      scroll-snap-type: x mandatory;
     }
 
     .photo-carousel img {
-      width: 150px;
-      height: 150px;
+      width: 120px;
+      height: 120px;
+      border-radius: 10px;
       object-fit: cover;
-      border-radius: 12px;
-      scroll-snap-align: start;
+      scroll-snap-align: center;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: 22px;
+      color: #ffbaff;
+    }
+
+    .salles, .location, .description {
+      margin: 5px 0;
     }
 
     .actions {
       position: absolute;
       bottom: 20px;
-      width: calc(100% - 40px);
+      left: 20px;
+      right: 20px;
       display: flex;
       justify-content: space-between;
     }
 
     .btn {
-      padding: 10px 20px;
-      border-radius: 20px;
-      background-color: #ff6dfb;
-      border: none;
+      background: #ff6dfb;
       color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 20px;
       font-weight: bold;
       cursor: pointer;
       box-shadow: 0 0 10px #ff6dfb;
     }
-
-    h2 {
-      margin: 0 0 10px;
-      color: #ffbaff;
-    }
-
-    .salles {
-      font-size: 18px;
-      margin-top: 10px;
-    }
-
-    .description {
-      margin-top: 10px;
-    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="sidebar" id="profileList">
-      <!-- Profils mock -->
-      <div class="profile-card" onclick="showDetail(0)">
-        <div class="profile-info">
-          <img src="img/emma1.jpg" alt="Emma">
-          <div class="profile-text">
-            <span><strong>Emma</strong>, 28</span>
-            <span>Paris</span>
-            <span>💖 💬 🎉</span>
-          </div>
-        </div>
-      </div>
-      <div class="profile-card" onclick="showDetail(1)">
-        <div class="profile-info">
-          <img src="img/laura1.jpg" alt="Laura">
-          <div class="profile-text">
-            <span><strong>Laura</strong>, 26</span>
-            <span>Lyon</span>
-            <span>💖 💬</span>
-          </div>
-        </div>
+
+<div class="container">
+  <!-- Encadré gauche -->
+  <div class="sidebar" id="profileList">
+    <div class="profile-card" onclick="showProfile(0)">
+      <img src="img/emma1.jpg" alt="Emma">
+      <div class="profile-info">
+        <strong>Emma</strong>
+        <span>28 ans - Paris</span>
+        <span>💖 💬 🎉</span>
       </div>
     </div>
-
-    <div class="detail" id="detailView">
-      <div class="photo-carousel" id="photoCarousel">
-        <!-- Photos ici -->
-      </div>
-      <h2 id="nameAge">Emma, 28</h2>
-      <div id="location">Paris</div>
-      <div class="salles" id="salles">💖 💬 🎉</div>
-      <div class="description" id="description">À la recherche d’une belle histoire basée sur la confiance et la complicité.</div>
-
-      <div class="actions">
-        <button class="btn" onclick="hideDetail()">⬅ Revenir</button>
-        <button class="btn">💬 Chat</button>
+    <div class="profile-card" onclick="showProfile(1)">
+      <img src="img/laura1.jpg" alt="Laura">
+      <div class="profile-info">
+        <strong>Laura</strong>
+        <span>26 ans - Lyon</span>
+        <span>💖 🎉</span>
       </div>
     </div>
   </div>
 
-  <script>
-    const profiles = [
-      {
-        name: "Emma",
-        age: 28,
-        ville: "Paris",
-        description: "À la recherche d’une belle histoire basée sur la confiance et la complicité.",
-        salles: "💖 💬 🎉",
-        photos: ["img/emma1.jpg", "img/emma2.jpg", "img/emma3.jpg"]
-      },
-      {
-        name: "Laura",
-        age: 26,
-        ville: "Lyon",
-        description: "Prête à construire un lien fort, tendre et durable.",
-        salles: "💖 💬",
-        photos: ["img/laura1.jpg", "img/laura2.jpg", "img/laura3.jpg"]
-      }
-    ];
+  <!-- Encadré droit -->
+  <div class="detail" id="profileDetail">
+    <div class="photo-carousel" id="carousel">
+      <!-- photos ajoutées dynamiquement -->
+    </div>
+    <h2 id="nameAge">Emma, 28 ans</h2>
+    <div class="location" id="location">Paris</div>
+    <div class="salles" id="salles">💖 💬 🎉</div>
+    <div class="description" id="description">
+      À la recherche d’une belle histoire basée sur la confiance et la complicité.
+    </div>
+    <div class="actions">
+      <button class="btn" onclick="resetDetail()">⬅ Revenir</button>
+      <button class="btn">💬 Chat</button>
+    </div>
+  </div>
+</div>
 
-    function showDetail(index) {
-      const profile = profiles[index];
-      document.getElementById("nameAge").textContent = `${profile.name}, ${profile.age}`;
-      document.getElementById("location").textContent = profile.ville;
-      document.getElementById("description").textContent = profile.description;
-      document.getElementById("salles").textContent = profile.salles;
-
-      const carousel = document.getElementById("photoCarousel");
-      carousel.innerHTML = "";
-      profile.photos.forEach(src => {
-        const img = document.createElement("img");
-        img.src = src;
-        carousel.appendChild(img);
-      });
+<script>
+  const profiles = [
+    {
+      name: "Emma",
+      age: 28,
+      location: "Paris",
+      salles: "💖 💬 🎉",
+      description: "À la recherche d’une belle histoire basée sur la confiance et la complicité.",
+      photos: ["img/emma1.jpg", "img/emma2.jpg", "img/emma3.jpg"]
+    },
+    {
+      name: "Laura",
+      age: 26,
+      location: "Lyon",
+      salles: "💖 🎉",
+      description: "Je crois en une relation sincère et pleine de douceur.",
+      photos: ["img/laura1.jpg", "img/laura2.jpg"]
     }
+  ];
 
-    function hideDetail() {
-      document.getElementById("photoCarousel").innerHTML = "";
-      document.getElementById("nameAge").textContent = "";
-      document.getElementById("location").textContent = "";
-      document.getElementById("description").textContent = "";
-      document.getElementById("salles").textContent = "";
-    }
+  function showProfile(index) {
+    const user = profiles[index];
+    document.getElementById("nameAge").textContent = `${user.name}, ${user.age} ans`;
+    document.getElementById("location").textContent = user.location;
+    document.getElementById("salles").textContent = user.salles;
+    document.getElementById("description").textContent = user.description;
 
-    // Par défaut, afficher le premier profil
-    showDetail(0);
-  </script>
+    const carousel = document.getElementById("carousel");
+    carousel.innerHTML = "";
+    user.photos.forEach(src => {
+      const img = document.createElement("img");
+      img.src = src;
+      carousel.appendChild(img);
+    });
+  }
+
+  function resetDetail() {
+    document.getElementById("nameAge").textContent = "";
+    document.getElementById("location").textContent = "";
+    document.getElementById("salles").textContent = "";
+    document.getElementById("description").textContent = "";
+    document.getElementById("carousel").innerHTML = "";
+  }
+
+  // Afficher le 1er profil par défaut
+  showProfile(0);
+</script>
+
 </body>
 </html>
