@@ -1,209 +1,203 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <title>💖 Relation Sérieuse - AFFINIX</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+  <meta charset="UTF-8">
+  <title>Relation Sérieuse - AFFINIX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Police Orbitron -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
+
+  <style>
     body {
       margin: 0;
+      padding: 0;
       font-family: 'Orbitron', sans-serif;
       background: url('img/fond-serieuse.jpg') no-repeat center center fixed;
       background-size: cover;
       color: #fff;
-      height: 100vh;
-      overflow: hidden;
-      display: flex;
-      justify-content: space-between;
-      padding: 40px;
-      gap: 20px;
+      overflow-x: hidden;
     }
 
-    .list-profils {
-      width: 30%;
-      height: 100%;
+    .encadre-gauche {
+      position: absolute;
+      top: 100px;
+      left: 20px;
+      width: 35%;
+      max-width: 280px;
+      backdrop-filter: blur(10px);
+      border: 2px solid #ff6dfb;
+      border-radius: 20px;
+      padding: 15px;
+      background: rgba(0,0,0,0.5);
+      box-shadow: 0 0 15px #ff6dfb;
       overflow-y: auto;
-      padding-right: 10px;
+      max-height: 80vh;
     }
 
-    .profil-card {
-      background: rgba(255, 255, 255, 0.07);
-      border: 1px solid #ff6dfb;
-      border-radius: 12px;
+    .profil-item {
       margin-bottom: 15px;
-      padding: 10px;
+      display: flex;
+      gap: 10px;
       cursor: pointer;
-      transition: 0.3s;
+      border-bottom: 1px solid #ffbaff;
+      padding-bottom: 10px;
     }
 
-    .profil-card:hover {
-      background: rgba(255, 255, 255, 0.15);
-    }
-
-    .profil-card img {
-      width: 100%;
+    .profil-item img {
+      width: 60px;
+      height: 60px;
       border-radius: 10px;
-      margin-bottom: 10px;
+      object-fit: cover;
+      border: 2px solid #ffbaff;
     }
 
-    .profil-card .nom {
-      font-size: 18px;
-      font-weight: bold;
+    .profil-item .infos {
+      font-size: 13px;
+      line-height: 1.4;
     }
 
-    .profil-card .info {
-      font-size: 14px;
-      color: #ffdfff;
-    }
-
-    .profil-card .salles {
-      margin-top: 5px;
-      font-size: 16px;
-    }
-
-    .fiche-detail {
-      width: 65%;
-      background: rgba(0, 0, 0, 0.5);
-      border: 1px solid #ff6dfb;
-      border-radius: 12px;
+    .encadre-droit {
+      position: absolute;
+      top: 100px;
+      right: 20px;
+      width: 50%;
+      max-width: 400px;
+      backdrop-filter: blur(12px);
+      border: 2px solid #ff6dfb;
+      border-radius: 20px;
       padding: 20px;
+      background: rgba(0,0,0,0.6);
+      box-shadow: 0 0 20px #ff6dfb;
       display: none;
-      flex-direction: column;
-      justify-content: space-between;
     }
 
-    .photos-carousel {
+    .carousel {
       display: flex;
       overflow-x: auto;
       gap: 10px;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
     }
 
-    .photos-carousel img {
-      height: 140px;
+    .carousel img {
+      height: 100px;
+      width: 100px;
+      object-fit: cover;
       border-radius: 10px;
-      flex-shrink: 0;
+      border: 2px solid #ffbaff;
     }
 
-    .description {
-      font-size: 15px;
-      margin-bottom: 10px;
-      color: #ffdfff;
+    h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+      color: #ffbaff;
     }
 
-    .actions {
+    .buttons {
       display: flex;
       justify-content: space-between;
+      margin-top: 20px;
     }
 
-    .btn {
-      padding: 10px 20px;
-      font-size: 14px;
-      background: #ff6dfb;
+    .buttons button {
+      background-color: #a86eff;
       border: none;
-      border-radius: 20px;
+      padding: 10px 20px;
+      border-radius: 15px;
+      color: white;
+      font-family: 'Orbitron', sans-serif;
       cursor: pointer;
-      font-weight: bold;
-      color: #000;
+      box-shadow: 0 0 10px #ff6dfb;
     }
 
-    .btn:hover {
-      background: #d94bff;
+    .buttons button:hover {
+      background-color: #ff6dfb;
     }
 
-    @media (max-width: 900px) {
-      body {
-        flex-direction: column;
-        padding: 20px;
-      }
-
-      .list-profils, .fiche-detail {
-        width: 100%;
+    @media (max-width: 768px) {
+      .encadre-gauche, .encadre-droit {
+        position: static;
+        width: auto;
+        max-width: 90%;
+        margin: 10px auto;
       }
     }
   </style>
 </head>
 <body>
 
-  <div class="list-profils">
-    <div class="profil-card" onclick="openFiche(0)">
-      <img src="https://i.pravatar.cc/300?img=20" alt="Profil 1" />
-      <div class="nom">Léna</div>
-      <div class="info">27 ans – Paris</div>
-      <div class="salles">💖 💬 🎉</div>
-    </div>
-
-    <div class="profil-card" onclick="openFiche(1)">
-      <img src="https://i.pravatar.cc/300?img=32" alt="Profil 2" />
-      <div class="nom">Éric</div>
-      <div class="info">30 ans – Lyon</div>
-      <div class="salles">💖 🎉</div>
-    </div>
+  <!-- Encadré gauche : Liste profils -->
+  <div id="liste-profils" class="encadre-gauche">
+    <h3 style="color:#ff6dfb;">Relation Sérieuse</h3>
   </div>
 
-  <div class="fiche-detail" id="fiche">
-    <div class="photos-carousel" id="photos"></div>
-    <div class="description" id="desc"></div>
-    <div class="actions">
-      <button class="btn" onclick="closeFiche()">⬅ Revenir</button>
-      <button class="btn">💬 Chat</button>
-    </div>
-  </div>
+  <!-- Encadré droit : Détail profil -->
+  <div id="fiche-detaillee" class="encadre-droit"></div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
   <script>
-    const profils = [
-      {
-        nom: "Léna",
-        age: 27,
-        ville: "Paris",
-        salles: ["💖", "💬", "🎉"],
-        photos: [
-          "https://i.pravatar.cc/300?img=20",
-          "https://i.pravatar.cc/300?img=21",
-          "https://i.pravatar.cc/300?img=22"
-        ],
-        description: "Je suis passionnée de lecture et d’astronomie. Je cherche une belle connexion sincère 🌌."
-      },
-      {
-        nom: "Éric",
-        age: 30,
-        ville: "Lyon",
-        salles: ["💖", "🎉"],
-        photos: [
-          "https://i.pravatar.cc/300?img=32",
-          "https://i.pravatar.cc/300?img=33"
-        ],
-        description: "Musicien rêveur, j’adore les balades nocturnes et les discussions profondes ✨."
+    // Init Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
+      authDomain: "affinix-3a930.firebaseapp.com",
+      projectId: "affinix-3a930"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    const profilsContainer = document.getElementById("liste-profils");
+    const ficheContainer = document.getElementById("fiche-detaillee");
+
+    function getIconeSalle(salle) {
+      switch (salle) {
+        case "relation-serieuse": return "💖";
+        case "amicale": return "💬";
+        case "fun": return "🎉";
+        case "parents": return "👨‍👩‍👧";
+        default: return "";
       }
-    ];
+    }
 
-    function openFiche(index) {
-      const fiche = document.getElementById("fiche");
-      const photos = document.getElementById("photos");
-      const desc = document.getElementById("desc");
+    function ouvrirProfil(data) {
+      ficheContainer.innerHTML = `
+        <div class="carousel">
+          ${data.photos.slice(1).map(photo => `<img src="${photo}" alt="">`).join('')}
+        </div>
+        <h3>${data.prenom}, ${data.age} ans</h3>
+        <p>${data.description}</p>
+        <div class="buttons">
+          <button onclick="fermerFiche()">⬅ Revenir</button>
+          <button>💬 Chat</button>
+        </div>
+      `;
+      ficheContainer.style.display = "block";
+    }
 
-      const profil = profils[index];
+    function fermerFiche() {
+      ficheContainer.style.display = "none";
+    }
 
-      photos.innerHTML = "";
-      profil.photos.forEach(src => {
-        const img = document.createElement("img");
-        img.src = src;
-        photos.appendChild(img);
+    db.collection("users").where("salles", "array-contains", "relation-serieuse")
+      .get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          const profilHTML = `
+            <div class="profil-item" onclick='ouvrirProfil(${JSON.stringify(data).replace(/'/g, "\\'").replace(/"/g, '&quot;')})'>
+              <img src="${data.photos[0]}" alt="${data.prenom}">
+              <div class="infos">
+                <strong>${data.prenom}</strong><br>
+                ${data.age} ans – ${data.ville}<br>
+                ${data.salles.map(getIconeSalle).join(" ")}
+              </div>
+            </div>
+          `;
+          profilsContainer.innerHTML += profilHTML;
+        });
       });
-
-      desc.textContent = profil.description;
-      fiche.style.display = "flex";
-    }
-
-    function closeFiche() {
-      document.getElementById("fiche").style.display = "none";
-    }
   </script>
-
 </body>
 </html>
