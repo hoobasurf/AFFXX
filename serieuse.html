@@ -2,178 +2,221 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>💖 Relation Sérieuse - AFFINIX</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
-
+  <title>Relation Sérieuse - Affinix</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet" />
   <style>
     body {
       margin: 0;
+      padding: 0;
       font-family: 'Orbitron', sans-serif;
-      background: url('img/fond-serieuse.jpg') no-repeat center center fixed;
+      background: url('img/fond-serieuse-violet.jpg') no-repeat center center fixed;
       background-size: cover;
+      color: #fff;
       overflow: hidden;
-      color: white;
     }
 
     .container {
       display: flex;
       height: 100vh;
-      width: 100vw;
+      padding: 20px;
+      box-sizing: border-box;
     }
 
-    .profile-list {
-      width: 35%;
-      overflow-y: auto;
+    .sidebar {
+      width: 30%;
       backdrop-filter: blur(10px);
-      background-color: rgba(255, 255, 255, 0.05);
-      border-right: 2px solid rgba(255, 255, 255, 0.2);
+      border: 2px solid #ff80d5;
+      border-radius: 20px;
       padding: 20px;
+      margin-right: 20px;
+      overflow-y: auto;
     }
 
     .profile-card {
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 15px;
-      padding: 15px;
-      margin-bottom: 20px;
+      border: 1px solid #ffbaff;
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 10px;
       cursor: pointer;
-      transition: 0.3s;
-      backdrop-filter: blur(4px);
-      border: 2px solid;
+      background: rgba(255, 255, 255, 0.05);
+      transition: background 0.3s;
     }
 
-    .profile-card.girl { border-color: #ff6dfb; }
-    .profile-card.boy { border-color: #6dd3ff; }
+    .profile-card:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
 
     .profile-card img {
-      width: 100%;
-      height: 180px;
+      width: 60px;
+      height: 60px;
+      border-radius: 10px;
+      object-fit: cover;
+      margin-right: 10px;
+    }
+
+    .profile-info {
+      display: flex;
+      align-items: center;
+    }
+
+    .profile-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .profile-text span {
+      margin: 2px 0;
+    }
+
+    .detail {
+      flex-grow: 1;
+      border: 2px solid #ff80d5;
+      border-radius: 20px;
+      padding: 20px;
+      position: relative;
+      backdrop-filter: blur(10px);
+      overflow: hidden;
+    }
+
+    .photo-carousel {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .photo-carousel img {
+      width: 150px;
+      height: 150px;
       object-fit: cover;
       border-radius: 12px;
-      margin-bottom: 10px;
-    }
-
-    .profile-detail {
-      flex: 1;
-      padding: 20px;
-      display: none;
-      flex-direction: column;
-      justify-content: space-between;
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(10px);
-      border-left: 2px solid rgba(255, 255, 255, 0.2);
-      position: relative;
-    }
-
-    .swiper {
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      margin-bottom: 20px;
-    }
-
-    .swiper img {
-      height: 220px;
-      border-radius: 12px;
-    }
-
-    .desc {
-      font-size: 15px;
-      line-height: 1.6;
-      margin-bottom: 20px;
+      scroll-snap-align: start;
     }
 
     .actions {
       position: absolute;
       bottom: 20px;
-      left: 20px;
-      right: 20px;
+      width: calc(100% - 40px);
       display: flex;
       justify-content: space-between;
     }
 
     .btn {
       padding: 10px 20px;
-      font-size: 14px;
       border-radius: 20px;
-      cursor: pointer;
+      background-color: #ff6dfb;
       border: none;
-      font-weight: bold;
       color: white;
-      background: linear-gradient(90deg, #ff6dfb, #c266ff);
+      font-weight: bold;
+      cursor: pointer;
       box-shadow: 0 0 10px #ff6dfb;
     }
 
-    .btn:hover {
-      opacity: 0.9;
+    h2 {
+      margin: 0 0 10px;
+      color: #ffbaff;
     }
 
-    /* Scroll bar légère */
-    .profile-list::-webkit-scrollbar {
-      width: 6px;
+    .salles {
+      font-size: 18px;
+      margin-top: 10px;
     }
-    .profile-list::-webkit-scrollbar-thumb {
-      background-color: rgba(255,255,255,0.3);
-      border-radius: 10px;
+
+    .description {
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
-
   <div class="container">
-    <!-- Liste de profils -->
-    <div class="profile-list">
-      <div class="profile-card girl" onclick="showProfile(0)">
-        <img src="img/profil-fille1.jpg" alt="profil 1">
-        <div><strong>Luna</strong>, 26 ans</div>
-        <div>📍 Paris</div>
-        <div>💖 💬 🎉</div>
+    <div class="sidebar" id="profileList">
+      <!-- Profils mock -->
+      <div class="profile-card" onclick="showDetail(0)">
+        <div class="profile-info">
+          <img src="img/emma1.jpg" alt="Emma">
+          <div class="profile-text">
+            <span><strong>Emma</strong>, 28</span>
+            <span>Paris</span>
+            <span>💖 💬 🎉</span>
+          </div>
+        </div>
       </div>
-      <div class="profile-card boy" onclick="showProfile(1)">
-        <img src="img/profil-garcon1.jpg" alt="profil 2">
-        <div><strong>Leo</strong>, 30 ans</div>
-        <div>📍 Lyon</div>
-        <div>💖 🎉</div>
-      </div>
-      <div class="profile-card girl" onclick="showProfile(2)">
-        <img src="img/profil-fille2.jpg" alt="profil 3">
-        <div><strong>Emma</strong>, 24 ans</div>
-        <div>📍 Marseille</div>
-        <div>💬 🎉</div>
+      <div class="profile-card" onclick="showDetail(1)">
+        <div class="profile-info">
+          <img src="img/laura1.jpg" alt="Laura">
+          <div class="profile-text">
+            <span><strong>Laura</strong>, 26</span>
+            <span>Lyon</span>
+            <span>💖 💬</span>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Détail du profil -->
-    <div class="profile-detail" id="detail">
-      <div>
-        <div class="swiper" id="swiper"></div>
-        <div class="desc" id="desc">Description ici...</div>
+    <div class="detail" id="detailView">
+      <div class="photo-carousel" id="photoCarousel">
+        <!-- Photos ici -->
       </div>
+      <h2 id="nameAge">Emma, 28</h2>
+      <div id="location">Paris</div>
+      <div class="salles" id="salles">💖 💬 🎉</div>
+      <div class="description" id="description">À la recherche d’une belle histoire basée sur la confiance et la complicité.</div>
+
       <div class="actions">
-        <button class="btn" onclick="closeDetail()">⬅ Revenir</button>
+        <button class="btn" onclick="hideDetail()">⬅ Revenir</button>
         <button class="btn">💬 Chat</button>
       </div>
     </div>
   </div>
 
   <script>
-    const detail = document.getElementById('detail');
-    const swiper = document.getElementById('swiper');
-    const desc = document.getElementById('desc');
-
-    const profils = [
+    const profiles = [
       {
-        photos: ['img/profil-fille1.jpg', 'img/profil-fille1-2.jpg', 'img/profil-fille1-3.jpg'],
-        description: "Je suis Luna 🌙, passionnée d’art et de nature. J’aime les longues discussions profondes et sincères 💖.",
+        name: "Emma",
+        age: 28,
+        ville: "Paris",
+        description: "À la recherche d’une belle histoire basée sur la confiance et la complicité.",
+        salles: "💖 💬 🎉",
+        photos: ["img/emma1.jpg", "img/emma2.jpg", "img/emma3.jpg"]
       },
       {
-        photos: ['img/profil-garcon1.jpg', 'img/profil-garcon1-2.jpg'],
-        description: "Moi c’est Leo 😎. Développeur le jour, aventurier la nuit. Envie de créer une vraie connexion 💬.",
-      },
-      {
-        photos: ['img/profil-fille2.jpg', 'img/profil-fille2-2.jpg', 'img/profil-fille2-3.jpg', 'img/profil-fille2-4.jpg'],
-        description: "Emma 💫, rêveuse & spontanée. Je cherche quelqu’un qui me fera rire et vibrer. 🎉",
+        name: "Laura",
+        age: 26,
+        ville: "Lyon",
+        description: "Prête à construire un lien fort, tendre et durable.",
+        salles: "💖 💬",
+        photos: ["img/laura1.jpg", "img/laura2.jpg", "img/laura3.jpg"]
       }
     ];
 
-    function show
+    function showDetail(index) {
+      const profile = profiles[index];
+      document.getElementById("nameAge").textContent = `${profile.name}, ${profile.age}`;
+      document.getElementById("location").textContent = profile.ville;
+      document.getElementById("description").textContent = profile.description;
+      document.getElementById("salles").textContent = profile.salles;
+
+      const carousel = document.getElementById("photoCarousel");
+      carousel.innerHTML = "";
+      profile.photos.forEach(src => {
+        const img = document.createElement("img");
+        img.src = src;
+        carousel.appendChild(img);
+      });
+    }
+
+    function hideDetail() {
+      document.getElementById("photoCarousel").innerHTML = "";
+      document.getElementById("nameAge").textContent = "";
+      document.getElementById("location").textContent = "";
+      document.getElementById("description").textContent = "";
+      document.getElementById("salles").textContent = "";
+    }
+
+    // Par défaut, afficher le premier profil
+    showDetail(0);
+  </script>
+</body>
+</html>
