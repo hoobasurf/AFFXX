@@ -24,17 +24,18 @@
       width: 30%;
       max-width: 300px;
       overflow-y: auto;
-      overflow-x: hidden;           /* empêche scroll horizontal */
+      overflow-x: hidden;
       background-color: rgba(0, 0, 0, 0.4);
-      padding: 60px 10px 60px 10px; /* padding haut et bas */
+      padding: 20px 10px 20px 10px; /* réduit padding haut/bas */
       border-right: 2px solid #ff66c4;
-      touch-action: pan-y;          /* scroll vertical uniquement sur mobile */
-      user-select: none;            /* évite sélection texte pendant glissement */
+      touch-action: pan-y; /* désactive le mouvement horizontal */
+      user-select: none;   /* évite sélection accidentelle */
     }
 
     .profile-card {
       background: rgba(255, 255, 255, 0.05);
-      margin-bottom: 10px;
+      margin-top: 5px;    /* petit espace en haut */
+      margin-bottom: 5px; /* petit espace en bas */
       border-radius: 10px;
       padding: 10px;
       border: 1px solid #ff66c4;
@@ -42,7 +43,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      user-select: text; /* autorise sélection texte dans profils */
+      user-select: text;  /* permet la sélection de texte dans la carte */
     }
 
     .profile-card img {
