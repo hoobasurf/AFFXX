@@ -23,18 +23,13 @@
     .sidebar {
       width: 30%;
       max-width: 300px;
-      background-color: rgba(0, 0, 0, 0.4);
-      border-right: 2px solid #ff66c4;
-      padding: 10px 10px 0 10px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .profile-scroll {
       overflow-y: auto;
-      padding-top: 80px; /* espace vide sous le mot "Relation Sérieuse" dans l'image */
-      padding-right: 5px;
-      max-height: calc(100vh - 80px); /* on réduit le bas de la liste d’environ 1 profil */
+      overflow-x: hidden;           /* empêche scroll horizontal */
+      background-color: rgba(0, 0, 0, 0.4);
+      padding: 60px 10px 60px 10px; /* padding haut et bas */
+      border-right: 2px solid #ff66c4;
+      touch-action: pan-y;          /* scroll vertical uniquement sur mobile */
+      user-select: none;            /* évite sélection texte pendant glissement */
     }
 
     .profile-card {
@@ -47,8 +42,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      max-width: 100%;
-      box-sizing: border-box;
+      user-select: text; /* autorise sélection texte dans profils */
     }
 
     .profile-card img {
@@ -125,9 +119,7 @@
 </head>
 <body>
 
-  <div class="sidebar">
-    <div class="profile-scroll" id="profileList"></div>
-  </div>
+  <div class="sidebar" id="profileList"></div>
 
   <div class="main-content">
     <div class="detail-card" id="detailCard">
