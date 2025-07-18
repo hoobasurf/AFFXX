@@ -27,6 +27,10 @@
       background-color: rgba(0, 0, 0, 0.4);
       padding: 10px;
       border-right: 2px solid #ff66c4;
+
+      /* Ajout pour corriger le titre caché */
+      position: relative;
+      z-index: 10;
     }
 
     .profile-card {
@@ -39,6 +43,10 @@
       display: flex;
       align-items: center;
       gap: 10px;
+
+      /* Ajout pour éviter débordement */
+      max-width: 100%;
+      box-sizing: border-box;
     }
 
     .profile-card img {
