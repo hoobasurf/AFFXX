@@ -2,51 +2,57 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8" />
-<title>Affinix - Relation Sérieuse</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sidebar réduite en haut et bas</title>
 <style>
-  * {
-    box-sizing: border-box;
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    font-family: Arial, sans-serif;
+    background: #111;
+    color: #fff;
   }
+
   body {
-    margin: 0;
-    font-family: 'Orbitron', sans-serif;
-    background: url('img/fond-serieuse.jpg') no-repeat center center fixed;
-    background-size: cover;
-    color: white;
     display: flex;
     height: 100vh;
     overflow: hidden;
   }
 
-  .sidebar {
-    width: 30%;
-    max-width: 300px;
-    background-color: rgba(0, 0, 0, 0.4);
-    padding: 10px 10px 60px 10px; /* bottom padding safe area */
-    border-right: 2px solid #ff66c4;
+  /* Sidebar gauche */
+  .sidebar-left {
+    width: 280px;
+    background: rgba(0,0,0,0.6);
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    padding-top: 5px;   /* réduit le haut */
+    padding-bottom: 5px; /* réduit le bas */
+    border-right: 2px solid #ff66c4;
     overflow-y: auto;
-    overflow-x: hidden;
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: #ff66c4 transparent;
   }
 
+  .sidebar-left::-webkit-scrollbar {
+    width: 6px;
+  }
+  .sidebar-left::-webkit-scrollbar-thumb {
+    background-color: #ff66c4;
+    border-radius: 3px;
+  }
+
+  /* Profils */
   .profile-card {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
+    background: rgba(255,255,255,0.1);
+    margin: 6px 10px;
     padding: 8px;
-    border: 1px solid #ff66c4;
-    cursor: pointer;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     gap: 10px;
-    user-select: none;
-    height: 80px; /* hauteur réduite pour 3 profils visibles */
-    min-height: 80px;
+    height: 75px;  /* hauteur réduite */
+    min-height: 75px;
+    cursor: pointer;
+    border: 1px solid #ff66c4;
   }
 
   .profile-card img {
@@ -62,138 +68,73 @@
     justify-content: center;
   }
 
+  /* Contenu principal */
   .main-content {
     flex: 1;
-    padding: 20px;
-    overflow: auto;
-    position: relative;
+    background: url('img/fond-serieuse.jpg') no-repeat center center fixed;
+    background-size: cover;
+    padding: 15px;
+    overflow-y: auto;
+    padding-top: 5px;   /* réduit haut */
+    padding-bottom: 5px; /* réduit bas */
   }
 
-  .detail-card {
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 15px;
-    padding: 20px;
-    border: 2px solid #ff66c4;
-    display: none;
-    height: 100%;
+  /* Sidebar droite (exemple d'encadré à droite) */
+  .sidebar-right {
+    width: 200px;
+    background: rgba(0,0,0,0.5);
+    border-left: 2px solid #ff66c4;
+    padding-top: 5px;   /* réduit le haut */
+    padding-bottom: 5px; /* réduit le bas */
+    overflow-y: auto;
   }
 
-  .carousel {
-    display: flex;
-    overflow-x: auto;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-
-  .carousel img {
-    height: 150px;
-    border-radius: 10px;
-  }
-
-  .actions {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    right: 20px;
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .btn {
-    padding: 10px 20px;
-    background-color: #ff66c4;
-    border: none;
-    border-radius: 20px;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    user-select: none;
-  }
-
-  @media (max-width: 768px) {
-    .sidebar {
-      width: 40%;
-      padding-bottom: 80px;
-    }
-    .profile-card {
-      height: 70px;
-    }
-    .profile-card img {
-      width: 50px;
-      height: 50px;
-    }
-    .carousel img {
-      height: 120px;
-    }
-  }
+  /* Pas de barre blanche */
+  /* Le contenu prend toute la hauteur avec 5px padding en haut et bas */
 </style>
 </head>
 <body>
 
-  <div class="sidebar" id="profileList">
-    <!-- Les profils seront injectés ici -->
+  <div class="sidebar-left">
+    <div class="profile-card">
+      <img src="https://randomuser.me/api/portraits/women/1.jpg" alt="Profil" />
+      <div class="profile-info">
+        <strong>Marie, 27</strong>
+        <small>Paris</small>
+      </div>
+    </div>
+    <div class="profile-card">
+      <img src="https://randomuser.me/api/portraits/men/2.jpg" alt="Profil" />
+      <div class="profile-info">
+        <strong>Paul, 32</strong>
+        <small>Lyon</small>
+      </div>
+    </div>
+    <div class="profile-card">
+      <img src="https://randomuser.me/api/portraits/women/3.jpg" alt="Profil" />
+      <div class="profile-info">
+        <strong>Claire, 24</strong>
+        <small>Marseille</small>
+      </div>
+    </div>
+    <!-- Ajoute plus si besoin -->
   </div>
 
   <div class="main-content">
-    <div class="detail-card" id="detailCard">
-      <div class="carousel" id="carouselPhotos"></div>
-      <div id="detailDescription"></div>
-      <div class="actions">
-        <button class="btn" onclick="closeDetail()">⬅ Revenir</button>
-        <button class="btn">💬 Chat</button>
-      </div>
-    </div>
+    <h1>Titre visible ici sur fond</h1>
+    <p>Contenu principal...</p>
   </div>
 
-<script>
-  const profiles = Array.from({ length: 20 }, (_, i) => ({
-    photo: `https://randomuser.me/api/portraits/${i % 2 === 0 ? 'women' : 'men'}/${i}.jpg`,
-    prenom: `Prénom${i + 1}`,
-    age: 20 + (i % 10),
-    ville: "Paris",
-    description: "Voici une belle description de la personne...",
-    salles: "💖 💬 🎉",
-    photos: [
-      `https://picsum.photos/id/${100 + i}/200/150`,
-      `https://picsum.photos/id/${110 + i}/200/150`
-    ]
-  }));
-
-  const profileList = document.getElementById('profileList');
-  const detailCard = document.getElementById('detailCard');
-  const carouselPhotos = document.getElementById('carouselPhotos');
-  const detailDescription = document.getElementById('detailDescription');
-
-  function renderProfiles() {
-    profileList.innerHTML = '';
-    profiles.forEach((p, index) => {
-      const card = document.createElement('div');
-      card.className = 'profile-card';
-      card.innerHTML = `
-        <img src="${p.photo}" alt="${p.prenom}" />
-        <div class="profile-info">
-          <strong>${p.prenom}, ${p.age}</strong>
-          <small>${p.ville}</small>
-        </div>
-      `;
-      card.addEventListener('click', () => showDetail(index));
-      profileList.appendChild(card);
-    });
-  }
-
-  function showDetail(index) {
-    const p = profiles[index];
-    carouselPhotos.innerHTML = p.photos.map(src => `<img src="${src}" alt="photo" />`).join('');
-    detailDescription.textContent = p.description;
-    detailCard.style.display = 'block';
-  }
-
-  function closeDetail() {
-    detailCard.style.display = 'none';
-  }
-
-  renderProfiles();
-</script>
+  <div class="sidebar-right">
+    <div class="profile-card">
+      <img src="https://randomuser.me/api/portraits/men/4.jpg" alt="Profil" />
+      <div class="profile-info">
+        <strong>Luc, 29</strong>
+        <small>Toulouse</small>
+      </div>
+    </div>
+    <!-- Plus de contenu à droite -->
+  </div>
 
 </body>
 </html>
