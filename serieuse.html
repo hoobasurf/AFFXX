@@ -1,131 +1,199 @@
 <!DOCTYPE html>
-<html lang="fr"><head><meta charset="UTF-8"/>
-  <title>Affinix - Relation Sérieuse</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
-  <style>
-    * {box-sizing:border-box;}
-    html, body {
-      margin:0; padding:0;
-      font-family:'Orbitron',sans-serif;
-      background:url('img/fond-serieuse.jpg')center/cover fixed;
-      color:white; height:100%;
-    }
-    body {
-      display:flex; flex-direction:column;
-      height:100vh;
-      padding-top:env(safe-area-inset-top);
-      padding-bottom:env(safe-area-inset-bottom);
-      overflow:hidden;
-    }
-    .container {
-      display:flex; flex:1; overflow:hidden;
-    }
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<title>Affinix - Relation Sérieuse</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Orbitron', sans-serif;
+    background: url('img/fond-serieuse.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .sidebar {
+    width: 30%;
+    max-width: 300px;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 10px 10px 60px 10px; /* bottom padding safe area */
+    border-right: 2px solid #ff66c4;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .profile-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 8px;
+    border: 1px solid #ff66c4;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    user-select: none;
+    height: 80px; /* hauteur réduite pour 3 profils visibles */
+    min-height: 80px;
+  }
+
+  .profile-card img {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+
+  .profile-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .main-content {
+    flex: 1;
+    padding: 20px;
+    overflow: auto;
+    position: relative;
+  }
+
+  .detail-card {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    padding: 20px;
+    border: 2px solid #ff66c4;
+    display: none;
+    height: 100%;
+  }
+
+  .carousel {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .carousel img {
+    height: 150px;
+    border-radius: 10px;
+  }
+
+  .actions {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .btn {
+    padding: 10px 20px;
+    background-color: #ff66c4;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  @media (max-width: 768px) {
     .sidebar {
-      width:30%; max-width:300px;
-      overflow-y:auto;
-      overflow-x:hidden;
-      background:rgba(0,0,0,0.4);
-      padding:15px 10px; /* <-- top/bottom ajusté */
-      border-right:2px solid #ff66c4;
+      width: 40%;
+      padding-bottom: 80px;
     }
     .profile-card {
-      background:rgba(255,255,255,0.05);
-      margin-bottom:10px;
-      border-radius:10px;
-      padding:10px;
-      border:1px solid #ff66c4;
-      display:flex; gap:10px; cursor:pointer;
+      height: 70px;
     }
     .profile-card img {
-      width:60px; height:60px; border-radius:8px; object-fit:cover;
+      width: 50px;
+      height: 50px;
     }
-    .profile-info {flex-grow:1;}
-    .main-content {
-      flex:1;
-      padding:20px;
-      overflow-y:auto;
-      overflow-x:hidden;
-      position:relative;
+    .carousel img {
+      height: 120px;
     }
-    .detail-card {
-      display:none;
-      background:rgba(0,0,0,0.5);
-      border:2px solid #ff66c4;
-      border-radius:15px;
-      padding:20px;
-      height:100%;
-    }
-    .carousel {
-      display:flex;
-      overflow-x:auto;
-      gap:10px;
-      margin-bottom:20px;
-    }
-    .carousel img {height:150px; border-radius:10px;}
-    .actions {
-      position:absolute;
-      bottom:20px; left:20px; right:20px;
-      display:flex; justify-content:space-between;
-    }
-    .btn {
-      padding:10px 20px;
-      background:#ff66c4; border:none; border-radius:20px;
-      color:white; font-size:16px; cursor:pointer;
-    }
-    @media(max-width:768px){
-      .sidebar{width:40%;}
-      .profile-card img{width:50px;height:50px;}
-      .carousel img{height:120px;}
-    }
-  </style>
-</head><body>
-  <div class="container">
-    <div class="sidebar" id="profileList"></div>
-    <div class="main-content">
-      <div class="detail-card" id="detailCard">
-        <div class="carousel" id="carouselPhotos"></div>
-        <div id="detailDescription"></div>
-        <div class="actions">
-          <button class="btn" onclick="closeDetail()">⬅ Revenir</button>
-          <button class="btn">💬 Chat</button>
-        </div>
+  }
+</style>
+</head>
+<body>
+
+  <div class="sidebar" id="profileList">
+    <!-- Les profils seront injectés ici -->
+  </div>
+
+  <div class="main-content">
+    <div class="detail-card" id="detailCard">
+      <div class="carousel" id="carouselPhotos"></div>
+      <div id="detailDescription"></div>
+      <div class="actions">
+        <button class="btn" onclick="closeDetail()">⬅ Revenir</button>
+        <button class="btn">💬 Chat</button>
       </div>
     </div>
   </div>
-  <script>
-    const profiles = Array.from({length:20},(_,i)=>({
-      photo:`https://randomuser.me/api/portraits/${i%2===0?'women':'men'}/${i}.jpg`,
-      prenom:`Prénom${i+1}`, age:20+(i%10), ville:"Paris",
-      description:"Voici une belle description...", salles:"💖 💬 🎉",
-      photos:[
-        `https://picsum.photos/id/${100+i}/200/150`,
-        `https://picsum.photos/id/${110+i}/200/150`,
-        `https://picsum.photos/id/${120+i}/200/150`
-      ]
-    }));
-    const list=document.getElementById("profileList"),
-          detailCard=document.getElementById("detailCard"),
-          carousel=document.getElementById("carouselPhotos"),
-          desc=document.getElementById("detailDescription");
 
-    profiles.forEach(p=>{
-      const c=document.createElement("div");
-      c.className="profile-card";
-      c.onclick=()=>openDetail(p);
-      c.innerHTML=`<img src="${p.photo}"/><div class="profile-info"><strong>${p.prenom}</strong><div>${p.age} ans – ${p.ville}</div><div>${p.salles}</div></div>`;
-      list.appendChild(c);
+<script>
+  const profiles = Array.from({ length: 20 }, (_, i) => ({
+    photo: `https://randomuser.me/api/portraits/${i % 2 === 0 ? 'women' : 'men'}/${i}.jpg`,
+    prenom: `Prénom${i + 1}`,
+    age: 20 + (i % 10),
+    ville: "Paris",
+    description: "Voici une belle description de la personne...",
+    salles: "💖 💬 🎉",
+    photos: [
+      `https://picsum.photos/id/${100 + i}/200/150`,
+      `https://picsum.photos/id/${110 + i}/200/150`
+    ]
+  }));
+
+  const profileList = document.getElementById('profileList');
+  const detailCard = document.getElementById('detailCard');
+  const carouselPhotos = document.getElementById('carouselPhotos');
+  const detailDescription = document.getElementById('detailDescription');
+
+  function renderProfiles() {
+    profileList.innerHTML = '';
+    profiles.forEach((p, index) => {
+      const card = document.createElement('div');
+      card.className = 'profile-card';
+      card.innerHTML = `
+        <img src="${p.photo}" alt="${p.prenom}" />
+        <div class="profile-info">
+          <strong>${p.prenom}, ${p.age}</strong>
+          <small>${p.ville}</small>
+        </div>
+      `;
+      card.addEventListener('click', () => showDetail(index));
+      profileList.appendChild(card);
     });
+  }
 
-    function openDetail(p){
-      detailCard.style.display="block";
-      carousel.innerHTML="";
-      desc.innerText=p.description;
-      p.photos.forEach(url=>{
-        const img=document.createElement("img");
-        img.src=url;
-        carousel.appendChild(img);
-      });
-    }
-    function closeDetail(){ detailCard.style.display="none"; }
-  </script>
-</body></html>
+  function showDetail(index) {
+    const p = profiles[index];
+    carouselPhotos.innerHTML = p.photos.map(src => `<img src="${src}" alt="photo" />`).join('');
+    detailDescription.textContent = p.description;
+    detailCard.style.display = 'block';
+  }
+
+  function closeDetail() {
+    detailCard.style.display = 'none';
+  }
+
+  renderProfiles();
+</script>
+
+</body>
+</html>
