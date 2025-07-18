@@ -23,14 +23,29 @@
     .sidebar {
       width: 30%;
       max-width: 300px;
-      overflow-y: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+      border-right: 2px solid #ff66c4;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-title {
+      font-size: 22px;
+      color: #ff66c4;
       background-color: rgba(0, 0, 0, 0.4);
       padding: 10px;
-      border-right: 2px solid #ff66c4;
+      border: 1px solid #ff66c4;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
 
-      /* Ajout pour corriger le titre caché */
-      position: relative;
-      z-index: 10;
+    .profile-scroll {
+      overflow-y: auto;
+      flex-grow: 1;
+      max-height: 88vh; /* remonte légèrement le bas */
+      padding-right: 5px;
     }
 
     .profile-card {
@@ -43,8 +58,6 @@
       display: flex;
       align-items: center;
       gap: 10px;
-
-      /* Ajout pour éviter débordement */
       max-width: 100%;
       box-sizing: border-box;
     }
@@ -123,7 +136,10 @@
 </head>
 <body>
 
-  <div class="sidebar" id="profileList"></div>
+  <div class="sidebar">
+    <div class="sidebar-title">💖 Relation Sérieuse</div>
+    <div class="profile-scroll" id="profileList"></div>
+  </div>
 
   <div class="main-content">
     <div class="detail-card" id="detailCard">
