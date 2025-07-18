@@ -23,19 +23,19 @@
     .sidebar {
       width: 30%;
       max-width: 300px;
+      height: calc(100vh - 60px); /* 30px en haut et 30px en bas */
+      padding-top: 30px;
+      padding-bottom: 30px;
       overflow-y: auto;
-      overflow-x: hidden;
       background-color: rgba(0, 0, 0, 0.4);
-      padding: 20px 10px 20px 10px; /* réduit padding haut/bas */
+      padding-left: 10px;
+      padding-right: 10px;
       border-right: 2px solid #ff66c4;
-      touch-action: pan-y; /* désactive le mouvement horizontal */
-      user-select: none;   /* évite sélection accidentelle */
     }
 
     .profile-card {
       background: rgba(255, 255, 255, 0.05);
-      margin-top: 5px;    /* petit espace en haut */
-      margin-bottom: 5px; /* petit espace en bas */
+      margin-bottom: 10px;
       border-radius: 10px;
       padding: 10px;
       border: 1px solid #ff66c4;
@@ -43,7 +43,6 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      user-select: text;  /* permet la sélection de texte dans la carte */
     }
 
     .profile-card img {
@@ -59,7 +58,11 @@
 
     .main-content {
       flex: 1;
-      padding: 20px;
+      height: calc(100vh - 60px); /* 30px en haut et 30px en bas */
+      padding-top: 30px;
+      padding-bottom: 30px;
+      padding-left: 20px;
+      padding-right: 20px;
       overflow: auto;
       position: relative;
     }
@@ -71,6 +74,7 @@
       border: 2px solid #ff66c4;
       display: none;
       height: 100%;
+      box-sizing: border-box;
     }
 
     .carousel {
