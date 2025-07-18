@@ -25,27 +25,16 @@
       max-width: 300px;
       background-color: rgba(0, 0, 0, 0.4);
       border-right: 2px solid #ff66c4;
-      padding: 10px;
+      padding: 10px 10px 0 10px;
       display: flex;
       flex-direction: column;
     }
 
-    .sidebar-title {
-      font-size: 22px;
-      color: #ff66c4;
-      background-color: rgba(0, 0, 0, 0.4);
-      padding: 10px;
-      border: 1px solid #ff66c4;
-      border-radius: 10px;
-      margin-bottom: 10px;
-      text-align: center;
-    }
-
     .profile-scroll {
       overflow-y: auto;
-      flex-grow: 1;
-      max-height: 88vh; /* remonte légèrement le bas */
+      padding-top: 80px; /* espace vide sous le mot "Relation Sérieuse" dans l'image */
       padding-right: 5px;
+      max-height: calc(100vh - 80px); /* on réduit le bas de la liste d’environ 1 profil */
     }
 
     .profile-card {
@@ -137,7 +126,6 @@
 <body>
 
   <div class="sidebar">
-    <div class="sidebar-title">💖 Relation Sérieuse</div>
     <div class="profile-scroll" id="profileList"></div>
   </div>
 
