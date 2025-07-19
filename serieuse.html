@@ -3,18 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Profils Compatibles</title>
+  <title>Relation Sérieuse</title>
   <style>
     body {
       margin: 0;
       font-family: 'Arial', sans-serif;
-      background: url('fond-classique.jpg') no-repeat center center fixed;
+      background: url('fond-tokyo.jpg') no-repeat center center fixed;
       background-size: cover;
       color: white;
+      overflow-x: hidden;
     }
 
     .test-btn {
-      position: absolute;
+      position: fixed;
       top: 20px;
       left: 20px;
       background: rgba(255, 105, 180, 0.85);
@@ -23,22 +24,26 @@
       border-radius: 8px;
       text-decoration: none;
       font-weight: bold;
+      z-index: 999;
     }
 
     .card {
       width: 90%;
       max-width: 350px;
       margin: 100px auto;
-      background: rgba(0, 0, 0, 0.6);
-      border-radius: 10px;
+      background: linear-gradient(145deg, rgba(255,182,193,0.8), rgba(238,130,238,0.8));
+      border-radius: 20px;
       padding: 20px;
       text-align: center;
-      transition: transform 0.3s ease, opacity 0.3s ease;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease;
     }
 
     .card img {
       width: 100%;
-      border-radius: 10px;
+      border-radius: 15px;
+      border: 3px solid white;
     }
 
     .buttons {
@@ -47,7 +52,7 @@
       justify-content: space-around;
     }
 
-    .buttons button {
+    .buttons button, .view-btn {
       background: white;
       color: black;
       border: none;
@@ -57,23 +62,21 @@
       cursor: pointer;
     }
 
-    .voir-btn {
-      margin-top: 12px;
-      background: #ff69b4;
-      color: white;
-      border: none;
-      padding: 8px 16px;
+    .view-btn {
       border-radius: 20px;
-      cursor: pointer;
+      font-size: 14px;
+      padding: 8px 16px;
+      margin-top: 12px;
     }
 
-    .voir-btn:hover {
-      background: #e758a0;
+    .hidden {
+      display: none;
     }
   </style>
 </head>
 <body>
-  <a href="questionnaire.html" class="test-btn">✨ Refaire le test</a>
+  <a href="questionnaire.html" class="test-btn">✨ Trouver mon profil idéal</a>
+
   <div id="profilContainer"></div>
 
   <script>
@@ -101,60 +104,47 @@
     ];
 
     const filters = JSON.parse(localStorage.getItem("questionnaireProfil"));
-    const container = document.getElementById("profilContainer");
 
-    function isCompatible(p, filters) {
+    function isCompatible(profil, filters) {
       if (!filters) return true;
       let score = 0;
       for (const key in filters) {
-        if (p[key] === filters[key]) score++;
+        if (profil[key] && profil[key] === filters[key]) score++;
       }
       return score >= 3;
     }
 
-    profils.forEach(p => {
-      if (isCompatible(p, filters)) {
-        const card = document.createElement("div");
-        card.className = "card";
-        card.innerHTML = `
+    const container = document.getElementById("profilContainer");
+
+    let current = 0;
+    const compatibles = profils.filter(p => isCompatible(p, filters));
+
+    function showProfil(index) {
+      if (index >= compatibles.length) {
+        container.innerHTML = "<h2 style='text-align:center'>💖 Plus de profils pour le moment</h2>";
+        return;
+      }
+      const p = compatibles[index];
+      container.innerHTML = `
+        <div class="card" id="profilCard">
           <img src="${p.image}" alt="${p.nom}">
           <h2>${p.nom}, ${p.age} ans</h2>
           <p>${p.description}</p>
-          <button class="voir-btn" onclick='openProfil(${JSON.stringify(p)})'>Voir le profil</button>
           <div class="buttons">
-            <button onclick="swipeCard(this, false)">❌</button>
-            <button onclick="swipeCard(this, true)">❤️</button>
+            <button onclick="nextProfil()">❌</button>
+            <button onclick="nextProfil()">❤️</button>
           </div>
-        `;
-        container.appendChild(card);
-      }
-    });
-
-    function openProfil(p) {
-      const win = window.open("", "_blank");
-      win.document.write(`
-        <html><head><title>${p.nom}</title>
-        <style>
-          body {background: url('fond-paradis-romantique.jpg') center/cover no-repeat; color: white; text-align: center; font-family: Arial; padding: 40px;}
-          img {border-radius: 50%; width: 150px; border: 3px solid white;}
-          .btn {position: absolute; top: 20px; left: 20px; background: #fff; color: #000; padding: 10px 16px; border-radius: 5px;}
-        </style>
-        </head>
-        <body>
-          <a href="serieuse.html" class="btn">🔙 Retour</a>
-          <img src="${p.image}" alt="${p.nom}"><br><br>
-          <h2>${p.nom}, ${p.age} ans</h2>
-          <p style="max-width: 400px; margin: auto">${p.description}</p>
-        </body></html>
-      `);
+          <button class="view-btn" onclick="window.location.href='profil-${p.nom.toLowerCase()}.html'">👁 Voir le profil</button>
+        </div>
+      `;
     }
 
-    function swipeCard(button, liked) {
-      const card = button.closest('.card');
-      card.style.transform = liked ? 'translateX(100%) rotate(10deg)' : 'translateX(-100%) rotate(-10deg)';
-      card.style.opacity = 0;
-      setTimeout(() => card.remove(), 300);
+    function nextProfil() {
+      current++;
+      showProfil(current);
     }
+
+    showProfil(current);
   </script>
 </body>
 </html>
