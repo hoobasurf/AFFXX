@@ -2,149 +2,182 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Relation Sérieuse</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ton Profil Idéal</title>
+
   <style>
     body {
-      margin: 0;
-      font-family: 'Arial', sans-serif;
+      margin: 0; padding: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       background: url('fond-tokyo.jpg') no-repeat center center fixed;
       background-size: cover;
-      color: white;
-      overflow-x: hidden;
-    }
-
-    .test-btn {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      background: rgba(255, 105, 180, 0.85);
-      color: white;
-      padding: 10px 16px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-      z-index: 999;
-    }
-
-    .card {
-      width: 90%;
-      max-width: 350px;
-      margin: 100px auto;
-      background: linear-gradient(145deg, rgba(255,182,193,0.8), rgba(238,130,238,0.8));
-      border-radius: 20px;
-      padding: 20px;
-      text-align: center;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 4px 30px rgba(0,0,0,0.3);
-      transition: transform 0.3s ease;
-    }
-
-    .card img {
-      width: 100%;
-      border-radius: 15px;
-      border: 3px solid white;
-    }
-
-    .buttons {
-      margin-top: 15px;
+      color: #f0e6fa;
       display: flex;
-      justify-content: space-around;
+      flex-direction: column;
+      min-height: 100vh;
+      text-shadow: 0 0 10px #c87bf2;
     }
 
-    .buttons button, .view-btn {
-      background: white;
-      color: black;
-      border: none;
-      padding: 10px;
-      border-radius: 50%;
-      font-size: 20px;
-      cursor: pointer;
+    header {
+      background: rgba(123, 47, 247, 0.8);
+      padding: 1.2rem;
+      font-size: 2rem;
+      font-weight: 700;
+      text-align: center;
+      box-shadow: 0 0 30px #f107a3;
+      user-select: none;
     }
 
-    .view-btn {
+    main {
+      background: rgba(30, 15, 45, 0.85);
+      margin: 2rem auto 3rem;
       border-radius: 20px;
-      font-size: 14px;
-      padding: 8px 16px;
-      margin-top: 12px;
+      box-shadow: 0 0 30px #f107a3aa;
+      width: 90%;
+      max-width: 480px;
+      padding: 2rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
     }
 
-    .hidden {
-      display: none;
+    h2 {
+      margin: 0 0 1rem 0;
+      font-weight: 800;
+      color: #ff79c6;
+      text-align: center;
+      text-shadow: 0 0 12px #ff79c6;
+      user-select: none;
+    }
+
+    .profile-field {
+      background: #4a2168;
+      padding: 1rem 1.3rem;
+      border-radius: 16px;
+      box-shadow: inset 0 0 15px #d95ce7;
+      font-size: 1.1rem;
+      user-select: text;
+    }
+
+    .profile-label {
+      font-weight: 700;
+      color: #d19eea;
+      margin-bottom: 0.3rem;
+      user-select: none;
+    }
+
+    #backButton {
+      align-self: flex-start;
+      background: transparent;
+      border: 2px solid #ff79c6;
+      color: #ff79c6;
+      border-radius: 15px;
+      padding: 0.5rem 1.2rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 0 15px #ff79c6;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      user-select: none;
+      margin-bottom: 1rem;
+    }
+    #backButton:hover {
+      background-color: #ff79c6;
+      color: #4a2168;
+    }
+
+    #loading {
+      color: #e0caff;
+      font-style: italic;
+      text-align: center;
+      margin-top: 2rem;
+      user-select: none;
     }
   </style>
 </head>
 <body>
-  <a href="questionnaire.html" class="test-btn">✨ Trouver mon profil idéal</a>
 
-  <div id="profilContainer"></div>
+  <header>Voici ton profil idéal</header>
 
-  <script>
-    const profils = [
-      {
-        nom: "Alex",
-        age: 28,
-        animal: "Chien",
-        lieu: "Plage",
-        soiree: "Chez soi en amoureux",
-        amour: "Fusionnel(le)",
-        image: "photo-profil1.jpg",
-        description: "Aime les couchers de soleil et les romans."
-      },
-      {
-        nom: "Léa",
-        age: 26,
-        animal: "Chat",
-        lieu: "Montagne",
-        soiree: "Avec des amis",
-        amour: "Indépendant(e)",
-        image: "photo-profil2.jpg",
-        description: "Passionnée de randonnées et de liberté."
+  <main>
+    <button id="backButton" onclick="window.history.back()">← Retour</button>
+    <div id="loading">Chargement de ton profil...</div>
+    <div id="profileContainer" style="display:none;">
+      <div class="profile-field">
+        <div class="profile-label">Prénom :</div>
+        <div id="prenom"></div>
+      </div>
+      <div class="profile-field">
+        <div class="profile-label">Âge préféré :</div>
+        <div id="age"></div>
+      </div>
+      <div class="profile-field">
+        <div class="profile-label">Style préféré :</div>
+        <div id="style"></div>
+      </div>
+      <div class="profile-field">
+        <div class="profile-label">Description :</div>
+        <div id="description"></div>
+      </div>
+    </div>
+  </main>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
+      authDomain: "affinix-3a930.firebaseapp.com",
+      databaseURL: "https://affinix-3a930-default-rtdb.firebaseio.com",
+      projectId: "affinix-3a930",
+      storageBucket: "affinix-3a930.firebasestorage.app",
+      messagingSenderId: "498829285833",
+      appId: "1:498829285833:web:344dacf5b6bcc818167018"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const loadingDiv = document.getElementById("loading");
+    const profileDiv = document.getElementById("profileContainer");
+
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        loadProfile(user.uid);
+      } else {
+        signInAnonymously(auth).catch(error => {
+          loadingDiv.textContent = "Erreur d'authentification Firebase.";
+          console.error(error);
+        });
       }
-    ];
+    });
 
-    const filters = JSON.parse(localStorage.getItem("questionnaireProfil"));
+    async function loadProfile(uid) {
+      try {
+        const docRef = doc(db, "profils", uid);
+        const docSnap = await getDoc(docRef);
 
-    function isCompatible(profil, filters) {
-      if (!filters) return true;
-      let score = 0;
-      for (const key in filters) {
-        if (profil[key] && profil[key] === filters[key]) score++;
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+
+          document.getElementById("prenom").textContent = data.prenom || "Non défini";
+          document.getElementById("age").textContent = data.age || "Non défini";
+          document.getElementById("style").textContent = data.style || "Non défini";
+          document.getElementById("description").textContent = data.description || "Non défini";
+
+          loadingDiv.style.display = "none";
+          profileDiv.style.display = "flex";
+        } else {
+          loadingDiv.textContent = "Aucun profil trouvé pour cet utilisateur.";
+        }
+      } catch (error) {
+        loadingDiv.textContent = "Erreur lors du chargement du profil.";
+        console.error(error);
       }
-      return score >= 3;
     }
-
-    const container = document.getElementById("profilContainer");
-
-    let current = 0;
-    const compatibles = profils.filter(p => isCompatible(p, filters));
-
-    function showProfil(index) {
-      if (index >= compatibles.length) {
-        container.innerHTML = "<h2 style='text-align:center'>💖 Plus de profils pour le moment</h2>";
-        return;
-      }
-      const p = compatibles[index];
-      container.innerHTML = `
-        <div class="card" id="profilCard">
-          <img src="${p.image}" alt="${p.nom}">
-          <h2>${p.nom}, ${p.age} ans</h2>
-          <p>${p.description}</p>
-          <div class="buttons">
-            <button onclick="nextProfil()">❌</button>
-            <button onclick="nextProfil()">❤️</button>
-          </div>
-          <button class="view-btn" onclick="window.location.href='profil-${p.nom.toLowerCase()}.html'">👁 Voir le profil</button>
-        </div>
-      `;
-    }
-
-    function nextProfil() {
-      current++;
-      showProfil(current);
-    }
-
-    showProfil(current);
   </script>
+
 </body>
 </html>
