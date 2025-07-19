@@ -3,36 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Questionnaire Profil Idéal</title>
+  <title>Profil Idéal</title>
   <style>
     body {
       margin: 0;
       padding: 30px 20px;
       font-family: Arial, sans-serif;
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(10px);
-      color: #fff;
       background-image: url('fond-classique.jpg');
       background-size: cover;
+      color: white;
+      backdrop-filter: blur(6px);
     }
 
     h1 {
       text-align: center;
       margin-bottom: 30px;
-      color: #ffccff;
+      color: #ffbbee;
     }
 
     form {
       max-width: 600px;
       margin: auto;
-      background: rgba(0,0,0,0.5);
-      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 12px;
       padding: 20px;
     }
 
     label {
       display: block;
       margin: 20px 0 5px;
+      font-weight: bold;
     }
 
     select {
@@ -50,7 +50,7 @@
       color: white;
       border: none;
       border-radius: 8px;
-      font-size: 16px;
+      font-size: 18px;
       cursor: pointer;
     }
 
@@ -60,67 +60,38 @@
   </style>
 </head>
 <body>
-  <h1>✨ Votre Profil Idéal</h1>
+  <h1>🔮 Trouver ton profil idéal</h1>
   <form id="quizForm">
+    <!-- Questions -->
     <label>1. Vous êtes plutôt :</label>
-    <select name="animal">
-      <option>Chat</option>
-      <option>Chien</option>
-    </select>
+    <select name="animal"><option>Chat</option><option>Chien</option></select>
 
     <label>2. Plutôt :</label>
-    <select name="lieu">
-      <option>Plage</option>
-      <option>Montagne</option>
-    </select>
+    <select name="lieu"><option>Plage</option><option>Montagne</option></select>
 
     <label>3. Soirée idéale :</label>
-    <select name="soiree">
-      <option>Chez soi en amoureux</option>
-      <option>Avec des amis</option>
-    </select>
+    <select name="soiree"><option>Chez soi en amoureux</option><option>Avec des amis</option></select>
 
     <label>4. Vous aimez mieux :</label>
-    <select name="musique">
-      <option>Musique douce</option>
-      <option>Ambiance dansante</option>
-    </select>
+    <select name="musique"><option>Musique douce</option><option>Ambiance dansante</option></select>
 
     <label>5. Votre humeur est :</label>
-    <select name="humeur">
-      <option>Posée</option>
-      <option>Fêtarde</option>
-    </select>
+    <select name="humeur"><option>Posée</option><option>Fêtarde</option></select>
 
     <label>6. Vous préférez :</label>
-    <select name="voyage">
-      <option>Voyager souvent</option>
-      <option>Rester chez vous</option>
-    </select>
+    <select name="voyage"><option>Voyager souvent</option><option>Rester chez vous</option></select>
 
     <label>7. Niveau passion :</label>
-    <select name="passion">
-      <option>Lecture</option>
-      <option>Sport</option>
-    </select>
+    <select name="passion"><option>Lecture</option><option>Sport</option></select>
 
     <label>8. Vos valeurs :</label>
-    <select name="valeurs">
-      <option>Fidélité</option>
-      <option>Liberté</option>
-    </select>
+    <select name="valeurs"><option>Fidélité</option><option>Liberté</option></select>
 
     <label>9. En amour vous êtes :</label>
-    <select name="amour">
-      <option>Fusionnel(le)</option>
-      <option>Indépendant(e)</option>
-    </select>
+    <select name="amour"><option>Fusionnel(le)</option><option>Indépendant(e)</option></select>
 
     <label>10. Votre idéal :</label>
-    <select name="ideal">
-      <option>Romantique</option>
-      <option>Spontané(e)</option>
-    </select>
+    <select name="ideal"><option>Romantique</option><option>Spontané(e)</option></select>
 
     <button type="submit">🎯 Valider & voir les profils</button>
   </form>
@@ -129,8 +100,7 @@
     document.getElementById("quizForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const data = {};
-      const selects = document.querySelectorAll("select");
-      selects.forEach(s => data[s.name] = s.value);
+      document.querySelectorAll("select").forEach(s => data[s.name] = s.value);
       localStorage.setItem("questionnaireProfil", JSON.stringify(data));
       window.location.href = "serieuse.html";
     });
