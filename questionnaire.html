@@ -9,7 +9,7 @@
       margin: 0;
       padding: 0;
       font-family: 'Arial', sans-serif;
-      background: url('../img/fond-romantique.jpg') no-repeat center center fixed;
+      background: url('../img/fond-paradis-romantique.jpg') no-repeat center center fixed;
       background-size: cover;
       color: white;
     }
@@ -17,7 +17,7 @@
     .container {
       max-width: 800px;
       margin: 50px auto;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.55);
       padding: 30px;
       border-radius: 15px;
       box-shadow: 0 0 15px rgba(0,0,0,0.6);
@@ -34,6 +34,7 @@
 
     .question p {
       font-weight: bold;
+      font-size: 1.1em;
     }
 
     label {
@@ -41,23 +42,28 @@
       margin-left: 20px;
       margin-top: 5px;
       cursor: pointer;
+      font-size: 1em;
+    }
+
+    input[type="radio"] {
+      margin-right: 10px;
     }
 
     button {
       display: block;
-      margin: 30px auto 0;
+      margin: 40px auto 0;
       background-color: #ff69b4;
       border: none;
       color: white;
       padding: 15px 25px;
-      font-size: 16px;
-      border-radius: 10px;
+      font-size: 18px;
+      border-radius: 12px;
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
 
     button:hover {
-      background-color: #ff85c1;
+      background-color: #ff88c4;
     }
 
     @media (max-width: 600px) {
@@ -65,8 +71,14 @@
         margin: 20px;
         padding: 20px;
       }
+
       button {
         width: 100%;
+        font-size: 16px;
+      }
+
+      h1 {
+        font-size: 1.5em;
       }
     }
   </style>
@@ -143,17 +155,16 @@
   <script>
     document.getElementById("questionnaire").addEventListener("submit", function (e) {
       e.preventDefault();
-
       const formData = new FormData(e.target);
       const reponses = {};
       formData.forEach((val, key) => {
         reponses[key] = val;
       });
 
-      // Enregistre dans localStorage (ou utilise Firebase plus tard)
+      // Enregistre les réponses dans le localStorage
       localStorage.setItem('profilIdeal', JSON.stringify(reponses));
 
-      // Rediriger vers la page des profils filtrés
+      // Redirection ou suite à gérer
       window.location.href = "/serieuse.html";
     });
   </script>
