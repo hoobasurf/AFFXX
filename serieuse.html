@@ -9,15 +9,15 @@
     body {
       margin: 0;
       padding: 0;
-      height: 100vh;
       background: url('img/fond-tokyo.jpg') no-repeat center center fixed;
       background-size: cover;
       font-family: 'Orbitron', sans-serif;
-      overflow: hidden;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      height: 100vh;
+      overflow: hidden;
     }
 
     .tinder-container {
@@ -25,6 +25,7 @@
       width: 90%;
       max-width: 320px;
       height: 480px;
+      margin-bottom: 80px; /* pour ne pas cacher les boutons */
     }
 
     .card {
@@ -50,11 +51,22 @@
       margin: 0;
     }
 
+    .card button.view-profile {
+      margin-top: 10px;
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
     .buttons {
-      margin-top: 20px;
       display: flex;
       justify-content: center;
       gap: 40px;
+      position: absolute;
+      bottom: 30px;
     }
 
     .buttons button {
@@ -65,11 +77,40 @@
       padding: 15px;
       border-radius: 50%;
       cursor: pointer;
-      transition: background 0.2s ease;
     }
 
-    .buttons button:hover {
+    /* Overlay pour voir le profil en détail */
+    .profile-detail {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.8);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      z-index: 999;
+    }
+
+    .profile-detail img {
+      width: 80%;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .profile-detail button {
+      margin-top: 20px;
       background: rgba(255,255,255,0.2);
+      border: none;
+      padding: 10px 20px;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -82,20 +123,56 @@
     <button onclick="like()">❤️</button>
   </div>
 
+  <!-- Détail du profil -->
+  <div class="profile-detail" id="profile-detail">
+    <img id="detail-image" src="">
+    <h2 id="detail-name"></h2>
+    <p id="detail-city"></p>
+    <p id="detail-description"></p>
+    <button onclick="closeProfile()">Retour</button>
+  </div>
+
   <script>
     const profiles = [
-      { name: 'Lina', age: 27, city: 'Paris', image: 'img/fille1.jpg' },
-      { name: 'Sophie', age: 30, city: 'Lyon', image: 'img/fille2.jpg' },
-      { name: 'Emma', age: 26, city: 'Toulouse', image: 'img/fille3.jpg' }
+      {
+        name: 'Lina',
+        age: 27,
+        city: 'Paris',
+        image: 'img/fille1.jpg',
+        description: 'Passionnée de voyage et de cuisine japonaise.'
+      },
+      {
+        name: 'Sophie',
+        age: 30,
+        city: 'Lyon',
+        image: 'img/fille2.jpg',
+        description: 'Amatrice de randonnée et de musique live.'
+      },
+      {
+        name: 'Emma',
+        age: 26,
+        city: 'Toulouse',
+        image: 'img/fille3.jpg',
+        description: 'Créative, rêve d’ouvrir son café littéraire.'
+      }
     ];
 
     const container = document.getElementById('tinder-container');
+    const detail = document.getElementById('profile-detail');
+    const detailImage = document.getElementById('detail-image');
+    const detailName = document.getElementById('detail-name');
+    const detailCity = document.getElementById('detail-city');
+    const detailDescription = document.getElementById('detail-description');
 
     profiles.reverse().forEach(profile => {
       const card = document.createElement('div');
       card.className = 'card';
       card.style.backgroundImage = `url(${profile.image})`;
-      card.innerHTML = `<h2>${profile.name}, ${profile.age} ans</h2><p>${profile.city}</p>`;
+      card.innerHTML = `
+        <h2>${profile.name}, ${profile.age} ans</h2>
+        <p>${profile.city}</p>
+        <button class="view-profile" onclick='showProfile(${JSON.stringify(profile)})'>Voir Profil</button>
+      `;
       container.appendChild(card);
     });
 
@@ -116,13 +193,11 @@
       setTimeout(() => card.remove(), 300);
     }
 
-    // Geste glissé
+    // Touch swipe
     let startX = null;
-
     container.addEventListener('touchstart', (e) => {
       startX = e.touches[0].clientX;
     });
-
     container.addEventListener('touchend', (e) => {
       if (startX === null) return;
       const endX = e.changedTouches[0].clientX;
@@ -131,6 +206,18 @@
       else if (diff < -50) swipe('left');
       startX = null;
     });
+
+    function showProfile(profile) {
+      detailImage.src = profile.image;
+      detailName.innerText = `${profile.name}, ${profile.age} ans`;
+      detailCity.innerText = profile.city;
+      detailDescription.innerText = profile.description;
+      detail.style.display = 'flex';
+    }
+
+    function closeProfile() {
+      detail.style.display = 'none';
+    }
   </script>
 </body>
 </html>
