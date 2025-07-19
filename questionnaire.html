@@ -1,107 +1,137 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Profil Idéal</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>✨ Trouver ton profil idéal</title>
   <style>
     body {
       margin: 0;
-      padding: 30px 20px;
-      font-family: Arial, sans-serif;
-      background-image: url('fond-classique.jpg');
+      font-family: 'Segoe UI', sans-serif;
+      background: url('fond-tokyo.jpg') no-repeat center center fixed;
       background-size: cover;
       color: white;
-      backdrop-filter: blur(6px);
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 60px auto;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 0 20px rgba(255, 192, 203, 0.5);
     }
 
     h1 {
       text-align: center;
-      margin-bottom: 30px;
-      color: #ffbbee;
-    }
-
-    form {
-      max-width: 600px;
-      margin: auto;
-      background: rgba(0, 0, 0, 0.6);
-      border-radius: 12px;
-      padding: 20px;
+      font-size: 28px;
+      background: linear-gradient(to right, #ff70a6, #c770ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     label {
       display: block;
-      margin: 20px 0 5px;
+      margin: 18px 0 8px;
       font-weight: bold;
     }
 
-    select {
-      width: 100%;
-      padding: 10px;
-      border-radius: 5px;
-      border: none;
+    .question {
+      margin-bottom: 20px;
     }
 
-    button {
+    .option {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 10px;
+      border-radius: 8px;
+      margin: 6px 0;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .option:hover {
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    input[type="radio"] {
+      margin-right: 10px;
+    }
+
+    .btn {
       display: block;
-      margin: 30px auto 0;
-      padding: 12px 24px;
-      background: #ff69b4;
+      width: 100%;
+      margin-top: 20px;
+      padding: 15px;
+      background: linear-gradient(to right, #ff70a6, #c770ff);
       color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: 12px;
       font-size: 18px;
       cursor: pointer;
+      font-weight: bold;
+      transition: transform 0.2s;
     }
 
-    button:hover {
-      background: #e85aa0;
+    .btn:hover {
+      transform: scale(1.03);
+    }
+
+    @media screen and (max-width: 600px) {
+      .container {
+        margin: 20px;
+        padding: 20px;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>🔮 Trouver ton profil idéal</h1>
-  <form id="quizForm">
-    <!-- Questions -->
-    <label>1. Vous êtes plutôt :</label>
-    <select name="animal"><option>Chat</option><option>Chien</option></select>
+  <div class="container">
+    <h1>🔮 Trouve ton profil idéal</h1>
+    <form id="quizForm">
+      <div class="question">
+        <label>1. Quel animal préfères-tu ?</label>
+        <div class="option"><input type="radio" name="animal" value="Chien"> Chien</div>
+        <div class="option"><input type="radio" name="animal" value="Chat"> Chat</div>
+      </div>
 
-    <label>2. Plutôt :</label>
-    <select name="lieu"><option>Plage</option><option>Montagne</option></select>
+      <div class="question">
+        <label>2. Ton lieu idéal pour une rencontre ?</label>
+        <div class="option"><input type="radio" name="lieu" value="Plage"> Plage</div>
+        <div class="option"><input type="radio" name="lieu" value="Montagne"> Montagne</div>
+      </div>
 
-    <label>3. Soirée idéale :</label>
-    <select name="soiree"><option>Chez soi en amoureux</option><option>Avec des amis</option></select>
+      <div class="question">
+        <label>3. Soirée préférée ?</label>
+        <div class="option"><input type="radio" name="soiree" value="Chez soi en amoureux"> En amoureux à la maison</div>
+        <div class="option"><input type="radio" name="soiree" value="Avec des amis"> Avec des amis</div>
+      </div>
 
-    <label>4. Vous aimez mieux :</label>
-    <select name="musique"><option>Musique douce</option><option>Ambiance dansante</option></select>
+      <div class="question">
+        <label>4. Ta vision de l’amour ?</label>
+        <div class="option"><input type="radio" name="amour" value="Fusionnel(le)"> Fusionnel(le)</div>
+        <div class="option"><input type="radio" name="amour" value="Indépendant(e)"> Indépendant(e)</div>
+      </div>
 
-    <label>5. Votre humeur est :</label>
-    <select name="humeur"><option>Posée</option><option>Fêtarde</option></select>
+      <!-- Tu peux continuer avec d'autres questions si tu veux -->
 
-    <label>6. Vous préférez :</label>
-    <select name="voyage"><option>Voyager souvent</option><option>Rester chez vous</option></select>
-
-    <label>7. Niveau passion :</label>
-    <select name="passion"><option>Lecture</option><option>Sport</option></select>
-
-    <label>8. Vos valeurs :</label>
-    <select name="valeurs"><option>Fidélité</option><option>Liberté</option></select>
-
-    <label>9. En amour vous êtes :</label>
-    <select name="amour"><option>Fusionnel(le)</option><option>Indépendant(e)</option></select>
-
-    <label>10. Votre idéal :</label>
-    <select name="ideal"><option>Romantique</option><option>Spontané(e)</option></select>
-
-    <button type="submit">🎯 Valider & voir les profils</button>
-  </form>
+      <button type="submit" class="btn">💘 Voir mes résultats</button>
+    </form>
+  </div>
 
   <script>
-    document.getElementById("quizForm").addEventListener("submit", function(e) {
+    const form = document.getElementById("quizForm");
+    form.addEventListener("submit", (e) => {
       e.preventDefault();
-      const data = {};
-      document.querySelectorAll("select").forEach(s => data[s.name] = s.value);
-      localStorage.setItem("questionnaireProfil", JSON.stringify(data));
+
+      const formData = new FormData(form);
+      const result = {};
+      for (let [key, value] of formData.entries()) {
+        result[key] = value;
+      }
+
+      // Sauvegarde dans localStorage pour la page suivante
+      localStorage.setItem("questionnaireProfil", JSON.stringify(result));
       window.location.href = "serieuse.html";
     });
   </script>
