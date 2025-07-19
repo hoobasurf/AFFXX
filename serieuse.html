@@ -61,35 +61,96 @@
 <body>
   <a href="questionnaire.html" class="test-btn">✨ Découvrir le profil idéal</a>
 
-  <div class="card" onclick="openProfil()">
-    <img src="photo-profil1.jpg" alt="Profil">
-    <h2>Alex, 28 ans</h2>
-    <p>Aime les couchers de soleil et les romans</p>
-    <div class="buttons">
-      <button>❌</button>
-      <button>❤️</button>
-    </div>
-  </div>
-
-  <!-- Profil ouvert -->
-  <div id="profilOuvert" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; 
-    background: url('fond-paradis-romantique.jpg') no-repeat center center fixed; background-size:cover; 
-    color:white; z-index:10000; padding:20px;">
-    <button onclick="closeProfil()" style="background:#fff; color:#000; padding:10px 20px; border-radius:5px;">🔙 Retour</button>
-    <div style="margin-top:30px; text-align:center;">
-      <img src="photo-profil1.jpg" style="width:150px; border-radius:50%; border:3px solid white;">
-      <h2>Alex, 28 ans</h2>
-      <p style="max-width: 400px; margin: auto;">Romantique et passionné, j’aime partager des moments simples et sincères. À la recherche d'une relation vraie.</p>
-    </div>
-  </div>
+  <div id="profilContainer"></div>
 
   <script>
-    function openProfil() {
-      document.getElementById("profilOuvert").style.display = "block";
+    const profils = [
+      {
+        nom: "Alex",
+        age: 28,
+        animal: "Chien",
+        lieu: "Plage",
+        soiree: "Chez soi en amoureux",
+        amour: "Fusionnel(le)",
+        image: "photo-profil1.jpg",
+        description: "Aime les couchers de soleil et les romans."
+      },
+      {
+        nom: "Léa",
+        age: 26,
+        animal: "Chat",
+        lieu: "Montagne",
+        soiree: "Avec des amis",
+        amour: "Indépendant(e)",
+        image: "photo-profil2.jpg",
+        description: "Passionnée de randonnées et de liberté."
+      }
+    ];
+
+    const filters = JSON.parse(localStorage.getItem("questionnaireProfil"));
+
+    function isCompatible(profil, filters) {
+      if (!filters) return true; // Aucun filtre → afficher tous les profils
+      let score = 0;
+      Object.keys(filters).forEach(key => {
+        if (profil[key] && profil[key] === filters[key]) {
+          score++;
+        }
+      });
+      return score >= 3; // au moins 3 points communs
     }
 
-    function closeProfil() {
-      document.getElementById("profilOuvert").style.display = "none";
+    const container = document.getElementById("profilContainer");
+    profils.forEach(p => {
+      if (isCompatible(p, filters)) {
+        container.innerHTML += `
+          <div class="card" onclick="openProfil('${p.nom}', '${p.age}', '${p.image}', '${p.description}')">
+            <img src="${p.image}" alt="${p.nom}">
+            <h2>${p.nom}, ${p.age} ans</h2>
+            <p>${p.description}</p>
+            <div class="buttons">
+              <button>❌</button>
+              <button>❤️</button>
+            </div>
+          </div>`;
+      }
+    });
+
+    function openProfil(nom, age, image, description) {
+      const win = window.open("", "_blank");
+      win.document.write(`
+        <html>
+        <head>
+          <title>${nom}</title>
+          <style>
+            body {
+              margin: 0;
+              font-family: Arial;
+              background: url('fond-paradis-romantique.jpg') center/cover no-repeat fixed;
+              color: white;
+              text-align: center;
+              padding: 40px;
+            }
+            .btn {
+              position: absolute;
+              top: 20px;
+              left: 20px;
+              background: #fff;
+              color: #000;
+              padding: 10px 16px;
+              border-radius: 5px;
+              text-decoration: none;
+            }
+          </style>
+        </head>
+        <body>
+          <a href="serieuse.html" class="btn">🔙 Retour</a>
+          <img src="${image}" style="width:150px; border-radius:50%; border:3px solid white;"><br><br>
+          <h2>${nom}, ${age} ans</h2>
+          <p style="max-width:400px; margin:auto">${description}</p>
+        </body>
+        </html>
+      `);
     }
   </script>
 </body>
