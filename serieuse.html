@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Relation Sérieuse</title>
   <style>
     body {
@@ -12,10 +12,14 @@
       background-size: cover;
       color: white;
       overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    .test-btn {
-      position: absolute;
+    a.test-btn {
+      position: fixed;
       top: 20px;
       left: 20px;
       background: rgba(255, 105, 180, 0.85);
@@ -25,41 +29,97 @@
       text-decoration: none;
       font-weight: bold;
       z-index: 9999;
+      user-select: none;
+    }
+
+    #profilContainer {
+      margin-top: 80px;
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      padding-bottom: 50px;
     }
 
     .card {
-      width: 90%;
-      max-width: 350px;
-      margin: 100px auto;
-      background: rgba(0, 0, 0, 0.5);
-      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 12px;
       padding: 20px;
       text-align: center;
+      box-shadow: 0 0 10px #ff69b4aa;
+      user-select: none;
+      position: relative;
     }
 
     .card img {
       width: 100%;
-      border-radius: 10px;
+      max-width: 300px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      object-fit: cover;
+      height: 220px;
+    }
+
+    .card h2 {
+      margin: 0 0 10px 0;
+      font-size: 1.6em;
+      color: #ffb6c1;
+    }
+
+    .card p {
+      font-size: 1em;
+      color: #ddd;
+      min-height: 50px;
     }
 
     .buttons {
       margin-top: 15px;
       display: flex;
-      justify-content: space-around;
+      justify-content: center;
+      gap: 25px;
     }
 
     .buttons button {
       background: white;
       color: black;
       border: none;
-      padding: 10px;
-      border-radius: 50%;
-      font-size: 20px;
+      padding: 12px 18px;
+      border-radius: 30px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select: none;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .buttons button:hover {
+      background-color: #ff69b4;
+      color: white;
+    }
+
+    .buttons button.view-profile {
+      background: #ff69b4;
+      color: white;
+      width: auto;
+      padding: 12px 20px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .buttons button.view-profile:hover {
+      background: #e85aa0;
     }
   </style>
 </head>
 <body>
-  <a href="questionnaire.html" class="test-btn">✨ Découvrir le profil idéal</a>
+  <a href="questionnaire.html" class="test-btn" aria-label="Retour au questionnaire">✨ Découvrir le profil idéal</a>
 
   <div id="profilContainer"></div>
 
@@ -101,57 +161,98 @@
     }
 
     const container = document.getElementById("profilContainer");
-    profils.forEach(p => {
-      if (isCompatible(p, filters)) {
-        container.innerHTML += `
-          <div class="card" onclick="openProfil('${p.nom}', '${p.age}', '${p.image}', '${p.description}')">
-            <img src="${p.image}" alt="${p.nom}">
-            <h2>${p.nom}, ${p.age} ans</h2>
-            <p>${p.description}</p>
-            <div class="buttons">
-              <button>❌</button>
-              <button>❤️</button>
-            </div>
-          </div>`;
-      }
-    });
 
     function openProfil(nom, age, image, description) {
-      const win = window.open("", "_blank");
+      const win = window.open("", "_blank", "width=400,height=600");
       win.document.write(`
-        <html>
+        <html lang="fr">
         <head>
           <title>${nom}</title>
           <style>
             body {
-              margin: 0;
-              font-family: Arial;
+              margin: 0; padding: 30px;
+              font-family: Arial, sans-serif;
               background: url('fond-paradis-romantique.jpg') center/cover no-repeat fixed;
               color: white;
               text-align: center;
-              padding: 40px;
             }
             .btn {
-              position: absolute;
-              top: 20px;
-              left: 20px;
+              position: fixed;
+              top: 20px; left: 20px;
               background: #fff;
               color: #000;
               padding: 10px 16px;
               border-radius: 5px;
               text-decoration: none;
+              font-weight: bold;
+            }
+            img {
+              width: 150px;
+              border-radius: 50%;
+              border: 3px solid white;
+              margin-bottom: 25px;
+            }
+            h2 {
+              margin-bottom: 15px;
+            }
+            p {
+              max-width: 400px;
+              margin: auto;
+              font-size: 1.1em;
+              line-height: 1.4;
             }
           </style>
         </head>
         <body>
-          <a href="serieuse.html" class="btn">🔙 Retour</a>
-          <img src="${image}" style="width:150px; border-radius:50%; border:3px solid white;"><br><br>
+          <a href="serieuse.html" class="btn" onclick="window.close(); return false;">🔙 Retour</a>
+          <img src="${image}" alt="Photo de ${nom}">
           <h2>${nom}, ${age} ans</h2>
-          <p style="max-width:400px; margin:auto">${description}</p>
+          <p>${description}</p>
         </body>
         </html>
       `);
     }
+
+    // Afficher les profils filtrés
+    profils.forEach(p => {
+      if (isCompatible(p, filters)) {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        card.innerHTML = `
+          <img src="${p.image}" alt="Photo de ${p.nom}">
+          <h2>${p.nom}, ${p.age} ans</h2>
+          <p>${p.description}</p>
+          <div class="buttons">
+            <button class="btn-reject" aria-label="Rejeter ${p.nom}">❌</button>
+            <button class="btn-like" aria-label="Aimer ${p.nom}">❤️</button>
+            <button class="view-profile" aria-label="Voir profil de ${p.nom}">Voir profil</button>
+          </div>
+        `;
+
+        // Gestion clics boutons
+        const btnReject = card.querySelector('.btn-reject');
+        btnReject.addEventListener('click', e => {
+          e.stopPropagation();
+          card.remove();
+        });
+
+        const btnLike = card.querySelector('.btn-like');
+        btnLike.addEventListener('click', e => {
+          e.stopPropagation();
+          alert(`Vous avez aimé ${p.nom} !`);
+          // ici tu peux ajouter une action like (ex: sauvegarder)
+        });
+
+        const btnView = card.querySelector('.view-profile');
+        btnView.addEventListener('click', e => {
+          e.stopPropagation();
+          openProfil(p.nom, p.age, p.image, p.description);
+        });
+
+        container.appendChild(card);
+      }
+    });
   </script>
 </body>
 </html>
