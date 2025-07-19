@@ -1,139 +1,254 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>✨ Trouver ton profil idéal</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Questionnaire Profil Idéal</title>
+
   <style>
     body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: url('fond-tokyo.jpg') no-repeat center center fixed;
+      margin: 0; padding: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: url('fond-paradis-romantique.jpg') no-repeat center center fixed;
       background-size: cover;
-      color: white;
+      color: #f0e6fa;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      text-shadow: 0 0 8px #c87bf2;
     }
 
-    .container {
-      max-width: 700px;
-      margin: 60px auto;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 30px;
-      box-shadow: 0 0 20px rgba(255, 192, 203, 0.5);
-    }
-
-    h1 {
+    header {
+      background: rgba(178, 102, 217, 0.85);
+      padding: 1.5rem;
+      font-size: 2rem;
+      font-weight: 700;
       text-align: center;
-      font-size: 28px;
-      background: linear-gradient(to right, #ff70a6, #c770ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      box-shadow: 0 0 30px #dd73ff;
+      user-select: none;
+    }
+
+    main {
+      background: rgba(40, 20, 60, 0.85);
+      margin: 2rem auto 3rem;
+      border-radius: 20px;
+      box-shadow: 0 0 40px #d74cdaaa;
+      width: 90%;
+      max-width: 500px;
+      padding: 2rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
     }
 
     label {
+      font-weight: 600;
+      margin-bottom: 0.3rem;
       display: block;
-      margin: 18px 0 8px;
-      font-weight: bold;
+      color: #efa7ff;
+      user-select: none;
+      text-shadow: 0 0 6px #ff91ff;
     }
 
-    .question {
-      margin-bottom: 20px;
-    }
-
-    .option {
-      background: rgba(255, 255, 255, 0.2);
-      padding: 10px;
-      border-radius: 8px;
-      margin: 6px 0;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .option:hover {
-      background: rgba(255, 255, 255, 0.35);
-    }
-
-    input[type="radio"] {
-      margin-right: 10px;
-    }
-
-    .btn {
-      display: block;
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select {
       width: 100%;
-      margin-top: 20px;
-      padding: 15px;
-      background: linear-gradient(to right, #ff70a6, #c770ff);
-      color: white;
-      border: none;
+      padding: 0.5rem 0.8rem;
       border-radius: 12px;
-      font-size: 18px;
+      border: none;
+      font-size: 1.1rem;
+      font-family: inherit;
+      background: #4e2e72;
+      color: #f8dbff;
+      box-shadow: inset 0 0 10px #ce7bee;
+      resize: vertical;
+      user-select: text;
+      transition: box-shadow 0.3s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      box-shadow: 0 0 15px #f971f4;
+      background: #633ca6;
+    }
+
+    button {
+      margin-top: 1.5rem;
+      background: linear-gradient(45deg, #ff6de9, #af3ce9);
+      border: none;
+      color: white;
+      font-weight: 700;
+      font-size: 1.25rem;
+      padding: 0.9rem;
+      border-radius: 20px;
       cursor: pointer;
-      font-weight: bold;
-      transition: transform 0.2s;
+      box-shadow: 0 0 30px #d148db;
+      user-select: none;
+      transition: background 0.3s ease;
     }
 
-    .btn:hover {
-      transform: scale(1.03);
+    button:hover {
+      background: linear-gradient(45deg, #af3ce9, #ff6de9);
+      box-shadow: 0 0 40px #e383ff;
     }
 
-    @media screen and (max-width: 600px) {
-      .container {
-        margin: 20px;
-        padding: 20px;
-      }
+    #message {
+      margin-top: 1rem;
+      font-weight: 700;
+      text-align: center;
+      user-select: none;
+    }
+
+    #backButton {
+      align-self: flex-start;
+      background: transparent;
+      border: 2px solid #ff79c6;
+      color: #ff79c6;
+      border-radius: 15px;
+      padding: 0.5rem 1.2rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 0 15px #ff79c6;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      user-select: none;
+      margin-bottom: 1rem;
+    }
+    #backButton:hover {
+      background-color: #ff79c6;
+      color: #4a2168;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🔮 Trouve ton profil idéal</h1>
-    <form id="quizForm">
-      <div class="question">
-        <label>1. Quel animal préfères-tu ?</label>
-        <div class="option"><input type="radio" name="animal" value="Chien"> Chien</div>
-        <div class="option"><input type="radio" name="animal" value="Chat"> Chat</div>
-      </div>
 
-      <div class="question">
-        <label>2. Ton lieu idéal pour une rencontre ?</label>
-        <div class="option"><input type="radio" name="lieu" value="Plage"> Plage</div>
-        <div class="option"><input type="radio" name="lieu" value="Montagne"> Montagne</div>
-      </div>
+  <header>Crée ton profil idéal</header>
 
-      <div class="question">
-        <label>3. Soirée préférée ?</label>
-        <div class="option"><input type="radio" name="soiree" value="Chez soi en amoureux"> En amoureux à la maison</div>
-        <div class="option"><input type="radio" name="soiree" value="Avec des amis"> Avec des amis</div>
-      </div>
+  <main>
+    <button id="backButton" onclick="window.history.back()">← Retour</button>
 
-      <div class="question">
-        <label>4. Ta vision de l’amour ?</label>
-        <div class="option"><input type="radio" name="amour" value="Fusionnel(le)"> Fusionnel(le)</div>
-        <div class="option"><input type="radio" name="amour" value="Indépendant(e)"> Indépendant(e)</div>
-      </div>
+    <form id="profileForm" autocomplete="off" novalidate>
+      <label for="prenom">Prénom</label>
+      <input type="text" id="prenom" name="prenom" required minlength="2" maxlength="20" placeholder="Ton prénom préféré" />
 
-      <!-- Tu peux continuer avec d'autres questions si tu veux -->
+      <label for="age">Âge préféré</label>
+      <input type="number" id="age" name="age" required min="18" max="120" placeholder="Entre 18 et 120" />
 
-      <button type="submit" class="btn">💘 Voir mes résultats</button>
+      <label for="style">Style préféré</label>
+      <select id="style" name="style" required>
+        <option value="" disabled selected>Choisis un style</option>
+        <option value="Romantique">Romantique</option>
+        <option value="Aventureux">Aventureux</option>
+        <option value="Calme et zen">Calme et zen</option>
+        <option value="Futuriste">Futuriste</option>
+        <option value="Mystérieux">Mystérieux</option>
+      </select>
+
+      <label for="description">Description</label>
+      <textarea id="description" name="description" rows="4" maxlength="300" placeholder="Décris ce que tu aimerais..." required></textarea>
+
+      <button type="submit">Enregistrer mon profil</button>
     </form>
-  </div>
 
-  <script>
-    const form = document.getElementById("quizForm");
-    form.addEventListener("submit", (e) => {
+    <div id="message"></div>
+  </main>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
+      authDomain: "affinix-3a930.firebaseapp.com",
+      databaseURL: "https://affinix-3a930-default-rtdb.firebaseio.com",
+      projectId: "affinix-3a930",
+      storageBucket: "affinix-3a930.firebasestorage.app",
+      messagingSenderId: "498829285833",
+      appId: "1:498829285833:web:344dacf5b6bcc818167018"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    let currentUserUid = null;
+
+    const form = document.getElementById("profileForm");
+    const messageDiv = document.getElementById("message");
+
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        currentUserUid = user.uid;
+      } else {
+        signInAnonymously(auth).catch(error => {
+          showMessage("Erreur d'authentification Firebase.", true);
+          console.error(error);
+        });
+      }
+    });
+
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
+      clearMessage();
 
-      const formData = new FormData(form);
-      const result = {};
-      for (let [key, value] of formData.entries()) {
-        result[key] = value;
+      if (!currentUserUid) {
+        showMessage("Authentification en cours, veuillez patienter...", true);
+        return;
       }
 
-      // Sauvegarde dans localStorage pour la page suivante
-      localStorage.setItem("questionnaireProfil", JSON.stringify(result));
-      window.location.href = "serieuse.html";
+      const prenom = form.prenom.value.trim();
+      const age = Number(form.age.value);
+      const style = form.style.value;
+      const description = form.description.value.trim();
+
+      // Validation simple
+      if (prenom.length < 2 || prenom.length > 20) {
+        showMessage("Le prénom doit comporter entre 2 et 20 caractères.", true);
+        return;
+      }
+      if (!age || age < 18 || age > 120) {
+        showMessage("L'âge doit être compris entre 18 et 120.", true);
+        return;
+      }
+      if (!style) {
+        showMessage("Merci de choisir un style préféré.", true);
+        return;
+      }
+      if (description.length < 5) {
+        showMessage("La description est trop courte.", true);
+        return;
+      }
+
+      try {
+        await setDoc(doc(db, "profils", currentUserUid), {
+          prenom,
+          age,
+          style,
+          description,
+          updatedAt: new Date()
+        });
+        showMessage("Profil enregistré avec succès !", false);
+        form.reset();
+      } catch (error) {
+        showMessage("Erreur lors de l'enregistrement, réessayez plus tard.", true);
+        console.error(error);
+      }
     });
+
+    function showMessage(msg, isError = false) {
+      messageDiv.textContent = msg;
+      messageDiv.style.color = isError ? "#ff5f7e" : "#b7ffb7";
+      messageDiv.style.textShadow = isError ? "0 0 15px #ff5f7e" : "0 0 20px #95ff95";
+    }
+
+    function clearMessage() {
+      messageDiv.textContent = "";
+    }
   </script>
 </body>
 </html>
