@@ -1,121 +1,161 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Découvrir ton profil idéal</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mon Profil Idéal</title>
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: url('fond-romantique.webp') no-repeat center center fixed;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background: url('../img/fond-romantique.jpg') no-repeat center center fixed;
       background-size: cover;
       color: white;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
     }
-    .quiz-card {
-      width: 90%;
-      max-width: 400px;
-      background: rgba(0,0,0,0.4);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 20px;
+
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.6);
+    }
+
+    h1 {
       text-align: center;
-      animation: fadeIn 0.5s ease-out;
+      margin-bottom: 30px;
     }
-    h1 { font-size: 22px; margin-bottom: 20px; }
+
     .question {
-      font-size: 18px;
-      margin: 20px 0 10px;
+      margin-bottom: 25px;
     }
-    .choices {
-      display: flex;
-      justify-content: space-around;
-      gap: 10px;
+
+    .question p {
+      font-weight: bold;
     }
-    .choice-btn {
-      flex: 1;
-      padding: 12px;
-      background: rgba(255,255,255,0.8);
-      color: #333;
-      border: none;
-      border-radius: 12px;
+
+    label {
+      display: block;
+      margin-left: 20px;
+      margin-top: 5px;
       cursor: pointer;
-      font-size: 16px;
-      transition: background 0.3s;
     }
-    .choice-btn:hover { background: rgba(255,255,255,1); }
-    .next-btn {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background: #ff69b4;
+
+    button {
+      display: block;
+      margin: 30px auto 0;
+      background-color: #ff69b4;
       border: none;
-      border-radius: 12px;
       color: white;
+      padding: 15px 25px;
       font-size: 16px;
+      border-radius: 10px;
       cursor: pointer;
-      opacity: 0.9;
-      transition: opacity 0.3s;
+      transition: background-color 0.3s ease;
     }
-    .next-btn:hover { opacity: 1; }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+
+    button:hover {
+      background-color: #ff85c1;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        margin: 20px;
+        padding: 20px;
+      }
+      button {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <h1>Découvrir mon profil idéal 💖</h1>
 
-<div class="quiz-card" id="quiz">
-  <h1>✨ Trouve ton profil idéal</h1>
-  <div class="question" id="q-text"></div>
-  <div class="choices">
-    <button class="choice-btn" id="btn0"></button>
-    <button class="choice-btn" id="btn1"></button>
+    <form id="questionnaire">
+      <div class="question">
+        <p>1. 🐶 Tu es plutôt…</p>
+        <label><input type="radio" name="q1" value="chien" required> 🐾 Chien</label>
+        <label><input type="radio" name="q1" value="chat"> 🐱 Chat</label>
+      </div>
+
+      <div class="question">
+        <p>2. 🌊 Tu préfères…</p>
+        <label><input type="radio" name="q2" value="plage" required> Plage</label>
+        <label><input type="radio" name="q2" value="montagne"> Montagne</label>
+      </div>
+
+      <div class="question">
+        <p>3. 🌃 Ton type de soirée idéale ?</p>
+        <label><input type="radio" name="q3" value="amis" required> Entre amis, ambiance festive</label>
+        <label><input type="radio" name="q3" value="romantique"> Soirée romantique à deux</label>
+      </div>
+
+      <div class="question">
+        <p>4. 📱 Comment tu vis les messages ?</p>
+        <label><input type="radio" name="q4" value="papoter" required> J’adore papoter toute la journée</label>
+        <label><input type="radio" name="q4" value="peu"> Un message ou deux, c’est suffisant</label>
+      </div>
+
+      <div class="question">
+        <p>5. 🎯 En amour tu cherches…</p>
+        <label><input type="radio" name="q5" value="stable" required> Une relation sérieuse et stable</label>
+        <label><input type="radio" name="q5" value="feeling"> Une belle histoire si le feeling passe</label>
+      </div>
+
+      <div class="question">
+        <p>6. 💬 Tu préfères…</p>
+        <label><input type="radio" name="q6" value="parler" required> Parler pendant des heures</label>
+        <label><input type="radio" name="q6" value="vivre"> Vivre les moments sans trop parler</label>
+      </div>
+
+      <div class="question">
+        <p>7. 🎥 Une soirée parfaite, c’est…</p>
+        <label><input type="radio" name="q7" value="netflix" required> Netflix & chill sous un plaid</label>
+        <label><input type="radio" name="q7" value="sortie"> Sortie resto / bar romantique</label>
+      </div>
+
+      <div class="question">
+        <p>8. 💌 Tu crois au…</p>
+        <label><input type="radio" name="q8" value="foudre" required> Coup de foudre</label>
+        <label><input type="radio" name="q8" value="construit"> L’amour qui se construit</label>
+      </div>
+
+      <div class="question">
+        <p>9. 🚀 Tu es plutôt…</p>
+        <label><input type="radio" name="q9" value="spontane" required> Spontané(e), je fonce sans trop réfléchir</label>
+        <label><input type="radio" name="q9" value="reflechi"> Réfléchi(e), je prends mon temps</label>
+      </div>
+
+      <div class="question">
+        <p>10. 👀 Ce qui t’attire en premier chez quelqu’un :</p>
+        <label><input type="radio" name="q10" value="valeurs" required> Sa personnalité et ses valeurs</label>
+        <label><input type="radio" name="q10" value="physique"> Son regard / son physique</label>
+      </div>
+
+      <button type="submit">Valider pour découvrir des profils compatibles</button>
+    </form>
   </div>
-  <button class="next-btn" onclick="nextQuestion()">Suivant</button>
-</div>
 
-<script>
-const questions = [
-  { q: "🐶 Tu es plutôt…", c: ["Chien", "Chat"] },
-  { q: "🌊 Tu préfères…", c: ["Plage", "Montagne"] },
-  { q: "🌃 Ton type de soirée idéale ?", c: ["Entre amis", "Romantique à deux"] },
-  { q: "📱 Comment tu vis les messages ?", c: ["Papoter toute la journée", "Un message ou deux"] },
-  { q: "🎯 En amour tu cherches…", c: ["Relation sérieuse", "On verra selon le feeling"] },
-  { q: "💬 Tu préfères…", c: ["Parler des heures", "Moments sans trop parler"] },
-  { q: "🎥 Soirée parfaite :", c: ["Netflix & chill", "Sortie resto/bar"] },
-  { q: "💌 Tu crois au…", c: ["Coup de foudre", "Amour construit"] },
-  { q: "🚀 Tu es plutôt…", c: ["Spontané(e)", "Réfléchi(e)"] },
-  { q: "👀 Ce qui t’attire d’abord :", c: ["Personnalité/valeurs", "Regard/physique"] }
-];
-let answers = [];
-let idx = 0;
+  <script>
+    document.getElementById("questionnaire").addEventListener("submit", function (e) {
+      e.preventDefault();
 
-function showQuestion(i) {
-  document.getElementById('q-text').innerText = questions[i].q;
-  document.getElementById('btn0').innerText = questions[i].c[0];
-  document.getElementById('btn1').innerText = questions[i].c[1];
-}
-document.getElementById('btn0').onclick = () => { answers[idx]=questions[idx].c[0]; nextQuestion(); };
-document.getElementById('btn1').onclick = () => { answers[idx]=questions[idx].c[1]; nextQuestion(); };
+      const formData = new FormData(e.target);
+      const reponses = {};
+      formData.forEach((val, key) => {
+        reponses[key] = val;
+      });
 
-function nextQuestion() {
-  if (idx < questions.length - 1) {
-    idx++;
-    showQuestion(idx);
-  } else {
-    localStorage.setItem('profilIdeal', JSON.stringify(answers));
-    window.location.href = 'serieuse.html';
-  }
-}
+      // Enregistre dans localStorage (ou utilise Firebase plus tard)
+      localStorage.setItem('profilIdeal', JSON.stringify(reponses));
 
-showQuestion(0);
-</script>
-
+      // Rediriger vers la page des profils filtrés
+      window.location.href = "/serieuse.html";
+    });
+  </script>
 </body>
 </html>
