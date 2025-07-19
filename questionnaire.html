@@ -1,254 +1,121 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Questionnaire Profil Idéal</title>
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Découvrir ton profil idéal</title>
   <style>
     body {
-      margin: 0; padding: 0;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background: url('fond-paradis-romantique.jpg') no-repeat center center fixed;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('fond-romantique.webp') no-repeat center center fixed;
       background-size: cover;
-      color: #f0e6fa;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      text-shadow: 0 0 8px #c87bf2;
-    }
-
-    header {
-      background: rgba(178, 102, 217, 0.85);
-      padding: 1.5rem;
-      font-size: 2rem;
-      font-weight: 700;
-      text-align: center;
-      box-shadow: 0 0 30px #dd73ff;
-      user-select: none;
-    }
-
-    main {
-      background: rgba(40, 20, 60, 0.85);
-      margin: 2rem auto 3rem;
-      border-radius: 20px;
-      box-shadow: 0 0 40px #d74cdaaa;
-      width: 90%;
-      max-width: 500px;
-      padding: 2rem 2.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.8rem;
-    }
-
-    label {
-      font-weight: 600;
-      margin-bottom: 0.3rem;
-      display: block;
-      color: #efa7ff;
-      user-select: none;
-      text-shadow: 0 0 6px #ff91ff;
-    }
-
-    input[type="text"],
-    input[type="number"],
-    textarea,
-    select {
-      width: 100%;
-      padding: 0.5rem 0.8rem;
-      border-radius: 12px;
-      border: none;
-      font-size: 1.1rem;
-      font-family: inherit;
-      background: #4e2e72;
-      color: #f8dbff;
-      box-shadow: inset 0 0 10px #ce7bee;
-      resize: vertical;
-      user-select: text;
-      transition: box-shadow 0.3s ease;
-    }
-
-    input[type="text"]:focus,
-    input[type="number"]:focus,
-    textarea:focus,
-    select:focus {
-      outline: none;
-      box-shadow: 0 0 15px #f971f4;
-      background: #633ca6;
-    }
-
-    button {
-      margin-top: 1.5rem;
-      background: linear-gradient(45deg, #ff6de9, #af3ce9);
-      border: none;
       color: white;
-      font-weight: 700;
-      font-size: 1.25rem;
-      padding: 0.9rem;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .quiz-card {
+      width: 90%;
+      max-width: 400px;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(10px);
       border-radius: 20px;
-      cursor: pointer;
-      box-shadow: 0 0 30px #d148db;
-      user-select: none;
-      transition: background 0.3s ease;
-    }
-
-    button:hover {
-      background: linear-gradient(45deg, #af3ce9, #ff6de9);
-      box-shadow: 0 0 40px #e383ff;
-    }
-
-    #message {
-      margin-top: 1rem;
-      font-weight: 700;
+      padding: 20px;
       text-align: center;
-      user-select: none;
+      animation: fadeIn 0.5s ease-out;
     }
-
-    #backButton {
-      align-self: flex-start;
-      background: transparent;
-      border: 2px solid #ff79c6;
-      color: #ff79c6;
-      border-radius: 15px;
-      padding: 0.5rem 1.2rem;
-      font-weight: 700;
+    h1 { font-size: 22px; margin-bottom: 20px; }
+    .question {
+      font-size: 18px;
+      margin: 20px 0 10px;
+    }
+    .choices {
+      display: flex;
+      justify-content: space-around;
+      gap: 10px;
+    }
+    .choice-btn {
+      flex: 1;
+      padding: 12px;
+      background: rgba(255,255,255,0.8);
+      color: #333;
+      border: none;
+      border-radius: 12px;
       cursor: pointer;
-      box-shadow: 0 0 15px #ff79c6;
-      transition: background-color 0.3s ease, color 0.3s ease;
-      user-select: none;
-      margin-bottom: 1rem;
+      font-size: 16px;
+      transition: background 0.3s;
     }
-    #backButton:hover {
-      background-color: #ff79c6;
-      color: #4a2168;
+    .choice-btn:hover { background: rgba(255,255,255,1); }
+    .next-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #ff69b4;
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      opacity: 0.9;
+      transition: opacity 0.3s;
+    }
+    .next-btn:hover { opacity: 1; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
 
-  <header>Crée ton profil idéal</header>
+<div class="quiz-card" id="quiz">
+  <h1>✨ Trouve ton profil idéal</h1>
+  <div class="question" id="q-text"></div>
+  <div class="choices">
+    <button class="choice-btn" id="btn0"></button>
+    <button class="choice-btn" id="btn1"></button>
+  </div>
+  <button class="next-btn" onclick="nextQuestion()">Suivant</button>
+</div>
 
-  <main>
-    <button id="backButton" onclick="window.history.back()">← Retour</button>
+<script>
+const questions = [
+  { q: "🐶 Tu es plutôt…", c: ["Chien", "Chat"] },
+  { q: "🌊 Tu préfères…", c: ["Plage", "Montagne"] },
+  { q: "🌃 Ton type de soirée idéale ?", c: ["Entre amis", "Romantique à deux"] },
+  { q: "📱 Comment tu vis les messages ?", c: ["Papoter toute la journée", "Un message ou deux"] },
+  { q: "🎯 En amour tu cherches…", c: ["Relation sérieuse", "On verra selon le feeling"] },
+  { q: "💬 Tu préfères…", c: ["Parler des heures", "Moments sans trop parler"] },
+  { q: "🎥 Soirée parfaite :", c: ["Netflix & chill", "Sortie resto/bar"] },
+  { q: "💌 Tu crois au…", c: ["Coup de foudre", "Amour construit"] },
+  { q: "🚀 Tu es plutôt…", c: ["Spontané(e)", "Réfléchi(e)"] },
+  { q: "👀 Ce qui t’attire d’abord :", c: ["Personnalité/valeurs", "Regard/physique"] }
+];
+let answers = [];
+let idx = 0;
 
-    <form id="profileForm" autocomplete="off" novalidate>
-      <label for="prenom">Prénom</label>
-      <input type="text" id="prenom" name="prenom" required minlength="2" maxlength="20" placeholder="Ton prénom préféré" />
+function showQuestion(i) {
+  document.getElementById('q-text').innerText = questions[i].q;
+  document.getElementById('btn0').innerText = questions[i].c[0];
+  document.getElementById('btn1').innerText = questions[i].c[1];
+}
+document.getElementById('btn0').onclick = () => { answers[idx]=questions[idx].c[0]; nextQuestion(); };
+document.getElementById('btn1').onclick = () => { answers[idx]=questions[idx].c[1]; nextQuestion(); };
 
-      <label for="age">Âge préféré</label>
-      <input type="number" id="age" name="age" required min="18" max="120" placeholder="Entre 18 et 120" />
+function nextQuestion() {
+  if (idx < questions.length - 1) {
+    idx++;
+    showQuestion(idx);
+  } else {
+    localStorage.setItem('profilIdeal', JSON.stringify(answers));
+    window.location.href = 'serieuse.html';
+  }
+}
 
-      <label for="style">Style préféré</label>
-      <select id="style" name="style" required>
-        <option value="" disabled selected>Choisis un style</option>
-        <option value="Romantique">Romantique</option>
-        <option value="Aventureux">Aventureux</option>
-        <option value="Calme et zen">Calme et zen</option>
-        <option value="Futuriste">Futuriste</option>
-        <option value="Mystérieux">Mystérieux</option>
-      </select>
+showQuestion(0);
+</script>
 
-      <label for="description">Description</label>
-      <textarea id="description" name="description" rows="4" maxlength="300" placeholder="Décris ce que tu aimerais..." required></textarea>
-
-      <button type="submit">Enregistrer mon profil</button>
-    </form>
-
-    <div id="message"></div>
-  </main>
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
-    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
-      authDomain: "affinix-3a930.firebaseapp.com",
-      databaseURL: "https://affinix-3a930-default-rtdb.firebaseio.com",
-      projectId: "affinix-3a930",
-      storageBucket: "affinix-3a930.firebasestorage.app",
-      messagingSenderId: "498829285833",
-      appId: "1:498829285833:web:344dacf5b6bcc818167018"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    let currentUserUid = null;
-
-    const form = document.getElementById("profileForm");
-    const messageDiv = document.getElementById("message");
-
-    onAuthStateChanged(auth, user => {
-      if (user) {
-        currentUserUid = user.uid;
-      } else {
-        signInAnonymously(auth).catch(error => {
-          showMessage("Erreur d'authentification Firebase.", true);
-          console.error(error);
-        });
-      }
-    });
-
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      clearMessage();
-
-      if (!currentUserUid) {
-        showMessage("Authentification en cours, veuillez patienter...", true);
-        return;
-      }
-
-      const prenom = form.prenom.value.trim();
-      const age = Number(form.age.value);
-      const style = form.style.value;
-      const description = form.description.value.trim();
-
-      // Validation simple
-      if (prenom.length < 2 || prenom.length > 20) {
-        showMessage("Le prénom doit comporter entre 2 et 20 caractères.", true);
-        return;
-      }
-      if (!age || age < 18 || age > 120) {
-        showMessage("L'âge doit être compris entre 18 et 120.", true);
-        return;
-      }
-      if (!style) {
-        showMessage("Merci de choisir un style préféré.", true);
-        return;
-      }
-      if (description.length < 5) {
-        showMessage("La description est trop courte.", true);
-        return;
-      }
-
-      try {
-        await setDoc(doc(db, "profils", currentUserUid), {
-          prenom,
-          age,
-          style,
-          description,
-          updatedAt: new Date()
-        });
-        showMessage("Profil enregistré avec succès !", false);
-        form.reset();
-      } catch (error) {
-        showMessage("Erreur lors de l'enregistrement, réessayez plus tard.", true);
-        console.error(error);
-      }
-    });
-
-    function showMessage(msg, isError = false) {
-      messageDiv.textContent = msg;
-      messageDiv.style.color = isError ? "#ff5f7e" : "#b7ffb7";
-      messageDiv.style.textShadow = isError ? "0 0 15px #ff5f7e" : "0 0 20px #95ff95";
-    }
-
-    function clearMessage() {
-      messageDiv.textContent = "";
-    }
-  </script>
 </body>
 </html>
