@@ -3,129 +3,94 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Test de Compatibilité</title>
+  <title>Relation Sérieuse</title>
   <style>
     body {
       margin: 0;
       font-family: 'Arial', sans-serif;
-      background: url('https://i.imgur.com/SWBgF4O.jpeg') no-repeat center center fixed;
+      background: url('fond-classique.jpg') no-repeat center center fixed;
       background-size: cover;
       color: white;
-      padding: 20px;
+      overflow-x: hidden;
     }
 
-    .container {
-      max-width: 700px;
-      margin: 80px auto;
-      background-color: rgba(0, 0, 0, 0.75);
-      border-radius: 10px;
-      padding: 30px;
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 30px;
-      font-size: 26px;
-      color: #ffb6c1;
-    }
-
-    .question {
-      margin-bottom: 20px;
-    }
-
-    .question p {
-      font-weight: bold;
-    }
-
-    label {
-      display: block;
-      margin: 5px 0;
-      cursor: pointer;
-    }
-
-    button {
-      background-color: #ff69b4;
+    .test-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(255, 105, 180, 0.85);
       color: white;
-      padding: 12px 20px;
-      font-size: 16px;
-      border: none;
+      padding: 10px 16px;
       border-radius: 8px;
-      cursor: pointer;
-      display: block;
-      margin: 30px auto 0;
+      text-decoration: none;
+      font-weight: bold;
+      z-index: 9999;
     }
 
-    button:hover {
-      background-color: #ff85c1;
+    .card {
+      width: 90%;
+      max-width: 350px;
+      margin: 100px auto;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .buttons {
+      margin-top: 15px;
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .buttons button {
+      background: white;
+      color: black;
+      border: none;
+      padding: 10px;
+      border-radius: 50%;
+      font-size: 20px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>💖 Trouve ton profil idéal</h1>
-    <form id="compatibilityForm" action="serieuse.html" method="get">
-      <div class="question">
-        <p>1. Tu es plutôt :</p>
-        <label><input type="radio" name="q1" value="chien" required> 🐶 Chien</label>
-        <label><input type="radio" name="q1" value="chat"> 🐱 Chat</label>
-      </div>
+  <a href="questionnaire.html" class="test-btn">✨ Découvrir le profil idéal</a>
 
-      <div class="question">
-        <p>2. Tu préfères :</p>
-        <label><input type="radio" name="q2" value="plage" required> 🏖️ Plage</label>
-        <label><input type="radio" name="q2" value="montagne"> 🏔️ Montagne</label>
-      </div>
-
-      <div class="question">
-        <p>3. Soirée idéale :</p>
-        <label><input type="radio" name="q3" value="amis" required> 🎉 Avec des amis</label>
-        <label><input type="radio" name="q3" value="romantique"> 💞 En amoureux</label>
-      </div>
-
-      <div class="question">
-        <p>4. Messages :</p>
-        <label><input type="radio" name="q4" value="papoter" required> 💬 Toute la journée</label>
-        <label><input type="radio" name="q4" value="peu"> 🕊️ Quelques messages suffisent</label>
-      </div>
-
-      <div class="question">
-        <p>5. Tu recherches :</p>
-        <label><input type="radio" name="q5" value="serieux" required> ❤️ Relation sérieuse</label>
-        <label><input type="radio" name="q5" value="feeling"> 💫 Selon le feeling</label>
-      </div>
-
-      <div class="question">
-        <p>6. Tu es plutôt :</p>
-        <label><input type="radio" name="q6" value="bavard" required> 🎙️ Très bavard(e)</label>
-        <label><input type="radio" name="q6" value="calme"> 🤫 Plutôt calme</label>
-      </div>
-
-      <div class="question">
-        <p>7. Soirée parfaite :</p>
-        <label><input type="radio" name="q7" value="netflix" required> 📺 Netflix & chill</label>
-        <label><input type="radio" name="q7" value="sortie"> 🍷 Sortie romantique</label>
-      </div>
-
-      <div class="question">
-        <p>8. Tu crois au :</p>
-        <label><input type="radio" name="q8" value="coupdefoudre" required> ⚡ Coup de foudre</label>
-        <label><input type="radio" name="q8" value="temps"> ⏳ Amour qui se construit</label>
-      </div>
-
-      <div class="question">
-        <p>9. Tu es plutôt :</p>
-        <label><input type="radio" name="q9" value="spontane" required> 🚀 Spontané(e)</label>
-        <label><input type="radio" name="q9" value="reflechi"> 🧠 Réfléchi(e)</label>
-      </div>
-
-      <div class="question">
-        <p>10. Ce qui t’attire en premier :</p>
-        <label><input type="radio" name="q10" value="valeurs" required> 💖 Personnalité</label>
-        <label><input type="radio" name="q10" value="physique"> 😍 Le physique</label>
-      </div>
-
-      <button type="submit">✨ Trouver les profils compatibles</button>
-    </form>
+  <div class="card" onclick="openProfil()">
+    <img src="photo-profil1.jpg" alt="Profil">
+    <h2>Alex, 28 ans</h2>
+    <p>Aime les couchers de soleil et les romans</p>
+    <div class="buttons">
+      <button>❌</button>
+      <button>❤️</button>
+    </div>
   </div>
+
+  <!-- Profil ouvert -->
+  <div id="profilOuvert" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; 
+    background: url('fond-paradis-romantique.jpg') no-repeat center center fixed; background-size:cover; 
+    color:white; z-index:10000; padding:20px;">
+    <button onclick="closeProfil()" style="background:#fff; color:#000; padding:10px 20px; border-radius:5px;">🔙 Retour</button>
+    <div style="margin-top:30px; text-align:center;">
+      <img src="photo-profil1.jpg" style="width:150px; border-radius:50%; border:3px solid white;">
+      <h2>Alex, 28 ans</h2>
+      <p style="max-width: 400px; margin: auto;">Romantique et passionné, j’aime partager des moments simples et sincères. À la recherche d'une relation vraie.</p>
+    </div>
+  </div>
+
+  <script>
+    function openProfil() {
+      document.getElementById("profilOuvert").style.display = "block";
+    }
+
+    function closeProfil() {
+      document.getElementById("profilOuvert").style.display = "none";
+    }
+  </script>
 </body>
 </html>
