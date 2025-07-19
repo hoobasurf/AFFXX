@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profil idéal – Questionnaire</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('fond-questionnaire.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      padding: 20px;
+    }
+
+    .overlay {
+      background: rgba(0, 0, 0, 0.65);
+      border-radius: 20px;
+      padding: 30px 20px;
+      max-width: 600px;
+      margin: 40px auto;
+      box-shadow: 0 0 30px rgba(255, 105, 180, 0.4);
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 28px;
+      color: #ffb6c1;
+    }
+
+    label {
+      display: block;
+      margin: 20px 0 5px;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    select, input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      background-color: #ff69b4;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 18px;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #ff85c1;
+    }
+
+    @media (max-width: 600px) {
+      .overlay {
+        padding: 20px 15px;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <h1>✨ Trouvons votre profil idéal</h1>
+    <form id="compatibilityForm">
+      <label>1. Vous êtes plutôt :</label>
+      <select name="q1">
+        <option>Chien 🐶</option>
+        <option>Chat 🐱</option>
+        <option>Les deux</option>
+      </select>
+
+      <label>2. Vacances idéales :</label>
+      <select name="q2">
+        <option>Plage 🌴</option>
+        <option>Montagne 🏔️</option>
+        <option>Ville 🌆</option>
+      </select>
+
+      <label>3. Vous préférez :</label>
+      <select name="q3">
+        <option>Soirée romantique chez soi</option>
+        <option>Sorties entre amis</option>
+        <option>Un peu des deux</option>
+      </select>
+
+      <label>4. Niveau de communication :</label>
+      <select name="q4">
+        <option>Messages réguliers</option>
+        <option>Appels fréquents</option>
+        <option>Liberté totale</option>
+      </select>
+
+      <label>5. Gestion des conflits :</label>
+      <select name="q5">
+        <option>Discussion calme</option>
+        <option>Besoin d’espace</option>
+        <option>Un mélange des deux</option>
+      </select>
+
+      <label>6. Matin ou soir :</label>
+      <select name="q6">
+        <option>Lève-tôt ☀️</option>
+        <option>Couche-tard 🌙</option>
+        <option>Flexible</option>
+      </select>
+
+      <label>7. Votre priorité dans une relation :</label>
+      <select name="q7">
+        <option>Confiance</option>
+        <option>Passion</option>
+        <option>Stabilité</option>
+      </select>
+
+      <label>8. Vous êtes plutôt :</label>
+      <select name="q8">
+        <option>Introverti(e)</option>
+        <option>Extraverti(e)</option>
+        <option>Ambiverti(e)</option>
+      </select>
+
+      <label>9. Ce que vous cherchez :</label>
+      <select name="q9">
+        <option>Un amour durable</option>
+        <option>Une belle histoire à vivre</option>
+        <option>Je laisse le destin choisir</option>
+      </select>
+
+      <label>10. Quelle musique vous représente ?</label>
+      <select name="q10">
+        <option>Douce et romantique 🎵</option>
+        <option>Rythmé et dansant 🎶</option>
+        <option>Classique et profond 🎻</option>
+      </select>
+
+      <button type="submit">💖 Trouver mes profils compatibles</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("compatibilityForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      // Tu peux ici stocker les réponses dans le localStorage ou appeler une API
+      // Pour l'instant, on retourne simplement vers les profils
+      window.location.href = "serieuse.html";
+    });
+  </script>
+</body>
+</html>
