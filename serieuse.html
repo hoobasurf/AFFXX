@@ -2,182 +2,186 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ton Profil Idéal</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Relation Sérieuse</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
     body {
-      margin: 0; padding: 0;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background: url('fond-tokyo.jpg') no-repeat center center fixed;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('fond-paradis-romantique.jpg') no-repeat center center fixed;
       background-size: cover;
-      color: #f0e6fa;
       display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      text-shadow: 0 0 10px #c87bf2;
+      height: 100vh;
+      overflow: hidden;
     }
 
-    header {
-      background: rgba(123, 47, 247, 0.8);
-      padding: 1.2rem;
-      font-size: 2rem;
-      font-weight: 700;
-      text-align: center;
-      box-shadow: 0 0 30px #f107a3;
-      user-select: none;
+    #sidebar {
+      width: 25%;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 10px;
+      overflow-y: auto;
     }
 
-    main {
-      background: rgba(30, 15, 45, 0.85);
-      margin: 2rem auto 3rem;
-      border-radius: 20px;
-      box-shadow: 0 0 30px #f107a3aa;
-      width: 90%;
-      max-width: 480px;
-      padding: 2rem 2.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
+    #content {
+      width: 75%;
+      padding: 20px;
+      color: #333;
+      backdrop-filter: blur(5px);
     }
 
-    h2 {
-      margin: 0 0 1rem 0;
-      font-weight: 800;
-      color: #ff79c6;
-      text-align: center;
-      text-shadow: 0 0 12px #ff79c6;
-      user-select: none;
-    }
-
-    .profile-field {
-      background: #4a2168;
-      padding: 1rem 1.3rem;
-      border-radius: 16px;
-      box-shadow: inset 0 0 15px #d95ce7;
-      font-size: 1.1rem;
-      user-select: text;
-    }
-
-    .profile-label {
-      font-weight: 700;
-      color: #d19eea;
-      margin-bottom: 0.3rem;
-      user-select: none;
-    }
-
-    #backButton {
-      align-self: flex-start;
-      background: transparent;
-      border: 2px solid #ff79c6;
-      color: #ff79c6;
-      border-radius: 15px;
-      padding: 0.5rem 1.2rem;
-      font-weight: 700;
+    .profil-circle {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 10px auto;
+      border: 3px solid #ff6fa1;
+      box-shadow: 0 0 10px #ff6fa1;
       cursor: pointer;
-      box-shadow: 0 0 15px #ff79c6;
-      transition: background-color 0.3s ease, color 0.3s ease;
-      user-select: none;
-      margin-bottom: 1rem;
-    }
-    #backButton:hover {
-      background-color: #ff79c6;
-      color: #4a2168;
     }
 
-    #loading {
-      color: #e0caff;
-      font-style: italic;
-      text-align: center;
-      margin-top: 2rem;
-      user-select: none;
+    .profil-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    #header {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .info {
+      margin: 10px 0;
+    }
+
+    .badges {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .badge {
+      padding: 5px 10px;
+      background-color: #ff6fa1;
+      border-radius: 20px;
+      color: white;
+      font-size: 12px;
+    }
+
+    .btns {
+      margin-top: 15px;
+      display: flex;
+      gap: 15px;
+    }
+
+    .btn {
+      padding: 10px 14px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .like { background: #ff4f81; color: white; }
+    .fav  { background: #ffaa00; color: white; }
+    .msg  { background: #4fc3f7; color: white; }
+    .more { background: #333; color: white; margin-top: 20px; }
+
+    #btn-questionnaire {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      padding: 8px 14px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 2px solid #ff6fa1;
+      border-radius: 25px;
+      font-size: 14px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    @media screen and (max-width: 768px) {
+      body { flex-direction: column; }
+      #sidebar, #content { width: 100%; height: auto; }
+      .btns { flex-direction: column; }
+      #btn-questionnaire { position: relative; margin: 10px; }
     }
   </style>
 </head>
 <body>
 
-  <header>Voici ton profil idéal</header>
+<button id="btn-questionnaire" onclick="window.location.href='questionnaire.html'">Découvrir mon profil idéal</button>
 
-  <main>
-    <button id="backButton" onclick="window.history.back()">← Retour</button>
-    <div id="loading">Chargement de ton profil...</div>
-    <div id="profileContainer" style="display:none;">
-      <div class="profile-field">
-        <div class="profile-label">Prénom :</div>
-        <div id="prenom"></div>
-      </div>
-      <div class="profile-field">
-        <div class="profile-label">Âge préféré :</div>
-        <div id="age"></div>
-      </div>
-      <div class="profile-field">
-        <div class="profile-label">Style préféré :</div>
-        <div id="style"></div>
-      </div>
-      <div class="profile-field">
-        <div class="profile-label">Description :</div>
-        <div id="description"></div>
-      </div>
-    </div>
-  </main>
+<div id="sidebar">
+  <!-- Profils en cercle -->
+</div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+<div id="content">
+  <div id="header">Sélectionnez un profil à gauche</div>
+</div>
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyBjbhT9EE0DkabbyQYFn17fTHFuGFF9bZY",
-      authDomain: "affinix-3a930.firebaseapp.com",
-      databaseURL: "https://affinix-3a930-default-rtdb.firebaseio.com",
-      projectId: "affinix-3a930",
-      storageBucket: "affinix-3a930.firebasestorage.app",
-      messagingSenderId: "498829285833",
-      appId: "1:498829285833:web:344dacf5b6bcc818167018"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    const loadingDiv = document.getElementById("loading");
-    const profileDiv = document.getElementById("profileContainer");
-
-    onAuthStateChanged(auth, user => {
-      if (user) {
-        loadProfile(user.uid);
-      } else {
-        signInAnonymously(auth).catch(error => {
-          loadingDiv.textContent = "Erreur d'authentification Firebase.";
-          console.error(error);
-        });
-      }
-    });
-
-    async function loadProfile(uid) {
-      try {
-        const docRef = doc(db, "profils", uid);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-
-          document.getElementById("prenom").textContent = data.prenom || "Non défini";
-          document.getElementById("age").textContent = data.age || "Non défini";
-          document.getElementById("style").textContent = data.style || "Non défini";
-          document.getElementById("description").textContent = data.description || "Non défini";
-
-          loadingDiv.style.display = "none";
-          profileDiv.style.display = "flex";
-        } else {
-          loadingDiv.textContent = "Aucun profil trouvé pour cet utilisateur.";
-        }
-      } catch (error) {
-        loadingDiv.textContent = "Erreur lors du chargement du profil.";
-        console.error(error);
-      }
+<script>
+  // Exemples de profils (à remplacer avec Firebase + filtre plus tard)
+  const profils = [
+    {
+      id: 1,
+      nom: "Emma",
+      age: 26,
+      ville: "Paris",
+      passions: ["Musique", "Voyage"],
+      image: "emma.jpg",
+      description: "Passionnée de guitare et de couchers de soleil.",
+      salles: ["💖", "🎉"]
+    },
+    {
+      id: 2,
+      nom: "Léo",
+      age: 30,
+      ville: "Nice",
+      passions: ["Sport", "Nature"],
+      image: "leo.jpg",
+      description: "Amoureux de randos et de cuisine italienne.",
+      salles: ["💬", "👨‍👩‍👧"]
     }
-  </script>
+  ];
+
+  const sidebar = document.getElementById('sidebar');
+  const content = document.getElementById('content');
+
+  // Créer les cercles dans la colonne gauche
+  profils.forEach(p => {
+    const div = document.createElement('div');
+    div.className = 'profil-circle';
+    div.innerHTML = `<img src="${p.image}" alt="${p.nom}" />`;
+    div.onclick = () => afficherProfil(p);
+    sidebar.appendChild(div);
+  });
+
+  function afficherProfil(p) {
+    content.innerHTML = `
+      <div id="header">${p.nom}, ${p.age} ans - ${p.ville}</div>
+      <div class="badges">
+        ${p.passions.map(pas => `<div class="badge">${pas}</div>`).join('')}
+      </div>
+      <div class="badges">
+        ${p.salles.map(s => `<div class="badge">${s}</div>`).join('')}
+      </div>
+      <div class="info">${p.description}</div>
+      <div class="btns">
+        <button class="btn like">❤️ Like</button>
+        <button class="btn fav">🌟 Favori</button>
+        <button class="btn msg">✉️ Message</button>
+      </div>
+      <button class="btn more" onclick="window.location.href='profil-detail.html?id=${p.id}'">👁️ Voir plus de détails</button>
+    `;
+  }
+</script>
 
 </body>
 </html>
