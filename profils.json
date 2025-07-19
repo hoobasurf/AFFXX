@@ -1,0 +1,36 @@
+[
+  {
+    "id": "1",
+    "nom": "Léa",
+    "photo": "img/lea.jpg",
+    "reponses": {
+      "q1": "chien",
+      "q2": "plage",
+      "q3": "romantique",
+      "q4": "beaucoup",
+      "q5": "serieux",
+      "q6": "parler",
+      "q7": "netflix",
+      "q8": "coupdefoudre",
+      "q9": "spontane",
+      "q10": "valeurs"
+    }
+  },
+  {
+    "id": "2",
+    "nom": "Camille",
+    "photo": "img/camille.jpg",
+    "reponses": {
+      "q1": "chat",
+      "q2": "montagne",
+      "q3": "amis",
+      "q4": "peu",
+      "q5": "feeling",
+      "q6": "vivre",
+      "q7": "sortie",
+      "q8": "amourlent",
+      "q9": "reflechi",
+      "q10": "physique"
+    }
+  }
+]
