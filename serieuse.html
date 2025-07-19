@@ -1,187 +1,118 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Relation Sérieuse</title>
+  <meta charset="UTF-8">
+  <title>Profils compatibles</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-    }
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: url('fond-paradis-romantique.jpg') no-repeat center center fixed;
-      background-size: cover;
+      font-family: 'Quicksand', sans-serif;
+      background: url("img/fond-paradis-romantique.jpg") center/cover no-repeat fixed;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 60px auto;
+      padding: 30px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 20px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 0 20px rgba(255,255,255,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    #resultats {
       display: flex;
-      height: 100vh;
-      overflow: hidden;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
     }
 
-    #sidebar {
-      width: 25%;
-      background: rgba(255, 255, 255, 0.8);
-      padding: 10px;
-      overflow-y: auto;
+    .carte-profil {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 15px;
+      width: 200px;
+      text-align: center;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      transition: transform 0.3s;
     }
 
-    #content {
-      width: 75%;
-      padding: 20px;
-      color: #333;
-      backdrop-filter: blur(5px);
+    .carte-profil:hover {
+      transform: scale(1.05);
     }
 
-    .profil-circle {
-      width: 90px;
-      height: 90px;
+    .carte-profil img {
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
-      overflow: hidden;
-      margin: 10px auto;
-      border: 3px solid #ff6fa1;
-      box-shadow: 0 0 10px #ff6fa1;
-      cursor: pointer;
-    }
-
-    .profil-circle img {
-      width: 100%;
-      height: 100%;
       object-fit: cover;
-    }
-
-    #header {
-      font-size: 20px;
-      font-weight: bold;
-      margin-bottom: 20px;
-    }
-
-    .info {
-      margin: 10px 0;
-    }
-
-    .badges {
-      display: flex;
-      gap: 8px;
       margin-bottom: 10px;
     }
 
-    .badge {
-      padding: 5px 10px;
-      background-color: #ff6fa1;
-      border-radius: 20px;
-      color: white;
-      font-size: 12px;
+    a {
+      color: #ffd4e9;
+      text-decoration: underline;
     }
 
-    .btns {
-      margin-top: 15px;
-      display: flex;
-      gap: 15px;
-    }
-
-    .btn {
-      padding: 10px 14px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 14px;
-    }
-
-    .like { background: #ff4f81; color: white; }
-    .fav  { background: #ffaa00; color: white; }
-    .msg  { background: #4fc3f7; color: white; }
-    .more { background: #333; color: white; margin-top: 20px; }
-
-    #btn-questionnaire {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      padding: 8px 14px;
-      background: rgba(255, 255, 255, 0.8);
-      border: 2px solid #ff6fa1;
-      border-radius: 25px;
-      font-size: 14px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    @media screen and (max-width: 768px) {
-      body { flex-direction: column; }
-      #sidebar, #content { width: 100%; height: auto; }
-      .btns { flex-direction: column; }
-      #btn-questionnaire { position: relative; margin: 10px; }
+    @media screen and (max-width: 600px) {
+      .carte-profil {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <h1>Profils compatibles avec toi 💖</h1>
+    <div id="resultats">
+      <p>Chargement des profils...</p>
+    </div>
+  </div>
 
-<button id="btn-questionnaire" onclick="window.location.href='questionnaire.html'">Découvrir mon profil idéal</button>
+  <script>
+    async function chargerProfils() {
+      const reponses = JSON.parse(localStorage.getItem("reponsesIdeales") || "{}");
+      const res = await fetch("profils.json");
+      const profils = await res.json();
 
-<div id="sidebar">
-  <!-- Profils en cercle -->
-</div>
+      const compatibles = profils.filter(profil => {
+        let score = 0;
+        for (let i = 1; i <= 10; i++) {
+          if (profil.reponses["q" + i] === reponses["q" + i]) {
+            score++;
+          }
+        }
+        return score >= 6;
+      });
 
-<div id="content">
-  <div id="header">Sélectionnez un profil à gauche</div>
-</div>
+      const zone = document.getElementById("resultats");
+      if (compatibles.length === 0) {
+        zone.innerHTML = `<p style="text-align:center">Aucun profil ne correspond à tes réponses 😢</p>`;
+        return;
+      }
 
-<script>
-  // Exemples de profils (à remplacer avec Firebase + filtre plus tard)
-  const profils = [
-    {
-      id: 1,
-      nom: "Emma",
-      age: 26,
-      ville: "Paris",
-      passions: ["Musique", "Voyage"],
-      image: "emma.jpg",
-      description: "Passionnée de guitare et de couchers de soleil.",
-      salles: ["💖", "🎉"]
-    },
-    {
-      id: 2,
-      nom: "Léo",
-      age: 30,
-      ville: "Nice",
-      passions: ["Sport", "Nature"],
-      image: "leo.jpg",
-      description: "Amoureux de randos et de cuisine italienne.",
-      salles: ["💬", "👨‍👩‍👧"]
+      zone.innerHTML = "";
+      compatibles.forEach(p => {
+        const carte = document.createElement("div");
+        carte.className = "carte-profil";
+        carte.innerHTML = `
+          <img src="${p.photo}" alt="${p.nom}">
+          <h3>${p.nom}</h3>
+          <p><a href="profil.html?id=${p.id}">Voir son profil</a></p>
+        `;
+        zone.appendChild(carte);
+      });
     }
-  ];
 
-  const sidebar = document.getElementById('sidebar');
-  const content = document.getElementById('content');
-
-  // Créer les cercles dans la colonne gauche
-  profils.forEach(p => {
-    const div = document.createElement('div');
-    div.className = 'profil-circle';
-    div.innerHTML = `<img src="${p.image}" alt="${p.nom}" />`;
-    div.onclick = () => afficherProfil(p);
-    sidebar.appendChild(div);
-  });
-
-  function afficherProfil(p) {
-    content.innerHTML = `
-      <div id="header">${p.nom}, ${p.age} ans - ${p.ville}</div>
-      <div class="badges">
-        ${p.passions.map(pas => `<div class="badge">${pas}</div>`).join('')}
-      </div>
-      <div class="badges">
-        ${p.salles.map(s => `<div class="badge">${s}</div>`).join('')}
-      </div>
-      <div class="info">${p.description}</div>
-      <div class="btns">
-        <button class="btn like">❤️ Like</button>
-        <button class="btn fav">🌟 Favori</button>
-        <button class="btn msg">✉️ Message</button>
-      </div>
-      <button class="btn more" onclick="window.location.href='profil-detail.html?id=${p.id}'">👁️ Voir plus de détails</button>
-    `;
-  }
-</script>
-
+    chargerProfils();
+  </script>
 </body>
 </html>
