@@ -1,118 +1,192 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Profils compatibles</title>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <title>Relation Sérieuse - AFFINIX</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Quicksand', sans-serif;
-      background: url("img/fond-paradis-romantique.jpg") center/cover no-repeat fixed;
-      color: #fff;
-    }
-
-    .container {
-      max-width: 1000px;
-      margin: 60px auto;
-      padding: 30px;
-      background: rgba(0, 0, 0, 0.4);
-      border-radius: 20px;
-      backdrop-filter: blur(6px);
-      box-shadow: 0 0 20px rgba(255,255,255,0.1);
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    #resultats {
+      font-family: 'Segoe UI', sans-serif;
+      background: url('img/fond-paradis-romantique.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
       display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
     }
 
-    .carte-profil {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 15px;
-      padding: 15px;
-      width: 200px;
+    #sidebar {
+      width: 300px;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 20px;
+      overflow-y: auto;
+      backdrop-filter: blur(8px);
+    }
+
+    #sidebar h2 {
       text-align: center;
-      backdrop-filter: blur(4px);
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
-      transition: transform 0.3s;
+      margin-bottom: 20px;
     }
 
-    .carte-profil:hover {
-      transform: scale(1.05);
-    }
-
-    .carte-profil img {
-      width: 100px;
-      height: 100px;
+    .profil-cercle {
+      width: 90px;
+      height: 90px;
       border-radius: 50%;
+      overflow: hidden;
+      margin: 10px auto;
+      cursor: pointer;
+      border: 2px solid #fff;
+      transition: transform 0.2s ease;
+    }
+
+    .profil-cercle:hover {
+      transform: scale(1.1);
+    }
+
+    .profil-cercle img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
+    }
+
+    #detail-profil {
+      flex: 1;
+      padding: 40px;
+      overflow-y: auto;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(6px);
+    }
+
+    #detail-profil h2 {
+      font-size: 28px;
       margin-bottom: 10px;
     }
 
-    a {
-      color: #ffd4e9;
-      text-decoration: underline;
+    .info {
+      margin-bottom: 10px;
+      font-size: 18px;
     }
 
-    @media screen and (max-width: 600px) {
-      .carte-profil {
+    .badge {
+      display: inline-block;
+      background: #ff89c0;
+      color: black;
+      padding: 6px 12px;
+      border-radius: 20px;
+      margin: 5px 5px 5px 0;
+      font-size: 14px;
+    }
+
+    #decouvrir-ideal {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: #ff70c0;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease;
+      z-index: 10;
+    }
+
+    #decouvrir-ideal:hover {
+      background: #ff40a0;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+
+      #sidebar {
         width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 10px;
+      }
+
+      #detail-profil {
+        padding: 20px;
+      }
+
+      .profil-cercle {
+        margin: 10px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Profils compatibles avec toi 💖</h1>
-    <div id="resultats">
-      <p>Chargement des profils...</p>
-    </div>
+  <button id="decouvrir-ideal" onclick="window.location.href='questionnaire.html'">💫 Découvrir mon profil idéal</button>
+
+  <div id="sidebar">
+    <h2>Profils sérieux</h2>
+    <div id="liste-profils"></div>
+  </div>
+
+  <div id="detail-profil">
+    <h2>Bienvenue 💖</h2>
+    <p>Sélectionne un profil à gauche pour voir ses détails ici.</p>
   </div>
 
   <script>
-    async function chargerProfils() {
-      const reponses = JSON.parse(localStorage.getItem("reponsesIdeales") || "{}");
-      const res = await fetch("profils.json");
-      const profils = await res.json();
-
-      const compatibles = profils.filter(profil => {
-        let score = 0;
-        for (let i = 1; i <= 10; i++) {
-          if (profil.reponses["q" + i] === reponses["q" + i]) {
-            score++;
-          }
-        }
-        return score >= 6;
-      });
-
-      const zone = document.getElementById("resultats");
-      if (compatibles.length === 0) {
-        zone.innerHTML = `<p style="text-align:center">Aucun profil ne correspond à tes réponses 😢</p>`;
-        return;
+    const profils = [
+      {
+        id: 1,
+        nom: "Emma",
+        age: 28,
+        passion: "Musique 🎵",
+        ville: "Paris",
+        badges: ["Relation sérieuse", "Soirée romantique", "Chien"],
+        description: "Je suis une romantique dans l’âme, j’adore les couchers de soleil et les discussions profondes.",
+        photo: "img/emma.jpg"
+      },
+      {
+        id: 2,
+        nom: "Lucas",
+        age: 31,
+        passion: "Voyages ✈️",
+        ville: "Lyon",
+        badges: ["Netflix & Chill", "Chat", "Plage"],
+        description: "Posé, drôle et ambitieux. Je cherche quelqu’un pour écrire une belle histoire.",
+        photo: "img/lucas.jpg"
+      },
+      {
+        id: 3,
+        nom: "Sofia",
+        age: 27,
+        passion: "Lecture 📚",
+        ville: "Marseille",
+        badges: ["L’amour qui se construit", "Montagne", "Discrétion"],
+        description: "Je préfère les soirées cocooning aux boîtes de nuit. Et toi ?",
+        photo: "img/sofia.jpg"
       }
+    ];
 
-      zone.innerHTML = "";
-      compatibles.forEach(p => {
-        const carte = document.createElement("div");
-        carte.className = "carte-profil";
-        carte.innerHTML = `
-          <img src="${p.photo}" alt="${p.nom}">
-          <h3>${p.nom}</h3>
-          <p><a href="profil.html?id=${p.id}">Voir son profil</a></p>
-        `;
-        zone.appendChild(carte);
-      });
+    const liste = document.getElementById("liste-profils");
+    const detail = document.getElementById("detail-profil");
+
+    profils.forEach(p => {
+      const div = document.createElement("div");
+      div.className = "profil-cercle";
+      div.innerHTML = `<img src="${p.photo}" alt="${p.nom}" />`;
+      div.onclick = () => afficherProfil(p);
+      liste.appendChild(div);
+    });
+
+    function afficherProfil(p) {
+      detail.innerHTML = `
+        <h2>${p.nom}, ${p.age} ans</h2>
+        <p class="info"><strong>Ville :</strong> ${p.ville}</p>
+        <p class="info"><strong>Passion :</strong> ${p.passion}</p>
+        <p class="info"><strong>Description :</strong> ${p.description}</p>
+        <div>${p.badges.map(b => `<span class="badge">${b}</span>`).join(' ')}</div>
+        <br><a href="profil.html?id=${p.id}" style="color:#fff;text-decoration:underline;">Voir plus de détails</a>
+      `;
     }
-
-    chargerProfils();
   </script>
 </body>
 </html>
