@@ -1,179 +1,108 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <title>Profil détaillé</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <title>Profil</title>
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: url('img/fond-paradis-romantique.jpg') no-repeat center center / cover;
-      color: #fff;
-      backdrop-filter: blur(2px);
+      background: linear-gradient(135deg, #151515, #1f1f1f);
+      color: white;
     }
+
     .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .profil-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .profil-header img {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #fff;
+    }
+
+    .profil-info {
+      text-align: center;
+      font-size: 1.2em;
+      margin-top: 10px;
+    }
+
+    .photos-grid {
       display: flex;
-      flex-direction: row;
-      min-height: 100vh;
-      background-color: rgba(0, 0, 0, 0.3);
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 30px;
     }
-    .sidebar {
-      width: 250px;
-      padding: 20px;
-      border-right: 1px solid rgba(255,255,255,0.2);
-      background: rgba(0,0,0,0.4);
-      overflow-y: auto;
+
+    .photos-grid img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 10px;
+      cursor: pointer;
     }
-    .sidebar h2 {
-      font-size: 20px;
+
+    .fullscreen-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.95);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .fullscreen-image {
+      max-width: 90vw;
+      max-height: 90vh;
+    }
+
+    .fullscreen-overlay img {
+      border-radius: 10px;
+    }
+
+    .retour {
+      margin-top: 40px;
       text-align: center;
     }
-    .profile-circle {
-      border-radius: 50%;
-      overflow: hidden;
-      width: 80px;
-      height: 80px;
-      margin: 15px auto;
-      border: 2px solid #fff;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-    .profile-circle:hover {
-      transform: scale(1.1);
-    }
-    .profile-circle img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+
+    .retour a {
+      padding: 12px 24px;
+      background: rgba(255,255,255,0.8);
+      color: #000;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: bold;
     }
 
-    .details {
-      flex: 1;
-      padding: 40px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      background-color: rgba(0, 0, 0, 0.3);
-    }
-
-    .details h1 {
-      margin-top: 0;
-      font-size: 32px;
-    }
-
-    .info-box {
-      background: rgba(255,255,255,0.1);
-      padding: 20px;
-      border-radius: 10px;
-      margin-bottom: 15px;
-    }
-
-    .badge {
-      display: inline-block;
-      background: #ff7eb3;
-      color: #fff;
-      padding: 5px 10px;
-      border-radius: 20px;
-      margin: 5px 5px 5px 0;
-      font-size: 13px;
-    }
-
-    @media screen and (max-width: 768px) {
-      .container {
-        flex-direction: column;
-      }
-      .sidebar {
-        width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        border-right: none;
-        border-bottom: 1px solid rgba(255,255,255,0.2);
-      }
-      .profile-circle {
-        margin: 10px;
+    @media screen and (max-width: 600px) {
+      .photos-grid img {
+        width: 100px;
+        height: 100px;
       }
     }
   </style>
 </head>
 <body>
-
-<div class="container">
-  <div class="sidebar" id="sidebar-profiles">
-    <h2>Profils</h2>
-    <!-- Exemples - dynamiques en JS -->
-    <!-- <div class="profile-circle"><img src="img/photo1.jpg" alt="Photo"></div> -->
-  </div>
-
-  <div class="details" id="detail-profil">
-    <h1 id="nom"></h1>
-    <div class="info-box">
-      <p><strong>Âge :</strong> <span id="age"></span></p>
-      <p><strong>Lieu :</strong> <span id="lieu"></span></p>
-      <p><strong>Description :</strong></p>
-      <p id="description"></p>
+  <div class="container">
+    <div class="profil-header">
+      <img id="photo-profil" src="" alt="Photo">
+      <h2 id="nom-profil"></h2>
     </div>
-    <div class="info-box">
-      <p><strong>Type de relation :</strong> <span id="relation"></span></p>
-      <p><strong>Passions :</strong></p>
-      <div id="passions"></div>
-      <p><strong>Salles sélectionnées :</strong></p>
-      <div id="salles"></div>
-    </div>
-  </div>
-</div>
 
-<script>
-  const profils = [
-    {
-      id: "1",
-      nom: "Élodie",
-      age: 29,
-      lieu: "Paris",
-      photo: "img/photo1.jpg",
-      relation: "Sérieuse",
-      description: "Amoureuse de la nature et des livres. Cherche une belle âme.",
-      passions: ["Lecture", "Voyages", "Yoga"],
-      salles: ["💖 Relation Sérieuse", "🎉 Rencontre Fun"]
-    },
-    {
-      id: "2",
-      nom: "Lucas",
-      age: 32,
-      lieu: "Lyon",
-      photo: "img/photo2.jpg",
-      relation: "Sérieuse",
-      description: "Gamer romantique, toujours prêt à faire rire.",
-      passions: ["Jeux vidéo", "Cuisine", "Méditation"],
-      salles: ["💖 Relation Sérieuse", "🧬 Connexion Unique"]
-    }
-  ];
+    <div class="profil-info" id="infos"></div>
 
-  const sidebar = document.getElementById("sidebar-profiles");
-  const params = new URLSearchParams(window.location.search);
-  const id = params.get("id") || profils[0].id;
+    <div class="photos-grid" id="photos-grid"></div>
 
-  profils.forEach(p => {
-    const div = document.createElement("div");
-    div.className = "profile-circle";
-    div.innerHTML = `<img src="${p.photo}" alt="${p.nom}">`;
-    div.onclick = () => window.location.href = `profil.html?id=${p.id}`;
-    sidebar.appendChild(div);
-  });
-
-  const profil = profils.find(p => p.id === id);
-  if (profil) {
-    document.getElementById("nom").textContent = profil.nom;
-    document.getElementById("age").textContent = profil.age;
-    document.getElementById("lieu").textContent = profil.lieu;
-    document.getElementById("description").textContent = profil.description;
-    document.getElementById("relation").textContent = profil.relation;
-
-    document.getElementById("passions").innerHTML = profil.passions.map(p => `<span class="badge">${p}</span>`).join('');
-    document.getElementById("salles").innerHTML = profil.salles.map(s => `<span class="badge">${s}</span>`).join('');
-  }
-</script>
-
-</body>
-</html>
+    <div class="retour">
+      <a href="
