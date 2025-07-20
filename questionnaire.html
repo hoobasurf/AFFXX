@@ -2,201 +2,185 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Découvrir mon profil idéal</title>
+  <title>Découvrir mon profil idéal - AFFINIX</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" />
   <style>
     body {
       margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-image: url("img/fond-paradis-romantique.jpg");
+      font-family: 'Poppins', sans-serif;
+      background: url('img/fond-paradis-romantique.jpg') no-repeat center center fixed;
       background-size: cover;
-      background-position: center;
       color: white;
-      overflow-x: hidden;
     }
-
     .container {
-      background-color: rgba(0, 0, 0, 0.5);
-      margin: 30px auto;
-      max-width: 800px;
-      padding: 30px;
-      border-radius: 20px;
-      backdrop-filter: blur(6px);
+      max-width: 900px;
+      margin: auto;
+      padding: 40px 20px;
+      background: rgba(0,0,0,0.4);
+      border-radius: 15px;
     }
-
     h1, h2 {
       text-align: center;
+      margin-bottom: 30px;
     }
-
     label {
       display: block;
-      margin: 10px 0 5px;
-      font-weight: bold;
+      margin-bottom: 15px;
+      font-size: 1.1em;
     }
-
     .question {
-      margin-bottom: 20px;
+      margin-bottom: 30px;
     }
-
     input[type="radio"] {
       margin-right: 10px;
     }
-
     button {
       display: block;
-      margin: 30px auto;
-      padding: 15px 25px;
-      font-size: 18px;
-      background-color: #ff69b4;
+      margin: 40px auto 20px;
+      padding: 15px 30px;
+      font-size: 1.1em;
       border: none;
       border-radius: 10px;
+      background-color: #ff7bb2;
       color: white;
       cursor: pointer;
     }
-
-    .result-card {
-      background: rgba(255,255,255,0.15);
-      backdrop-filter: blur(6px);
-      border-radius: 15px;
-      padding: 20px;
-      text-align: center;
-      margin: 20px auto;
-      max-width: 220px;
+    #resultats {
+      margin-top: 40px;
     }
-
-    .result-card img {
+    .profil-card {
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 15px;
+      width: 180px;
+      text-align: center;
+      backdrop-filter: blur(4px);
+    }
+    .profil-card img {
       width: 100px;
       height: 100px;
-      border-radius: 50%;
       object-fit: cover;
-      margin-bottom: 10px;
+      border-radius: 50%;
     }
-
-    #resultats {
+    .resultats-container {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
       gap: 20px;
-    }
-
-    @media (max-width: 600px) {
-      .container {
-        padding: 20px;
-      }
-
-      button {
-        width: 100%;
-      }
+      justify-content: center;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>✨ Découvre ton profil idéal ✨</h1>
+    <h1>💖 Découvrir mon profil idéal</h1>
     <form id="questionnaire">
-      <!-- Questions 1 à 10 -->
       <div class="question">
-        <label>1. 🐶 Tu es plutôt…</label>
-        <input type="radio" name="q1" value="Chien" required /> Chien
-        <input type="radio" name="q1" value="Chat" /> Chat
+        <label>1. 🐶 Tu es plutôt…
+          <br><input type="radio" name="q1" value="chien" required> 🐾 Chien
+          <br><input type="radio" name="q1" value="chat"> 🐱 Chat
+        </label>
       </div>
-
       <div class="question">
-        <label>2. 🌊 Tu préfères…</label>
-        <input type="radio" name="q2" value="Plage" required /> Plage
-        <input type="radio" name="q2" value="Montagne" /> Montagne
+        <label>2. 🌊 Tu préfères…
+          <br><input type="radio" name="q2" value="plage" required> Plage
+          <br><input type="radio" name="q2" value="montagne"> Montagne
+        </label>
       </div>
-
       <div class="question">
-        <label>3. 🌃 Ton type de soirée idéale ?</label>
-        <input type="radio" name="q3" value="Amis" required /> Entre amis
-        <input type="radio" name="q3" value="Romantique" /> Soirée romantique
+        <label>3. 🌃 Soirée idéale ?
+          <br><input type="radio" name="q3" value="amis" required> Entre amis
+          <br><input type="radio" name="q3" value="romantique"> Romantique à deux
+        </label>
       </div>
-
       <div class="question">
-        <label>4. 📱 Comment tu vis les messages ?</label>
-        <input type="radio" name="q4" value="Papoter" required /> Papoter
-        <input type="radio" name="q4" value="Quelques messages" /> Peu de messages
+        <label>4. 📱 Messages ?
+          <br><input type="radio" name="q4" value="papoter" required> J’adore papoter
+          <br><input type="radio" name="q4" value="peu"> 1 ou 2 suffisent
+        </label>
       </div>
-
       <div class="question">
-        <label>5. 🎯 En amour tu cherches…</label>
-        <input type="radio" name="q5" value="Stable" required /> Relation stable
-        <input type="radio" name="q5" value="Feeling" /> Une belle histoire
+        <label>5. 🎯 En amour tu cherches…
+          <br><input type="radio" name="q5" value="stable" required> Relation sérieuse
+          <br><input type="radio" name="q5" value="feeling"> Si le feeling passe
+        </label>
       </div>
-
       <div class="question">
-        <label>6. 💬 Tu préfères…</label>
-        <input type="radio" name="q6" value="Parler" required /> Parler des heures
-        <input type="radio" name="q6" value="Moments calmes" /> Moments calmes
+        <label>6. 💬 Tu préfères…
+          <br><input type="radio" name="q6" value="parler" required> Parler pendant des heures
+          <br><input type="radio" name="q6" value="vivre"> Vivre sans trop parler
+        </label>
       </div>
-
       <div class="question">
-        <label>7. 🎥 Soirée parfaite ?</label>
-        <input type="radio" name="q7" value="Netflix" required /> Netflix & chill
-        <input type="radio" name="q7" value="Sortie" /> Resto / bar
+        <label>7. 🎥 Soirée parfaite ?
+          <br><input type="radio" name="q7" value="netflix" required> Netflix & plaid
+          <br><input type="radio" name="q7" value="resto"> Sortie resto / bar
+        </label>
       </div>
-
       <div class="question">
-        <label>8. 💌 Tu crois au…</label>
-        <input type="radio" name="q8" value="Coup de foudre" required /> Coup de foudre
-        <input type="radio" name="q8" value="Amour construit" /> Amour construit
+        <label>8. 💌 Tu crois au…
+          <br><input type="radio" name="q8" value="foudre" required> Coup de foudre
+          <br><input type="radio" name="q8" value="construit"> L’amour qui se construit
+        </label>
       </div>
-
       <div class="question">
-        <label>9. 🚀 Tu es plutôt…</label>
-        <input type="radio" name="q9" value="Spontané" required /> Spontané(e)
-        <input type="radio" name="q9" value="Réfléchi" /> Réfléchi(e)
+        <label>9. 🚀 Tu es plutôt…
+          <br><input type="radio" name="q9" value="spontane" required> Spontané(e)
+          <br><input type="radio" name="q9" value="reflechi"> Réfléchi(e)
+        </label>
       </div>
-
       <div class="question">
-        <label>10. 👀 Ce qui t’attire en premier :</label>
-        <input type="radio" name="q10" value="Valeurs" required /> Sa personnalité
-        <input type="radio" name="q10" value="Physique" /> Son regard
+        <label>10. 👀 Ce qui t’attire en premier :
+          <br><input type="radio" name="q10" value="valeurs" required> Personnalité/valeurs
+          <br><input type="radio" name="q10" value="physique"> Physique / regard
+        </label>
       </div>
-
-      <button type="submit">🔍 Trouver mon profil idéal</button>
+      <button type="submit">Voir mes profils compatibles 💞</button>
     </form>
 
     <div id="resultats"></div>
   </div>
 
   <script>
-    document.getElementById("questionnaire").addEventListener("submit", async function (e) {
-      e.preventDefault();
-      const data = new FormData(e.target);
-      const userAnswers = {};
-      data.forEach((v, k) => userAnswers[k] = v);
-
-      const res = await fetch("profils.json");
-      const profils = await res.json();
-
-      const compatibles = profils.filter(p => {
-        let score = 0;
-        for (let i = 1; i <= 10; i++) {
-          if (p.reponses["q" + i] === userAnswers["q" + i]) score++;
-        }
-        return score >= 6;
-      });
-
-      const zone = document.getElementById("resultats");
-      if (compatibles.length === 0) {
-        zone.innerHTML = `<p style="text-align:center;">😢 Aucun profil ne correspond à tes réponses.</p>`;
-        return;
-      }
-
-      zone.innerHTML = `<h2>✨ Profils compatibles :</h2>`;
-      compatibles.forEach(p => {
-        zone.innerHTML += `
-          <div class="result-card">
-            <img src="${p.photo}" alt="${p.nom}" />
-            <h3>${p.nom}</h3>
-            <p>${p.ville}, ${p.age} ans</p>
-            <p><a href="profil.html?id=${p.id}" style="color:#fff;text-decoration:underline;">Voir le profil</a></p>
-          </div>
-        `;
-      });
+  document.querySelector("form").addEventListener("submit", async function(e) {
+    e.preventDefault();
+    const form = e.target;
+    const data = new FormData(form);
+    const reponsesUser = {};
+    data.forEach((value, key) => {
+      reponsesUser[key] = value;
     });
+
+    const res = await fetch('profils.json');
+    const profils = await res.json();
+
+    const compatibles = profils.filter(profil => {
+      let points = 0;
+      for (let i = 1; i <= 10; i++) {
+        const q = "q" + i;
+        if (profil.reponses[q] === reponsesUser[q]) points++;
+      }
+      return points >= 6;
+    });
+
+    const zoneResultats = document.getElementById("resultats");
+    if (compatibles.length === 0) {
+      zoneResultats.innerHTML = `<p style="text-align:center">Aucun profil compatible 😢</p>`;
+      return;
+    }
+
+    zoneResultats.innerHTML = `
+      <h2>💫 Profils compatibles :</h2>
+      <div class="resultats-container">
+        ${compatibles.map(p => `
+          <div class="profil-card">
+            <img src="${p.photo}" alt="${p.nom}">
+            <h3>${p.nom}</h3>
+            <p><a href="profil.html?id=${p.id}" style="color:#fff;">Voir le profil</a></p>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  });
   </script>
 </body>
 </html>
