@@ -1,49 +1,44 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <title>Profil</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8"/>
+  <title>Profil détaillé</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #151515, #1f1f1f);
+      font-family: 'Poppins', sans-serif;
+      background: url('img/fond-paradis-romantique.jpg') center/cover no-repeat fixed;
       color: white;
       padding: 20px;
     }
-
     .container {
       max-width: 800px;
       margin: auto;
     }
-
     .profil-header {
       text-align: center;
     }
-
     .profil-header img {
       width: 150px;
       height: 150px;
       border-radius: 50%;
       object-fit: cover;
-      border: 4px solid #fff;
+      border: 4px solid white;
     }
-
     .profil-info {
       text-align: center;
-      margin-top: 10px;
-      font-size: 1.3em;
+      font-size: 1.2em;
+      margin: 15px 0;
     }
-
     .photos-grid {
       display: flex;
-      flex-wrap: wrap;
       gap: 12px;
       justify-content: center;
+      flex-wrap: wrap;
       margin: 30px 0;
     }
-
     .photos-grid img {
       width: 120px;
       height: 120px;
@@ -52,133 +47,116 @@
       cursor: pointer;
       transition: transform 0.2s;
     }
-
     .photos-grid img:hover {
       transform: scale(1.05);
     }
-
+    .retour {
+      text-align: center;
+      margin: 40px 0;
+    }
+    .retour a {
+      padding: 14px 26px;
+      background: rgba(255,255,255,0.9);
+      color: #111;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: 600;
+    }
     .fullscreen-overlay {
       display: none;
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
+      inset: 0;
       background: rgba(0,0,0,0.95);
-      z-index: 999;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
+      z-index: 999;
     }
-
-    .fullscreen-image {
+    .fullscreen-overlay img {
       max-width: 90vw;
       max-height: 80vh;
       border-radius: 10px;
     }
-
-    .fullscreen-controls {
-      margin-top: 20px;
+    .fs-controls {
+      position: absolute;
+      bottom: 40px;
+      display: flex;
+      gap: 20px;
     }
-
-    .fullscreen-controls button {
-      margin: 0 10px;
-      font-size: 1.2em;
-      padding: 8px 16px;
-    }
-
-    .retour {
-      margin-top: 50px;
-      text-align: center;
-    }
-
-    .retour a {
-      padding: 14px 26px;
+    .fs-controls button {
       background: rgba(255,255,255,0.8);
-      color: #000;
-      text-decoration: none;
-      border-radius: 30px;
-      font-weight: bold;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      border-radius: 10px;
+      cursor: pointer;
     }
-
-    @media screen and (max-width: 600px) {
-      .photos-grid img {
-        width: 100px;
-        height: 100px;
-      }
+    @media (max-width: 600px) {
+      .profile-info { font-size: 1em; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="container" id="main">
     <div class="profil-header">
-      <img id="avatar" src="" alt="Photo de profil">
-      <div class="profil-info">
-        <h2 id="nom"></h2>
-        <p id="description"></p>
-      </div>
+      <img id="avatar" src="" alt="Photo de profil"/>
+      <h2 id="name"></h2>
     </div>
-
+    <div class="profil-info">
+      <p id="description"></p>
+    </div>
     <div class="photos-grid" id="photos"></div>
-
     <div class="retour">
-      <a href="questionnaire.html">← Retour</a>
+      <a href="serieuse.html">← Retour</a>
     </div>
   </div>
 
-  <!-- Plein écran -->
   <div class="fullscreen-overlay" id="fullscreen">
-    <img class="fullscreen-image" id="fullscreen-img" src="" alt="photo">
-    <div class="fullscreen-controls">
-      <button onclick="prevImage()">←</button>
-      <button onclick="closeFullscreen()">Fermer</button>
-      <button onclick="nextImage()">→</button>
+    <img id="fs-img" src="" alt=""/>
+    <div class="fs-controls">
+      <button onclick="prevImg()">←</button>
+      <button onclick="closeFs()">Fermer</button>
+      <button onclick="nextImg()">→</button>
     </div>
   </div>
 
   <script>
     const params = new URLSearchParams(window.location.search);
-    const id = params.get('id');
-
-    let photos = [];
-    let currentIndex = 0;
+    const pid = params.get('id');
+    let photos = [], idx = 0;
 
     fetch('profils.json')
-      .then(res => res.json())
-      .then(data => {
-        const profil = data.find(p => p.id == id);
-        if (!profil) return;
-
-        document.getElementById('avatar').src = profil.photo;
-        document.getElementById('nom').textContent = profil.nom;
-        document.getElementById('description').textContent = profil.description;
-
-        const photosContainer = document.getElementById('photos');
-        photos = profil.photos || [];
-
+      .then(r => r.json())
+      .then(list => {
+        const p = list.find(x => String(x.id) === pid);
+        if (!p) return alert("Profil non trouvé");
+        document.getElementById('avatar').src = p.photo;
+        document.getElementById('name').textContent = p.nom + (p.age ? `, ${p.age} ans` : '');
+        document.getElementById('description').textContent = p.description || '';
+        photos = p.photos || [p.photo];
+        const grid = document.getElementById('photos');
         photos.forEach((src, i) => {
           const img = document.createElement('img');
           img.src = src;
-          img.addEventListener('click', () => openFullscreen(i));
-          photosContainer.appendChild(img);
+          img.onclick = () => openFs(i);
+          grid.appendChild(img);
         });
       });
 
-    function openFullscreen(index) {
-      currentIndex = index;
+    function openFs(i) {
+      idx = i;
+      document.getElementById('fs-img').src = photos[i];
       document.getElementById('fullscreen').style.display = 'flex';
-      document.getElementById('fullscreen-img').src = photos[index];
     }
-
-    function closeFullscreen() {
+    function closeFs() {
       document.getElementById('fullscreen').style.display = 'none';
     }
-
-    function nextImage() {
-      currentIndex = (currentIndex + 1) % photos.length;
-      document.getElementById('fullscreen-img').src = photos[currentIndex];
+    function nextImg() {
+      idx = (idx + 1) % photos.length;
+      document.getElementById('fs-img').src = photos[idx];
     }
-
-    function prevImage() {
-      currentIndex = (currentIndex - 1 + photos.length) % photos.length;
-      document.getElementById('fullscreen-img').src = photos[currentIndex];
+    function prevImg() {
+      idx = (idx - 1 + photos.length)%photos.length;
+      document.getElementById('fs-img').src = photos[idx];
     }
   </script>
 </body>
