@@ -1,36 +1,140 @@
 [
   {
-    "id": "1",
+    "id": 1,
     "nom": "Léa",
-    "photo": "img/lea.jpg",
+    "photo": "https://randomuser.me/api/portraits/women/10.jpg",
+    "description": "Passionnée de nature et de poésie.",
+    "photos": [
+      "https://randomuser.me/api/portraits/women/10.jpg",
+      "https://source.unsplash.com/featured/?nature",
+      "https://source.unsplash.com/featured/?forest"
+    ],
     "reponses": {
-      "q1": "chien",
-      "q2": "plage",
-      "q3": "romantique",
-      "q4": "beaucoup",
-      "q5": "serieux",
-      "q6": "parler",
-      "q7": "netflix",
-      "q8": "coupdefoudre",
-      "q9": "spontane",
-      "q10": "valeurs"
+      "q1": "a", "q2": "b", "q3": "a", "q4": "c", "q5": "a",
+      "q6": "b", "q7": "a", "q8": "b", "q9": "a", "q10": "b"
     }
   },
   {
-    "id": "2",
-    "nom": "Camille",
-    "photo": "img/camille.jpg",
+    "id": 2,
+    "nom": "Nina",
+    "photo": "https://randomuser.me/api/portraits/women/11.jpg",
+    "description": "Amoureuse de cinéma romantique.",
+    "photos": [
+      "https://randomuser.me/api/portraits/women/11.jpg",
+      "https://source.unsplash.com/featured/?cinema",
+      "https://source.unsplash.com/featured/?lights"
+    ],
     "reponses": {
-      "q1": "chat",
-      "q2": "montagne",
-      "q3": "amis",
-      "q4": "peu",
-      "q5": "feeling",
-      "q6": "vivre",
-      "q7": "sortie",
-      "q8": "amourlent",
-      "q9": "reflechi",
-      "q10": "physique"
+      "q1": "a", "q2": "a", "q3": "b", "q4": "c", "q5": "a",
+      "q6": "b", "q7": "a", "q8": "b", "q9": "b", "q10": "a"
+    }
+  },
+  {
+    "id": 3,
+    "nom": "Inès",
+    "photo": "https://randomuser.me/api/portraits/women/12.jpg",
+    "description": "Joue du piano et adore les chats.",
+    "photos": [
+      "https://randomuser.me/api/portraits/women/12.jpg",
+      "https://source.unsplash.com/featured/?piano",
+      "https://source.unsplash.com/featured/?cat"
+    ],
+    "reponses": {
+      "q1": "b", "q2": "b", "q3": "a", "q4": "b", "q5": "a",
+      "q6": "b", "q7": "b", "q8": "b", "q9": "a", "q10": "a"
+    }
+  },
+  {
+    "id": 4,
+    "nom": "Lola",
+    "photo": "https://randomuser.me/api/portraits/women/13.jpg",
+    "description": "Curieuse et joyeuse, toujours le sourire.",
+    "photos": [
+      "https://randomuser.me/api/portraits/women/13.jpg",
+      "https://source.unsplash.com/featured/?sunset",
+      "https://source.unsplash.com/featured/?smile"
+    ],
+    "reponses": {
+      "q1": "a", "q2": "b", "q3": "c", "q4": "a", "q5": "b",
+      "q6": "a", "q7": "a", "q8": "b", "q9": "b", "q10": "a"
+    }
+  },
+  {
+    "id": 5,
+    "nom": "Emma",
+    "photo": "https://randomuser.me/api/portraits/women/14.jpg",
+    "description": "Voyageuse dans l’âme, aime les découvertes.",
+    "photos": [
+      "https://randomuser.me/api/portraits/women/14.jpg",
+      "https://source.unsplash.com/featured/?travel",
+      "https://source.unsplash.com/featured/?mountains"
+    ],
+    "reponses": {
+      "q1": "a", "q2": "a", "q3": "a", "q4": "b", "q5": "c",
+      "q6": "b", "q7": "a", "q8": "c", "q9": "a", "q10": "b"
+    }
+  },
+  {
+    "id": 6,
+    "nom": "Mila",
+    "photo": "https://randomuser.me/api/portraits/women/15.jpg",
+    "description": "Romantique dans l’âme et rêveuse.",
+    "photos": [
+      "https://randomuser.me/api/portraits/women/15.jpg",
+      "https://source.unsplash.com/featured/?dream",
+      "https://source.unsplash.com/featured/?stars"
+    ],
+    "reponses": {
+      "q1": "c", "q2": "b", "q3": "a", "q4": "c", "q5": "b",
+      "q6": "c", "q7": "a", "q8": "b", "q9": "c", "q10": "b"
+    }
+  },
+  {
+    "id": 7,
+    "nom": "Julie",
+    "photo": "https://randomuser.me/api/portraits/women/16.jpg",
+    "description": "Créative, adore dessiner et créer.",
+    "photos": [
+      "https://randomuser.me/api/portraits/women/16.jpg",
+      "https://source.unsplash.com/featured/?art",
+      "https://source.unsplash.com/featured/?drawing"
+    ],
+    "reponses": {
+      "q1": "b", "q2": "a", "q3": "c", "q4": "a", "q5": "a",
+      "q6": "b", "q7": "b", "q8": "a", "q9": "b", "q10": "c"
+    }
+  },
+  {
+    "id": 8,
+    "nom": "Élise",
+    "photo": "https://randomuser.me/api/portraits/women/17.jpg",
+    "description": "Sportive et énergique, adore le défi.",
+    "photos": [
+      "https://randomuser.me/api/portraits/women/17.jpg",
+      "https://source.unsplash.com/featured/?sport",
+      "https://source.unsplash.com/featured/?running"
+    ],
+    "reponses": {
+      "q1": "a", "q2": "b", "q3": "b", "q4": "c", "q5": "b",
+      "q6": "a", "q7": "c", "q8": "b", "q9": "a", "q10": "b"
+    }
+  },
+
+  // ... Ajoute 12 autres profils en dupliquant et modifiant légèrement les infos ...
+
+  {
+    "id": 20,
+    "nom": "Zoé",
+    "photo": "https://randomuser.me/api/portraits/women/30.jpg",
+    "description": "Douce et attentive, aime les balades au coucher du soleil.",
+    "photos": [
+      "https://randomuser.me/api/portraits/women/30.jpg",
+      "https://source.unsplash.com/featured/?sunset,girl",
+      "https://source.unsplash.com/featured/?romantic"
+    ],
+    "reponses": {
+      "q1": "a", "q2": "b", "q3": "a", "q4": "c", "q5": "b",
+      "q6": "a", "q7": "b", "q8": "b", "q9": "a", "q10": "b"
     }
   }
 ]
