@@ -1,30 +1,30 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Profil</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(135deg, #151515, #1f1f1f);
       color: white;
+      padding: 20px;
     }
 
     .container {
       max-width: 800px;
       margin: auto;
-      padding: 30px 20px;
     }
 
     .profil-header {
       text-align: center;
-      margin-bottom: 30px;
     }
 
     .profil-header img {
-      width: 130px;
-      height: 130px;
+      width: 150px;
+      height: 150px;
       border-radius: 50%;
       object-fit: cover;
       border: 4px solid #fff;
@@ -32,16 +32,16 @@
 
     .profil-info {
       text-align: center;
-      font-size: 1.2em;
       margin-top: 10px;
+      font-size: 1.3em;
     }
 
     .photos-grid {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 12px;
       justify-content: center;
-      margin-top: 30px;
+      margin: 30px 0;
     }
 
     .photos-grid img {
@@ -50,6 +50,11 @@
       object-fit: cover;
       border-radius: 10px;
       cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .photos-grid img:hover {
+      transform: scale(1.05);
     }
 
     .fullscreen-overlay {
@@ -60,24 +65,32 @@
       z-index: 999;
       justify-content: center;
       align-items: center;
+      flex-direction: column;
     }
 
     .fullscreen-image {
       max-width: 90vw;
-      max-height: 90vh;
-    }
-
-    .fullscreen-overlay img {
+      max-height: 80vh;
       border-radius: 10px;
     }
 
+    .fullscreen-controls {
+      margin-top: 20px;
+    }
+
+    .fullscreen-controls button {
+      margin: 0 10px;
+      font-size: 1.2em;
+      padding: 8px 16px;
+    }
+
     .retour {
-      margin-top: 40px;
+      margin-top: 50px;
       text-align: center;
     }
 
     .retour a {
-      padding: 12px 24px;
+      padding: 14px 26px;
       background: rgba(255,255,255,0.8);
       color: #000;
       text-decoration: none;
@@ -96,13 +109,77 @@
 <body>
   <div class="container">
     <div class="profil-header">
-      <img id="photo-profil" src="" alt="Photo">
-      <h2 id="nom-profil"></h2>
+      <img id="avatar" src="" alt="Photo de profil">
+      <div class="profil-info">
+        <h2 id="nom"></h2>
+        <p id="description"></p>
+      </div>
     </div>
 
-    <div class="profil-info" id="infos"></div>
-
-    <div class="photos-grid" id="photos-grid"></div>
+    <div class="photos-grid" id="photos"></div>
 
     <div class="retour">
-      <a href="
+      <a href="questionnaire.html">← Retour</a>
+    </div>
+  </div>
+
+  <!-- Plein écran -->
+  <div class="fullscreen-overlay" id="fullscreen">
+    <img class="fullscreen-image" id="fullscreen-img" src="" alt="photo">
+    <div class="fullscreen-controls">
+      <button onclick="prevImage()">←</button>
+      <button onclick="closeFullscreen()">Fermer</button>
+      <button onclick="nextImage()">→</button>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+
+    let photos = [];
+    let currentIndex = 0;
+
+    fetch('profils.json')
+      .then(res => res.json())
+      .then(data => {
+        const profil = data.find(p => p.id == id);
+        if (!profil) return;
+
+        document.getElementById('avatar').src = profil.photo;
+        document.getElementById('nom').textContent = profil.nom;
+        document.getElementById('description').textContent = profil.description;
+
+        const photosContainer = document.getElementById('photos');
+        photos = profil.photos || [];
+
+        photos.forEach((src, i) => {
+          const img = document.createElement('img');
+          img.src = src;
+          img.addEventListener('click', () => openFullscreen(i));
+          photosContainer.appendChild(img);
+        });
+      });
+
+    function openFullscreen(index) {
+      currentIndex = index;
+      document.getElementById('fullscreen').style.display = 'flex';
+      document.getElementById('fullscreen-img').src = photos[index];
+    }
+
+    function closeFullscreen() {
+      document.getElementById('fullscreen').style.display = 'none';
+    }
+
+    function nextImage() {
+      currentIndex = (currentIndex + 1) % photos.length;
+      document.getElementById('fullscreen-img').src = photos[currentIndex];
+    }
+
+    function prevImage() {
+      currentIndex = (currentIndex - 1 + photos.length) % photos.length;
+      document.getElementById('fullscreen-img').src = photos[currentIndex];
+    }
+  </script>
+</body>
+</html>
