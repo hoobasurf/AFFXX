@@ -2,19 +2,178 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Mon Profil - Affinix</title>
+  <title>Profil détaillé - AFFINIX</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url('img/fond-paradis-romantique.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    #profil-container {
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(8px);
+      border-radius: 20px;
+      max-width: 500px;
+      width: 100%;
+      padding: 30px;
+      box-shadow: 0 0 15px rgba(255, 182, 193, 0.6);
+      text-align: center;
+      position: relative;
+    }
+
+    #profil-container img {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #ff70c0;
+      margin-bottom: 20px;
+      box-shadow: 0 0 15px #ff70c0;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-weight: 700;
+      font-size: 2.2rem;
+      color: #ffb6c1;
+      text-shadow: 0 0 8px #ff70c0;
+    }
+
+    .info {
+      font-size: 1.1rem;
+      margin: 8px 0;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #ff70c0;
+      color: black;
+      padding: 7px 15px;
+      border-radius: 30px;
+      margin: 6px 8px 0 0;
+      font-weight: 600;
+      font-size: 0.9rem;
+      box-shadow: 0 0 5px #ff70c0;
+      user-select: none;
+    }
+
+    #btn-retour {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: #ff70c0;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 30px;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ff70c0;
+      transition: background 0.3s ease;
+      z-index: 10;
+    }
+    #btn-retour:hover {
+      background: #ff40a0;
+    }
+
+    @media (max-width: 600px) {
+      #profil-container {
+        max-width: 90vw;
+        padding: 20px;
+      }
+
+      #profil-container img {
+        width: 140px;
+        height: 140px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h1>Mon Profil</h1>
-  
-  <div id="user-info">
-    <p>Email : <span id="user-email"></span></p>
-    <p>Type de relation : <input id="relation-type" placeholder="Ex: Amicale, Sérieuse" /></p>
-    <p>Description : <textarea id="description" placeholder="Votre description ici"></textarea></p>
-    <button id="save-profile">Enregistrer</button>
-    <button id="logout">Déconnexion</button>
+  <div id="profil-container">
+    <button id="btn-retour">← Retour</button>
+    <img id="photo" src="" alt="Photo profil" />
+    <h1 id="nom"></h1>
+    <p class="info" id="age"></p>
+    <p class="info" id="ville"></p>
+    <p class="info" id="passion"></p>
+    <p class="info" id="description"></p>
+    <div id="badges"></div>
   </div>
 
-  <script type="module" src="profil.js"></script>
+  <script>
+    // Exemple de profils, normalement tu peux récupérer via URL (ex: ?id=2) puis fetch JSON ou Firebase
+    const profils = [
+      {
+        id: 1,
+        nom: "Emma",
+        age: 28,
+        passion: "Musique 🎵",
+        ville: "Paris",
+        badges: ["Relation sérieuse", "Soirée romantique", "Chien"],
+        description: "Je suis une romantique dans l’âme, j’adore les couchers de soleil et les discussions profondes.",
+        photo: "img/emma.jpg"
+      },
+      {
+        id: 2,
+        nom: "Lucas",
+        age: 31,
+        passion: "Voyages ✈️",
+        ville: "Lyon",
+        badges: ["Netflix & Chill", "Chat", "Plage"],
+        description: "Posé, drôle et ambitieux. Je cherche quelqu’un pour écrire une belle histoire.",
+        photo: "img/lucas.jpg"
+      },
+      {
+        id: 3,
+        nom: "Sofia",
+        age: 27,
+        passion: "Lecture 📚",
+        ville: "Marseille",
+        badges: ["L’amour qui se construit", "Montagne", "Discrétion"],
+        description: "Je préfère les soirées cocooning aux boîtes de nuit. Et toi ?",
+        photo: "img/sofia.jpg"
+      }
+    ];
+
+    function getIdFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      return parseInt(params.get('id'));
+    }
+
+    function afficherProfilDetail(id) {
+      const profil = profils.find(p => p.id === id);
+      if (!profil) {
+        document.getElementById('profil-container').innerHTML = '<p>Profil introuvable.</p>';
+        return;
+      }
+      document.getElementById('photo').src = profil.photo;
+      document.getElementById('photo').alt = profil.nom;
+      document.getElementById('nom').textContent = profil.nom;
+      document.getElementById('age').textContent = `Âge : ${profil.age} ans`;
+      document.getElementById('ville').textContent = `Ville : ${profil.ville}`;
+      document.getElementById('passion').textContent = `Passion : ${profil.passion}`;
+      document.getElementById('description').textContent = profil.description;
+
+      const badgesDiv = document.getElementById('badges');
+      badgesDiv.innerHTML = profil.badges.map(b => `<span class="badge">${b}</span>`).join(' ');
+    }
+
+    document.getElementById('btn-retour').addEventListener('click', () => {
+      window.history.back();
+    });
+
+    const idProfil = getIdFromUrl();
+    afficherProfilDetail(idProfil);
+  </script>
 </body>
 </html>
