@@ -1,48 +1,24 @@
 [
   {
     "id": 1,
-    "nom": "Lina",
-    "genre": "femme",
-    "age": 24,
-    "ville": "Paris",
-    "photo": "https://i.imgur.com/x9aT6S8.jpg",
-    "photos": [
-      "https://i.imgur.com/x9aT6S8.jpg",
-      "https://i.imgur.com/K5WzHsi.jpg",
-      "https://i.imgur.com/wpxm77D.jpg"
-    ],
-    "description": "J'adore les balades et les étoiles.",
-    "badges": ["Rêveuse", "Aventure", "Chocolat"]
+    "nom": "Léna",
+    "genre": "fille",
+    "photo": "img/profil1.jpg",
+    "joursConnecte": 3
   },
   {
     "id": 2,
-    "nom": "Nora",
-    "genre": "femme",
-    "age": 28,
-    "ville": "Lyon",
-    "photo": "https://i.imgur.com/EybGn8e.jpg",
-    "photos": [
-      "https://i.imgur.com/EybGn8e.jpg",
-      "https://i.imgur.com/WJv5Dtu.jpg",
-      "https://i.imgur.com/SK0iGJD.jpg"
-    ],
-    "description": "Passionnée par la nature et les livres.",
-    "badges": ["Nature", "Lecture", "Douceur"]
+    "nom": "Lucas",
+    "genre": "garçon",
+    "photo": "img/profil2.jpg",
+    "joursConnecte": 5
   },
   {
     "id": 3,
-    "nom": "Eliott",
-    "genre": "homme",
-    "age": 27,
-    "ville": "Toulouse",
-    "photo": "https://i.imgur.com/fn4AdBl.jpg",
-    "photos": [
-      "https://i.imgur.com/fn4AdBl.jpg",
-      "https://i.imgur.com/NEMvZPX.jpg",
-      "https://i.imgur.com/cO5r7eG.jpg"
-    ],
-    "description": "Toujours partant pour une nouvelle aventure.",
-    "badges": ["Sportif", "Voyage", "Sincère"]
+    "nom": "Emma",
+    "genre": "fille",
+    "photo": "img/profil3.jpg",
+    "joursConnecte": 7
   }
-  // Tu peux cloner ces objets pour en créer 20 en changeant id, noms, photos, etc.
+  // ... 17 autres profils
 ]
