@@ -1,163 +1,109 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8"/>
-  <title>Profil détaillé</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>Profil AFFINIX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Raleway:wght@500&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: url('img/fond-paradis-romantique.jpg') center/cover no-repeat fixed;
+      padding: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: url('img/fond-serieuse.jpg') no-repeat center center fixed;
+      background-size: cover;
       color: white;
-      padding: 20px;
-    }
-    .container {
-      max-width: 800px;
-      margin: auto;
-    }
-    .profil-header {
       text-align: center;
+      padding: 30px 10px;
     }
-    .profil-header img {
-      width: 150px;
-      height: 150px;
+
+    h1 {
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px #fff;
+    }
+
+    .profile-box {
+      max-width: 400px;
+      margin: auto;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 0 15px #ff9dfb;
+    }
+
+    .profile-pic {
+      width: 200px;
+      height: 200px;
       border-radius: 50%;
       object-fit: cover;
-      border: 4px solid white;
+      border: 8px solid #fff;
+      margin-bottom: 20px;
+      box-shadow: 0 0 15px #fff;
     }
-    .profil-info {
-      text-align: center;
-      font-size: 1.2em;
-      margin: 15px 0;
+
+    .info {
+      font-family: 'Raleway', sans-serif;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
     }
-    .photos-grid {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin: 30px 0;
+
+    .tag {
+      display: inline-block;
+      padding: 5px 15px;
+      border-radius: 20px;
+      margin: 10px 5px;
+      font-size: 1rem;
     }
-    .photos-grid img {
-      width: 120px;
-      height: 120px;
-      object-fit: cover;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: transform 0.2s;
+
+    .fille {
+      background: #ff70e6;
+      color: white;
     }
-    .photos-grid img:hover {
-      transform: scale(1.05);
+
+    .garcon {
+      background: #3faeff;
+      color: white;
     }
-    .retour {
-      text-align: center;
-      margin: 40px 0;
+
+    .jours {
+      background: #ffffff33;
+      border: 1px solid #fff;
+      color: white;
     }
-    .retour a {
-      padding: 14px 26px;
-      background: rgba(255,255,255,0.9);
-      color: #111;
-      text-decoration: none;
-      border-radius: 30px;
-      font-weight: 600;
-    }
-    .fullscreen-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.95);
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-    }
-    .fullscreen-overlay img {
-      max-width: 90vw;
-      max-height: 80vh;
-      border-radius: 10px;
-    }
-    .fs-controls {
-      position: absolute;
-      bottom: 40px;
-      display: flex;
-      gap: 20px;
-    }
-    .fs-controls button {
-      background: rgba(255,255,255,0.8);
-      border: none;
-      padding: 10px 20px;
-      font-size: 1.2em;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-    @media (max-width: 600px) {
-      .profile-info { font-size: 1em; }
+
+    @media (max-width: 500px) {
+      .profile-pic {
+        width: 150px;
+        height: 150px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container" id="main">
-    <div class="profil-header">
-      <img id="avatar" src="" alt="Photo de profil"/>
-      <h2 id="name"></h2>
-    </div>
-    <div class="profil-info">
-      <p id="description"></p>
-    </div>
-    <div class="photos-grid" id="photos"></div>
-    <div class="retour">
-      <a href="serieuse.html">← Retour</a>
-    </div>
-  </div>
 
-  <div class="fullscreen-overlay" id="fullscreen">
-    <img id="fs-img" src="" alt=""/>
-    <div class="fs-controls">
-      <button onclick="prevImg()">←</button>
-      <button onclick="closeFs()">Fermer</button>
-      <button onclick="nextImg()">→</button>
-    </div>
+  <h1>👤 Profil</h1>
+  <div class="profile-box">
+    <img src="img/profil7.jpg" alt="Profil" class="profile-pic" id="photo">
+    <div class="info" id="nom">Hugo</div>
+    <div class="tag garcon" id="genre">Garçon</div>
+    <div class="tag jours" id="jours">7 jours dans l'app</div>
   </div>
 
   <script>
-    const params = new URLSearchParams(window.location.search);
-    const pid = params.get('id');
-    let photos = [], idx = 0;
+    // Simule un chargement dynamique (tu peux remplacer par des URL ou query params plus tard)
+    const profil = {
+      nom: "Hugo",
+      genre: "garcon", // ou "fille"
+      photo: "img/profil7.jpg",
+      jours: 7
+    };
 
-    fetch('profils.json')
-      .then(r => r.json())
-      .then(list => {
-        const p = list.find(x => String(x.id) === pid);
-        if (!p) return alert("Profil non trouvé");
-        document.getElementById('avatar').src = p.photo;
-        document.getElementById('name').textContent = p.nom + (p.age ? `, ${p.age} ans` : '');
-        document.getElementById('description').textContent = p.description || '';
-        photos = p.photos || [p.photo];
-        const grid = document.getElementById('photos');
-        photos.forEach((src, i) => {
-          const img = document.createElement('img');
-          img.src = src;
-          img.onclick = () => openFs(i);
-          grid.appendChild(img);
-        });
-      });
-
-    function openFs(i) {
-      idx = i;
-      document.getElementById('fs-img').src = photos[i];
-      document.getElementById('fullscreen').style.display = 'flex';
-    }
-    function closeFs() {
-      document.getElementById('fullscreen').style.display = 'none';
-    }
-    function nextImg() {
-      idx = (idx + 1) % photos.length;
-      document.getElementById('fs-img').src = photos[idx];
-    }
-    function prevImg() {
-      idx = (idx - 1 + photos.length)%photos.length;
-      document.getElementById('fs-img').src = photos[idx];
-    }
+    document.getElementById("photo").src = profil.photo;
+    document.getElementById("nom").textContent = profil.nom;
+    document.getElementById("genre").textContent = profil.genre === "fille" ? "Fille" : "Garçon";
+    document.getElementById("genre").className = "tag " + profil.genre;
+    document.getElementById("jours").textContent = profil.jours + " jour" + (profil.jours > 1 ? "s" : "") + " dans l'app";
   </script>
+
 </body>
 </html>
