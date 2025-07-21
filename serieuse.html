@@ -2,119 +2,129 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Profils Compatibles - Affinix</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profils Compatibles</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      font-family: 'Arial', sans-serif;
-      background: url('img/fond-paradis-romantique.jpg') no-repeat center center fixed;
+      padding: 0;
+      background: url('img/fond-serieuse.jpg') no-repeat center center fixed;
       background-size: cover;
-      color: #fff;
+      font-family: 'Orbitron', sans-serif;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 50px;
     }
 
     h1 {
-      text-align: center;
-      font-size: 2.2em;
-      margin-top: 30px;
-      text-shadow: 2px 2px 6px #000;
+      font-size: 2rem;
+      text-shadow: 0 0 10px #ff70e6;
     }
 
-    #resultats {
+    .profiles {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 30px;
-      padding: 30px;
+      margin-top: 40px;
     }
 
-    .profil {
-      background: rgba(255, 255, 255, 0.12);
-      border-radius: 20px;
-      padding: 20px;
-      width: 200px;
-      text-align: center;
-      backdrop-filter: blur(6px);
-      transition: transform 0.3s;
+    .profile-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    .profil:hover {
-      transform: scale(1.05);
+    .ring {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      position: relative;
+      background-color: #111;
+      overflow: hidden;
+      box-shadow: 0 0 12px rgba(255,255,255,0.2);
     }
 
-    .profil img {
-      width: 130px;
-      height: 130px;
+    .profile-pic {
+      width: 140px;
+      height: 140px;
       border-radius: 50%;
       object-fit: cover;
-      border: 4px solid #fff;
-      box-shadow: 0 0 10px #000;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 2;
     }
 
-    .profil h3 {
-      margin: 10px 0 5px;
-      font-size: 1.3em;
+    .liquid-fill {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 0%;
+      z-index: 1;
+      border-radius: 50%;
+      transition: height 0.6s ease;
     }
 
-    .profil p {
-      margin: 5px 0;
-      font-size: 1em;
+    .profile-container[data-gender="fille"] .liquid-fill {
+      background: linear-gradient(145deg, #ff94f8, #ff70e6);
     }
 
-    .profil a {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 6px 12px;
-      background: #ff66cc;
+    .profile-container[data-gender="garcon"] .liquid-fill {
+      background: linear-gradient(145deg, #70d1ff, #507aff);
+    }
+
+    .profile-name {
+      margin-top: 12px;
+      font-size: 1.1rem;
       color: #fff;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    .profil a:hover {
-      background: #ff3399;
-    }
-
-    @media (max-width: 500px) {
-      .profil {
-        width: 85%;
-      }
-
-      .profil img {
-        width: 150px;
-        height: 150px;
-      }
-
-      h1 {
-        font-size: 1.7em;
-      }
+      text-shadow: 0 0 6px #000;
     }
   </style>
 </head>
 <body>
+  <h1>Profils Compatibles 💖</h1>
 
-  <h1>Profils Compatibles</h1>
+  <div class="profiles">
+    <!-- Profil 1 -->
+    <div class="profile-container" data-gender="fille" data-jour="1">
+      <div class="ring">
+        <div class="liquid-fill"></div>
+        <img src="img/profil1.jpg" alt="Profil" class="profile-pic">
+      </div>
+      <p class="profile-name">Élise</p>
+    </div>
 
-  <div id="resultats">
-    <!-- Les profils compatibles seront affichés ici dynamiquement -->
+    <!-- Profil 2 -->
+    <div class="profile-container" data-gender="garcon" data-jour="4">
+      <div class="ring">
+        <div class="liquid-fill"></div>
+        <img src="img/profil2.jpg" alt="Profil" class="profile-pic">
+      </div>
+      <p class="profile-name">Maxime</p>
+    </div>
+
+    <!-- Profil 3 -->
+    <div class="profile-container" data-gender="fille" data-jour="7">
+      <div class="ring">
+        <div class="liquid-fill"></div>
+        <img src="img/profil3.jpg" alt="Profil" class="profile-pic">
+      </div>
+      <p class="profile-name">Jade</p>
+    </div>
   </div>
 
   <script>
-    // Charger profils.json (fichier de 20 profils)
-    fetch('profils.json')
-      .then(res => res.json())
-      .then(profils => {
-        const container = document.getElementById('resultats');
-        container.innerHTML = profils.map(p => `
-          <div class="profil">
-            <img src="${p.photo}" alt="${p.nom}">
-            <h3>${p.nom}, ${p.age} ans</h3>
-            <p>${p.ville}</p>
-            <a href="profil.html?id=${p.id}">Voir le profil</a>
-          </div>
-        `).join('');
-      });
+    document.querySelectorAll('.profile-container').forEach(container => {
+      const day = parseInt(container.dataset.jour) || 0;
+      const percent = Math.min(day / 7, 1) * 100;
+      const fill = container.querySelector('.liquid-fill');
+      fill.style.height = percent + '%';
+    });
   </script>
 </body>
 </html>
