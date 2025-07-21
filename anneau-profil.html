@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Profil avec Anneaux</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      background: #0e0e1a;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .profile-container {
+      position: relative;
+      width: 200px;
+      height: 200px;
+    }
+
+    .ring {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: conic-gradient(var(--color) calc(var(--progress) * 1%), #222 0%);
+      mask: radial-gradient(circle 85px at center, transparent 80px, black 81px);
+      -webkit-mask: radial-gradient(circle 85px at center, transparent 80px, black 81px);
+      transition: all 0.4s ease-in-out;
+    }
+
+    .profile-pic {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 2;
+      box-shadow: 0 0 12px rgba(255,255,255,0.2);
+    }
+
+    .username {
+      text-align: center;
+      margin-top: 230px;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Exemple de profil fille avec 3 jours de connexion -->
+  <div class="profile-container" style="--progress: 42.8; --color: #ff60d4;">
+    <div class="ring"></div>
+    <img src="https://i.imgur.com/Vf5ZZkm.jpg" alt="Profil Fille" class="profile-pic" />
+    <div class="username">Sophie</div>
+  </div>
+
+  <!-- Pour garçons : changer la couleur et le pourcentage -->
+  <!-- Exemple garçon avec 5 jours : 5/7 = 71.4% -->
+  <!--
+  <div class="profile-container" style="--progress: 71.4; --color: #60aaff;">
+    <div class="ring"></div>
+    <img src="https://i.imgur.com/vYbrg0n.jpg" alt="Profil Garçon" class="profile-pic" />
+    <div class="username">Alex</div>
+  </div>
+  -->
+
+</body>
+</html>
