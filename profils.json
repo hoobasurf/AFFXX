@@ -1,162 +1,48 @@
 [
   {
     "id": 1,
-    "nom": "Léa",
-    "photo": "https://randomuser.me/api/portraits/women/10.jpg",
-    "description": "Passionnée de nature et de poésie.",
-    "photos": ["https://randomuser.me/api/portraits/women/10.jpg","https://source.unsplash.com/featured/?nature","https://source.unsplash.com/featured/?forest"],
-    "reponses": {"q1":"chien","q2":"plage","q3":"amis","q4":"papoter","q5":"stable","q6":"parler","q7":"netflix","q8":"foudre","q9":"spontane","q10":"valeurs"}
+    "nom": "Lina",
+    "genre": "femme",
+    "age": 24,
+    "ville": "Paris",
+    "photo": "https://i.imgur.com/x9aT6S8.jpg",
+    "photos": [
+      "https://i.imgur.com/x9aT6S8.jpg",
+      "https://i.imgur.com/K5WzHsi.jpg",
+      "https://i.imgur.com/wpxm77D.jpg"
+    ],
+    "description": "J'adore les balades et les étoiles.",
+    "badges": ["Rêveuse", "Aventure", "Chocolat"]
   },
   {
     "id": 2,
-    "nom": "Nina",
-    "photo": "https://randomuser.me/api/portraits/women/11.jpg",
-    "description": "Amoureuse de cinéma romantique.",
-    "photos": ["https://randomuser.me/api/portraits/women/11.jpg","https://source.unsplash.com/featured/?cinema","https://source.unsplash.com/featured/?lights"],
-    "reponses": {"q1":"chien","q2":"montagne","q3":"romantique","q4":"papoter","q5":"stable","q6":"parler","q7":"netflix","q8":"foudre","q9":"reflechi","q10":"physique"}
+    "nom": "Nora",
+    "genre": "femme",
+    "age": 28,
+    "ville": "Lyon",
+    "photo": "https://i.imgur.com/EybGn8e.jpg",
+    "photos": [
+      "https://i.imgur.com/EybGn8e.jpg",
+      "https://i.imgur.com/WJv5Dtu.jpg",
+      "https://i.imgur.com/SK0iGJD.jpg"
+    ],
+    "description": "Passionnée par la nature et les livres.",
+    "badges": ["Nature", "Lecture", "Douceur"]
   },
   {
     "id": 3,
-    "nom": "Inès",
-    "photo": "https://randomuser.me/api/portraits/women/12.jpg",
-    "description": "Joue du piano et adore les chats.",
-    "photos": ["https://randomuser.me/api/portraits/women/12.jpg","https://source.unsplash.com/featured/?piano","https://source.unsplash.com/featured/?cat"],
-    "reponses": {"q1":"chat","q2":"montagne","q3":"amis","q4":"peu","q5":"stable","q6":"vivre","q7":"resto","q8":"construit","q9":"spontane","q10":"valeurs"}
-  },
-  {
-    "id": 4,
-    "nom": "Lola",
-    "photo": "https://randomuser.me/api/portraits/women/13.jpg",
-    "description": "Curieuse et joyeuse, toujours le sourire.",
-    "photos": ["https://randomuser.me/api/portraits/women/13.jpg","https://source.unsplash.com/featured/?sunset","https://source.unsplash.com/featured/?smile"],
-    "reponses": {"q1":"chien","q2":"plage","q3":"romantique","q4":"papoter","q5":"stable","q6":"parler","q7":"netflix","q8":"construit","q9":"spontane","q10":"valeurs"}
-  },
-  {
-    "id": 5,
-    "nom": "Emma",
-    "photo": "https://randomuser.me/api/portraits/women/14.jpg",
-    "description": "Voyageuse dans l’âme, aime les découvertes.",
-    "photos": ["https://randomuser.me/api/portraits/women/14.jpg","https://source.unsplash.com/featured/?travel","https://source.unsplash.com/featured/?mountains"],
-    "reponses": {"q1":"chien","q2":"plage","q3":"romantique","q4":"peu","q5":"feeling","q6":"vivre","q7":"netflix","q8":"construit","q9":"spontane","q10":"physique"}
-  },
-  {
-    "id": 6,
-    "nom": "Mila",
-    "photo": "https://randomuser.me/api/portraits/women/15.jpg",
-    "description": "Romantique dans l’âme et rêveuse.",
-    "photos": ["https://randomuser.me/api/portraits/women/15.jpg","https://source.unsplash.com/featured/?dream","https://source.unsplash.com/featured/?stars"],
-    "reponses": {"q1":"chien","q2":"montagne","q3":"romantique","q4":"papoter","q5":"stable","q6":"parler","q7":"netflix","q8":"foudre","q9":"spontane","q10":"valeurs"}
-  },
-  {
-    "id": 7,
-    "nom": "Julie",
-    "photo": "https://randomuser.me/api/portraits/women/16.jpg",
-    "description": "Créative, adore dessiner et créer.",
-    "photos": ["https://randomuser.me/api/portraits/women/16.jpg","https://source.unsplash.com/featured/?art","https://source.unsplash.com/featured/?drawing"],
-    "reponses": {"q1":"chat","q2":"plage","q3":"romantique","q4":"papoter","q5":"stable","q6":"parler","q7":"netflix","q8":"foudre","q9":"spontane","q10":"valeurs"}
-  },
-  {
-    "id": 8,
-    "nom": "Élise",
-    "photo": "https://randomuser.me/api/portraits/women/17.jpg",
-    "description": "Sportive et énergique.",
-    "photos": ["https://randomuser.me/api/portraits/women/17.jpg","https://source.unsplash.com/featured/?sport","https://source.unsplash.com/featured/?running"],
-    "reponses": {"q1":"chien","q2":"montagne","q3":"amis","q4":"peu","q5":"feeling","q6":"vivre","q7":"resto","q8":"construit","q9":"reflechi","q10":"valeurs"}
-  },
-  {
-    "id": 9,
-    "nom": "Sara",
-    "photo": "https://randomuser.me/api/portraits/women/18.jpg",
-    "description": "Douce et attentionnée.",
-    "photos": ["https://randomuser.me/api/portraits/women/18.jpg","https://source.unsplash.com/featured/?sunrise","https://source.unsplash.com/featured/?love"],
-    "reponses": {"q1":"chat","q2":"plage","q3":"romantique","q4":"papoter","q5":"stable","q6":"parler","q7":"netflix","q8":"foudre","q9":"spontane","q10":"valeurs"}
-  },
-  {
-    "id": 10,
-    "nom": "Clara",
-    "photo": "https://randomuser.me/api/portraits/women/19.jpg",
-    "description": "Amoureuse de voyages et de musique.",
-    "photos": ["https://randomuser.me/api/portraits/women/19.jpg","https://source.unsplash.com/featured/?music","https://source.unsplash.com/featured/?city"],
-    "reponses": {"q1":"chien","q2":"montagne","q3":"amis","q4":"peu","q5":"stable","q6":"vivre","q7":"resto","q8":"construit","q9":"reflechi","q10":"valeurs"}
-  },
-  {
-    "id": 11,
-    "nom": "Théo",
-    "photo": "https://randomuser.me/api/portraits/men/20.jpg",
-    "description": "Calme, aime la lecture et les chats.",
-    "photos": ["https://randomuser.me/api/portraits/men/20.jpg","https://source.unsplash.com/featured/?book","https://source.unsplash.com/featured/?cat"],
-    "reponses": {"q1":"chat","q2":"montagne","q3":"amis","q4":"peu","q5":"stable","q6":"vivre","q7":"netflix","q8":"construit","q9":"reflechi","q10":"valeurs"}
-  },
-  {
-    "id": 12,
-    "nom": "Maxime",
-    "photo": "https://randomuser.me/api/portraits/men/21.jpg",
-    "description": "Aventurier et passionné de montagne.",
-    "photos": ["https://randomuser.me/api/portraits/men/21.jpg","https://source.unsplash.com/featured/?mountain","https://source.unsplash.com/featured/?hiking"],
-    "reponses": {"q1":"chien","q2":"montagne","q3":"amis","q4":"peu","q5":"stable","q6":"vivre","q7":"resto","q8":"construit","q9":"reflechi","q10":"valeurs"}
-  },
-  {
-    "id": 13,
-    "nom": "Lucas",
-    "photo": "https://randomuser.me/api/portraits/men/22.jpg",
-    "description": "Gamer romantique, amateur de musique.",
-    "photos": ["https://randomuser.me/api/portraits/men/22.jpg","https://source.unsplash.com/featured/?gaming","https://source.unsplash.com/featured/?music"],
-    "reponses": {"q1":"chien","q2":"montagne","q3":"romantique","q4":"peu","q5":"feeling","q6":"vivre","q7":"netflix","q8":"construit","q9":"spontane","q10":"physique"}
-  },
-  {
-    "id": 14,
-    "nom": "Mathis",
-    "photo": "https://randomuser.me/api/portraits/men/23.jpg",
-    "description": "Adore les animaux et les longues balades.",
-    "photos": ["https://randomuser.me/api/portraits/men/23.jpg","https://source.unsplash.com/featured/?animals","https://source.unsplash.com/featured/?walk"],
-    "reponses": {"q1":"chien","q2":"plage","q3":"amis","q4":"peu","q5":"stable","q6":"vivre","q7":"resto","q8":"foudre","q9":"reflechi","q10":"valeurs"}
-  },
-  {
-    "id": 15,
-    "nom": "Antoine",
-    "photo": "https://randomuser.me/api/portraits/men/24.jpg",
-    "description": "Calme et posé, aime cuisiner.",
-    "photos": ["https://randomuser.me/api/portraits/men/24.jpg","https://source.unsplash.com/featured/?cooking","https://source.unsplash.com/featured/?food"],
-    "reponses": {"q1":"chien","q2":"plage","q3":"amis","q4":"peu","q5":"stable","q6":"vivre","q7":"resto","q8":"construit","q9":"reflechi","q10":"valeurs"}
-  },
-  {
-    "id": 16,
-    "nom": "Émile",
-    "photo": "https://randomuser.me/api/portraits/men/25.jpg",
-    "description": "Créatif, fan de design et d’art.",
-    "photos": ["https://randomuser.me/api/portraits/men/25.jpg","https://source.unsplash.com/featured/?design","https://source.unsplash.com/featured/?art"],
-    "reponses": {"q1":"chat","q2":"montagne","q3":"amis","q4":"peu","q5":"stable","q6":"vivre","q7":"netflix","q8":"construit","q9":"reflechi","q10":"valeurs"}
-  },
-  {
-    "id": 17,
-    "nom": "Sarah",
-    "photo": "https://randomuser.me/api/portraits/women/26.jpg",
-    "description": "Dynamique, aime les soirées entre amis.",
-    "photos": ["https://randomuser.me/api/portraits/women/26.jpg","https://source.unsplash.com/featured/?party","https://source.unsplash.com/featured/?fun"],
-    "reponses": {"q1":"chien","q2":"plage","q3":"amis","q4":"papoter","q5":"stable","q6":"vivre","q7":"resto","q8":"foudre","q9":"spontane","q10":"valeurs"}
-  },
-  {
-    "id": 18,
-    "nom": "Thomas",
-    "photo": "https://randomuser.me/api/portraits/men/27.jpg",
-    "description": "Romantique, aime les balades au coucher du soleil.",
-    "photos": ["https://randomuser.me/api/portraits/men/27.jpg","https://source.unsplash.com/featured/?sunset","https://source.unsplash.com/featured/?romantic"],
-    "reponses": {"q1":"chien","q2":"plage","q3":"romantique","q4":"papoter","q5":"stable","q6":"vivre","q7":"resto","q8":"foudre","q9":"spontane","q10":"valeurs"}
-  },
-  {
-    "id": 19,
-    "nom": "Chloé",
-    "photo": "https://randomuser.me/api/portraits/women/28.jpg",
-    "description": "Adore la musique et les chats.",
-    "photos": ["https://randomuser.me/api/portraits/women/28.jpg","https://source.unsplash.com/featured/?music","https://source.unsplash.com/featured/?cat"],
-    "reponses": {"q1":"chat","q2":"plage","q3":"romantique","q4":"papoter","q5":"stable","q6":"vivre","q7":"netflix","q8":"foudre","q9":"spontane","q10":"valeurs"}
-  },
-  {
-    "id": 20,
-    "nom": "Zoé",
-    "photo": "https://randomuser.me/api/portraits/women/29.jpg",
-    "description": "Douce et attentive, aime les couchers de soleil.",
-    "photos": ["https://randomuser.me/api/portraits/women/29.jpg","https://source.unsplash.com/featured/?sunset,girl","https://source.unsplash.com/featured/?romantic"],
-    "reponses": {"q1":"chien","q2":"montagne","q3":"romantique","q4":"peu","q5":"stable","q6":"vivre","q7":"netflix","q8":"construit","q9":"reflechi","q10":"valeurs"}
+    "nom": "Eliott",
+    "genre": "homme",
+    "age": 27,
+    "ville": "Toulouse",
+    "photo": "https://i.imgur.com/fn4AdBl.jpg",
+    "photos": [
+      "https://i.imgur.com/fn4AdBl.jpg",
+      "https://i.imgur.com/NEMvZPX.jpg",
+      "https://i.imgur.com/cO5r7eG.jpg"
+    ],
+    "description": "Toujours partant pour une nouvelle aventure.",
+    "badges": ["Sportif", "Voyage", "Sincère"]
   }
+  // Tu peux cloner ces objets pour en créer 20 en changeant id, noms, photos, etc.
 ]
