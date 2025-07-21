@@ -2,191 +2,119 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Relation Sérieuse - AFFINIX</title>
+  <title>Profils Compatibles - Affinix</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: url('img/fond-paradis-romantique.jpg') no-repeat center center fixed;
+      font-family: 'Arial', sans-serif;
+      background: url('fond-paradis-romantique.jpg') no-repeat center center fixed;
       background-size: cover;
-      color: white;
-      display: flex;
-      height: 100vh;
-      overflow: hidden;
+      color: #fff;
     }
 
-    #sidebar {
-      width: 300px;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 20px;
-      overflow-y: auto;
-      backdrop-filter: blur(8px);
-    }
-
-    #sidebar h2 {
+    h1 {
       text-align: center;
-      margin-bottom: 20px;
+      font-size: 2.2em;
+      margin-top: 30px;
+      text-shadow: 2px 2px 6px #000;
     }
 
-    .profil-cercle {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      overflow: hidden;
-      margin: 10px auto;
-      cursor: pointer;
-      border: 2px solid #fff;
-      transition: transform 0.2s ease;
+    #resultats {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 30px;
     }
 
-    .profil-cercle:hover {
-      transform: scale(1.1);
-    }
-
-    .profil-cercle img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    #detail-profil {
-      flex: 1;
-      padding: 40px;
-      overflow-y: auto;
-      background: rgba(0, 0, 0, 0.4);
+    .profil {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      padding: 20px;
+      width: 200px;
+      text-align: center;
       backdrop-filter: blur(6px);
+      transition: transform 0.3s;
     }
 
-    #detail-profil h2 {
-      font-size: 28px;
-      margin-bottom: 10px;
+    .profil:hover {
+      transform: scale(1.05);
     }
 
-    .info {
-      margin-bottom: 10px;
-      font-size: 18px;
+    .profil img {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #fff;
+      box-shadow: 0 0 10px #000;
     }
 
-    .badge {
+    .profil h3 {
+      margin: 10px 0 5px;
+      font-size: 1.3em;
+    }
+
+    .profil p {
+      margin: 5px 0;
+      font-size: 1em;
+    }
+
+    .profil a {
       display: inline-block;
-      background: #ff89c0;
-      color: black;
+      margin-top: 10px;
       padding: 6px 12px;
-      border-radius: 20px;
-      margin: 5px 5px 5px 0;
-      font-size: 14px;
-    }
-
-    #decouvrir-ideal {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      background: #ff70c0;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 20px;
-      cursor: pointer;
+      background: #ff66cc;
+      color: #fff;
+      border-radius: 8px;
+      text-decoration: none;
       font-weight: bold;
-      transition: background 0.3s ease;
-      z-index: 10;
     }
 
-    #decouvrir-ideal:hover {
-      background: #ff40a0;
+    .profil a:hover {
+      background: #ff3399;
     }
 
-    @media (max-width: 768px) {
-      body {
-        flex-direction: column;
+    @media (max-width: 500px) {
+      .profil {
+        width: 85%;
       }
 
-      #sidebar {
-        width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        padding: 10px;
+      .profil img {
+        width: 150px;
+        height: 150px;
       }
 
-      #detail-profil {
-        padding: 20px;
-      }
-
-      .profil-cercle {
-        margin: 10px;
+      h1 {
+        font-size: 1.7em;
       }
     }
   </style>
 </head>
 <body>
-  <button id="decouvrir-ideal" onclick="window.location.href='questionnaire.html'">💫 Découvrir mon profil idéal</button>
 
-  <div id="sidebar">
-    <h2>Profils sérieux</h2>
-    <div id="liste-profils"></div>
-  </div>
+  <h1>Profils Compatibles</h1>
 
-  <div id="detail-profil">
-    <h2>Bienvenue 💖</h2>
-    <p>Sélectionne un profil à gauche pour voir ses détails ici.</p>
+  <div id="resultats">
+    <!-- Les profils compatibles seront affichés ici dynamiquement -->
   </div>
 
   <script>
-    const profils = [
-      {
-        id: 1,
-        nom: "Emma",
-        age: 28,
-        passion: "Musique 🎵",
-        ville: "Paris",
-        badges: ["Relation sérieuse", "Soirée romantique", "Chien"],
-        description: "Je suis une romantique dans l’âme, j’adore les couchers de soleil et les discussions profondes.",
-        photo: "img/emma.jpg"
-      },
-      {
-        id: 2,
-        nom: "Lucas",
-        age: 31,
-        passion: "Voyages ✈️",
-        ville: "Lyon",
-        badges: ["Netflix & Chill", "Chat", "Plage"],
-        description: "Posé, drôle et ambitieux. Je cherche quelqu’un pour écrire une belle histoire.",
-        photo: "img/lucas.jpg"
-      },
-      {
-        id: 3,
-        nom: "Sofia",
-        age: 27,
-        passion: "Lecture 📚",
-        ville: "Marseille",
-        badges: ["L’amour qui se construit", "Montagne", "Discrétion"],
-        description: "Je préfère les soirées cocooning aux boîtes de nuit. Et toi ?",
-        photo: "img/sofia.jpg"
-      }
-    ];
-
-    const liste = document.getElementById("liste-profils");
-    const detail = document.getElementById("detail-profil");
-
-    profils.forEach(p => {
-      const div = document.createElement("div");
-      div.className = "profil-cercle";
-      div.innerHTML = `<img src="${p.photo}" alt="${p.nom}" />`;
-      div.onclick = () => afficherProfil(p);
-      liste.appendChild(div);
-    });
-
-    function afficherProfil(p) {
-      detail.innerHTML = `
-        <h2>${p.nom}, ${p.age} ans</h2>
-        <p class="info"><strong>Ville :</strong> ${p.ville}</p>
-        <p class="info"><strong>Passion :</strong> ${p.passion}</p>
-        <p class="info"><strong>Description :</strong> ${p.description}</p>
-        <div>${p.badges.map(b => `<span class="badge">${b}</span>`).join(' ')}</div>
-        <br><a href="profil.html?id=${p.id}" style="color:#fff;text-decoration:underline;">Voir plus de détails</a>
-      `;
-    }
+    // Charger profils.json (fichier de 20 profils)
+    fetch('profils.json')
+      .then(res => res.json())
+      .then(profils => {
+        const container = document.getElementById('resultats');
+        container.innerHTML = profils.map(p => `
+          <div class="profil">
+            <img src="${p.photo}" alt="${p.nom}">
+            <h3>${p.nom}, ${p.age} ans</h3>
+            <p>${p.ville}</p>
+            <a href="profil.html?id=${p.id}">Voir le profil</a>
+          </div>
+        `).join('');
+      });
   </script>
 </body>
 </html>
