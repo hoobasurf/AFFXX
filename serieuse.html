@@ -6,145 +6,134 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body, html {
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
       font-family: 'Raleway', sans-serif;
-      height: 100%;
-      overflow: hidden;
+      height: 100%; overflow: hidden;
     }
-
     .background {
       background: url('img/fond-paradis-romantique.jpg') no-repeat center center fixed;
       background-size: cover;
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      filter: brightness(0.8);
+      position: fixed; width: 100%; height: 100%;
+      z-index: -1; filter: brightness(0.8);
     }
-
     .container {
-      display: flex;
-      height: 100vh;
+      display: flex; height: 100vh;
     }
-
     .sidebar {
-      width: 260px;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      padding: 20px;
-      color: white;
-      overflow-y: auto;
-      border-right: 2px solid #ff70e6;
+      width: 260px; background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px); padding: 20px;
+      color: white; overflow-y: auto; border-right: 2px solid #ff70e6;
     }
-
     .sidebar h2 {
-      margin-top: 0;
-      text-align: center;
-      color: #ffb6ff;
+      text-align: center; color: #ffb6ff; margin-top: 0;
     }
-
     .profils-list {
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
+      display: flex; flex-direction: column; gap: 18px;
     }
-
     .profil {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: rgba(255, 255, 255, 0.08);
-      padding: 10px;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: background 0.3s;
+      display: flex; align-items: center; gap: 12px;
+      cursor: pointer; transition: background 0.3s;
+      padding: 6px; border-radius: 10px;
     }
-
     .profil:hover {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255,255,255,0.2);
     }
-
+    .anneau-wrapper {
+      position: relative; width: 60px; height: 60px;
+    }
     .profil img {
-      width: 60px;
-      height: 60px;
+      width: 60px; height: 60px;
+      border-radius: 50%; object-fit: cover;
+      position: relative; z-index: 1;
+    }
+    .anneau {
+      position: absolute; top: 0; left: 0;
+      width: 60px; height: 60px;
       border-radius: 50%;
-      border: 3px solid #ff70e6;
-      object-fit: cover;
+      clip: rect(0,60px,60px,30px);
     }
-
+    .anneau .liquid {
+      position: absolute; top: 0; left: 0;
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      clip: rect(0,30px,60px,0);
+      background-color: transparent;
+      animation: fill 2s forwards;
+    }
+    .anneau.fille .liquid {
+      background: #ff70e6;
+    }
+    .anneau.garçon .liquid {
+      background: #66ccff;
+    }
+    @keyframes fill {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(calc(360deg * var(--fill))); }
+    }
     .main-content {
-      flex-grow: 1;
-      padding: 40px;
-      color: white;
-      overflow-y: auto;
+      flex-grow: 1; padding: 40px; color: white;
+      overflow-y: auto; position: relative;
     }
-
     .info h3 {
-      font-size: 2rem;
-      color: #ffd6fb;
-      margin-bottom: 10px;
+      font-size: 2rem; color: #ffd6fb; margin-bottom: 10px;
     }
-
     .info p {
-      font-size: 1.2rem;
-      line-height: 1.6;
+      font-size: 1.2rem; line-height: 1.6;
       background: rgba(255,255,255,0.1);
-      padding: 15px;
-      border-radius: 12px;
+      padding: 15px; border-radius: 12px;
       backdrop-filter: blur(6px);
     }
-
     .photo-large {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      border: 4px solid #ff70e6;
-      object-fit: cover;
-      margin-bottom: 20px;
+      width: 120px; height: 120px;
+      border-radius: 50%; border: 4px solid #ff70e6;
+      object-fit: cover; margin-bottom: 20px;
     }
-
+    .actions {
+      display: flex; justify-content: space-between;
+      margin-top: 20px;
+    }
+    .btn {
+      padding: 12px 20px;
+      border: none; border-radius: 30px;
+      font-size: 1rem; cursor: pointer;
+      transition: 0.3s;
+    }
+    .btn-like {
+      background: #ff4da6; color: white;
+      animation: heartbeat 1.5s infinite;
+    }
+    .btn-message {
+      background: #66ccff; color: white;
+    }
+    .btn-like:hover { background: #ff1f8b; }
+    .btn-message:hover { background: #33bbff; }
+    @keyframes heartbeat {
+      0%,100% { transform: scale(1); }
+      25%,75% { transform: scale(1.1); }
+      50% { transform: scale(1.2); }
+    }
     @media screen and (max-width: 768px) {
-      .container {
-        flex-direction: column;
-      }
-
+      .container { flex-direction: column; }
       .sidebar {
-        width: 100%;
-        height: 200px;
+        width: 100%; height: 200px;
         overflow-x: auto;
-        display: flex;
-        flex-direction: row;
+        display: flex; flex-direction: row;
       }
-
-      .profils-list {
-        flex-direction: row;
-      }
-
-      .main-content {
-        padding: 20px;
-      }
-
-      .photo-large {
-        margin: 0 auto;
-        display: block;
-      }
-
-      .info {
-        text-align: center;
-      }
+      .profils-list { flex-direction: row; }
+      .main-content { padding: 20px; }
+      .photo-large { margin: auto; display: block; }
+      .info { text-align: center; }
+      .actions { flex-direction: column; gap: 10px; align-items: center; }
     }
   </style>
 </head>
 <body>
   <div class="background"></div>
-
   <div class="container">
     <aside class="sidebar">
       <h2>💖 Sérieux</h2>
       <div id="profils" class="profils-list"></div>
     </aside>
-
     <main class="main-content">
       <div class="info" id="info">
         <h3>Sélectionne un profil</h3>
@@ -155,59 +144,43 @@
 
   <script>
     const profils = [
-      {
-        "id": 1,
-        "nom": "Léna",
-        "genre": "fille",
-        "photo": "img/profil1.jpg",
-        "joursConnecte": 3,
-        "presentation": "Je suis passionnée par la nature, les étoiles et les longues discussions sincères. J’aime rêver à deux."
-      },
-      {
-        "id": 2,
-        "nom": "Lucas",
-        "genre": "garçon",
-        "photo": "img/profil2.jpg",
-        "joursConnecte": 5,
-        "presentation": "Je recherche une belle connexion avec une personne douce et vraie. Le reste viendra naturellement."
-      },
-      {
-        "id": 3,
-        "nom": "Emma",
-        "genre": "fille",
-        "photo": "img/profil3.jpg",
-        "joursConnecte": 7,
-        "presentation": "Romantique et rêveuse, je crois encore aux histoires sincères qui naissent d’un simple regard."
-      }
+      { id:1, nom:"Léna", genre:"fille", photo:"img/profil1.jpg", joursConnecte:3,
+        presentation:"Passionnée de nature et de longues discussions sincères." },
+      { id:2, nom:"Lucas", genre:"garçon", photo:"img/profil2.jpg", joursConnecte:5,
+        presentation:"J’aime les échanges vrais et les petites aventures." },
+      { id:3, nom:"Emma", genre:"fille", photo:"img/profil3.jpg", joursConnecte:7,
+        presentation:"Romantique et rêveuse, j’adore les histoires vraies." }
     ];
 
-    const container = document.getElementById("profils");
-    const infoDiv = document.getElementById("info");
+    const cont = document.getElementById("profils"),
+          info = document.getElementById("info");
 
-    profils.forEach(profil => {
-      const card = document.createElement("div");
-      card.className = "profil";
-
-      card.innerHTML = `
-        <img src="${profil.photo}" alt="${profil.nom}">
-        <div>
-          <strong>${profil.nom}</strong><br>
-          ${profil.genre}<br>
-          ${profil.joursConnecte} j connect.
+    profils.forEach(p => {
+      const div = document.createElement("div");
+      div.className = "profil";
+      div.innerHTML = `
+        <div class="anneau-wrapper">
+          <img src="${p.photo}" alt="${p.nom}">
+          <div class="anneau ${p.genre}" style="--fill:${p.joursConnecte/7}">
+            <div class="liquid"></div>
+          </div>
         </div>
-      `;
-
-      card.addEventListener("click", () => {
-        infoDiv.innerHTML = `
-          <img class="photo-large" src="${profil.photo}" alt="${profil.nom}">
-          <h3>${profil.nom}</h3>
-          <p><strong>Genre :</strong> ${profil.genre}<br>
-          <strong>Connecté(e) il y a :</strong> ${profil.joursConnecte} jours</p>
-          <p>${profil.presentation}</p>
-        `;
-      });
-
-      container.appendChild(card);
+        <div>
+          <strong>${p.nom}</strong><br>
+          ${p.genre}<br>${p.joursConnecte} j
+        </div>`;
+      div.onclick = () => {
+        info.innerHTML = `
+          <img class="photo-large" src="${p.photo}" alt="${p.nom}">
+          <h3>${p.nom}</h3><p><strong>Genre :</strong> ${p.genre}<br>
+          <strong>Connecté(e) :</strong> ${p.joursConnecte} jours</p>
+          <p>${p.presentation}</p>
+          <div class="actions">
+            <button class="btn btn-like">💖 Liker</button>
+            <button class="btn btn-message">✉️ Envoyer un message</button>
+          </div>`;
+      };
+      cont.appendChild(div);
     });
   </script>
 </body>
