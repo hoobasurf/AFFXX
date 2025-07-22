@@ -1,262 +1,214 @@
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <title>Relation Sérieuse - AFFINIX</title>
-  <title>Profils Compatibles - Affinix</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <title>💖 Rencontre Sérieuse</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
+    body, html {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
+      padding: 0;
+      font-family: 'Raleway', sans-serif;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .background {
       background: url('img/fond-paradis-romantique.jpg') no-repeat center center fixed;
-      font-family: 'Arial', sans-serif;
-      background: url('fond-paradis-romantique.jpg') no-repeat center center fixed;
       background-size: cover;
-      color: white;
-      display: flex;
-      height: 100vh;
-      overflow: hidden;
-    }
-
-    #sidebar {
-      width: 300px;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 20px;
-      overflow-y: auto;
-      backdrop-filter: blur(8px);
-      color: #fff;
-    }
-
-    #sidebar h2 {
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-      font-size: 2.2em;
-      margin-top: 30px;
-      text-shadow: 2px 2px 6px #000;
-    }
-
-    .profil-cercle {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      overflow: hidden;
-      margin: 10px auto;
-      cursor: pointer;
-      border: 2px solid #fff;
-      transition: transform 0.2s ease;
-    #resultats {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 30px;
-      padding: 30px;
-    }
-
-    .profil-cercle:hover {
-      transform: scale(1.1);
-    .profil {
-      background: rgba(255, 255, 255, 0.12);
-      border-radius: 20px;
-      padding: 20px;
-      width: 200px;
-      text-align: center;
-      backdrop-filter: blur(6px);
-      transition: transform 0.3s;
-    }
-
-    .profil-cercle img {
+      position: fixed;
       width: 100%;
       height: 100%;
-      object-fit: cover;
-    .profil:hover {
-      transform: scale(1.05);
+      z-index: -1;
+      filter: brightness(0.8);
     }
 
-    #detail-profil {
-      flex: 1;
-      padding: 40px;
-      overflow-y: auto;
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(6px);
-    .profil img {
-      width: 130px;
-      height: 130px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 4px solid #fff;
-      box-shadow: 0 0 10px #000;
+    .container {
+      display: flex;
+      height: 100vh;
     }
 
-    #detail-profil h2 {
-      font-size: 28px;
-      margin-bottom: 10px;
-    .profil h3 {
-      margin: 10px 0 5px;
-      font-size: 1.3em;
-    }
-
-    .info {
-      margin-bottom: 10px;
-      font-size: 18px;
-    .profil p {
-      margin: 5px 0;
-      font-size: 1em;
-    }
-
-    .badge {
-    .profil a {
-      display: inline-block;
-      background: #ff89c0;
-      color: black;
-      margin-top: 10px;
-      padding: 6px 12px;
-      border-radius: 20px;
-      margin: 5px 5px 5px 0;
-      font-size: 14px;
-    }
-
-    #decouvrir-ideal {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      background: #ff70c0;
+    .sidebar {
+      width: 260px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 20px;
       color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 20px;
+      overflow-y: auto;
+      border-right: 2px solid #ff70e6;
+    }
+
+    .sidebar h2 {
+      margin-top: 0;
+      text-align: center;
+      color: #ffb6ff;
+    }
+
+    .profils-list {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .profil {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 10px;
+      border-radius: 12px;
       cursor: pointer;
-      background: #ff66cc;
-      color: #fff;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: background 0.3s ease;
-      z-index: 10;
+      transition: background 0.3s;
     }
 
-    #decouvrir-ideal:hover {
-      background: #ff40a0;
-    .profil a:hover {
-      background: #ff3399;
+    .profil:hover {
+      background: rgba(255, 255, 255, 0.2);
     }
 
-    @media (max-width: 768px) {
-      body {
+    .profil img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 3px solid #ff70e6;
+      object-fit: cover;
+    }
+
+    .main-content {
+      flex-grow: 1;
+      padding: 40px;
+      color: white;
+      overflow-y: auto;
+    }
+
+    .info h3 {
+      font-size: 2rem;
+      color: #ffd6fb;
+      margin-bottom: 10px;
+    }
+
+    .info p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      background: rgba(255,255,255,0.1);
+      padding: 15px;
+      border-radius: 12px;
+      backdrop-filter: blur(6px);
+    }
+
+    .photo-large {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 4px solid #ff70e6;
+      object-fit: cover;
+      margin-bottom: 20px;
+    }
+
+    @media screen and (max-width: 768px) {
+      .container {
         flex-direction: column;
       }
 
-      #sidebar {
+      .sidebar {
         width: 100%;
+        height: 200px;
+        overflow-x: auto;
         display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        padding: 10px;
-    @media (max-width: 500px) {
-      .profil {
-        width: 85%;
+        flex-direction: row;
       }
 
-      #detail-profil {
+      .profils-list {
+        flex-direction: row;
+      }
+
+      .main-content {
         padding: 20px;
-      .profil img {
-        width: 150px;
-        height: 150px;
       }
 
-      .profil-cercle {
-        margin: 10px;
-      h1 {
-        font-size: 1.7em;
+      .photo-large {
+        margin: 0 auto;
+        display: block;
+      }
+
+      .info {
+        text-align: center;
       }
     }
   </style>
 </head>
 <body>
-  <button id="decouvrir-ideal" onclick="window.location.href='questionnaire.html'">💫 Découvrir mon profil idéal</button>
+  <div class="background"></div>
 
-  <div id="sidebar">
-    <h2>Profils sérieux</h2>
-    <div id="liste-profils"></div>
-  </div>
-  <h1>Profils Compatibles</h1>
+  <div class="container">
+    <aside class="sidebar">
+      <h2>💖 Sérieux</h2>
+      <div id="profils" class="profils-list"></div>
+    </aside>
 
-  <div id="detail-profil">
-    <h2>Bienvenue 💖</h2>
-    <p>Sélectionne un profil à gauche pour voir ses détails ici.</p>
-  <div id="resultats">
-    <!-- Les profils compatibles seront affichés ici dynamiquement -->
+    <main class="main-content">
+      <div class="info" id="info">
+        <h3>Sélectionne un profil</h3>
+        <p>Tu découvriras les détails ici bientôt ✨</p>
+      </div>
+    </main>
   </div>
 
   <script>
     const profils = [
       {
-        id: 1,
-        nom: "Emma",
-        age: 28,
-        passion: "Musique 🎵",
-        ville: "Paris",
-        badges: ["Relation sérieuse", "Soirée romantique", "Chien"],
-        description: "Je suis une romantique dans l’âme, j’adore les couchers de soleil et les discussions profondes.",
-        photo: "img/emma.jpg"
+        "id": 1,
+        "nom": "Léna",
+        "genre": "fille",
+        "photo": "img/profil1.jpg",
+        "joursConnecte": 3,
+        "presentation": "Je suis passionnée par la nature, les étoiles et les longues discussions sincères. J’aime rêver à deux."
       },
       {
-        id: 2,
-        nom: "Lucas",
-        age: 31,
-        passion: "Voyages ✈️",
-        ville: "Lyon",
-        badges: ["Netflix & Chill", "Chat", "Plage"],
-        description: "Posé, drôle et ambitieux. Je cherche quelqu’un pour écrire une belle histoire.",
-        photo: "img/lucas.jpg"
+        "id": 2,
+        "nom": "Lucas",
+        "genre": "garçon",
+        "photo": "img/profil2.jpg",
+        "joursConnecte": 5,
+        "presentation": "Je recherche une belle connexion avec une personne douce et vraie. Le reste viendra naturellement."
       },
       {
-        id: 3,
-        nom: "Sofia",
-        age: 27,
-        passion: "Lecture 📚",
-        ville: "Marseille",
-        badges: ["L’amour qui se construit", "Montagne", "Discrétion"],
-        description: "Je préfère les soirées cocooning aux boîtes de nuit. Et toi ?",
-        photo: "img/sofia.jpg"
+        "id": 3,
+        "nom": "Emma",
+        "genre": "fille",
+        "photo": "img/profil3.jpg",
+        "joursConnecte": 7,
+        "presentation": "Romantique et rêveuse, je crois encore aux histoires sincères qui naissent d’un simple regard."
       }
     ];
 
-    const liste = document.getElementById("liste-profils");
-    const detail = document.getElementById("detail-profil");
+    const container = document.getElementById("profils");
+    const infoDiv = document.getElementById("info");
 
-    profils.forEach(p => {
-      const div = document.createElement("div");
-      div.className = "profil-cercle";
-      div.innerHTML = `<img src="${p.photo}" alt="${p.nom}" />`;
-      div.onclick = () => afficherProfil(p);
-      liste.appendChild(div);
-    });
+    profils.forEach(profil => {
+      const card = document.createElement("div");
+      card.className = "profil";
 
-    function afficherProfil(p) {
-      detail.innerHTML = `
-        <h2>${p.nom}, ${p.age} ans</h2>
-        <p class="info"><strong>Ville :</strong> ${p.ville}</p>
-        <p class="info"><strong>Passion :</strong> ${p.passion}</p>
-        <p class="info"><strong>Description :</strong> ${p.description}</p>
-        <div>${p.badges.map(b => `<span class="badge">${b}</span>`).join(' ')}</div>
-        <br><a href="profil.html?id=${p.id}" style="color:#fff;text-decoration:underline;">Voir plus de détails</a>
+      card.innerHTML = `
+        <img src="${profil.photo}" alt="${profil.nom}">
+        <div>
+          <strong>${profil.nom}</strong><br>
+          ${profil.genre}<br>
+          ${profil.joursConnecte} j connect.
+        </div>
       `;
-    }
-    // Charger profils.json (fichier de 20 profils)
-    fetch('profils.json')
-      .then(res => res.json())
-      .then(profils => {
-        const container = document.getElementById('resultats');
-        container.innerHTML = profils.map(p => `
-          <div class="profil">
-            <img src="${p.photo}" alt="${p.nom}">
-            <h3>${p.nom}, ${p.age} ans</h3>
-            <p>${p.ville}</p>
-            <a href="profil.html?id=${p.id}">Voir le profil</a>
-          </div>
-        `).join('');
+
+      card.addEventListener("click", () => {
+        infoDiv.innerHTML = `
+          <img class="photo-large" src="${profil.photo}" alt="${profil.nom}">
+          <h3>${profil.nom}</h3>
+          <p><strong>Genre :</strong> ${profil.genre}<br>
+          <strong>Connecté(e) il y a :</strong> ${profil.joursConnecte} jours</p>
+          <p>${profil.presentation}</p>
+        `;
       });
+
+      container.appendChild(card);
+    });
   </script>
 </body>
 </html>
