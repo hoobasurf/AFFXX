@@ -1,109 +1,165 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Profils Compatibles - Sérieuse</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profils Compatibles - AFFINIX</title>
   <style>
     body {
       margin: 0;
-      font-family: "Segoe UI", sans-serif;
-      background: url('img/fond-paradis-romantique.jpg') no-repeat center center fixed;
+      font-family: 'Arial', sans-serif;
+      background: url('img/fond-galactique.jpg') no-repeat center center fixed;
       background-size: cover;
-      color: #fff;
+      color: white;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 220px;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 20px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .profile {
+      margin: 20px 0;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .ring {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 10px;
+      position: relative;
+    }
+
+    .ring img.anneau {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      animation: spin 6s linear infinite;
+    }
+
+    .ring img.avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    @keyframes spin {
+      from {transform: rotate(0deg);}
+      to {transform: rotate(360deg);}
+    }
+
+    .main {
+      flex: 1;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
       text-align: center;
     }
 
-    h1 {
-      margin-top: 30px;
+    .main h1 {
       font-size: 2em;
-      text-shadow: 0 0 10px #ffccff;
+      margin-bottom: 30px;
     }
 
-    .profils-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      padding: 30px 10px;
+    .btn {
+      padding: 10px 18px;
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 1px solid white;
+      border-radius: 20px;
+      text-decoration: none;
+      margin: 15px auto;
+      display: inline-block;
+      font-size: 0.9em;
+      transition: background 0.3s;
     }
 
-    .profil {
-      position: relative;
-      margin: 20px;
-      width: 160px;
-      height: 160px;
+    .btn:hover {
+      background-color: rgba(255, 255, 255, 0.4);
     }
 
-    .anneau {
-      position: absolute;
-      width: 180px;
-      height: 180px;
-      top: -10px;
-      left: -10px;
-      animation: rotate 12s linear infinite;
-      pointer-events: none;
+    .footer {
+      margin-top: auto;
+      padding: 20px 0;
     }
 
-    .anneau.rose {
-      animation-direction: normal;
-    }
-
-    .anneau.bleu {
-      animation-direction: reverse;
-    }
-
-    @keyframes rotate {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    .profil img.avatar {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid rgba(255, 255, 255, 0.6);
-      box-shadow: 0 0 15px rgba(255, 192, 203, 0.7);
-    }
-
-    @media screen and (max-width: 600px) {
-      .profil {
-        width: 120px;
-        height: 120px;
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
       }
 
-      .anneau {
-        width: 140px;
-        height: 140px;
-        top: -10px;
-        left: -10px;
+      .sidebar {
+        flex-direction: row;
+        width: 100%;
+        overflow-x: auto;
+        justify-content: center;
+      }
+
+      .main {
+        padding: 20px;
       }
     }
   </style>
 </head>
 <body>
 
-  <h1>Voici tes profils compatibles ✨</h1>
-
-  <div class="profils-container">
-    <div class="profil">
-      <img src="img/anneau-rose.png" class="anneau rose" alt="Anneau rose">
-      <img src="img/profil1.jpg" class="avatar" alt="Profil 1">
+  <div class="sidebar">
+    <div class="profile" onclick="location.href='detail-profil.html?id=1'">
+      <div class="ring">
+        <img class="anneau" src="img/anneau-rose.png" alt="Anneau">
+        <img class="avatar" src="img/profil1.jpg" alt="Profil 1">
+      </div>
+      <p>Camille</p>
     </div>
 
-    <div class="profil">
-      <img src="img/anneau-bleu.png" class="anneau bleu" alt="Anneau bleu">
-      <img src="img/profil2.jpg" class="avatar" alt="Profil 2">
+    <div class="profile" onclick="location.href='detail-profil.html?id=2'">
+      <div class="ring">
+        <img class="anneau" src="img/anneau-bleu.png" alt="Anneau">
+        <img class="avatar" src="img/profil2.jpg" alt="Profil 2">
+      </div>
+      <p>Lucas</p>
     </div>
 
-    <div class="profil">
-      <img src="img/anneau-rose.png" class="anneau rose" alt="Anneau rose">
-      <img src="img/profil3.jpg" class="avatar" alt="Profil 3">
+    <div class="profile" onclick="location.href='detail-profil.html?id=3'">
+      <div class="ring">
+        <img class="anneau" src="img/anneau-rose.png" alt="Anneau">
+        <img class="avatar" src="img/profil3.jpg" alt="Profil 3">
+      </div>
+      <p>Sarah</p>
     </div>
 
-    <div class="profil">
-      <img src="img/anneau-bleu.png" class="anneau bleu" alt="Anneau bleu">
-      <img src="img/profil4.jpg" class="avatar" alt="Profil 4">
+    <div class="profile" onclick="location.href='detail-profil.html?id=4'">
+      <div class="ring">
+        <img class="anneau" src="img/anneau-bleu.png" alt="Anneau">
+        <img class="avatar" src="img/profil4.jpg" alt="Profil 4">
+      </div>
+      <p>Enzo</p>
+    </div>
+  </div>
+
+  <div class="main">
+    <h1>✨ Voici tes affinités sérieuses ✨</h1>
+    
+    <a class="btn" href="questionnaire.html">Découvre ton idéal 💖</a>
+
+    <div class="footer">
+      <a class="btn" href="index.html">↩ Retour</a>
     </div>
   </div>
 
