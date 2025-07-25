@@ -7,109 +7,113 @@
   <style>
     body {
       margin: 0;
+      font-family: 'Segoe UI', sans-serif;
       background: url('img/fond-futuriste.jpg') no-repeat center center fixed;
       background-size: cover;
       overflow: hidden;
-      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
     }
 
     .carousel {
       display: flex;
       overflow-x: auto;
-      gap: 20px;
-      padding: 50px 10px 120px;
       scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      justify-content: center;
+      gap: 30px;
+      padding: 30px 20px;
+      max-width: 100%;
     }
 
     .profile {
-      position: relative;
-      flex: 0 0 auto;
-      width: 140px;
-      height: 140px;
       scroll-snap-align: center;
+      position: relative;
+      width: 130px;
+      height: 130px;
+      flex: 0 0 auto;
     }
 
-    .profile img.photo {
-      width: 100%;
-      height: 100%;
+    .ring {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      border: 5px solid transparent;
+      box-sizing: border-box;
+      animation: sway 4s ease-in-out infinite;
+      z-index: 1;
+      background: linear-gradient(135deg, #ff66cc, #66ccff);
+      mask: radial-gradient(closest-side, transparent 50%, black 51%);
+      -webkit-mask: radial-gradient(closest-side, transparent 50%, black 51%);
+    }
+
+    .avatar {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 110px;
+      height: 110px;
       border-radius: 50%;
       object-fit: cover;
-      position: absolute;
-      top: 0; left: 0;
       z-index: 2;
-      border: 2px solid white;
     }
 
-    .profile img.anneau {
-      position: absolute;
-      width: 140px;
-      height: 140px;
-      top: 0; left: 0;
-      animation: tangage 4s infinite ease-in-out;
-      z-index: 1;
+    @keyframes sway {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(2deg); }
     }
 
-    @keyframes tangage {
-      0%,100% { transform: translateY(0px); }
-      50% { transform: translateY(4px); }
-    }
-
-    .cta {
-      text-align: center;
-      margin-top: -80px;
-    }
-
-    .cta a {
-      display: inline-block;
-      background: rgba(255,255,255,0.2);
+    .btn {
+      margin-top: 20px;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid white;
       color: white;
       padding: 10px 20px;
-      border: 1px solid white;
-      border-radius: 25px;
+      border-radius: 30px;
       text-decoration: none;
-      font-size: 0.9em;
       transition: background 0.3s;
     }
-    .cta a:hover {
-      background: rgba(255,255,255,0.4);
+
+    .btn:hover {
+      background: rgba(255,255,255,0.3);
     }
 
-    @media (max-width: 600px) {
-      .profile { width: 120px; height: 120px; }
-      .profile img.anneau { width: 120px; height: 120px; }
+    /* Scrollbar stylée */
+    .carousel::-webkit-scrollbar {
+      height: 8px;
+    }
+    .carousel::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.2);
+      border-radius: 4px;
     }
   </style>
 </head>
 <body>
 
-  <div class="carousel">
-    <!-- Exemple avec 5 profils -->
-    <div class="profile">
-      <img class="anneau" src="https://i.imgur.com/XrT0GQk.png" alt="Anneau rose">
-      <img class="photo" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Femme 1">
+  <div class="container">
+    <div class="carousel">
+      <div class="profile">
+        <div class="ring"></div>
+        <img class="avatar" src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?q=80&w=400" alt="Profil 1">
+      </div>
+      <div class="profile">
+        <div class="ring"></div>
+        <img class="avatar" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=400" alt="Profil 2">
+      </div>
+      <div class="profile">
+        <div class="ring"></div>
+        <img class="avatar" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=400" alt="Profil 3">
+      </div>
     </div>
-    <div class="profile">
-      <img class="anneau" src="https://i.imgur.com/VMEpCPy.png" alt="Anneau bleu">
-      <img class="photo" src="https://randomuser.me/api/portraits/men/35.jpg" alt="Homme 1">
-    </div>
-    <div class="profile">
-      <img class="anneau" src="https://i.imgur.com/XrT0GQk.png" alt="Anneau rose">
-      <img class="photo" src="https://randomuser.me/api/portraits/women/55.jpg" alt="Femme 2">
-    </div>
-    <div class="profile">
-      <img class="anneau" src="https://i.imgur.com/VMEpCPy.png" alt="Anneau bleu">
-      <img class="photo" src="https://randomuser.me/api/portraits/men/12.jpg" alt="Homme 2">
-    </div>
-    <div class="profile">
-      <img class="anneau" src="https://i.imgur.com/XrT0GQk.png" alt="Anneau rose">
-      <img class="photo" src="https://randomuser.me/api/portraits/women/42.jpg" alt="Femme 3">
-    </div>
-  </div>
 
-  <div class="cta">
-    <a href="questionnaire.html">Découvre ton idéal 💖</a>
+    <a class="btn" href="questionnaire.html">Découvre ton idéal</a>
   </div>
 
 </body>
