@@ -1,139 +1,166 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Relation Sérieuse – AFFINIX</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>Affinix – Rencontre Sérieuse</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       margin: 0;
+      padding: 0;
       background: url('img/fond-futuriste.jpg') no-repeat center center fixed;
       background-size: cover;
       font-family: 'Segoe UI', sans-serif;
       color: white;
       overflow: hidden;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
     }
 
     .carousel {
       display: flex;
-      gap: 40px;
-      padding: 40px 20px;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
+      gap: 20px;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+    }
+    .carousel::-webkit-scrollbar { display: none; }
+
+    .slide {
+      flex: 0 0 100%;
+      scroll-snap-align: start;
+      display: grid;
+      grid-template-columns: repeat(3, 120px);
+      grid-template-rows: repeat(2, 120px);
+      gap: 20px;
       justify-content: center;
       align-items: center;
-      flex: 1;
     }
 
-    .carousel::-webkit-scrollbar {
-      display: none;
-    }
-
-    .profil-container {
+    .profil {
       position: relative;
       width: 120px;
       height: 120px;
-      flex: 0 0 auto;
-      scroll-snap-align: center;
     }
-
-    .anneau-animé {
+    .profil img.photo {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      top: 10px; left: 10px;
+      border-radius: 50%;
+      object-fit: cover;
+      z-index: 1;
+    }
+    .profil img.anneau {
       position: absolute;
       width: 120px;
       height: 120px;
-      top: 0;
-      left: 0;
-      z-index: 1;
+      top: 0; left: 0;
+      z-index: 2;
     }
 
-    .photo-profil {
+    /* Popup overlay */
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
+    .popup {
+      position: relative;
+      width: 280px;
+      height: 340px;
+      background: transparent;
+    }
+    .popup img.porte {
+      width: 100%;
+      height: auto;
+    }
+    .popup img.photo {
       position: absolute;
-      width: 80px;
-      height: 80px;
-      top: 20px;
-      left: 20px;
+      width: 180px;
+      height: 180px;
       border-radius: 50%;
       object-fit: cover;
+      top: 60px; left: 50%;
+      transform: translateX(-50%);
       z-index: 2;
-      box-shadow: 0 0 10px rgba(255,255,255,0.3);
     }
-
-    .footer {
-      text-align: center;
-      padding: 20px;
-    }
-
-    .btn {
-      background: rgba(255,255,255,0.2);
-      border: 1px solid #fff;
-      color: #fff;
-      padding: 10px 18px;
-      text-decoration: none;
-      border-radius: 20px;
-      font-size: 0.9em;
-      transition: background 0.3s;
-    }
-
-    .btn:hover {
-      background: rgba(255,255,255,0.4);
-    }
-
-    @media (max-width: 600px) {
-      .carousel {
-        gap: 20px;
-        padding: 30px 10px;
-      }
-
-      .profil-container {
-        width: 100px;
-        height: 100px;
-      }
-
-      .anneau-animé {
-        width: 100px;
-        height: 100px;
-      }
-
-      .photo-profil {
-        width: 65px;
-        height: 65px;
-        top: 17.5px;
-        left: 17.5px;
-      }
+    .close-btn {
+      position: absolute;
+      top: 8px; right: 12px;
+      font-size: 1.6em; color: white;
+      cursor: pointer;
+      z-index: 3;
     }
   </style>
 </head>
 <body>
 
   <div class="carousel">
-    <!-- Profil 1 -->
-    <div class="profil-container">
-      <img src="img/anneau-profil.gif" class="anneau-animé" alt="Anneau">
-      <img src="https://randomuser.me/api/portraits/women/60.jpg" class="photo-profil" alt="Profil 1">
+    <!-- Slide 1 -->
+    <div class="slide">
+      <div class="profil" onclick="openPopup(1)">
+        <img class="anneau" src="img/anneau-profil.gif" alt="Anneau">
+        <img class="photo" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Profil 1">
+      </div>
+      <div class="profil" onclick="openPopup(2)">
+        <img class="anneau" src="img/anneau-profil.gif" alt="Anneau">
+        <img class="photo" src="https://randomuser.me/api/portraits/men/35.jpg" alt="Profil 2">
+      </div>
+      <div class="profil" onclick="openPopup(3)">
+        <img class="anneau" src="img/anneau-profil.gif" alt="Anneau">
+        <img class="photo" src="https://randomuser.me/api/portraits/women/55.jpg" alt="Profil 3">
+      </div>
+      <div class="profil" onclick="openPopup(4)">
+        <img class="anneau" src="img/anneau-profil.gif" alt="Anneau">
+        <img class="photo" src="https://randomuser.me/api/portraits/men/52.jpg" alt="Profil 4">
+      </div>
+      <div class="profil" onclick="openPopup(5)">
+        <img class="anneau" src="img/anneau-profil.gif" alt="Anneau">
+        <img class="photo" src="https://randomuser.me/api/portraits/women/60.jpg" alt="Profil 5">
+      </div>
+      <div class="profil" onclick="openPopup(6)">
+        <img class="anneau" src="img/anneau-profil.gif" alt="Anneau">
+        <img class="photo" src="https://randomuser.me/api/portraits/men/21.jpg" alt="Profil 6">
+      </div>
     </div>
 
-    <!-- Profil 2 -->
-    <div class="profil-container">
-      <img src="img/anneau-profil.gif" class="anneau-animé" alt="Anneau">
-      <img src="https://randomuser.me/api/portraits/men/52.jpg" class="photo-profil" alt="Profil 2">
-    </div>
-
-    <!-- Profil 3 -->
-    <div class="profil-container">
-      <img src="img/anneau-profil.gif" class="anneau-animé" alt="Anneau">
-      <img src="https://randomuser.me/api/portraits/women/47.jpg" class="photo-profil" alt="Profil 3">
-    </div>
-
-    <!-- Tu peux en rajouter ici -->
+    <!-- Tu peux ajouter d'autres <div class="slide"> ici pour plus de groupes -->
   </div>
 
-  <div class="footer">
-    <a href="questionnaire.html" class="btn">Découvre ton idéal</a>
+  <a href="questionnaire.html" class="btn" style="position:absolute; bottom:20px; left:50%; transform:translateX(-50%);">Découvre ton idéal 💖</a>
+
+  <!-- POPUP -->
+  <div class="overlay" id="overlay">
+    <div class="popup">
+      <div class="close-btn" onclick="closePopup()">✖️</div>
+      <img class="porte" src="img/porte.gif" alt="Porte animée">
+      <img class="photo" id="popup-photo" src="" alt="Profil">
+    </div>
   </div>
+
+<script>
+  function openPopup(n) {
+    const photos = {
+      1: 'https://randomuser.me/api/portraits/women/68.jpg',
+      2: 'https://randomuser.me/api/portraits/men/35.jpg',
+      3: 'https://randomuser.me/api/portraits/women/55.jpg',
+      4: 'https://randomuser.me/api/portraits/men/52.jpg',
+      5: 'https://randomuser.me/api/portraits/women/60.jpg',
+      6: 'https://randomuser.me/api/portraits/men/21.jpg'
+    };
+    document.getElementById('popup-photo').src = photos[n];
+    document.getElementById('overlay').style.display = 'flex';
+  }
+  function closePopup() {
+    document.getElementById('overlay').style.display = 'none';
+  }
+</script>
 
 </body>
 </html>
