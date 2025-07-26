@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Relation Sérieuse</title>
+  <title>AFFINIX - Profils</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
-      font-family: 'Arial', sans-serif;
-      background: url('img/fond-futuriste.jpg') no-repeat center center fixed;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://images.unsplash.com/photo-1604079628045-cf82c11e2d4b') no-repeat center center fixed;
       background-size: cover;
+      color: #fff;
       overflow-x: hidden;
     }
 
@@ -18,175 +18,163 @@
       display: flex;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
-    }
-
-    .page {
-      scroll-snap-align: start;
-      min-width: 100vw;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
+      -webkit-overflow-scrolling: touch;
+      padding: 50px 10px;
       gap: 20px;
-      padding: 40px 0;
     }
 
     .profile-card {
+      flex: 0 0 300px;
+      scroll-snap-align: center;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 15px;
+      backdrop-filter: blur(6px);
+      padding: 20px;
+      transition: transform 0.5s ease;
       position: relative;
-      width: 120px;
-      height: 120px;
-      cursor: pointer;
+      box-shadow: 0 0 20px #00f0ff55;
+      animation: fadeIn 1s ease-in-out;
     }
 
-    .profile-ring {
-      width: 120px;
-      height: 120px;
-      background-size: cover;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 1;
+    .profile-card:hover {
+      transform: scale(1.02);
     }
 
-    .profile-photo {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
+    .profile-pic {
+      width: 100%;
+      border-radius: 12px;
       object-fit: cover;
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      z-index: 2;
+      height: 200px;
+      box-shadow: 0 0 10px #0ff;
     }
 
+    h2 {
+      margin: 10px 0 5px;
+      font-size: 1.4em;
+    }
+
+    .info {
+      font-size: 0.95em;
+      margin: 4px 0;
+    }
+
+    .btn {
+      background: #0ff;
+      color: #000;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 10px;
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background: #00c9d8;
+    }
+
+    /* Popup */
     .popup {
       display: none;
       position: fixed;
-      z-index: 999;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       width: 100vw;
       height: 100vh;
-      background-color: rgba(0, 0, 0, 0.85);
+      background: rgba(0,0,0,0.85);
+      z-index: 999;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
     }
 
-    .popup .door {
-      width: 300px;
-      height: 300px;
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-      position: relative;
+    .popup-content {
+      background: #111;
+      border-radius: 15px;
+      padding: 20px;
+      max-width: 90%;
+      color: #fff;
+      text-align: left;
+      animation: zoomIn 0.5s ease;
+      box-shadow: 0 0 20px #0ff;
     }
 
-    .popup .main-photo {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      object-fit: cover;
-      position: absolute;
-      top: 80px;
-      left: 80px;
-      z-index: 2;
-    }
-
-    .popup .info {
-      margin-top: 20px;
-      color: white;
-      text-align: center;
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      font-size: 26px;
-      color: white;
+    .popup-close {
+      background: #f33;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
       cursor: pointer;
+      margin-top: 10px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
   </style>
 </head>
 <body>
 
-<div class="carousel-container">
-  <!-- Page 1 -->
-  <div class="page">
-    <div class="profile-card" onclick="openPopup('img/photo1.jpg', 'img/porte-rose.gif', 'Élodie, 28 ans, Paris – Relation sérieuse')">
-      <div class="profile-ring" style="background-image: url('img/anneau-rose.gif');"></div>
-      <img src="img/photo1.jpg" class="profile-photo" />
+  <div class="carousel-container">
+    <!-- Profil 1 -->
+    <div class="profile-card">
+      <img class="profile-pic" src="https://randomuser.me/api/portraits/women/21.jpg" alt="Emma">
+      <h2>Emma, 27 ans</h2>
+      <div class="info">📍 Lyon</div>
+      <div class="info">🎨 Graphiste</div>
+      <div class="info">💖 Recherche : Relation sérieuse</div>
+      <div class="info">🎒 Passions : Art, voyages, animaux</div>
+      <button class="btn" onclick="showPopup('Emma, 27 ans', 'Emma est une artiste passionnée par la création visuelle. Elle adore les voyages spontanés, les galeries d’art et les cafés parisiens. Elle cherche quelqu’un de sincère avec qui partager de vrais moments. ❤️')">Voir plus</button>
     </div>
-    <div class="profile-card" onclick="openPopup('img/photo2.jpg', 'img/porte.gif', 'Lucas, 30 ans, Lyon – Rencontre fun')">
-      <div class="profile-ring" style="background-image: url('img/anneau-profil.gif');"></div>
-      <img src="img/photo2.jpg" class="profile-photo" />
+
+    <!-- Profil 2 -->
+    <div class="profile-card">
+      <img class="profile-pic" src="https://randomuser.me/api/portraits/men/44.jpg" alt="Lucas">
+      <h2>Lucas, 31 ans</h2>
+      <div class="info">📍 Paris</div>
+      <div class="info">🧑‍💻 Développeur web</div>
+      <div class="info">💬 Recherche : Rencontre fun</div>
+      <div class="info">🎮 Passions : Gaming, manga, sport</div>
+      <button class="btn" onclick="showPopup('Lucas, 31 ans', 'Lucas est un geek cool qui aime le code, les mangas et les escape games. Il cherche des discussions légères, des rires, et pourquoi pas plus si affinités. 🎮🌟')">Voir plus</button>
     </div>
-    <div class="profile-card" onclick="openPopup('img/photo3.jpg', 'img/porte.gif', 'Jules, 26 ans, Marseille – Parents solos')">
-      <div class="profile-ring" style="background-image: url('img/anneau-profil.gif');"></div>
-      <img src="img/photo3.jpg" class="profile-photo" />
-    </div>
-    <div class="profile-card" onclick="openPopup('img/photo4.jpg', 'img/porte-rose.gif', 'Léna, 25 ans, Nice – Rencontre amicale')">
-      <div class="profile-ring" style="background-image: url('img/anneau-rose.gif');"></div>
-      <img src="img/photo4.jpg" class="profile-photo" />
-    </div>
-    <div class="profile-card" onclick="openPopup('img/photo5.jpg', 'img/porte.gif', 'Maxime, 32 ans, Lille – Relation sérieuse')">
-      <div class="profile-ring" style="background-image: url('img/anneau-profil.gif');"></div>
-      <img src="img/photo5.jpg" class="profile-photo" />
-    </div>
-    <div class="profile-card" onclick="openPopup('img/photo6.jpg', 'img/porte-rose.gif', 'Emma, 27 ans, Toulouse – Rencontre fun')">
-      <div class="profile-ring" style="background-image: url('img/anneau-rose.gif');"></div>
-      <img src="img/photo6.jpg" class="profile-photo" />
-    </div>   <!-- Page 2 -->
-  <div class="page">
-    <div class="profile-card" onclick="openPopup('img/photo7.jpg', 'img/porte.gif', 'Nicolas, 29 ans, Nantes – Rencontre fun')">
-      <div class="profile-ring" style="background-image: url('img/anneau-profil.gif');"></div>
-      <img src="img/photo7.jpg" class="profile-photo" />
-    </div>
-    <div class="profile-card" onclick="openPopup('img/photo8.jpg', 'img/porte-rose.gif', 'Camille, 31 ans, Strasbourg – Relation sérieuse')">
-      <div class="profile-ring" style="background-image: url('img/anneau-rose.gif');"></div>
-      <img src="img/photo8.jpg" class="profile-photo" />
-    </div>
-    <div class="profile-card" onclick="openPopup('img/photo9.jpg', 'img/porte.gif', 'Théo, 24 ans, Montpellier – Rencontre amicale')">
-      <div class="profile-ring" style="background-image: url('img/anneau-profil.gif');"></div>
-      <img src="img/photo9.jpg" class="profile-photo" />
-    </div>
-    <div class="profile-card" onclick="openPopup('img/photo10.jpg', 'img/porte-rose.gif', 'Chloé, 26 ans, Rennes – Parents solos')">
-      <div class="profile-ring" style="background-image: url('img/anneau-rose.gif');"></div>
-      <img src="img/photo10.jpg" class="profile-photo" />
-    </div>
-    <div class="profile-card" onclick="openPopup('img/photo11.jpg', 'img/porte.gif', 'Alexandre, 33 ans, Bordeaux – Rencontre fun')">
-      <div class="profile-ring" style="background-image: url('img/anneau-profil.gif');"></div>
-      <img src="img/photo11.jpg" class="profile-photo" />
-    </div>
-    <div class="profile-card" onclick="openPopup('img/photo12.jpg', 'img/porte-rose.gif', 'Manon, 22 ans, Dijon – Connexion unique')">
-      <div class="profile-ring" style="background-image: url('img/anneau-rose.gif');"></div>
-      <img src="img/photo12.jpg" class="profile-photo" />
+
+    <!-- Profil 3 -->
+    <div class="profile-card">
+      <img class="profile-pic" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Jade">
+      <h2>Jade, 25 ans</h2>
+      <div class="info">📍 Marseille</div>
+      <div class="info">🧘 Coach bien-être</div>
+      <div class="info">💖 Recherche : Connexion unique</div>
+      <div class="info">🌺 Passions : Nature, méditation, yoga</div>
+      <button class="btn" onclick="showPopup('Jade, 25 ans', 'Jade respire la sérénité. Elle adore la nature, les énergies douces et les connexions profondes. Elle croit au destin et aux belles rencontres. 🌌💫')">Voir plus</button>
     </div>
   </div>
+
+  <!-- FENÊTRE POPUP -->
+  <div class="popup" id="profilePopup">
+    <div class="popup-content" id="popupContent">
+      <h2 id="popupTitle"></h2>
+      <p id="popupDescription"></p>
+      <button class="popup-close" onclick="hidePopup()">Fermer</button>
+    </div>
   </div>
-</div>
 
-<!-- Popup -->
-<div class="popup" id="popup">
-  <div class="close-btn" onclick="closePopup()">✖</div>
-  <div class="door" id="door">
-    <img id="main-photo" class="main-photo" src="" />
-  </div>
-  <div class="info" id="info"></div>
-</div>
+  <script>
+    function showPopup(title, description) {
+      document.getElementById('popupTitle').innerText = title;
+      document.getElementById('popupDescription').innerText = description;
+      document.getElementById('profilePopup').style.display = 'flex';
+    }
 
-<script>
-  function openPopup(photoUrl, doorGif, infoText) {
-    document.getElementById('popup').style.display = 'flex';
-    document.getElementById('main-photo').src = photoUrl;
-    document.getElementById('door').style.backgroundImage = 'url(' + doorGif + ')';
-    document.getElementById('info').textContent = infoText;
-  }
-
-  function closePopup() {
-    document.getElementById('popup').style.display = 'none';
-  }
-</script>
-
+    function hidePopup() {
+      document.getElementById('profilePopup').style.display = 'none';
+    }
+  </script>
 </body>
 </html>
