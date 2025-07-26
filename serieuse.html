@@ -1,168 +1,215 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <title>Affinix – Rencontre Sérieuse</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <title>Rencontres Sérieuses - Affinix</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       margin: 0;
-      padding: 0;
-      background: url('img/fond-futuriste.jpg') no-repeat center center fixed;
-      background-size: cover;
-      font-family: 'Segoe UI', sans-serif;
+      background: url('img/fond-futuriste.jpg') no-repeat center center/cover;
+      font-family: 'Arial', sans-serif;
       color: white;
-      overflow: hidden;
+      overflow-x: hidden;
+    }
+
+    .container {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .profiles-wrapper {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+      width: 100%;
+    }
+
+    .profile-page {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      width: 100%;
+      flex-shrink: 0;
+      justify-items: center;
     }
 
     .carousel {
-      display: flex;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      gap: 20px;
-      height: 100vh;
-      align-items: center;
-      justify-content: center;
-    }
-    .carousel::-webkit-scrollbar { display: none; }
-
-    .slide {
-      flex: 0 0 100%;
-      scroll-snap-align: start;
-      display: grid;
-      grid-template-columns: repeat(3, 120px);
-      grid-template-rows: repeat(2, 120px);
-      gap: 20px;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .profil {
-  position: relative;
-  width: 120px;
-  height: 120px;
-}
-.profil img.anneau {
-  position: absolute;
-  width: 120px;
-  height: 120px;
-  top: 0;
-  left: 0;
-  z-index: 2;
-}
-.profil img.photo {
-  position: absolute;
-  width: 80px;
-  height: 80px;
-  top: 20px;
-  left: 20px;
-  border-radius: 50%;
-  object-fit: cover;
-  z-index: 1;
-}
-
-    /* Popup overlay */
-    .overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.7);
-      justify-content: center;
-      align-items: center;
-      z-index: 10;
-    }
-    .popup {
-      position: relative;
-      width: 280px;
-      height: 340px;
-      background: transparent;
-    }
-    .popup img.porte {
+      overflow: hidden;
       width: 100%;
-      height: auto;
     }
-    .popup img.photo {
+
+    .profile {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      cursor: pointer;
+    }
+
+    .profile .ring {
+      width: 100%;
+      height: 100%;
       position: absolute;
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      object-fit: cover;
-      top: 60px; left: 50%;
-      transform: translateX(-50%);
+      top: 0;
+      left: 0;
       z-index: 2;
     }
-    .close-btn {
+
+    .profile img.photo {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      object-fit: cover;
       position: absolute;
-      top: 8px; right: 12px;
-      font-size: 1.6em; color: white;
+      top: 30px;
+      left: 30px;
+      z-index: 1;
+    }
+
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .popup img {
+      max-width: 200px;
+      margin-bottom: 20px;
+    }
+
+    .popup .description {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .popup button {
+      background: #fff;
+      color: #111;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 8px;
+      font-size: 16px;
       cursor: pointer;
-      z-index: 3;
+    }
+
+    .nav-buttons {
+      margin-top: 20px;
+    }
+
+    .nav-buttons button {
+      background-color: #fff;
+      color: #111;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      margin: 0 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .profile-page {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
   </style>
 </head>
 <body>
 
-  <div class="carousel">
-    <!-- Slide 1 -->
-    <div class="slide">
-      <div class="profil" onclick="openPopup(1)">
-        <img class="anneau" src="img/anneau-profil.gif" alt="Anneau">
-        <img class="photo" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Profil 1">
-      </div>
-      <div class="profil" onclick="openPopup(2)">
-        <img class="anneau" src="img/anneau-profil.gif" alt="Anneau">
-        <img class="photo" src="https://randomuser.me/api/portraits/men/35.jpg" alt="Profil 2">
-      </div>
-      <div class="profil" onclick="openPopup(3)">
-        <img class="anneau" src="img/anneau-profil.gif" alt="Anneau">
-        <img class="photo" src="https://randomuser.me/api/portraits/women/55.jpg" alt="Profil 3">
-      </div>
-      <div class="profil" onclick="openPopup(4)">
-        <img class="anneau" src="img/anneau-profil.gif" alt="Anneau">
-        <img class="photo" src="https://randomuser.me/api/portraits/men/52.jpg" alt="Profil 4">
-      </div>
-      <div class="profil" onclick="openPopup(5)">
-        <img class="anneau" src="img/anneau-profil.gif" alt="Anneau">
-        <img class="photo" src="https://randomuser.me/api/portraits/women/60.jpg" alt="Profil 5">
-      </div>
-      <div class="profil" onclick="openPopup(6)">
-        <img class="anneau" src="img/anneau-profil.gif" alt="Anneau">
-        <img class="photo" src="https://randomuser.me/api/portraits/men/21.jpg" alt="Profil 6">
+  <div class="container">
+    <div class="carousel">
+      <div class="profiles-wrapper" id="profilesWrapper">
+        <!-- Page 1 -->
+        <div class="profile-page">
+          <div class="profile" onclick="openProfile('img/porte-rose.gif', 'Emma, 28 ans', 'Paris', '💬 Amicale, 💖 Sérieuse')">
+            <img class="ring" src="img/anneau-rose.gif">
+            <img class="photo" src="https://randomuser.me/api/portraits/women/11.jpg">
+          </div>
+          <div class="profile" onclick="openProfile('img/porte.gif', 'Léo, 31 ans', 'Lyon', '🎉 Fun, 🧬 Connexion Unique')">
+            <img class="ring" src="img/anneau-profil.gif">
+            <img class="photo" src="https://randomuser.me/api/portraits/men/15.jpg">
+          </div>
+          <div class="profile" onclick="openProfile('img/porte-rose.gif', 'Sofia, 26 ans', 'Marseille', '💖 Sérieuse, 👨‍👩‍👧 Parents Solos')">
+            <img class="ring" src="img/anneau-rose.gif">
+            <img class="photo" src="https://randomuser.me/api/portraits/women/24.jpg">
+          </div>
+          <div class="profile" onclick="openProfile('img/porte.gif', 'Thomas, 34 ans', 'Bordeaux', '💬 Amicale, 🎮 Passions')">
+            <img class="ring" src="img/anneau-profil.gif">
+            <img class="photo" src="https://randomuser.me/api/portraits/men/21.jpg">
+          </div>
+          <div class="profile" onclick="openProfile('img/porte-rose.gif', 'Julie, 30 ans', 'Nice', '💖 Sérieuse, 🧬 Connexion Unique')">
+            <img class="ring" src="img/anneau-rose.gif">
+            <img class="photo" src="https://randomuser.me/api/portraits/women/19.jpg">
+          </div>
+          <div class="profile" onclick="openProfile('img/porte.gif', 'Lucas, 29 ans', 'Toulouse', '🎉 Fun, 💬 Amicale')">
+            <img class="ring" src="img/anneau-profil.gif">
+            <img class="photo" src="https://randomuser.me/api/portraits/men/30.jpg">
+          </div>
+        </div>
+
+        <!-- Page 2 (autres profils à ajouter si tu veux) -->
+        <div class="profile-page">
+          <div class="profile" onclick="openProfile('img/porte-rose.gif', 'Anna, 27 ans', 'Lille', '💖 Sérieuse, 🎉 Fun')">
+            <img class="ring" src="img/anneau-rose.gif">
+            <img class="photo" src="https://randomuser.me/api/portraits/women/22.jpg">
+          </div>
+          <div class="profile" onclick="openProfile('img/porte.gif', 'Julien, 32 ans', 'Rennes', '💬 Amicale, 🎮 Passions')">
+            <img class="ring" src="img/anneau-profil.gif">
+            <img class="photo" src="https://randomuser.me/api/portraits/men/25.jpg">
+          </div>
+          <!-- Ajoute ici d'autres profils si tu veux -->
+        </div>
       </div>
     </div>
 
-    <!-- Tu peux ajouter d'autres <div class="slide"> ici pour plus de groupes -->
-  </div>
-
-  <a href="questionnaire.html" class="btn" style="position:absolute; bottom:20px; left:50%; transform:translateX(-50%);">Découvre ton idéal 💖</a>
-
-  <!-- POPUP -->
-  <div class="overlay" id="overlay">
-    <div class="popup">
-      <div class="close-btn" onclick="closePopup()">✖️</div>
-      <img class="porte" src="img/porte.gif" alt="Porte animée">
-      <img class="photo" id="popup-photo" src="" alt="Profil">
+    <div class="nav-buttons">
+      <button onclick="prevPage()">⬅️</button>
+      <button onclick="nextPage()">➡️</button>
     </div>
   </div>
 
-<script>
-  function openPopup(n) {
-    const photos = {
-      1: 'https://randomuser.me/api/portraits/women/68.jpg',
-      2: 'https://randomuser.me/api/portraits/men/35.jpg',
-      3: 'https://randomuser.me/api/portraits/women/55.jpg',
-      4: 'https://randomuser.me/api/portraits/men/52.jpg',
-      5: 'https://randomuser.me/api/portraits/women/60.jpg',
-      6: 'https://randomuser.me/api/portraits/men/21.jpg'
-    };
-    document.getElementById('popup-photo').src = photos[n];
-    document.getElementById('overlay').style.display = 'flex';
-  }
-  function closePopup() {
-    document.getElementById('overlay').style.display = 'none';
-  }
-</script>
+  <!-- Popup -->
+  <div class="popup" id="popup">
+    <img id="popup-img" src="">
+    <div class="description" id="popup-text"></div>
+    <button onclick="closePopup()">Fermer</button>
+  </div>
+
+  <script>
+    let currentPage = 0;
+
+    function openProfile(gif, name, city, salles) {
+      document.getElementById('popup').style.display = 'flex';
+      document.getElementById('popup-img').src = gif;
+      document.getElementById('popup-text').innerHTML =
+        `<strong>${name}</strong><br>${city}<br>${salles}`;
+    }
+
+    function closePopup() {
+      document.getElementById('popup').style.display = 'none';
+    }
+
+    function nextPage() {
+      const wrapper = document.getElementById('profilesWrapper');
+      const totalPages = wrapper.children.length;
+      if (currentPage < totalPages - 1) currentPage++;
+      wrapper.style.transform = `translateX(-${100 * currentPage}%)`;
+    }
+
+    function prevPage() {
+      const wrapper = document.getElementById('profilesWrapper');
+      if (currentPage > 0) currentPage--;
+      wrapper.style.transform = `translateX(-${100 * currentPage}%)`;
+    }
+  </script>
 
 </body>
 </html>
